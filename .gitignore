@@ -1,0 +1,7 @@
+texmakerwin64usb/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+texmakerwin64usb/

@@ -1,0 +1,271 @@
+% Chapter 2
+
+\chapter{Introducción Específica} % Main chapter title
+
+\label{Chapter2} 
+\label{IntroEsp}
+
+%----------------------------------------------------------------------------------------
+
+En este capítulo se explorarán en términos muy generales las distintas tecnologías, arquitecturas, paradigmas y técnicas que resultaron útiles para el desarrollo del trabajo.
+
+
+\section{Seguimiento Ocular (Eye-tracking)}
+
+El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocular}, es el proceso tecnológico que permite medir y registrar el punto de la mirada de una persona o el movimiento de sus ojos en relación con la cabeza. Para ello, comúnmente se utiliza como punto de referencia el centro de la pupila. A diferencia del seguimiento facial (que analiza músculos, cejas o expresiones), el \emph{eye-tracking} se concentra estrictamente en la forma y movimientos del globo ocular (Fig. \ref{fig:eyetracking}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/eyetracking.png}
+    \caption{Representación gráfica del Eye-Tracking}
+    \label{fig:eyetracking}
+\end{figure}
+
+Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Una de estas aplicaciones directas es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
+
+En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, se implementa el seguimiento ocular enfocado en detectar hacia cuál de las opciones disponibles está dirigiendo la mirada el alumno. Esta información se procesa para registrar la selección correspondiente, permitiéndole responder cuestionarios de opción múltiple sin necesidad de manipular un cursor en pantalla ni requerir destreza física.
+
+\section{Procesamiento de Imágenes y Visión por Computadora}
+
+\subsection{Conceptos fundamentales y biblioteca OpenCV}
+TEXTO A MODIFICAR
+
+\subsection{Coincidencia de patrones (Template Matching)}
+TEXTO A MODIFICAR
+
+
+\section{Redes Neuronales Artificiales}
+
+\subsection{Definición y conceptos básicos}
+
+Para entender el concepto de redes neuronales es necesario comenzar definiendo el ámbito del aprendizaje automático o \keyword{Machine Learning (ML)}, el cual es un campo de las ciencias de la computación cuya premisa es desarrollar técnicas que permitan a los sistemas aprender sin estar programados tradicionalmente. El concepto de aprendizaje se basa en suministrar a una computadora un conjunto de datos, para que esa misma máquina construya un modelo basado en dicha información y lo utilice como experiencia para analizar datos nuevos (Fig. \ref{fig:machinelearning}). En otras palabras, se obtiene un software capaz de resolver problemas.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/machinelearning.png}
+    \caption{El proceso del \emph{Machine Learning}}
+    \label{fig:machinelearning}
+\end{figure}
+
+Un tipo de modelo muy utilizado en \emph{Machine Learning} consiste en un conjunto de celdas o nodos interconectados que transmiten y procesan la información hasta ajustar su precisión de análisis lo máximo posible. Debido a su comportamiento similar al de las neuronas de los seres vivos es que se conoce a este método como \keyword{Redes Neuronales Artificiales}.
+
+
+\subsection{Principio de funcionamiento}
+
+El funcionamiento de estas redes se basa en la interconexión de unidades de procesamiento fundamentales llamadas \emph{neuronas artificiales} o \emph{nodos}, las cuales se encargan de recibir y transmitir señales realizando cálculos matemáticos intermedios.
+
+Estas neuronas se organizan en distintas capas, donde cada una cumple una función específica dentro de la arquitectura del modelo.
+La \keyword{capa de entrada} se encarga de recibir los datos sin procesar. Dichos datos pueden provenir de una imagen, un video o cualquier variable capaz de expresarse en valores numéricos. Esta información se transmite a las \keyword{capas ocultas}, que constituyen el núcleo de procesamiento principal del sistema. Puede haber una o hasta cientos, dependiendo de la complejidad del modelo. Las primeras capas obtienen la información más básica, como líneas o bordes oscuros en una imagen, y a medida que se avanza por las capas esta información se acumula para detectar patrones más complejos, como la figura de un rostro completo. Al final está la \keyword{capa de salida} donde se obtiene el resultado final, que puede ser la presencia o ausencia de un objeto en una imagen o las coordenadas en las que se ubican las pupilas de un ojo (Fig. \ref{fig:redneuronal}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/redneuronal.png}
+    \caption{Diagrama simplificado de una red neuronal}
+    \label{fig:redneuronal}
+\end{figure}
+
+Para lograr el aprendizaje, este conjunto de capas de neuronas recibe lo que se conoce como \emph{entrenamiento}, en el cual se ingresan datos conocidos en la capa de entrada, se hace trabajar a las capas intermedias y se obtiene a la salida un resultado que puede o no ser correcto. Este proceso se repite reiteradas veces ajustando matemáticamente el modelo hasta lograr un alto porcentaje de precisión.
+
+Durante estos ciclos de entrenamiento, las neuronas realizan cálculos matemáticos mediante una ecuación de la forma:
+
+\begin{equation}
+z = \sum w_i x_i + b
+\end{equation}
+
+Donde \emph{xi} es el dato de entrada \emph{i}, \emph{wi} es el \keyword{peso} que asocia la neurona a dicha entrada y \emph{b} es el \keyword{bias} o sesgo de la neurona. El peso representa la importancia relativa que se le da a la información de entrada proveniente de la neurona anterior. Un peso positivo amplifica la señal favoreciendo la activación, mientras que un peso negativo la inhibe. Por otro lado, el sesgo o bias es una constante de ajuste que permite al modelo adaptarse a patrones de entrada más complejos. El valor de resultado (\emph{z}), es un número real que luego es introducido en lo que se llama \emph{función de activación}, la cual finalmente determina la intensidad con la que cada neurona se enciende o apaga según el valor de entrada.
+
+El entrenamiento permite que el modelo ajuste iterativamente los valores de los pesos y sesgos para cada neurona, según los resultados de las evaluaciones con la información conocida hasta minimizar el error.
+
+
+\subsection{Tipos y arquitecturas de redes}
+
+Según la naturaleza del problema a resolver, la arquitectura del modelo puede variar. Fundamentalmente se distinguen tres tipos de redes, descritos en la tabla \ref{tab:tipos_de_redes}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Tipos de redes neuronales}
+    \label{tab:tipos_de_redes}
+    
+    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
+        \hline
+        \textbf{} & \textbf{Red Neuronal Prealimentada} & \textbf{Red Neuronal Convolucional} & \textbf{Red Neuronal Recurrente} \\
+        \hline
+        \textbf{Estructura} & Muy básica & Compleja. Múltiples conexiones & Compleja. Múltiples conexiones que forman bucles internos \\
+        \hline
+        \textbf{Funcionamiento} & La información viaja de manera unidireccional desde la entrada a la salida & Utiliza filtros matemáticos internos para analizar los datos de entrada por secciones & Los bucles internos que forman sus conexiones le permiten tener memoria secuencial (Recuerda datos ya analizados previamente) \\
+        \hline
+        \textbf{Aplicaciones} & Problemas sencillos que utilizan datos livianos y no se requiere memoria secuencial & Son buenas para analizar imágenes y video en tiempo real, ya que se les facilita procesar dimensiones espaciales & Problemas que requieran un contexto temporal para su análisis (Ej: Secuencias de video, procesamiento de lenguaje o predicciones meteorológicas) \\
+        \hline
+    \end{tabular}
+    
+\end{table}
+
+Para este proyecto se requiere analizar la posición espacial de las pupilas en un flujo de video a tiempo real. Este problema excede las capacidades de una red neuronal prealimentada, pero a la vez se puede prescindir de la memoria secuencial que aportan las redes neuronales recurrentes. Por lo tanto, se concluye que una red neuronal convolucional, la cual es apta para detectar patrones espaciales en imágenes, es la adecuada para aplicar en esta situación.
+
+
+\section{Sistemas Embebidos y Control Gráfico}
+
+\subsection{Microcontroladores y microprocesadores}
+
+En el diseño de sistemas embebidos actuales, la optimización de costos, espacio y consumo energético recae fundamentalmente en la implementación de microprocesadores y microcontroladores. 
+
+Un microprocesador (MPU) constituye la unidad central de procesamiento de un sistema. Se trata de un circuito integrado encargado de decodificar y ejecutar instrucciones aritméticas y lógicas. Su arquitectura interna se compone de una Unidad Aritmético Lógica (ALU), registros de memoria ultrarrápida y buses de datos y control que transmiten señales eléctricas binarias. Al carecer de memoria masiva y periféricos integrados, requiere de componentes externos interconectados en una placa base para conformar un sistema funcional. 
+
+Por otro lado, un microcontrolador (MCU) es un sistema informático completo encapsulado en un único circuito integrado. Su estructura integra un microprocesador central junto con bloques de memoria interna (tanto volátil para datos como no volátil para el programa) y múltiples periféricos. Estos módulos adicionales pueden incluir conversores analógico-digitales (ADC) y digital-analógicos (DAC), temporizadores, protocolos de comunicación serial y puertos de entrada/salida de propósito general (GPIO), lo que le permite interactuar directamente con el entorno físico y dispositivos externos de manera autónoma. 
+
+Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \emph{Arduino Uno} (Fig. \ref{fig:arduinouno})
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/arduinouno.png}
+    \caption{Placa de desarrollo \emph{Arduino Uno}}
+    \label{fig:arduinouno}
+\end{figure}
+
+\subsection{Familia de microcontroladores ESP32}
+TEXTO A MODIFICAR
+
+\subsection{Interfaces gráficas embebidas y biblioteca LVGL}
+
+El desarrollo de interfaces gráficas de usuario (GUI, por sus siglas en inglés) en sistemas embebidos presenta desafíos asociados a las restricciones de memoria RAM, capacidad de cómputo y consumo de energía de los microcontroladores. A diferencia de los entornos convencionales, donde el sistema operativo gestiona los recursos visuales mediante unidades de procesamiento gráfico dedicadas (GPU), en un microcontrolador el renderizado debe ejecutarse de forma eficiente para garantizar fluidez visual y respuesta táctil en tiempo real sin sobrecargar la CPU.
+
+Para resolver esta problemática, se recurre a bibliotecas gráficas optimizadas para hardware limitado, entre las que destaca \textbf{LVGL} (\emph{Light and Versatile Graphics Library}). LVGL es una biblioteca de código abierto escrita en lenguaje C, diseñada para operar con requerimientos mínimos de memoria. Implementa un modelo orientado a objetos basado en elementos visuales predefinidos (\emph{widgets}) como botones, etiquetas, listas, deslizadores y contenedores, los cuales pueden personalizarse mediante estilos y animaciones.
+
+La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de la interfaz y el hardware subyacente. Esto se logra a través de dos componentes principales:
+\begin{itemize}
+    \item \textbf{Controlador de pantalla (\emph{Display Driver}):} transfiere los píxeles renderizados desde el búfer de dibujo interno de la biblioteca hacia el controlador físico del panel (por ejemplo, a través de interfaces SPI o paralelas), admitiendo técnicas de doble búfer (\emph{double buffering}) para evitar parpadeos en pantalla.
+    \item \textbf{Controlador de dispositivo de entrada (\emph{Input Device Driver}):} gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
+\end{itemize}
+
+En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD), los cuales incorporan un SoC ESP32 junto con un panel TFT y un controlador táctil resistivo (típicamente XPT2046) interconectados mediante bus SPI. La integración de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
+\section{Redes y Comunicaciones}
+
+\subsection{Redes locales Wi-Fi (Modos Access Point y Station)}
+
+El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos para la implementación de redes de área local inalámbricas (WLAN). La topología de estas redes se articula a través de dos modos de operación fundamentales:
+
+\begin{itemize}
+    \item \textbf{Modo Estación (\emph{Station} - STA):} en esta configuración, el nodo inalámbrico actúa como cliente. Su función consiste en explorar el espectro de radiofrecuencia, detectar una red existente a través de su identificador (SSID), autenticarse mediante los protocolos de seguridad correspondientes (como WPA2/WPA3) y asociarse a un punto de acceso central para integrarse al tráfico de dicha red.
+    \item \textbf{Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP):} en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Es el encargado de emitir periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autenticar a los nodos que solicitan conexión y gestionar la tabla de clientes asociados, creando una infraestructura de red local independiente.
+\end{itemize}
+
+En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada y autónoma, mientras que tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station, permitiendo la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
+
+\subsection{Direccionamiento IP y protocolos de comunicación en red}
+
+Para que los nodos interconectados puedan comunicarse de manera estructurada a través de la red, se requiere un esquema de direccionamiento lógico y un conjunto de protocolos de capa de red y aplicación:
+
+\begin{itemize}
+    \item \textbf{Direccionamiento IPv4 y asignación de direcciones (DHCP e IP estática):} toda interfaz de red requiere una dirección lógica única dentro de su segmento para el enrutamiento de paquetes. La configuración de estas direcciones puede realizarse de forma estática, fijando manualmente los parámetros de red en el dispositivo para garantizar una ubicación fija y predecible, o de forma dinámica mediante el protocolo de configuración dinámica de host (\emph{Dynamic Host Configuration Protocol} - DHCP), el cual asigna direcciones IP y parámetros de red de manera automática a los clientes que se asocian.
+    \item \textbf{Protocolo de Transferencia de Hipertexto (HTTP):} protocolo de capa de aplicación orientado a transacciones sin estado que opera sobre una conexión de transporte confiable (TCP). Su funcionamiento se basa en el paradigma de petición/respuesta (\emph{request/response}), mediante el cual un cliente solicita recursos (páginas web, estilos, scripts) o transmite datos estructurados hacia el servidor.
+    \item \textbf{Transmisión de flujos continuos de datos (\emph{Streaming}):} cuando se requiere transferir datos continuos y secuenciales con baja latencia, como señales de video, el intercambio HTTP tradicional de peticiones individuales resulta ineficiente. En su lugar, se emplean técnicas de transmisión continua basadas en contenido multiparte (\emph{Multipart/x-mixed-replace} o MJPEG), donde el servidor mantiene una conexión TCP abierta y envía de forma ininterrumpida una secuencia de fotogramas directamente al cliente.
+\end{itemize}
+
+
+\section{Arquitectura y Patrones de Software}
+
+\subsection{Modelo Cliente/Servidor}
+
+La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo de diseño de software y redes en el cual las tareas a realizar se distribuyen entre un proveedor de recursos o servicios denominado “Servidor” y un receptor o demandante de dichos servicios denominado “Cliente”. Se basa en una dinámica de petición/respuesta entre ambas entidades. Sus componentes principales son:
+
+\begin{itemize}
+
+\item El \keyword{cliente} (\emph{frontend}): Es el dispositivo o aplicación que interactúa con el usuario final. Su función principal es la de elaborar y enviar peticiones de datos o ejecución de tareas a través de una red, y luego recibir, formatear y presentar los resultados obtenidos en la interfaz de usuario. Es el componente que siempre inicia la comunicación.
+
+\item El \keyword{servidor} (\emph{backend}): Es el dispositivo o programa en ejecución continua diseñado para escuchar, recibir y procesar las peticiones de uno o múltiples clientes. Su función es la de administrar los recursos y servicios para devolver al cliente la respuesta solicitada.
+
+\item La \keyword{red} y los \keyword{protocolos}: La red es la vía física o inalámbrica por la cual se comunican los dispositivos (generalmente internet), mientras que los protocolos son el conjunto de reglas o parámetros que estos dispositivos cumplen para que la comunicación sea efectiva.
+
+\end{itemize}
+
+Esta forma de trabajo es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor), en lugar de que cada uno de los clientes tenga su propia base de datos y recursos, lo cual incrementaría significativamente los costos y la complejidad de hardware en cada terminal, volviendo los procesos ineficientes. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/clienteservidor.png}
+    \caption{El sistema \emph{Cliente/Servidor}}
+    \label{fig:clienteservidor}
+\end{figure}
+
+\subsection{Patrón de diseño Modelo-Vista-Controlador (MVC)}
+
+El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una estrategia de diseño de software orientada a desacoplar la lógica de negocio, la gestión de datos y la interfaz de usuario en tres componentes con responsabilidades bien definidas:
+
+\begin{itemize}
+    \item \textbf{Modelo (\emph{Model}):} representa la estructura de los datos del sistema y gestiona las reglas de negocio. Se encarga de interactuar con los mecanismos de almacenamiento y persistencia para consultar, insertar, modificar o eliminar registros, asegurando la integridad de la información sin vincularse con la interfaz gráfica.
+    \item \textbf{Vista (\emph{View}):} constituye la capa de presentación con la que interactúa el usuario. Su función es recibir los datos procesados y renderizarlos en un formato comprensible, capturando los eventos y acciones del usuario para transferirlos al controlador.
+    \item \textbf{Controlador (\emph{Controller}):} actúa como intermediario entre el modelo y la vista. Procesa las solicitudes y eventos originados en la vista, ejecuta la lógica correspondiente, solicita las operaciones necesarias al modelo y actualiza la vista con el resultado.
+\end{itemize}
+
+Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación.
+
+\subsection{Frontend y arquitectura basada en componentes}
+
+En el diseño de software, programación web y desarrollo de sistemas embebidos, se utiliza un paradigma que separa las responsabilidades del código base en dos áreas principales: el \emph{frontend} y el \emph{backend}, descritos en la tabla \ref{tab:front_back}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Frontend y backend}
+    \label{tab:front_back}
+    
+    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
+        \hline
+        \textbf{} & \textbf{Frontend} & \textbf{Backend} \\
+        \hline
+        \textbf{Descripción} & Comprende toda la interfaz gráfica, los objetos visuales y el resto de elementos que intercomunican el sistema con el usuario final & Es el centro de operaciones del sistema, el núcleo de procesamiento.\\
+        \hline
+        \textbf{Funciones} & Muestra la información de manera didáctica e intuitiva, registra las acciones del usuario y se comunica con el backend & Recibe peticiones del frontend, almacena y gestiona la información y con ella responde a dichas peticiones \\
+        \hline
+        \textbf{Donde se aloja} & En los dispositivos clientes & En el dispositivo servidor (nunca interactúa con el usuario)\\
+        \hline
+    \end{tabular}
+    
+\end{table}
+
+Un paradigma muy utilizado en la programación web reciente es el de la arquitectura basada en componentes (CBA). A diferencia del tradicional “Modelo-Vista-Controlador”, donde el código se separa en tres bloques con distinta funcionalidad, aquí el código se rige por componentes (Fig. \ref{fig:componente}). Un componente es una entidad propia, tiene su propio modelo, vista y controlador que funcionan independientemente de otros (por ejemplo, un botón, una casilla de entrada de datos o un contenedor de formularios).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/componente.png}
+    \caption{Características de un componente web}
+    \label{fig:componente}
+\end{figure} 
+
+El código se divide en múltiples archivos modulares que se combinan y organizan en el archivo principal.
+La única relación de dependencia entre componentes se da cuando uno contiene a otro distinto. En esa situación, el componente hijo no puede alterar los datos o estados del padre, sino que solo puede hacerle peticiones para cambiarlo, mientras que el padre sí puede alterar los estados del hijo.
+
+Esta arquitectura resulta ventajosa cuando el código final resulta muy denso y difícil de organizar con el método del Modelo-Vista-Controlador, ya que no solo permite una fácil reusabilidad de componentes, sino también modularidad y aislamiento de fallos. Esto es, si un componente en específico no funciona, no compromete al programa en su totalidad.
+
+\subsection{Backend y arquitectura por capas (Controllers, Services, Repositories)}
+TEXTO A MODIFICAR
+
+
+\section{Bases de Datos y Persistencia}
+
+\subsection{Conceptos de bases de datos relacionales}
+
+Una base de datos es una colección organizada e integrada de datos almacenados de forma persistente para su posterior consulta y manipulación. Dentro de los distintos paradigmas existentes, el modelo relacional organiza la información en estructuras bidimensionales denominadas \textbf{tablas} (o relaciones), compuestas por filas (\textbf{registros} o tuplas) y columnas (\textbf{campos} o atributos).
+
+Los fundamentos de este modelo se basan en los siguientes conceptos:
+
+\begin{itemize}
+    \item \textbf{Estructura y esquemas:} cada tabla posee un esquema definido que determina el tipo de dato que puede almacenar cada columna (numérico, texto, fecha, etc.), garantizando la consistencia del formato.
+    \item \textbf{Claves e integridad relacional:} para identificar de forma unívoca cada registro se utiliza una \textbf{clave primaria} (\emph{Primary Key}). La vinculación entre distintas tablas se establece mediante \textbf{claves foráneas} (\emph{Foreign Keys}), lo que permite relacionar entidades sin duplicar información (integridad referencial).
+    \item \textbf{Lenguaje de consulta estructurado (SQL):} es el lenguaje formal estándar (\emph{Structured Query Language}) empleado para definir la estructura de los datos, realizar búsquedas mediante filtros, e insertar, modificar o eliminar información de manera declarativa.
+    \item \textbf{Transacciones y propiedades ACID:} una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID: \textbf{Atomicidad} (la operación se completa en su totalidad o no se aplica), \textbf{Consistencia} (se respetan todas las reglas e integridad del esquema), \textbf{Aislamiento} (las operaciones simultáneas no interfieren entre sí) y \textbf{Durabilidad} (los cambios confirmados persisten ante fallos o cortes de energía).
+\end{itemize}
+
+\subsection{Motores de bases de datos embebidos (SQLite)}
+
+En el desarrollo de software existen dos formas principales de gestionar una base de datos: mediante sistemas basados en un servidor independiente (que atienden peticiones a través de una red) o mediante \textbf{motores embebidos}.
+
+Un motor de base de datos embebido es una biblioteca de software que se integra directamente dentro del mismo código de la aplicación. En este esquema, el motor no se ejecuta como un proceso separado, sino que forma parte del propio ejecutable del sistema.
+
+\textbf{SQLite} es un motor de base de datos relacional embebido de código abierto ampliamente utilizado que implementa el estándar SQL. Sus características teóricas esenciales son:
+
+\begin{itemize}
+    \item \textbf{Arquitectura sin servidor (\emph{Serverless}):} los procesos leen y escriben directamente en el soporte de almacenamiento, eliminando la necesidad de configurar, administrar o mantener un servicio en segundo plano.
+    \item \textbf{Almacenamiento en archivo único:} la base de datos completa (esquema, tablas, índices y datos) se almacena dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
+    \item \textbf{Autonomía y portabilidad (\emph{Self-contained}):} no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, permitiendo su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
+    \item \textbf{Cumplimiento transaccional:} a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
+\end{itemize}
