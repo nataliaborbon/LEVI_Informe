@@ -27,81 +27,72 @@ En el caso del presente trabajo, orientado a la inclusión en el ámbito educati
 
 \section{Procesamiento de Imágenes y Visión por Computadora}
 
+Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
+
 \subsection{Conceptos fundamentales y biblioteca OpenCV}
-TEXTO A MODIFICAR
+El procesamiento de imágenes puede definirse como el proceso mediante el cual se modifica una imagen de entrada para obtener otra distinta mediante algoritmos matemáticos (ya sea para aumentar o disminuir su resolución, recortarla o cambiar su paleta de colores, entre otros procedimientos). En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+
+Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), con el fin de extraer características, interpretarlas y aprender de ellas, simulando la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
+
+Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
 
 \subsection{Coincidencia de patrones (Template Matching)}
-TEXTO A MODIFICAR
+La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para buscar y encontrar la ubicación de una imagen pequeña (denominada plantilla o molde) dentro de una imagen de mayor tamaño.
+
+El proceso funciona deslizando la plantilla píxel por píxel sobre la imagen principal, de izquierda a derecha y de arriba hacia abajo. En cada posición evaluada, el algoritmo utiliza una fórmula matemática para calcular un puntaje de similitud entre la plantilla original y el fragmento de la imagen principal que se está superponiendo en ese instante.
+
+El resultado de esta operación no es una imagen, sino una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta donde el algoritmo encontró la mayor coincidencia geométrica.
 
 
 \section{Redes Neuronales Artificiales}
 
 \subsection{Definición y conceptos básicos}
 
-Para entender el concepto de redes neuronales es necesario comenzar definiendo el ámbito del aprendizaje automático o \keyword{Machine Learning (ML)}, el cual es un campo de las ciencias de la computación cuya premisa es desarrollar técnicas que permitan a los sistemas aprender sin estar programados tradicionalmente. El concepto de aprendizaje se basa en suministrar a una computadora un conjunto de datos, para que esa misma máquina construya un modelo basado en dicha información y lo utilice como experiencia para analizar datos nuevos (Fig. \ref{fig:machinelearning}). En otras palabras, se obtiene un software capaz de resolver problemas.
+Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional, suministrando datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
 
 \begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/machinelearning.png}
-    \caption{El proceso del \emph{Machine Learning}}
-    \label{fig:machinelearning}
+\centering
+\includegraphics[width=0.5\textwidth]{figuras/machinelearning.png}
+\caption{El proceso del \emph{Machine Learning}}
+\label{fig:machinelearning}
 \end{figure}
 
-Un tipo de modelo muy utilizado en \emph{Machine Learning} consiste en un conjunto de celdas o nodos interconectados que transmiten y procesan la información hasta ajustar su precisión de análisis lo máximo posible. Debido a su comportamiento similar al de las neuronas de los seres vivos es que se conoce a este método como \keyword{Redes Neuronales Artificiales}.
-
+Dentro de los modelos de ML, uno de los más eficaces son las Redes Neuronales Artificiales. Reciben este nombre debido a que su estructura (basada en celdas o nodos interconectados para el procesamiento de información) se inspira directamente en el comportamiento biológico del sistema nervioso.
 
 \subsection{Principio de funcionamiento}
 
-El funcionamiento de estas redes se basa en la interconexión de unidades de procesamiento fundamentales llamadas \emph{neuronas artificiales} o \emph{nodos}, las cuales se encargan de recibir y transmitir señales realizando cálculos matemáticos intermedios.
-
-Estas neuronas se organizan en distintas capas, donde cada una cumple una función específica dentro de la arquitectura del modelo.
-La \keyword{capa de entrada} se encarga de recibir los datos sin procesar. Dichos datos pueden provenir de una imagen, un video o cualquier variable capaz de expresarse en valores numéricos. Esta información se transmite a las \keyword{capas ocultas}, que constituyen el núcleo de procesamiento principal del sistema. Puede haber una o hasta cientos, dependiendo de la complejidad del modelo. Las primeras capas obtienen la información más básica, como líneas o bordes oscuros en una imagen, y a medida que se avanza por las capas esta información se acumula para detectar patrones más complejos, como la figura de un rostro completo. Al final está la \keyword{capa de salida} donde se obtiene el resultado final, que puede ser la presencia o ausencia de un objeto en una imagen o las coordenadas en las que se ubican las pupilas de un ojo (Fig. \ref{fig:redneuronal}).
+Estas redes organizan sus neuronas en tres niveles jerárquicos principales: la capa de entrada (recibe los datos en crudo, como los píxeles de una imagen), las capas ocultas (el núcleo de procesamiento que detecta desde características básicas hasta patrones complejos) y la capa de salida (que entrega el resultado final, como las coordenadas de una pupila) (Fig. \ref{fig:redneuronal}).
 
 \begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/redneuronal.png}
-    \caption{Diagrama simplificado de una red neuronal}
-    \label{fig:redneuronal}
+\centering
+\includegraphics[width=0.5\textwidth]{figuras/redneuronal.png}
+\caption{Diagrama simplificado de una red neuronal}
+\label{fig:redneuronal}
 \end{figure}
 
-Para lograr el aprendizaje, este conjunto de capas de neuronas recibe lo que se conoce como \emph{entrenamiento}, en el cual se ingresan datos conocidos en la capa de entrada, se hace trabajar a las capas intermedias y se obtiene a la salida un resultado que puede o no ser correcto. Este proceso se repite reiteradas veces ajustando matemáticamente el modelo hasta lograr un alto porcentaje de precisión.
-
-Durante estos ciclos de entrenamiento, las neuronas realizan cálculos matemáticos mediante una ecuación de la forma:
+El aprendizaje del modelo se logra mediante el entrenamiento, un proceso iterativo donde la red evalúa datos conocidos y ajusta su matemática interna para minimizar el margen de error. Durante estos ciclos, cada neurona ejecuta una ecuación fundamental:
 
 \begin{equation}
 z = \sum w_i x_i + b
 \end{equation}
 
-Donde \emph{xi} es el dato de entrada \emph{i}, \emph{wi} es el \keyword{peso} que asocia la neurona a dicha entrada y \emph{b} es el \keyword{bias} o sesgo de la neurona. El peso representa la importancia relativa que se le da a la información de entrada proveniente de la neurona anterior. Un peso positivo amplifica la señal favoreciendo la activación, mientras que un peso negativo la inhibe. Por otro lado, el sesgo o bias es una constante de ajuste que permite al modelo adaptarse a patrones de entrada más complejos. El valor de resultado (\emph{z}), es un número real que luego es introducido en lo que se llama \emph{función de activación}, la cual finalmente determina la intensidad con la que cada neurona se enciende o apaga según el valor de entrada.
-
-El entrenamiento permite que el modelo ajuste iterativamente los valores de los pesos y sesgos para cada neurona, según los resultados de las evaluaciones con la información conocida hasta minimizar el error.
-
+Donde $xi$ representa el dato de entrada individual, $w_i$ es el peso (la importancia relativa asignada a esa entrada específica) y \emph{b} es el sesgo o bias (una constante de adaptación algorítmica). El resultado \emph{z} es evaluado finalmente por una función de activación, la cual determina con qué intensidad la neurona transmite la señal hacia la siguiente capa.
 
 \subsection{Tipos y arquitecturas de redes}
 
-Según la naturaleza del problema a resolver, la arquitectura del modelo puede variar. Fundamentalmente se distinguen tres tipos de redes, descritos en la tabla \ref{tab:tipos_de_redes}
+La arquitectura del modelo varía estrictamente según la naturaleza del problema a resolver. Se distinguen tres categorías fundamentales:
 
-\begin{table}[htbp]
-    \centering
-    \caption{Tipos de redes neuronales}
-    \label{tab:tipos_de_redes}
-    
-    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
-        \hline
-        \textbf{} & \textbf{Red Neuronal Prealimentada} & \textbf{Red Neuronal Convolucional} & \textbf{Red Neuronal Recurrente} \\
-        \hline
-        \textbf{Estructura} & Muy básica & Compleja. Múltiples conexiones & Compleja. Múltiples conexiones que forman bucles internos \\
-        \hline
-        \textbf{Funcionamiento} & La información viaja de manera unidireccional desde la entrada a la salida & Utiliza filtros matemáticos internos para analizar los datos de entrada por secciones & Los bucles internos que forman sus conexiones le permiten tener memoria secuencial (Recuerda datos ya analizados previamente) \\
-        \hline
-        \textbf{Aplicaciones} & Problemas sencillos que utilizan datos livianos y no se requiere memoria secuencial & Son buenas para analizar imágenes y video en tiempo real, ya que se les facilita procesar dimensiones espaciales & Problemas que requieran un contexto temporal para su análisis (Ej: Secuencias de video, procesamiento de lenguaje o predicciones meteorológicas) \\
-        \hline
-    \end{tabular}
-    
-\end{table}
+\begin{itemize}
 
-Para este proyecto se requiere analizar la posición espacial de las pupilas en un flujo de video a tiempo real. Este problema excede las capacidades de una red neuronal prealimentada, pero a la vez se puede prescindir de la memoria secuencial que aportan las redes neuronales recurrentes. Por lo tanto, se concluye que una red neuronal convolucional, la cual es apta para detectar patrones espaciales en imágenes, es la adecuada para aplicar en esta situación.
+\item Prealimentadas (\emph{Feedforward}): La información viaja de forma unidireccional (de entrada a salida). Son ideales para problemas sencillos con datos livianos que no requieren memoria temporal.
 
+\item Convolucionales (\emph{CNN}): Utilizan filtros matemáticos para analizar los datos espaciales por secciones. Son la arquitectura por excelencia para procesar imágenes y video en tiempo real.
+
+\item Recurrentes (\emph{RNN}): Poseen bucles internos que les otorgan memoria secuencial, perfectas para contextos de análisis temporal (como procesamiento de lenguaje natural o secuencias largas de video).
+
+Dado que este proyecto requiere analizar la posición espacial de las pupilas en un flujo de video en tiempo real, y considerando que se puede prescindir del contexto temporal (memoria secuencial), se concluye que la arquitectura a implementar en este dispositivo es una Red Neuronal Convolucional.
+
+\end{itemize}
 
 \section{Sistemas Embebidos y Control Gráfico}
 
@@ -115,7 +106,7 @@ Por otro lado, un microcontrolador (MCU) es un sistema informático completo enc
 
 Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \emph{Arduino Uno} (Fig. \ref{fig:arduinouno})
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/arduinouno.png}
     \caption{Placa de desarrollo \emph{Arduino Uno}}
@@ -123,7 +114,10 @@ Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \e
 \end{figure}
 
 \subsection{Familia de microcontroladores ESP32}
-TEXTO A MODIFICAR
+
+Otro modelo del placas de desarrollo que ha ganado enorme popularidad en el desarrollo de sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32. Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
+
+Además de sus excelentes capacidades de comunicación, este microcontrolador representa un salto significativo en cuanto a potencia computacional. Al estar generalmente equipado con un procesador de doble núcleo y una memoria considerablemente mayor que la de sus predecesores, permite manejar tareas más complejas, alojar servidores web locales y procesar datos a mayor velocidad. Gracias a este equilibrio entre rendimiento, conectividad y tamaño reducido, el ESP32 se ha convertido en una pieza fundamental para la ingeniería de dispositivos modernos e interconectados.
 
 \subsection{Interfaces gráficas embebidas y biblioteca LVGL}
 
@@ -199,30 +193,18 @@ El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una 
 
 Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación.
 
-\subsection{Frontend y arquitectura basada en componentes}
+\subsection{Arquitectura de una aplicación web}
 
-En el diseño de software, programación web y desarrollo de sistemas embebidos, se utiliza un paradigma que separa las responsabilidades del código base en dos áreas principales: el \emph{frontend} y el \emph{backend}, descritos en la tabla \ref{tab:front_back}.
+\subsubsection{Frontend}
 
-\begin{table}[htbp]
-    \centering
-    \caption{Frontend y backend}
-    \label{tab:front_back}
-    
-    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
-        \hline
-        \textbf{} & \textbf{Frontend} & \textbf{Backend} \\
-        \hline
-        \textbf{Descripción} & Comprende toda la interfaz gráfica, los objetos visuales y el resto de elementos que intercomunican el sistema con el usuario final & Es el centro de operaciones del sistema, el núcleo de procesamiento.\\
-        \hline
-        \textbf{Funciones} & Muestra la información de manera didáctica e intuitiva, registra las acciones del usuario y se comunica con el backend & Recibe peticiones del frontend, almacena y gestiona la información y con ella responde a dichas peticiones \\
-        \hline
-        \textbf{Donde se aloja} & En los dispositivos clientes & En el dispositivo servidor (nunca interactúa con el usuario)\\
-        \hline
-    \end{tabular}
-    
-\end{table}
+En el diseño de software, la programación web y desarrollo de sistemas embebidos, se utiliza un paradigma que separa las responsabilidades del código base en dos áreas principales: el \emph{Frontend} y el \emph{Backend}.
 
-Un paradigma muy utilizado en la programación web reciente es el de la arquitectura basada en componentes (CBA). A diferencia del tradicional “Modelo-Vista-Controlador”, donde el código se separa en tres bloques con distinta funcionalidad, aquí el código se rige por componentes (Fig. \ref{fig:componente}). Un componente es una entidad propia, tiene su propio modelo, vista y controlador que funcionan independientemente de otros (por ejemplo, un botón, una casilla de entrada de datos o un contenedor de formularios).
+El \emph{frontend} es la capa del programa que comprende la interfaz gráfica, los componentes visuales y el resto de los elementos de interacción directa con el usuario final. En otras palabras actúa como un intermediario entre el ser humano y la máquina.
+
+En este contexto, su función principal consiste en presentar la información de manera estructurada e intuitiva, capturar las acciones del usuario y comunicarse con el \emph{backend}, transformando estas interacciones en peticiones de datos. En la gran mayoría de los proyectos de sistemas embebidos el código del \emph{frontend} se ejecuta y aloja en los dispositivos clientes (como un navegador web o un celular), ya que actúan como los nodos terminales de control y visualización del sistema.
+
+A su vez, la programación del \emph{frontend} presenta varios paradigmas arquitectónicos posibles a implementar. Uno de los más modernos es la \emph{Arquitectura basada en componentes (CBA)}. A diferencia del tradicional \emph{Modelo-Vista-Controlador} descrito con anterioridad, en este enfoque el código se rige por componentes independientes (Fig. \ref{fig:componente}). Un componente es básicamente una entidad autónoma: posee su propio modelo, vista y controlador, funcionando de manera aislada respecto a los demás (por ejemplo, un botón, un campo de texto o un formulario completo).
+
 
 \begin{figure}[htbp]
     \centering
@@ -231,12 +213,11 @@ Un paradigma muy utilizado en la programación web reciente es el de la arquitec
     \label{fig:componente}
 \end{figure} 
 
-El código se divide en múltiples archivos modulares que se combinan y organizan en el archivo principal.
-La única relación de dependencia entre componentes se da cuando uno contiene a otro distinto. En esa situación, el componente hijo no puede alterar los datos o estados del padre, sino que solo puede hacerle peticiones para cambiarlo, mientras que el padre sí puede alterar los estados del hijo.
+El código fuente se divide en múltiples archivos modulares que se importan y organizan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro distinto. En esa situación, el componente hijo no puede alterar los datos o estados del padre, sino que solo puede hacerle peticiones para cambiarlo, mientras que el padre sí puede alterar los estados del hijo.
 
-Esta arquitectura resulta ventajosa cuando el código final resulta muy denso y difícil de organizar con el método del Modelo-Vista-Controlador, ya que no solo permite una fácil reusabilidad de componentes, sino también modularidad y aislamiento de fallos. Esto es, si un componente en específico no funciona, no compromete al programa en su totalidad.
+Esta arquitectura resulta ventajosa cuando el código final resulta muy denso y difícil de organizar con el método MVC, ya que no solo permite una fácil reusabilidad de componentes, sino también modularidad y aislamiento de fallos. Esto es, si un componente en específico no funciona, no compromente al programa en su totalidad.
 
-\subsection{Backend y arquitectura por capas (Controllers, Services, Repositories)}
+\subsubsection{Backend y arquitectura por capas (Controllers, Services, Repositories)}
 TEXTO A MODIFICAR
 
 
