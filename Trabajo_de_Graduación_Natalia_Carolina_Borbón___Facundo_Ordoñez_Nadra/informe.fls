@@ -1,6 +1,6 @@
-PWD C:\Users\Natalia\Downloads\Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra
+PWD C:\Users\Natalia\Documents\LEVI_Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Natalia\Downloads\Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra\informe.tex
+INPUT c:\Users\Natalia\Documents\LEVI_Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra\informe.tex
 OUTPUT informe.log
 INPUT .\MastersDoctoralThesis.cls
 INPUT MastersDoctoralThesis.cls
@@ -493,6 +493,10 @@ INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
+INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
+INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
+INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\tbmr10.tfm
 INPUT .\figuras\clienteservidor.png
 INPUT .\figuras\clienteservidor.png
 INPUT .\figuras\clienteservidor.png
@@ -541,10 +545,6 @@ INPUT .\figuras\esp32s3.png
 INPUT .\figuras\esp32s3.png
 INPUT .\figuras\esp32s3.png
 INPUT .\figuras\esp32s3.png
-INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
-INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
-INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\tbmr10.tfm
 INPUT .\figuras\ov2640.png
 INPUT .\figuras\ov2640.png
 INPUT .\figuras\ov2640.png

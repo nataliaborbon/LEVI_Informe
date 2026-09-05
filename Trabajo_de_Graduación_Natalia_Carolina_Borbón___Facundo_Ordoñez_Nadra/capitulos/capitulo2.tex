@@ -127,34 +127,39 @@ Para resolver esta problemática, se recurre a bibliotecas gráficas optimizadas
 
 La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de la interfaz y el hardware subyacente. Esto se logra a través de dos componentes principales:
 \begin{itemize}
-    \item \textbf{Controlador de pantalla (\emph{Display Driver}):} transfiere los píxeles renderizados desde el búfer de dibujo interno de la biblioteca hacia el controlador físico del panel (por ejemplo, a través de interfaces SPI o paralelas), admitiendo técnicas de doble búfer (\emph{double buffering}) para evitar parpadeos en pantalla.
-    \item \textbf{Controlador de dispositivo de entrada (\emph{Input Device Driver}):} gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
+    \item Controlador de pantalla (\emph{Display Driver}): transfiere los píxeles renderizados desde el búfer de dibujo interno de la biblioteca hacia el controlador físico del panel (por ejemplo, a través de interfaces SPI o paralelas), admitiendo técnicas de doble búfer (\emph{double buffering}) para evitar parpadeos en pantalla.
+    \item Controlador de dispositivo de entrada (\emph{Input Device Driver}): gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
 \end{itemize}
 
 En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD), los cuales incorporan un SoC ESP32 junto con un panel TFT y un controlador táctil resistivo (típicamente XPT2046) interconectados mediante bus SPI. La integración de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
 \section{Redes y Comunicaciones}
 
-\subsection{Redes locales Wi-Fi (Modos Access Point y Station)}
+\subsection{Redes locales Wi-Fi}
 
-El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos para la implementación de redes de área local inalámbricas (WLAN). La topología de estas redes se articula a través de dos modos de operación fundamentales:
-
-\begin{itemize}
-    \item \textbf{Modo Estación (\emph{Station} - STA):} en esta configuración, el nodo inalámbrico actúa como cliente. Su función consiste en explorar el espectro de radiofrecuencia, detectar una red existente a través de su identificador (SSID), autenticarse mediante los protocolos de seguridad correspondientes (como WPA2/WPA3) y asociarse a un punto de acceso central para integrarse al tráfico de dicha red.
-    \item \textbf{Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP):} en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Es el encargado de emitir periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autenticar a los nodos que solicitan conexión y gestionar la tabla de clientes asociados, creando una infraestructura de red local independiente.
-\end{itemize}
-
-En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada y autónoma, mientras que tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station, permitiendo la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
-
-\subsection{Direccionamiento IP y protocolos de comunicación en red}
-
-Para que los nodos interconectados puedan comunicarse de manera estructurada a través de la red, se requiere un esquema de direccionamiento lógico y un conjunto de protocolos de capa de red y aplicación:
+El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos para la implementación de redes de área local inalámbricas (WLAN). La topología de estas redes se estructura a través de dos modos de operación:
 
 \begin{itemize}
-    \item \textbf{Direccionamiento IPv4 y asignación de direcciones (DHCP e IP estática):} toda interfaz de red requiere una dirección lógica única dentro de su segmento para el enrutamiento de paquetes. La configuración de estas direcciones puede realizarse de forma estática, fijando manualmente los parámetros de red en el dispositivo para garantizar una ubicación fija y predecible, o de forma dinámica mediante el protocolo de configuración dinámica de host (\emph{Dynamic Host Configuration Protocol} - DHCP), el cual asigna direcciones IP y parámetros de red de manera automática a los clientes que se asocian.
-    \item \textbf{Protocolo de Transferencia de Hipertexto (HTTP):} protocolo de capa de aplicación orientado a transacciones sin estado que opera sobre una conexión de transporte confiable (TCP). Su funcionamiento se basa en el paradigma de petición/respuesta (\emph{request/response}), mediante el cual un cliente solicita recursos (páginas web, estilos, scripts) o transmite datos estructurados hacia el servidor.
-    \item \textbf{Transmisión de flujos continuos de datos (\emph{Streaming}):} cuando se requiere transferir datos continuos y secuenciales con baja latencia, como señales de video, el intercambio HTTP tradicional de peticiones individuales resulta ineficiente. En su lugar, se emplean técnicas de transmisión continua basadas en contenido multiparte (\emph{Multipart/x-mixed-replace} o MJPEG), donde el servidor mantiene una conexión TCP abierta y envía de forma ininterrumpida una secuencia de fotogramas directamente al cliente.
+    \item Modo Estación (\emph{Station} - STA): en esta configuración, el nodo inalámbrico actúa como cliente. Su función consiste en explorar el espectro de radiofrecuencia, detectar una red existente a través de su identificador (SSID), autenticarse mediante los protocolos de seguridad correspondientes (como WPA2/WPA3) y asociarse a un punto de acceso central para integrarse al tráfico de dicha red.
+    \item Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP): en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Es el encargado de emitir periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autenticar a los nodos que solicitan conexión y gestionar la tabla de clientes asociados, de esta manera crea una infraestructura de red local independiente.
 \end{itemize}
 
+En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente, mientras que tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station, permitiendo la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
+
+\subsubsection{Direccionamiento IP y transmisión de datos}
+
+La comunicación en una red de datos se rige por protocolos que definen cómo se estructura, transmite y recibe la información. Dentro de estas reglas, el direccionamiento lógico permite identificar a cada dispositivo de manera unívoca para asegurar que los datos alcancen su destino.
+
+\begin{itemize}
+    \item Protocolo IP (\textit{Internet Protocol}): estructura los datos en paquetes que contienen las direcciones de origen y destino para su entrega en la red. En redes locales bajo la versión IPv4, la dirección de cada dispositivo se establece mediante dos modalidades:
+    \begin{itemize}
+        \item Asignación estática: la dirección se define de manera manual en el equipo y permanece fija a lo largo del tiempo, lo que permite localizar siempre al dispositivo en esa misma dirección.
+        \item Asignación dinámica: el protocolo de configuración dinámica de host (DHCP, \textit{Dynamic Host Configuration Protocol}) asigna una dirección disponible de forma automática al asociarse el equipo a la red, lo que agiliza la incorporación de nuevos dispositivos sin requerir configuraciones individuales.
+    \end{itemize}
+
+    \item Protocolo HTTP (\textit{Hypertext Transfer Protocol}): opera bajo el modelo cliente-servidor mediante un esquema de peticiones y respuestas. Para asegurar que la información no sufra pérdidas ni alteraciones en su secuencia, HTTP utiliza TCP (\textit{Transmission Control Protocol}), el cual establece una conexión confiable previa al intercambio de datos. Mediante este mecanismo se transfieren páginas web, estilos y datos estructurados.
+
+    \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia continua de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro, logrando una visualización de video fluida en tiempo real.
+\end{itemize}
 
 \section{Arquitectura y Patrones de Software}
 
@@ -164,11 +169,11 @@ La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo d
 
 \begin{itemize}
 
-\item El \keyword{cliente} (\emph{frontend}): Es el dispositivo o aplicación que interactúa con el usuario final. Su función principal es la de elaborar y enviar peticiones de datos o ejecución de tareas a través de una red, y luego recibir, formatear y presentar los resultados obtenidos en la interfaz de usuario. Es el componente que siempre inicia la comunicación.
+\item El \keyword{cliente}: Es el dispositivo o aplicación que interactúa con el usuario final. Su función principal es la de elaborar y enviar peticiones de datos o ejecución de tareas a través de una red, y luego recibir, formatear y presentar los resultados obtenidos en la interfaz de usuario. Es el componente que siempre inicia la comunicación.
 
-\item El \keyword{servidor} (\emph{backend}): Es el dispositivo o programa en ejecución continua diseñado para escuchar, recibir y procesar las peticiones de uno o múltiples clientes. Su función es la de administrar los recursos y servicios para devolver al cliente la respuesta solicitada.
+\item El \keyword{servidor}: Es el dispositivo o programa en ejecución continua diseñado para escuchar, recibir y procesar las peticiones de uno o múltiples clientes. Su función es la de administrar los recursos y servicios para devolver al cliente la respuesta solicitada.
 
-\item La \keyword{red} y los \keyword{protocolos}: La red es la vía física o inalámbrica por la cual se comunican los dispositivos (generalmente internet), mientras que los protocolos son el conjunto de reglas o parámetros que estos dispositivos cumplen para que la comunicación sea efectiva.
+%       \item La \keyword{red} y los \keyword{protocolos}: La red es la vía física o inalámbrica por la cual se comunican los dispositivos (generalmente internet), mientras que los protocolos son el conjunto de reglas o parámetros que estos dispositivos cumplen para que la comunicación sea efectiva.
 
 \end{itemize}
 
@@ -186,57 +191,68 @@ Esta forma de trabajo es muy utilizada en los sistemas embebidos modernos para c
 El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una estrategia de diseño de software orientada a desacoplar la lógica de negocio, la gestión de datos y la interfaz de usuario en tres componentes con responsabilidades bien definidas:
 
 \begin{itemize}
-    \item \textbf{Modelo (\emph{Model}):} representa la estructura de los datos del sistema y gestiona las reglas de negocio. Se encarga de interactuar con los mecanismos de almacenamiento y persistencia para consultar, insertar, modificar o eliminar registros, asegurando la integridad de la información sin vincularse con la interfaz gráfica.
-    \item \textbf{Vista (\emph{View}):} constituye la capa de presentación con la que interactúa el usuario. Su función es recibir los datos procesados y renderizarlos en un formato comprensible, capturando los eventos y acciones del usuario para transferirlos al controlador.
-    \item \textbf{Controlador (\emph{Controller}):} actúa como intermediario entre el modelo y la vista. Procesa las solicitudes y eventos originados en la vista, ejecuta la lógica correspondiente, solicita las operaciones necesarias al modelo y actualiza la vista con el resultado.
+    \item Modelo (\emph{Model}): representa la estructura de los datos del sistema y gestiona las reglas de negocio. Se encarga de interactuar con los mecanismos de almacenamiento y persistencia para consultar, insertar, modificar o eliminar registros, asegurando la integridad de la información sin vincularse con la interfaz gráfica.
+    \item Vista (\emph{View}): constituye la capa de presentación con la que interactúa el usuario. Su función es recibir los datos procesados y renderizarlos en un formato comprensible, capturando los eventos y acciones del usuario para transferirlos al controlador.
+    \item Controlador (\emph{Controller}): actúa como intermediario entre el modelo y la vista. Procesa las solicitudes y eventos originados en la vista, ejecuta la lógica correspondiente, solicita las operaciones necesarias al modelo y actualiza la vista con el resultado.
 \end{itemize}
 
 Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación.
 
 \subsection{Arquitectura de una aplicación web}
 
+En el desarrollo de software, las aplicaciones web suelen combinar el modelo cliente/servidor con el patrón MVC. Este enfoque distribuye las responsabilidades del sistema entre el cliente y el servidor, a los que se identifica como \emph{frontend} y \emph{backend} respectivamente. El \emph{frontend} opera como la vista del sistema: presenta la interfaz gráfica, captura las acciones del usuario y emite las peticiones. El \emph{backend} reúne las funciones del controlador y del modelo: atiende las solicitudes entrantes, procesa la lógica del sistema y administra la persistencia de los datos. A continuación, se detallan las características y la organización de cada una de estas partes.
+
 \subsubsection{Frontend}
 
-En el diseño de software, la programación web y desarrollo de sistemas embebidos, se utiliza un paradigma que separa las responsabilidades del código base en dos áreas principales: el \emph{Frontend} y el \emph{Backend}.
+Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Este proceso se apoya en tres tecnologías complementarias:
 
-El \emph{frontend} es la capa del programa que comprende la interfaz gráfica, los componentes visuales y el resto de los elementos de interacción directa con el usuario final. En otras palabras actúa como un intermediario entre el ser humano y la máquina.
+\begin{itemize}
+    \item HTML (\textit{HyperText Markup Language}, lenguaje de marcado de hipertexto): define la estructura y el contenido del documento. Mediante etiquetas, especifica qué función cumple cada elemento en la interfaz (títulos, bloques de texto, botones o casillas para ingresar datos), organizándolos en un orden lógico que el navegador interpreta para armar la pantalla.
+    \item CSS (\textit{Cascading Style Sheets}, hojas de estilo en cascada): controla el aspecto visual y la ubicación de los elementos definidos por HTML. Aplica reglas para definir colores, tipografías, tamaños y espacios, organizando cómo se distribuyen los bloques en la pantalla para que la vista se adapte bien según el tamaño del dispositivo.
+    \item JavaScript: es el lenguaje de programación que se ejecuta directamente en el navegador. Mientras que el HTML define qué elementos existen y el CSS define cómo se ven, JavaScript es el encargado de que la página responda a las acciones del usuario: detecta eventos como clics o el envío de un formulario, altera el contenido en pantalla en tiempo real según esa interacción, y se comunica con el servidor para intercambiar información mientras la aplicación está en uso.
+\end{itemize}
 
-En este contexto, su función principal consiste en presentar la información de manera estructurada e intuitiva, capturar las acciones del usuario y comunicarse con el \emph{backend}, transformando estas interacciones en peticiones de datos. En la gran mayoría de los proyectos de sistemas embebidos el código del \emph{frontend} se ejecuta y aloja en los dispositivos clientes (como un navegador web o un celular), ya que actúan como los nodos terminales de control y visualización del sistema.
-
-A su vez, la programación del \emph{frontend} presenta varios paradigmas arquitectónicos posibles a implementar. Uno de los más modernos es la \emph{Arquitectura basada en componentes (CBA)}. A diferencia del tradicional \emph{Modelo-Vista-Controlador} descrito con anterioridad, en este enfoque el código se rige por componentes independientes (Fig. \ref{fig:componente}). Un componente es básicamente una entidad autónoma: posee su propio modelo, vista y controlador, funcionando de manera aislada respecto a los demás (por ejemplo, un botón, un campo de texto o un formulario completo).
-
+A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes (Fig.~\ref{fig:componente}), donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/componente.png}
     \caption{Características de un componente web}
     \label{fig:componente}
-\end{figure} 
+\end{figure}
 
-El código fuente se divide en múltiples archivos modulares que se importan y organizan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro distinto. En esa situación, el componente hijo no puede alterar los datos o estados del padre, sino que solo puede hacerle peticiones para cambiarlo, mientras que el padre sí puede alterar los estados del hijo.
+Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, el componente hijo no puede alterar directamente los datos o estados del padre, sino que solo puede emitir peticiones para solicitar cambios, mientras que el padre sí puede modificar los estados del hijo. Esta estructura ofrece una fácil reusabilidad de elementos, además de garantizar la modularidad y el aislamiento de fallos; es decir, si un componente específico presenta un error, no compromete al funcionamiento del programa en su totalidad.
 
-Esta arquitectura resulta ventajosa cuando el código final resulta muy denso y difícil de organizar con el método MVC, ya que no solo permite una fácil reusabilidad de componentes, sino también modularidad y aislamiento de fallos. Esto es, si un componente en específico no funciona, no compromente al programa en su totalidad.
+Para implementar este esquema se utiliza Preact, una biblioteca orientada a componentes que ofrece las mismas capacidades de desarrollo que React pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
 
-\subsubsection{Backend y arquitectura por capas (Controllers, Services, Repositories)}
-TEXTO A MODIFICAR
+\subsubsection{Backend}
 
+En este desarrollo, el backend adopta una arquitectura en capas basada en el patrón Controlador-Servicio-Repositorio. Esta estructura deriva directamente de MVC ya que, al resolverse la Vista de forma independiente en el cliente web, los Controladores conservan su rol original mientras que el Modelo tradicional se divide en dos capas separadas para diferenciar la lógica de la persistencia de datos.
+
+\begin{itemize}
+    \item Controladores (\textit{controllers}): reciben las peticiones que llegan desde el cliente web, extraen los datos de la solicitud y llaman al servicio correspondiente para devolver luego la respuesta. No aplican reglas de funcionamiento ni interactúan con los datos guardados.
+    \item Servicios (\textit{services}): representan la parte del Modelo encargada de la lógica del sistema. Reciben los datos procesados por el controlador, aplican las reglas operativas, realizan validaciones y coordinan cuándo consultar o modificar información mediante los repositorios.
+    \item Repositorios (\textit{repositories}): representan la parte del Modelo dedicada exclusivamente a los datos y su almacenamiento. Son los únicos que leen y escriben en la base de datos o en la memoria, aislando los detalles de la persistencia del resto del sistema.
+\end{itemize}
+
+En este trabajo, estas capas se desarrollaron en C++ junto con el resto del código del sistema embebido, ejecutándose todo dentro del microcontrolador.
 
 \section{Bases de Datos y Persistencia}
 
 \subsection{Conceptos de bases de datos relacionales}
 
-Una base de datos es una colección organizada e integrada de datos almacenados de forma persistente para su posterior consulta y manipulación. Dentro de los distintos paradigmas existentes, el modelo relacional organiza la información en estructuras bidimensionales denominadas \textbf{tablas} (o relaciones), compuestas por filas (\textbf{registros} o tuplas) y columnas (\textbf{campos} o atributos).
+Una base de datos es una colección organizada e integrada de datos almacenados de forma persistente para su posterior consulta y manipulación. Dentro de los distintos paradigmas existentes, el modelo relacional organiza la información en estructuras bidimensionales denominadas tablas (o relaciones), compuestas por filas (registros o tuplas) y columnas (campos o atributos).
 
 Los fundamentos de este modelo se basan en los siguientes conceptos:
 
 \begin{itemize}
-    \item \textbf{Estructura y esquemas:} cada tabla posee un esquema definido que determina el tipo de dato que puede almacenar cada columna (numérico, texto, fecha, etc.), garantizando la consistencia del formato.
-    \item \textbf{Claves e integridad relacional:} para identificar de forma unívoca cada registro se utiliza una \textbf{clave primaria} (\emph{Primary Key}). La vinculación entre distintas tablas se establece mediante \textbf{claves foráneas} (\emph{Foreign Keys}), lo que permite relacionar entidades sin duplicar información (integridad referencial).
-    \item \textbf{Lenguaje de consulta estructurado (SQL):} es el lenguaje formal estándar (\emph{Structured Query Language}) empleado para definir la estructura de los datos, realizar búsquedas mediante filtros, e insertar, modificar o eliminar información de manera declarativa.
-    \item \textbf{Transacciones y propiedades ACID:} una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID: \textbf{Atomicidad} (la operación se completa en su totalidad o no se aplica), \textbf{Consistencia} (se respetan todas las reglas e integridad del esquema), \textbf{Aislamiento} (las operaciones simultáneas no interfieren entre sí) y \textbf{Durabilidad} (los cambios confirmados persisten ante fallos o cortes de energía).
+    \item Estructura y esquemas: cada tabla posee un esquema definido que determina el tipo de dato que puede almacenar cada columna (numérico, texto, fecha, etc.), garantizando la consistencia del formato.
+    \item Claves e integridad relacional: para identificar de forma unívoca cada registro se utiliza una clave primaria (\emph{Primary Key}). La vinculación entre distintas tablas se establece mediante claves foráneas (\emph{Foreign Keys}), lo que permite relacionar entidades sin duplicar información (integridad referencial).
+    \item Lenguaje de consulta estructurado (SQL): es el lenguaje formal estándar (\emph{Structured Query Language}) empleado para definir la estructura de los datos, realizar búsquedas mediante filtros, e insertar, modificar o eliminar información de manera declarativa.
+    \item Transacciones y propiedades ACID: una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID: Atomicidad (la operación se completa en su totalidad o no se aplica), Consistencia (se respetan todas las reglas e integridad del esquema), Aislamiento (las operaciones simultáneas no interfieren entre sí) y Durabilidad (los cambios confirmados persisten ante fallos o cortes de energía).
 \end{itemize}
 
-\subsection{Motores de bases de datos embebidos (SQLite)}
+\subsection{Motores de bases de datos embebidos}
 
 En el desarrollo de software existen dos formas principales de gestionar una base de datos: mediante sistemas basados en un servidor independiente (que atienden peticiones a través de una red) o mediante \textbf{motores embebidos}.
 
@@ -245,8 +261,8 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
 \textbf{SQLite} es un motor de base de datos relacional embebido de código abierto ampliamente utilizado que implementa el estándar SQL. Sus características teóricas esenciales son:
 
 \begin{itemize}
-    \item \textbf{Arquitectura sin servidor (\emph{Serverless}):} los procesos leen y escriben directamente en el soporte de almacenamiento, eliminando la necesidad de configurar, administrar o mantener un servicio en segundo plano.
-    \item \textbf{Almacenamiento en archivo único:} la base de datos completa (esquema, tablas, índices y datos) se almacena dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
-    \item \textbf{Autonomía y portabilidad (\emph{Self-contained}):} no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, permitiendo su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
-    \item \textbf{Cumplimiento transaccional:} a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
+    \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, eliminando la necesidad de configurar, administrar o mantener un servicio en segundo plano.
+    \item Almacenamiento en archivo único: la base de datos completa (esquema, tablas, índices y datos) se almacena dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
+    \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, permitiendo su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
+    \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
 \end{itemize}
