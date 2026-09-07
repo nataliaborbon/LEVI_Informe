@@ -132,6 +132,14 @@ La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de 
 \end{itemize}
 
 En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD), los cuales incorporan un SoC ESP32 junto con un panel TFT y un controlador táctil resistivo (típicamente XPT2046) interconectados mediante bus SPI. La integración de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/esp32cyd.png}
+    \caption{Placa de desarrollo \emph{ESP32-CYD} (vista frontal y trasera)}
+    \label{fig:esp32cyd}
+\end{figure}
+
 \section{Redes y Comunicaciones}
 
 \subsection{Redes locales Wi-Fi}
@@ -144,6 +152,13 @@ El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos
 \end{itemize}
 
 En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente, mientras que tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station, permitiendo la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/esp32wifi.png}
+    \caption{Red Wi-Fi con un microcontrolador ESP32 actuando como punto de acceso}
+    \label{fig:esp32wifi}
+\end{figure}
 
 \subsubsection{Direccionamiento IP y transmisión de datos}
 
@@ -197,6 +212,13 @@ El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una 
 \end{itemize}
 
 Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/patronmvc.png}
+    \caption{Patrón de diseño Modelo-Vista-Controlador (MVC)}
+    \label{fig:patronmvc}
+\end{figure}
 
 \subsection{Arquitectura de una aplicación web}
 
