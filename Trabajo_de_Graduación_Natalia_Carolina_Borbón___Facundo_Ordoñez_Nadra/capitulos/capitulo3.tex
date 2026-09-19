@@ -9,11 +9,11 @@
 
 \section{Solución propuesta}
 
-En esta sección se dará una descripción general del sistema y las tecnologías que se utilizarán para este trabajo.
+En esta sección se realizará una descripción general del sistema y las tecnologías que se utilizarán para este trabajo.
 
 \subsection{Descripción general del sistema}
 
-El hardware necesario para construir un dispositivo de eye-tracking se puede resumir en tres partes principales:
+El hardware necesario para construir un dispositivo de \emph{eye-tracking} se puede resumir en tres partes principales:
 
 \begin{itemize}
 
@@ -35,15 +35,15 @@ Para nuestro trabajo se necesita de una cuarta parte adicional, que engloba a to
 En cuanto a los requisitos de software, se necesita que el dispositivo pueda almacenar información de usuarios, preguntas y respuestas en una base de datos propia, para que cualquier usuario registrado pueda informarse respecto al rendimiento académico del estudiante que lo utilizará.
 Una vez establecidos los requisitos mínimos, se describe a continuación cómo funcionará nuestro sistema.
 
-El núcleo central de nuestro trabajo se basa en el uso de un microcontrolador de bajo costo, que será el encargado de realizar todo el procesamiento de imagen y aplicaciones anteriormente descrito. Naturalmente, sus capacidades de memoria y procesamiento son limitadas, por lo que, para repartir la carga, se optó por dividir este núcleo principal en dos: un microcontrolador se encargará de todo el procesamiento de imagen, mientras que el otro almacenará y ejecutará la aplicación principal con los datos de trackeo proporcionados por el primero.
+El núcleo central de nuestro trabajo se basa en el uso de un microcontrolador de bajo costo encargado de realizar todo el procesamiento de imagen y aplicaciones. Naturalmente, sus capacidades de memoria y procesamiento son limitadas, por lo que, para repartir la carga, se optó por dividir este núcleo principal en dos: un microcontrolador se ocupará de todo el procesamiento de imagen, mientras que el otro almacenará y ejecutará la aplicación principal con los datos de seguimiento proporcionados por el primero.
 
-Para realizar la detección ocular utilizaremos una cámara diminuta, integrada en el microcontrolador de procesamiento de imagen. Será este mismo el encargado de manipular la cámara y captar las imágenes que luego se procesarán. Este análisis se realizará mediante redes neuronales artificiales que, al entrenarlas con imágenes de distintas direcciones de mirada, será capaz de predecir con precisión las coordenadas exactas de la pupila dentro de cualquier imagen captada por la cámara. 
+Para realizar la detección ocular utilizaremos una cámara diminuta e integrada en el microcontrolador de procesamiento de imagen. Será este mismo el encargado de manipular la cámara y captar las imágenes que luego se procesarán. Este análisis se realizará mediante una red neuronal artificial que, al entrenarla con imágenes de distintas direcciones de mirada, será capaz de medir con precisión las coordenadas exactas de la pupila dentro de cualquier imagen captada por la cámara. 
 
-Una vez finalice la detección, los datos de coordenadas serán transmitidos al segundo procesador para que gestione la interacción entre los movimientos oculares del estudiante con la aplicación que va a ejecutar. La idea que se pensó para este segundo núcleo es que sea capaz de ejecutar una aplicación web, transmitiendo los datos al dispositivo móvil externo mediante protocolo WiFi sin acceso a internet.
+Una vez finalice la detección, los datos de coordenadas serán transmitidos al segundo procesador para que gestione la interacción entre los movimientos oculares del estudiante y el software. La idea es que este segundo dispositivo sea capaz de ejecutar una aplicación web, transmitiendo los datos al dispositivo móvil externo mediante protocolo Wi-Fi sin acceso a internet.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/bloques2.png}
+    \includegraphics[width=0.9\textwidth]{figuras/bloques2.png}
     \caption{Diagrama de bloques del sistema específico}
     \label{fig:bloques2}
 \end{figure}
@@ -58,7 +58,7 @@ Utilizando todos estos componentes se logra que este dispositivo sea económico 
 
 \subsection{Tecnologías a utilizar}
 
-En esta sección se listan y justifican todos los componentes de hardware elegidos para este proyecto. Asimismo, se detalla también el rol que cumplirá cada uno en el sistema expuesto en la sección anterior.
+En esta sección se listan y justifican todos los componentes de hardware seleccionados para este proyecto, así como el rol que adoptará cada uno en el sistema expuesto en la sección anterior.
 
 \keyword{Microcontroladores}
 
@@ -82,10 +82,10 @@ La figura \ref{fig:familiaesp} muestra un conjunto de placas de desarrollo que u
     \label{fig:esp32s3}
 \end{figure}
 
-Para establecer un poco el contexto debemos describir sus modelos predecesores, remontándonos al año 2014 cuando salió al mercado el modelo \emph{ESP8266}, una alternativa a las placas Arduino de uso general pero que incluían módulo de WiFi. Había módulos Arduino con WiFi integrado pero no eran económicamente viables, esto último hizo que ganara popularidad rápidamente, por lo que en 2016 llegaría el \emph{ESP-32} estándar, que aunque tenía un precio ligeramente más elevado (~AR\$ 13.000), sus características eran muy superiores al \emph{ESP8266} (Cuenta con más núcleos, más memoria, más periféricos, etc.). Hoy en día tenemos a disposición su variante \emph{ESP32-S3}, el cual es mucho más potente, eficiente, veloz y cuenta con más espacio en memoria RAM que su versión clásica. Si bien su precio suele ser el doble (~AR\$24.000), todas estas características justifican el precio, ya que su potencia será necesaria para correr redes neuronales, transmitir datos y ejecutar aplicaciones web con relativa rapidez.
+Para establecer un poco el contexto debemos describir sus modelos predecesores, remontándonos al año 2014 cuando salió al mercado el modelo \emph{ESP8266}, una alternativa a las placas Arduino de uso general pero que incluían módulo de WiFi. Existían módulos Arduino con WiFi integrado pero no eran económicamente viables, lo que provocó que las placas de desarrollo de \emph{Espressif} ganara popularidad rápidamente. En 2016 llegaría el \emph{ESP-32} estándar que, aunque tenía un precio ligeramente más elevado (~AR\$ 13.000 a valores actuales), sus características eran muy superiores al \emph{ESP8266} (cuenta con más núcleos, más memoria, más periféricos, etc.). Hoy en día tenemos a disposición su variante \emph{ESP32-S3}, el cual es mucho más potente, eficiente, veloz y cuenta con más espacio en memoria RAM que su versión clásica. Si bien su precio suele ser el doble (~AR\$24.000 a valores actuales), todas estas características justifican el precio, ya que su potencia será necesaria para correr redes neuronales, transmitir datos y ejecutar aplicaciones web con relativa rapidez.
 
-Cabe recordar que, como se estableció previamente en esta sección, se requiere de dos microcontroladores: uno para capturar y procesar la imagen y otro para servir como punto de acceso WiFi y ejecutar la aplicación web. En ambos casos se utilizará el \emph{ESP32-S3}.
-Para capturar las imágenes se requiere una cámara, para lo cual se tiene disponible una placa de desarrollo que utiliza el mismo \emph{ESP32-S3} pero que cuenta con un módulo para insertar cámaras mediante conector flex. 
+Cabe recordar que, como se estableció previamente en esta sección, se requiere de dos microcontroladores: uno para capturar y procesar la imagen y otro para servir como punto de acceso WiFi y ejecutar la aplicación web. En ambos casos se utilizará el procesador \emph{ESP32-S3}.
+Por otro lado, para capturar las imágenes se requiere una cámara y en el mercado existe una placa de desarrollo idéntica al \emph{ESP32-S3} pero que cuenta con un módulo adicional para insertar cámaras pequeñas mediante un conector flex. 
 
 A continuación se listan algunas placas de desarrollo similares que se tuvieron en consideración y se justifica la razón de su descarte:
 
@@ -124,9 +124,9 @@ A continuación se listan las características técnicas de los \emph{ESP32-S3},
 
 \keyword{Cámara}
 
-Existen varios modelos de cámaras compatibles con la interfaz del \emph{ESP32-S3}. Para el procesamiento de imágenes en redes neuronales ligeras no se requiere una cámara de alta resolución, ya que el exceso de datos puede saturar la memoria del microcontrolador. Lo que se debe considerar son dos factores importantes: en primer lugar, la necesidad de una alta tasa de fotogramas por segundo (FPS). Esta velocidad es fundamental, ya que el sistema realiza un rastreo de coordenadas en tiempo real directamente desde el flujo de datos del sensor, en lugar de analizar imágenes estáticas. Por otro lado, al estar el dispositivo montado en la visera de una gorra, el campo de visión (FOV) no debe ser muy amplio, para evitar entorpecer a la red neuronal con estímulos ajenos a la pupila del ojo. Mediante el análisis empírico de imágenes con distintos ángulos, se determinó que para esta tarea es necesario un campo de visión de entre 60 y 120 grados. 
+Existen varios modelos de cámaras compatibles con la interfaz del \emph{ESP32-S3}. En este trabajo no se exige una cámara de alta resolución, ya que el exceso de datos puede saturar la memoria del microcontrolador. Lo que se debe considerar son dos factores importantes: en primer lugar, la necesidad de una alta tasa de fotogramas por segundo (FPS). Esta velocidad es fundamental debido a que, en lugar de analizar imágenes estádicas, el sistema realiza un rastreo de coordenadas en tiempo real directamente desde el flujo de datos del sensor. Por otro lado, al estar el dispositivo montado en la visera de una gorra, el campo de visión (FOV) no debe ser muy amplio, para evitar entorpecer a la red neuronal con estímulos ajenos a la pupila del ojo. Mediante el análisis empírico de imágenes con distintos ángulos, se determinó que para esta tarea es necesario un campo de visión de entre 60 y 120 grados. 
 
-En ese sentido, las cámaras \emph{OV2640} de 2 Megapíxeles (frecuentemente incluídas en la compra de los propios módulos ESP) son una opción adecuada. Sin embargo, existen otros modelos de cámara que también hubieran sido opciones viables, como la \emph{OV3660} de 3 Megapíxeles, que proporciona resultados similares. Debido a su reducida resolución, a la sencillez de adquisición y a que su lente posee un ángulo de visión de 68°, se decidió finalmente implementar la \emph{OV2640} (Figura \ref{fig:ov2640}). Cabe mencionar que existen en su versión acortada o alargada. En este trabajo optamos por la segunda, ya que su flexibilidad ayudará al posterior montaje en la gorra.
+En ese sentido, las cámaras \emph{OV2640} de 2 Megapíxeles (frecuentemente incluídas en la compra de los propios módulos ESP) son una opción adecuada. A pesar de tener a disponibilidad otros modelos de cámara igualmente viables, como la \emph{OV3660} de 3 Megapíxeles que proporciona resultados similares, se opta por implementar la \emph{OV2640} (Figura \ref{fig:ov2640}) debido a su reducida resolución, a la sencillez de adquisición y a que su lente posee un ángulo de visión de 68°. Cabe mencionar que existen en su versión acortada o alargada. En este trabajo optamos por la segunda, ya que su flexibilidad ayudará al posterior montaje en la gorra.
 
 \begin{figure}[htbp]
     \centering
@@ -156,9 +156,9 @@ Como se advirtió previamente, el hardware del sistema se estructura en tres blo
 
 Bajo esta arquitectura, se establecen dos canales de comunicación principales. El primero de ellos vincula a ambos microcontroladores y el segundo enlaza al microcontrolador secundario con el dispositivo externo. 
 
-Respecto al primer enlace, cabe aclarar que no se transmiten los fotogramas del video, sino únicamente los resultados del procesamiento del detector ocular: las coordenadas espaciales (\emph{X} e \emph{Y}) de la pupila y un valor booleano que indica si el ojo se encuentra abierto o cerrado. Como el sistema debe operar en tiempo real, esta transmisión exige alta velocidad y estricta seguridad para evitar la pérdida de paquetes. Para satisfacer estos requisitos, sumado a factores de practicidad física en el diseño, se determinó inicialmente la implementación del protocolo cableado \emph{SPI} (Serial Peripheral Interface). 
+Respecto al primer enlace, cabe aclarar que no se transmiten los fotogramas del video, sino únicamente los resultados del procesamiento del detector ocular: las coordenadas espaciales (\emph{X} e \emph{Y}) de la pupila y un valor booleano que indica si el ojo se encuentra abierto o cerrado. Puesto que el sistema debe operar en tiempo real, esta transmisión exige alta velocidad y estricta seguridad para evitar la pérdida de paquetes. Para satisfacer estos requisitos, sumado a factores de practicidad física en el diseño, se determinó inicialmente la implementación del protocolo cableado \emph{SPI} (Serial Peripheral Interface). 
 
-El protocolo SPI es un estándar de comunicación de datos en serie normalmente utilizado para comunicar un microcontrolador llamado \emph{maestro} con otro llamado \emph{esclavo} (puede haber uno o varios de cada categoría). Esta forma de comunicación es ideal debido a que es:
+El protocolo SPI es un estándar de comunicación de datos en serie normalmente utilizado para comunicar un dispositivo llamado \emph{maestro} con otro llamado \emph{esclavo} (puede haber uno o varios de cada categoría). Esta forma de comunicación es ideal debido a que es:
 
 \begin{itemize}
 
@@ -179,13 +179,12 @@ Estas dos ventajas satisfacen los requisitos de velocidad y seguridad necesarios
 
 Analizando la comunicación entre el microcontrolador que ejecuta la aplicación web y el dispositivo periférico que muestra la interfaz de usuario, se descarta de entrada un canal de transmisión por cable, ya que el receptor no necesariamente tendrá las mismas características entre una sesión y otra: puede tratarse de una laptop, un celular, una tablet o una computadora de escritorio, y resulta complicado estandarizar un medio físico para todos ellos, además de que se prioriza la comodidad del usuario. Es por eso que se opta por un canal de transmisión inalámbrico, para lo cual se analizaron tres posibilidades detalladas en la tabla \ref{tab:com_inalambrica}
 
-
 \begin{table}[htbp]
     \centering
     \caption{Sistemas de comunicación inalámbrica}
     \label{tab:com_inalambrica}
     
-    \begin{tabular}{|l|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
         \hline
         \textbf{} & \textbf{Bluetooth} & \textbf{Wi-Fi} & \textbf{RadioFrecuencias} \\
         \hline
@@ -195,16 +194,17 @@ Analizando la comunicación entre el microcontrolador que ejecuta la aplicación
         \hline
         \textbf{Accesibilidad de Software} & Se requiere una app nativa para interpretar los datos & Soporta protocolo TCP-IP & Se requiere una app nativa para interpretar los datos\\
         \hline
-    \end{tabular}
-    
+    \end{tabularx}
 \end{table}
 
 Por todos los motivos anteriormente evaluados, se opta por utilizar conexión Wi-Fi.
 
 \keyword{Entornos de desarrollo}
 
-La programación del hardware requiere la utilización de un Entorno de Desarrollo Integrado (IDE) para escribir, compilar y cargar el código en la placa de desarrollo. Para este proyecto se optó por el software \emph{Visual Studio Code} junto con la extensión \emph{PlatformIO}, ya que la eficiencia en la gestión de dependencias y librerías facilita el trabajo con una amplia variedad de microcontroladores.
-Adicionalmente, se realizaron pruebas utilizando \emph{Arduino IDE}. Dado que los microcontroladores de la familia ESP32 son compatibles con las librerías de Arduino, esta alternativa permitió una evaluación más ágil del microcontrolador durante las etapas iniciales de desarrollo en comparación con el entorno oficial provisto por \emph{Espressif} (\emph{ESP-IDF}).
+La programación del hardware requiere la utilización de un Entorno de Desarrollo Integrado (IDE) para escribir, compilar y cargar el código en la placa de desarrollo. Para este proyecto se optó por el software \emph{Visual Studio Code} junto con la extensión \emph{PlatformIO}, ya que su eficiencia en la gestión de dependencias y librerías facilita el trabajo con una amplia variedad de microcontroladores.
+Adicionalmente se realizaron pruebas utilizando \emph{Arduino IDE}, que también soporta el hardware de Espressif. 
+
+Dado que los microcontroladores de la familia ESP32 son compatibles con las librerías de Arduino, esta alternativa (\emph{Visual Studio + PlatformIO}) permitió una evaluación más ágil del microcontrolador durante las etapas iniciales de desarrollo en comparación con el entorno oficial provisto por \emph{Espressif} (\emph{ESP-IDF}).
 Por otra parte, para la etapa de experimentación y entrenamiento de los modelos matemáticos de redes neuronales orientados a la detección ocular, se utilizó el entorno basado en la nube \emph{Google Colab}, el cual permite la ejecución de código Python en notebooks interactivos.
 
 \begin{figure}[htbp]
@@ -222,15 +222,15 @@ En esta sección se describe el desarrollo del sistema de detección ocular, el 
 
 En un principio se estableció que el procesamiento de imágenes se realizaría en una de las placas \emph{ESP32-S3} mediante una red neuronal artificial de tipo convolucional. Al ser el propio microcontrolador el encargado de gestionar todas estas tareas de detección es que se habla de \keyword{procesamiento local}. 
 Lograr que un microcontrolador ejecute una red neuronal de detección de ese calibre no es tarea sencilla, puesto que la mayoría de estos modelos exigen una alta capacidad de memoria y velocidad que suele exceder a lo que el \emph{ESP32-S3} puede ofrecer. Es por esto que se comenzó a explorar formas de diseñar y entrenar redes neuronales lo más livianas y sencillas posibles.
-A este paradigma de trabajo que busca la implementación de inteligencia artificial con recursos y software y hardware limitados se lo conoce como \keyword{Tiny Machine Learning} (o \keyword{TinyML}), y es la filosofía que se aplicó en el desarrollo de este dispositivo.
+A este paradigma de trabajo que busca la implementación de inteligencia artificial con recursos de software y hardware limitados se lo conoce como \keyword{Tiny Machine Learning} (o \keyword{TinyML}), y es la filosofía que se aplicó en el desarrollo de este dispositivo.
 
 \keyword{Edge Impulse}
 
 Un primer acercamiento a la disciplina del \emph{Tiny Machine Learning} puede darse con el uso de \emph{Edge Impulse}, una plataforma de desarrollo basada en la nube orientada específicamente al aprendizaje automático con bajos recursos computacionales (Figura \ref{fig:edgeimpulse}). Fundado en 2019 con el objetivo de facilitar esta tarea, su principal función es trasladar el procesamiento desde servidores en la nube directamente al hardware local. Es una plataforma muy versátil, ya que ofrece compatibilidad con los entornos de desarrollo previamente mencionados y con el framework de Arduino. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/edgeimpulse.png}
+    \includegraphics[width=0.75\textwidth]{figuras/edgeimpulse.png}
     \caption{Pantalla de creación de modelos de \emph{Edge Impulse}}
     \label{fig:edgeimpulse}
 \end{figure}
@@ -246,13 +246,13 @@ Con las técnicas de cuantización que realiza y sus métodos de aceleración de
     \label{fig:deteccionverduras}
 \end{figure}
 
-Sin embargo, tras varias pruebas realizadas con datasets (conjunto de datos de entrada conocidos) sencillos, se determinó que este método no alcanzaba la precisión requerida para la detección continua de coordenadas espaciales a tiempo real, o siquiera para determinar hacia qué dirección se dirigía la mirada (arriba, abajo, izquierda o derecha).
+Sin embargo, tras varias pruebas realizadas con \emph{datasets} (conjunto de datos de entrada conocidos) sencillos, se determinó que este método no alcanzaba la precisión requerida para la detección continua de coordenadas espaciales a tiempo real, o siquiera para determinar hacia qué dirección se dirigía la mirada (arriba, abajo, izquierda o derecha).
 
 Además, al momento de cargar la red exportada en el procesador \emph{ESP32}, el monitor serial evidenció que cada inferencia demoraba entre 700 y 1000 milisegundos en finalizar, una latencia sumamente indeseable cuando se busca un seguimiento en tiempo real.
 
 Debido a estas imprecisiones y demoras se decidió descartar esta solución.
 
-\keyword{(Imágenes de la imprecisión o el delay)}
+\keyword{(Imágenes de la imprecisión o el delay?)}
 
 
 
@@ -260,13 +260,13 @@ Debido a estas imprecisiones y demoras se decidió descartar esta solución.
 
 Una herramienta muy utilizada en Machine Learning es el framework de código abierto \emph{TensorFlow (TF)}, el cual está diseñado para entrenar y ejecutar modelos de redes neuronales propias o ya existentes. El principal problema radica en que este entorno no está optimizado para ejecutar estas redes en sistemas con hardware limitado como lo es el microcontrolador \emph{ESP32}, y es por eso que Google desarrolló una versión más liviana dedicada a facilitar este tipo de situaciones, llamada \emph{TensorFlow Lite (TFLite)}, junto con su variante específica para arquitecturas sin sistema operativo: \emph{TensorFlow Lite for Microcontrollers (TFLM)}. 
 
-Como primera instancia, se pensó para este trabajo desarrollar un modelo propio con datos de entrada tomados por la propia \emph{ESP32} y mantener un control absoluto de la optimización y exportación del modelo. Esto último es una enorme ventaja que se tiene respecto al uso de \emph{Edge Impulse}, ya que permite gestionar exactamente cómo se comprime la red para el microcontrolador, evitando las limitaciones y la sobrecarga de código de una plataforma cerrada. 
+Como primera instancia se intentó desarrollar un modelo propio con datos de entrada tomados por el \emph{ESP32} y mantener un control absoluto de la optimización y exportación del modelo. Esto último es una enorme ventaja que se tiene respecto al uso de \emph{Edge Impulse}, ya que permite gestionar exactamente cómo se comprime la red para el microcontrolador, evitando las limitaciones y la sobrecarga de código de una plataforma cerrada. 
 
 Para facilitar el proceso de creación del modelo, Google ofrece también la herramienta \emph{Keras}, una API de alto nivel que agiliza y simplifica enormemente la programación de la arquitectura neuronal. Es por esto que el entorno de desarrollo seleccionado para esta tarea fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab}) utilizando el lenguaje Python.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/entornogooglecolab.png}
+    \includegraphics[width=1\textwidth]{figuras/entornogooglecolab.png}
     \caption{Entorno de \emph{Google Colab}}
     \label{fig:entornogooglecolab}
 \end{figure}
@@ -275,18 +275,24 @@ Antes de empezar a codificar es necesario un \emph{dataset}. Para una red de est
 
 Las imágenes de entrenamiento fueron capturadas utilizando el módulo \emph{ESP32-CAM} en formato de escala de grises (\emph{Grayscale}) y con una resolución de 96x96 píxeles. Esta configuración se seleccionó con el propósito de minimizar el consumo de recursos computacionales sin comprometer los detalles necesarios en la imagen. Para garantizar cantidad y variabilidad en los datos, se tomó un conjunto total de 1315 capturas obtenidas de cinco personas distintas, contemplando distintas condiciones de iluminación y variaciones físicas como la presencia y ausencia de anteojos.
 
-\keyword{(Imágenes de algunas de las 1315 fotos)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/fotosojos.png}
+    \caption{Una muestra de las imágenes utilizadas para el dataset}
+    \label{fig:fotosojos}
+\end{figure}
+
 
 En paralelo, las coordenadas correspondientes a cada imagen (expresadas en pixeles dentro de una imagen 96x96), se anotaron en una hoja de cálculo, estructurando así los datos para su posterior utilización en el entrenamiento.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/etiquetas.png}
     \caption{Planilla con etiquetado de imágenes}
     \label{fig:etiquetas}
 \end{figure}
 
-A continuación se listan y explican brevemente las etapas de la creación del modelo de la Red Neuronal Convolucional (CNN) en \emph{Google Colab} con \emph{Python/Keras}:
+A continuación se listan y explican brevemente las etapas de la creación de un modelo de Red Neuronal Convolucional (CNN) en \emph{Google Colab} con \emph{Python/Keras}:
 
 \begin{enumerate}
 
@@ -310,18 +316,18 @@ Tras iterar sobre la arquitectura de la red y ajustar sus hiperparámetros, tale
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/resultadoscolab.png}
+    \includegraphics[width=1\textwidth]{figuras/resultadoscolab.png}
     \caption{Resultados del modelo desarrollado en \emph{Google Colab}}
     \label{fig:resultadoscolab}
 \end{figure}
 
 Si bien este modelo demostró ser significativamente más rápido, eficiente y controlable que la opción generada mediante \emph{Edge Impulse}, las pruebas empíricas en tiempo real mostraron que no cumplía con los requisitos de precisión para ser utilizado en el dispositivo final. Al operar el sistema, el modelo presentaba una alta inestabilidad en las predicciones: el cursor de la interfaz sufría de oscilaciones pequeñas y constantes (\emph{jittering}) y era incapaz de mantener una posición firme o realizar un seguimiento fluido de la mirada.
 
-\keyword{(Imagenes de las fallas)}
+\keyword{(Imagenes de las fallas?)}
 
 Al intentar reducir esa inestabilidad, se encontró un límite de hardware insalvable: aumentar la complejidad y profundidad de la red neuronal para estabilizar la predicción disparaba la latencia de procesamiento a niveles inaceptables, mientras que simplificar la arquitectura para recuperar velocidad degradaba la exactitud de las coordenadas.
 
-\keyword{(Imagenes del monitor serial con los delays)}
+\keyword{(Imagenes del monitor serial con los delays?)}
 
 A partir de este compromiso insuperable entre latencia y precisión, se concluye que el procesamiento neuronal de imágenes de forma puramente local dentro de las limitaciones de memoria del microcontrolador no resulta viable para las exigencias de este proyecto. Esta limitación motiva el descarte definitivo en el uso de redes neuronales en hardware de bajos recursos. Sin embargo, para mantener el enfoque de este trabajo, no se sustituirá el hardware base, sino que se buscará otro método con un procesamiento más sencillo.
 
@@ -333,40 +339,40 @@ Cuando se toma una imagen del ojo de un individuo, en la inmensa mayoría de los
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{figuras/oscuridadpupila.png}
+    \includegraphics[width=0.5\textwidth]{figuras/oscuridadpupila.png}
     \caption{Distintas partes del ojo y su nivel de oscuridad}
     \label{fig:oscuridadpupila}
 \end{figure}
 
-Para entender este método se debe aclarar previamente el funcionamiento del procesamiento de imágenes en el microcontrolador. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado estructurado como una matriz bidimensional. Si se trabaja en escala de grises, cada elemento de esta matriz contiene un número entero comprendido entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial específica (donde 0 equivale a oscuridad absoluta y 255 a saturación blanca). 
+Para entender este método se debe aclarar previamente la manera en que el microcontrolador procesa una imágen. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado estructurado como una matriz bidimensional. Si se trabaja en escala de grises, cada elemento de esta matriz contiene un número entero comprendido entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial específica (donde 0 equivale a oscuridad absoluta y 255 a saturación blanca). 
 
-El algoritmo procesa la imagen realizando un barrido inicial revisando cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Para evitar que la detección dependa de un único píxel, lo cual arriesgaría la estabilidad, se establece un umbral de oscuridad dinámico. Esto significa que el algoritmo no aísla solamente el píxel más oscuro, sino a toda una región de píxeles cuyos valores de intensidad se encuentren por debajo de dicho umbral. 
+El algoritmo procesa la imagen realizando un barrido inicial en el que revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Para evitar que la detección dependa de un único píxel, lo cual arriesgaría la estabilidad, se establece un umbral de oscuridad dinámico. Esto significa que el algoritmo no aísla solamente el píxel más oscuro, sino a toda una región de píxeles cuyos valores de intensidad se encuentren por debajo de dicho umbral. 
 
 Una vez seleccionada la región de interés (\emph{ROI}) que teóricamente abarca a la pupila, el programa ejecuta un segundo barrido para calcular sus coordenadas centrales mediante la aplicación de un centroide ponderado. A diferencia de un promedio simple, donde se suman todas las coordenadas y se dividen por la cantidad de píxeles detectados, el centroide ponderado asigna un factor de peso a cada coordenada en función de su nivel de oscuridad.
 Mientras más oscuro sea un píxel, mayor será su peso matemático en la ecuación final. Esta ponderación resulta fundamental para la estabilidad del sistema, ya que otorga una influencia dominante al núcleo de la pupila (altamente oscura) y reduce considerablemente las desviaciones causadas por sombras periféricas o pestañas que hayan ingresado dentro del umbral de detección (grises más claros).
 
-\keyword{(Imagen del cálculo con centroide en el código)}
+\keyword{(Imagen del cálculo con centroide en el código?)}
 
 Este algoritmo, mucho más liviano que una red neuronal convolucional, redujo considerablemente el tiempo de procesamiento y aumentó la eficiencia de recursos de memoria en el \emph{ESP32}. Sin embargo, presentaba un problema importante: la iluminación ambiental.
 Al evaluar este método se descubrió que su precisión dependía exclusivamente de la luminosidad de la imagen. Un ambiente con mucha luz genera sombras pronunciadas que el algoritmo puede confundir con las pupilas. Por el contrario, en un ambiente con poca luz, el nivel de oscuridad de la pupila y de otras áreas (como pestañas o cejas) se vuelve demasiado similar. A pesar de que el umbral de oscuridad puede ajustarse mediante código, resulta poco práctico si se considera que la luz ambiental es una variable incontrolable y sumamente dinámica, motivo por el cual este algoritmo se descarta como una solución óptima para la detección ocular definitiva.
 
-A pesar de que la iluminación ambiental es una variable incontrolable, lo que sí se puede controlar es la iluminación de la imagen captada por el \emph{ESP32}. Si hubiese una fuente de luz junto a la cámara, esta variable sería siempre constante y se evitaría confusiones con sombras o pestañas. Sin embargo, alumbrar el ojo del usuario con luz visible permanentemente sería molesto y un perjuicio para su visión, por lo que se tuvo que plantear un método de iluminación para que solo la cámara del microcontrolador pudiera detectar sin dañar la vista: la luz infrarroja.
-La luz infrarroja (IR) tiene longitudes de onda mayores a las de la luz visible, por lo que es indetectable por el ojo humano, mientras que los sensores de las cámaras digitales sí son capaces de captarla. Es por eso que colocar un diodo LED emisor de luz infrarroja junto a la cámara parecía ser la solución perfecta para este problema. Sin embargo, se impuso otro obstáculo físico a superar: el efecto del brillo corneal.
+A pesar de que la iluminación ambiental es una variable incontrolable, lo que sí se puede controlar es la iluminación de la imagen captada por el \emph{ESP32}. Si hubiese una fuente de luz junto a la cámara, esta variable sería siempre constante y se evitaría confusiones con sombras o pestañas. Sin embargo, alumbrar el ojo del usuario con luz visible permanentemente sería molesto y un perjuicio para su visión, por lo que se tuvo que plantear un método de iluminación que solo la cámara del microcontrolador pudiera detectar sin dañar la vista: la luz infrarroja (IR).
+Este tipo de iluminación tiene longitudes de onda mayores a las de la luz visible, por lo que es indetectable por el ojo humano, mientras que los sensores de las cámaras digitales sí son capaces de captarla. Es por eso que colocar un diodo LED emisor de luz infrarroja junto a la cámara parecía ser la solución perfecta para este problema, pero había otro impedimento físico a superar: el efecto del brillo corneal.
 
 Al ser húmeda y curva, la superficie de la córnea del ojo actúa como un espejo esférico perfecto para estas ondas infrarrojas. La luz rebota en la superficie del ojo generando un punto blanco muy intenso y concentrado (denominado \emph{Glint}). Esto ocasionó errores severos en el algoritmo anterior de detección de oscuridad, por lo que se decidió modificarlo para utilizar este fenómeno físico a favor: en lugar de detectar los píxeles más oscuros, se invirtió la lógica para detectar los píxeles más claros mediante un umbral de brillantez. 
 
-\keyword{(Imagen del glint)}
+\keyword{(Imagen del glint?)}
 
-Lamentablemente, esta solución tampoco resultó viable. Al realizar las pruebas de seguimiento, se comprobó que el glint no se desplaza de la misma forma que la pupila: su posición relativa depende estrictamente de la geometría del ojo frente a la fuente de luz.
+Esta solución tampoco resultó viable. Al realizar las pruebas de seguimiento, se comprobó que el glint no se desplaza de la misma forma que la pupila: su posición relativa depende estrictamente de la geometría del ojo frente a la fuente de luz.
 
-\keyword{(Imagen del glint desplazado)}
+\keyword{(Imagen del glint desplazado?)}
 
 De este modo, tras exhaustivos análisis, pruebas y cambios de lógica, se demostró que estos algoritmos de detección de oscuridad y brillantez no alcanzaban la precisión requerida para el correcto funcionamiento del dispositivo. En consecuencia, se concluye que el procesamiento de imagen directamente en el microcontrolador no cumple con las expectativas impuestas al inicio de este trabajo, por lo que queda descartado definitivamente.
 
 
 \subsection{Procesamiento remoto}
 
-Tras las limitaciones comprobadas en la aplicación de métodos de detección ocular utilizando los recursos de un microcontrolador, se optó por prescindir del procesamiento local en el hardware base y derivar esta tarea a un dispositivo externo. Es por ello que los métodos expuestos a continuación se engloban en la categoría de \emph{procesamiento remoto}. En este sentido, el microcontrolador se encarga exclusivamente de capturar las imágenes y alojar la aplicación web, mientras que el procesamiento matemático de los fotogramas es ejecutado por el dispositivo cliente. 
+Tras las limitaciones técnicas comprobadas en la aplicación de métodos de detección ocular utilizando los recursos de un microcontrolador, se optó por prescindir del procesamiento local en el hardware base y derivar esta tarea a un dispositivo externo. Por este motivo, los métodos expuestos a continuación se engloban en la categoría de \emph{procesamiento remoto}. En este sentido, el microcontrolador se encarga exclusivamente de capturar las imágenes y alojar la aplicación web, mientras que el procesamiento matemático de los fotogramas es ejecutado por el dispositivo cliente. 
 Debido a la reducción considerable de la exigencia al microcontrolador capturador (pues su única tarea es capturar fotogramas y transmitirlos), se optó por ahorrar más recursos utilizando un \emph{ESP32-CAM}, una versión menos potente y más económica que el \emph{ESP32-S3}.
 
 \keyword{Redes neuronales pre-entrenadas}
@@ -388,7 +394,7 @@ Dos alternativas consideradas fueron \emph{MediaPipe} (un conjunto de librerías
     \label{fig:seguimiento_rostro_mediapipe}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/deteccion_rostro_webgazer.png}
     \caption{Facciones del rostro en \emph{WebGazer}}
@@ -397,44 +403,47 @@ Dos alternativas consideradas fueron \emph{MediaPipe} (un conjunto de librerías
 
 Por un lado, ambos son detectores de expresiones faciales y no están diseñados para seguir específicamente el movimiento de la pupila. Si bien los algoritmos se pueden adaptar, requieren una vista completa del rostro para poder anclar sus referencias. Esto implica perder precisión en las coordenadas exactas del ojo (al tener que medir variaciones minúsculas en píxeles) e invalida el diseño físico planeado originalmente para este proyecto (una cámara que capte únicamente la región ocular). 
 
-El otro inconveniente es que estas redes son demandantes en términos del hardware de captura necesario para su ejecución. Utilizar la cámara de baja resolución del \emph{ESP32} de forma focalizada no es la condición ideal para que estos modelos operen con normalidad. Se podría deducir que esto se soluciona derivando la tarea de captura de imagen a las cámaras integradas de los dispositivos externos (PC, celular o tablet), pero esto comprometería una característica vital del dispositivo final: la versatilidad. Cada dispositivo cliente posee una cámara con propiedades distintas, variando drásticamente su resolución, ubicación, distancia focal e inclinación. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial, algo que se evita por completo al utilizar un dispositivo que mantiene siempre su propia cámara en una posición fija y calibrada respecto al ojo.
+El otro inconveniente es que estas redes son demandantes en términos del hardware de captura necesario para su ejecución. Utilizar la cámara de baja resolución del \emph{ESP32} de forma focalizada no es la condición ideal para que estos modelos operen con normalidad. Se podría deducir que esto se soluciona derivando la tarea de captura de imagen a las cámaras integradas de los dispositivos externos (PC, celular o tablet), pero esto comprometería una característica vital del dispositivo final: la versatilidad. Cada dispositivo cliente posee una cámara con propiedades distintas, variando drásticamente su resolución, ubicación, distancia focal e inclinación. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial, algo que se evita por completo al utilizar un dispositivo universal que mantiene siempre su propia cámara en una posición fija y calibrada respecto al ojo.
 Por todos estos motivos empíricos y de diseño, se decide prescindir definitivamente de las redes neuronales como métodos de detección espacial.
 
 \keyword{OpenCV con circulos de Hough}
 
-La librería \emph{OpenCV} (Open Source Computer Vision Library) es una biblioteca de software de código abierto especializada en visión computacional y procesamiento de imágenes. Su principal ventaja es que está altamente optimizada para aplicaciones en tiempo real. En lugar de tener que escribir desde cero las complejas operaciones matemáticas para leer matrices de píxeles, detectar bordes o filtrar ruido, \emph{OpenCV} ofrece herramientas y funciones prefabricadas que ejecutan estos cálculos aprovechando al máximo la arquitectura del procesador del dispositivo cliente. 
+La librería \emph{OpenCV} (Open Source Computer Vision Library) es una biblioteca de software de código abierto especializada en visión computacional y procesamiento de imágenes. Su principal ventaja es que está altamente optimizada para aplicaciones en tiempo real. En lugar de tener que escribir desde cero las complejas operaciones matemáticas para leer matrices de píxeles, detectar bordes o filtrar ruido, \emph{OpenCV} ofrece herramientas y funciones prefabricadas que ejecutan estos cálculos aprovechando al máximo la arquitectura del procesador del dispositivo cliente. Por todo lo anterior, además de contar con mayor versatilidad que las redes neuronales anteriormente expuestas, \emph{OpenCV} se perfiló como una alternativa sumamente viable para utilizar en este trabajo.
+ 
+La principal desventaja de este método radica en el hecho de que desarrollar el detector requiere la creación de una aplicación nativa en Python que cada dispositivo cliente debe instalar y ejecutar por su cuenta. Evaluando ambos aspectos, se optó por aceptar esta dependencia de software en pos de obtener un detector ocular funcional y robusto. 
 
-Por todo lo anterior, además de contar con mayor versatilidad que las redes neuronales anteriormente expuestas, \emph{OpenCV} se perfiló como una alternativa sumamente viable para utilizar en este trabajo. La principal desventaja de este método es que desarrollar el detector requiere la creación de una aplicación nativa en Python que cada dispositivo cliente debe instalar y ejecutar por su cuenta. Evaluando ambos aspectos, se optó por aceptar esta dependencia de software en pos de obtener un detector ocular funcional y robusto. 
+Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complementarlo con un algoritmo matemático que se conoce como la \emph{Transformada de Hough}, un método clásico de extracción de características utilizado en el análisis de imágenes digitales. Su variante para círculos (conocida como \emph{HoughCircles} en \emph{OpenCV}) funciona analizando los bordes detectados en un fotograma mediante un sistema matemático de \emph{votación}. El algoritmo busca conjuntos de píxeles que compartan una curvatura y se encuentren a una distancia constante (el radio) de un posible punto central. Si suficientes píxeles \emph{votan} por el mismo centro, el algoritmo confirma la existencia matemática de un círculo en esa región. En este contexto, el círculo vendría a ser el iris del ojo, y para determinar las coordenadas exactas de la pupila simplemente se debe calcular la ubicación del centro de dicho círculo.
 
-Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complementarlo con un algoritmo matemático que se conoce como la \emph{Transformada de Hough}. Es un método clásico de extracción de características utilizado en el análisis de imágenes digitales. Su variante para círculos (conocida como \emph{HoughCircles} en \emph{OpenCV}) funciona analizando los bordes detectados en un fotograma mediante un sistema matemático de \emph{votación}. El algoritmo busca conjuntos de píxeles que compartan una curvatura y se encuentren a una distancia constante (el radio) de un posible punto central. Si suficientes píxeles \emph{votan} por el mismo centro, el algoritmo confirma la existencia matemática de un círculo en esa región. En este contexto, el círculo vendría a ser el iris del ojo, y para determinar las coordenadas exactas de la pupila simplemente se debe calcular la ubicación del centro de dicho círculo.
+Lo primero se debe hacer es transferir la imagen desde el microcontrolador capturador hacia el dispositivo cliente (recordemos que este método entra en la categoría de \emph {procesamiento remoto}), para lo cual se opta por utilizar una conexión Wi-Fi mediante protocolo \emph{UDP}. Se descarta la transmisión SPI puesto que no es adecuada para manejar el alto ancho de banda que requiere la transmisión fluida de imágenes. Una vez logrado esto (proceso que se detalla posteriormente en este informe), empieza el trabajo del procesador del dispositivo cliente.
 
-Para lograr esto, en primer lugar se debe transferir la imagen desde el microcontrolador capturador hacia el dispositivo cliente, para lo cual se opta por utilizar una conexión Wi-Fi mediante protocolo \emph{UDP}. Se descarta la transmisión SPI puesto que no es adecuada para manejar el alto ancho de banda que requiere la transmisión fluida de imágenes. Una vez logrado esto (proceso que se detalla posteriormente en este informe), empieza el trabajo del procesador (CPU) del dispositivo cliente.
+Ya recibido el fotograma, \emph{OpenCV} realiza un proceso de filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación se le aplica la función de círculos de Hough y, en el momento en que se detecta el contorno del iris se grafican los resultados sobre la imagen a modo de depuración visual: un trazo verde delimitando la circunferencia detectada con un punto rojo en su centro que representa las coordenadas de la pupila. 
 
-Ya recibido el fotograma, \emph{OpenCV} realiza un proceso de filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación, se le aplica la función de círculos de Hough, y en el momento en el que se detecta el contorno del iris se grafican los resultados sobre la imagen a modo de depuración visual: un trazo verde delimitando la circunferencia detectada, con un punto rojo en su centro que representa las coordenadas de la pupila. 
-
-\keyword{(Imagen de este método funcionando)}
+\keyword{(Imagen de este método funcionando?)}
 
 Aquí surge un problema importante. La función de círculos de Hough está matemáticamente diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara: frecuentemente, los párpados ocluyen una parte superior o inferior, alterando así su geometría circular. Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y garantizar el correcto funcionamiento del sistema, lo cual resulta poco práctico y sumamente indeseable. 
 
-\keyword{(Imagen con párpados semicerrados)}
+\keyword{(Imagen con párpados semicerrados?)}
 
 Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que no detecte únicamente círculos perfectos, sino que tenga cierta tolerancia ante las deformaciones (permitiendo la detección de arcos incompletos o formas elípticas). Esto, sin embargo, genera un problema secundario grave, puesto que el algoritmo se vuelve demasiado permisivo y comienza a registrar falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro. 
 
-\keyword{(Imagen de falsos positivos)}
+\keyword{(Imagen de falsos positivos?)}
 
 Ambos problemas presentan un compromiso técnico recíproco, debido a que si se intenta reducir uno, el otro empeora. Luego de sucesivas pruebas utilizando herramientas complementarias como umbrales de radio y detectores de brillantez/oscuridad apoyados por el LED infrarrojo, se concluye que la precisión alcanzada no es la adecuada para un seguidor ocular en tiempo real, por lo que esta solución queda definitivamente descartada.
+
 De esta forma, tras varios intentos insatisfactorios, se toma una decisión radical en el desarrollo de este trabajo: dejar atrás la detección de coordenadas espaciales específicas y pasar a identificar patrones de orientación de la mirada.
 
 
-\emph{Detección de similaridad estadística}
+\keyword{Detección de similaridad estadística (Template Matching)}
 
 Este método busca simplificar el sistema de detección ocular con el fin de disminuir la carga de procesamiento, a la vez que elimina toda posible causa de errores tratada con anterioridad. El objetivo es lograr un algoritmo independiente de la luz ambiental, de la resolución de la cámara y de las variaciones en las formas geométricas biológicas del ojo. 
 
 Para evitar, a su vez, la dependencia de aplicaciones nativas de Python, se optó por implementar este algoritmo directamente en una aplicación web. Esta interfaz se aloja en la memoria del propio \emph{ESP32} servidor, y es transmitida al dispositivo cliente externo. Esto implica que el usuario simplemente debe conectarse a la red Wi-Fi generada por el microcontrolador y abrir su navegador de preferencia para poder utilizar el sistema.  Los detalles del desarrollo de esta aplicación se exponen posteriormente en este informe.
 
-\emph{(Diagrama de bloques del nuevo sistema)}
+\emph{(Diagrama de bloques del nuevo sistema?)}
 
-Este sistema de detección requiere, como paso inicial, un proceso de calibración. Para ello, se captura un número definido de imágenes de referencia que representarán todas las acciones posibles dentro de la interfaz. Para garantizar la máxima estabilidad y mitigar posibles confusiones en el algoritmo, se optó por limitar estas acciones a seis:
+Este sistema de detección utilizará el método conocido como \emph{Template Matching} (ya introducido en secciones anteriores) y aprovechará su fácil implementación mediante OpenCV para realizar un detector sencillo de dirección de mirada.
+
+Este método requiere, como paso inicial, un proceso de calibración que otorgue las plantillas a utilizar. Para ello se captura un número definido de imágenes que representarán todas las acciones posibles dentro de la interfaz. Para garantizar la máxima estabilidad y mitigar posibles confusiones en el algoritmo, se optó por limitar estas acciones a seis:
 
 \begin{itemize}
 
@@ -452,13 +461,15 @@ Este sistema de detección requiere, como paso inicial, un proceso de calibraci�
 
 \end{itemize}
 
-\emph{(Imagen de los seis moldes)}
+\emph{(Imagen de los seis moldes?)}
 
-Una vez capturadas estas seis imágenes (con resolución 96x96 en escala de grises), se almacenan temporalmente en la memoria del navegador para tenerlas a disposición como plantillas durante la posterior ejecución. Con el sistema en marcha, el \emph{ESP32} captura el ojo en tiempo real con una resolución nativa de 320x240 píxeles en formato de color estándar y envía los fotogramas al navegador web mediante la red local.  Es allí, aprovechando los recursos del dispositivo cliente, donde se produce el procesamiento comparativo de las imágenes. 
+Una vez capturadas estas seis imágenes (con resolución 96x96 en escala de grises), se almacenan temporalmente en la memoria del navegador para tenerlas a disposición durante la posterior ejecución. Con el sistema en marcha, el \emph{ESP32} captura el ojo en tiempo real con una resolución nativa de 320x240 píxeles en formato de color estándar y envía los fotogramas al navegador web mediante la red local.  Es allí, aprovechando los recursos del dispositivo cliente, donde se produce el procesamiento comparativo de las imágenes. 
 
-\emph{(Imágenes del stream)}
+\emph{(Imágenes del stream?)}
 
-Se comienza con un previo ajuste de la imagen a procesar, esto es, recortar la imagen a un tamaño de 128x128 y convertir su formato a escala de grises para reducir lo máximo posible la carga del procesamiento posterior. Con este mismo fin de optimización, se limita la tasa de procesamiento a 15 fotogramas por segundo (FPS), una frecuencia empíricamente suficiente para garantizar una interacción fluida en tiempo real sin saturar el procesador del usuario. A continuación, el algoritmo evalúa el fotograma acondicionado frente a los seis moldes almacenados durante la calibración. Para ello, emplea un método estadístico denominado \emph{Coeficiente de correlación normalizado con media cero}. Esta herramienta deriva del clásico \emph{Coeficiente de correlación de Pearson}, pero adaptado para operar sobre matrices bidimensionales (que en este caso representan a las imágenes). La fórmula matemática aplicada se define de la siguiente manera:
+Se comienza con un previo ajuste de la imagen a procesar, esto es, recortar la imagen a un tamaño de 128x128 y convertir su formato a escala de grises para reducir lo máximo posible la carga del procesamiento posterior. Con este mismo fin de optimización, se limita la tasa de procesamiento a 15 fotogramas por segundo (FPS), una frecuencia empíricamente suficiente para garantizar una interacción fluida en tiempo real sin saturar el enlace de transmisión. A continuación el algoritmo realiza el barrido que compara cada una de las imágenes de la plantilla con la imagen a analizar.
+
+Durante cada comparación individual se emplea un método estadístico denominado \emph{Coeficiente de correlación normalizado con media cero}. Esta herramienta deriva del clásico \emph{Coeficiente de correlación de Pearson}, pero adaptado para operar sobre matrices bidimensionales (que en este caso representan a las imágenes). La fórmula matemática aplicada se define de la siguiente manera:
 
 \begin{figure}[htbp]
     \centering
@@ -475,7 +486,7 @@ Como se mencionó anteriormente, la imagen de referencia (\emph{Template}) tiene
 \emph{(Imagen ilustrativa del proceso de barrido)}
 
 Este minucioso proceso de análisis se justifica por los inevitables errores de posicionamiento relativos entre el ojo y la cámara. Al utilizar una fórmula matemática tan estricta, si se evaluara una única posición estática, cualquier mínima perturbación del dispositivo (incluso de un milímetro), desalinearía las matrices y provocaría el fracaso inmediato del cálculo. Por lo tanto, realizar un barrido completo otorga un margen geométrico para compensar cualquier desplazamiento involuntario. Con esta técnica se logra una ventaja ergonómica fundamental para el proyecto: la inmunidad del sistema ante los micro-movimientos físicos de la cabeza del usuario.
-De esta matriz resultante, con todos los valores de correlación, se extrae el coeficiente más alto (correspondiente al ciclo de comparación en el que la plantilla se alineó con mayor precisión sobre el fotograma capturado). Este proceso se repite con los cinco moldes restantes y, de esos seis valores máximos, se determina cuál fue el mayor, identificando así a qué acción corresponde la mirada actual.
+De esta matriz resultante con todos los valores de correlación, se extrae el coeficiente más alto (correspondiente al ciclo de comparación en el que la plantilla se alineó con mayor precisión sobre el fotograma capturado). Este proceso se repite con los cinco moldes restantes y, de esos seis valores máximos, se determina cuál fue el mayor, identificando así a qué plantilla corresponde esa coincidencia y, por lo tanto, a cuál acción del ojo corresponde.
 
 \emph{(Imagen del log indicando el mayor parecido)}
 
@@ -485,14 +496,14 @@ Una vez identificada la acción de mayor probabilidad, el sistema aplica la sigu
 
 \item Mirada hacia alguna opción (esquinas): La interfaz resalta visualmente esa opción y la guarda temporalmente en memoria como la última acción válida.
 
-\item Mirada hacia el centro (zona neutra): El sistema mantiene iluminada la última opción válida seleccionada, permitiendo al usuario descansar la vista sin perder su progreso.
+\item Mirada hacia el centro (zona neutra): El sistema mantiene iluminada la última opción válida seleccionada, permitiendo al usuario descansar la vista sin alterar la pantalla.
 
-\item Parpadeo (Ojo cerrado): El algoritmo actúa como un disparador de confirmación, ejecutando la decisión final si existía una opción previamente seleccionada.
+\item Parpadeo (ojo cerrado): El algoritmo actúa como un disparador de confirmación, ejecutando la decisión final si existía una opción previamente seleccionada.
 
 \end{itemize}
 
 Si bien este método de detección resultó mucho más robusto y funcional que todos los anteriores, en la práctica presenta algunos errores. Por un lado, aunque el algoritmo estadístico es inmune a las variaciones lineales de luz ambiental, las sombras proyectadas por la inclinación de una fuente de luz externa entorpecen el procesamiento. Esto justificó la decisión de reutilizar el diodo LED infrarrojo (IR) en el diseño, garantizando una iluminación frontal uniforme y la consecuente ausencia de estas sombras. 
-El otro inconveniente detectado fue la susceptibilidad a los falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para mitigar este efecto, se introdujo por código un \emph{umbral de similitud}. Esto implica que toda coincidencia probabilística inferior a este valor será automáticamente ignorada por el sistema. Por defecto, este umbral se estableció empíricamente en un 80\% (aunque el usuario puede ajustarlo en todo momento desde la propia interfaz web), solucionando el problema con gran eficacia. 
+El otro inconveniente detectado fue la susceptibilidad a los falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para mitigar este efecto se introdujo por código un \emph{umbral de similitud}. Esto implica que toda coincidencia probabilística inferior a este valor será automáticamente ignorada por el sistema. Por defecto, este umbral se estableció empíricamente en un 80\% (aunque el usuario puede ajustarlo en todo momento desde la propia interfaz web), solucionando el problema con gran eficacia. 
 
 \emph{(Imagen del slider)}
 
@@ -539,8 +550,8 @@ En esta sección se describen todas las funcionalidades de la aplicación web (\
 
 \subsection{Frontend}
 
-El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend}, quien gestiona los datos y los permisos, y el usuario.
-En este trabajo se optó por desarrollarlo en \emph{React}, una librería de \emph{JavaScript} de código abierto, creada y mantenida por \emph{META}, diseñada específicamente para construir interfaces de usuario (UI) dinámicas e interactivas para aplicaciones web. Es una herramienta muy versátil, ya que se puede utilizar en el entorno de \emph{Visual Studio Code}, y trabaja con arquitectura basada en componentes (CBA), lo cual vuelve al código más modular, ordenado y sencillo de depurar.
+El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend} (quien gestiona los datos y los permisos), y el usuario.
+En este trabajo se optó por desarrollarlo en \emph{React}, una librería de \emph{JavaScript} de código abierto, creada y mantenida por \emph{META}, diseñada específicamente para construir interfaces de usuario (UI) dinámicas e interactivas para aplicaciones web. Es una herramienta muy versátil, ya que se puede utilizar en el entorno de \emph{Visual Studio Code} y trabaja con arquitectura basada en componentes (CBA), lo cual vuelve al código más modular, ordenado y sencillo de depurar.
 La estructura del programa se divide por páginas o pantallas. Cada pantalla cumple un conjunto limitado de funciones que conforman un subsistema común. Para funcionar requieren de dos archivos: un archivo \emph{.jsx} que declara y enlaza cada entidad con la función que deben cumplir (botones, campos de texto, títulos, entre otros) y un archivo \emph{.css} que describe el aspecto de cada una de estas entidades (el color de los botones, el tamaño del texto que contengan, la extensión de los campos de texto y otros).
 Las pantallas se podrían dividir en tres categorías: 
 
@@ -551,7 +562,7 @@ La pantalla \emph{Home} es la interfaz de bienvenida que el usuario visualiza in
 
 (Imagen Home)
 
-La pantalla \emph{Login}, como su nombre indica, es aquella que los usuarios que no son alumnos utilizan para identificarse antes de comenzar su sesión con el dispositivo. Los usuarios con jerarquía (profesores y tutores) deben ingresar sus credenciales para acceder al núcleo del sistema. Esta vista incorpora un botón para registrar un usuario nuevo, el cual despliega un formulario que solicita datos personales (nombre, apellido, contacto), el rol deseado, la materia (exclusivo para el rol de profesor) y una palabra clave de administrador. Esta clave maestra es un requisito de seguridad indispensable para autorizar la creación de perfiles aptos para utilizar el dispositivo con fines académicos. 
+La pantalla \emph{Login}, como su nombre indica, es aquella que los usuarios que no son alumnos utilizan para identificarse antes de comenzar su sesión con el dispositivo. Los usuarios con jerarquía (profesores y tutores) deben ingresar sus credenciales para acceder al núcleo del sistema. Además de los campos de texto donde se ingresan estos datos, esta vista incorpora un botón para registrar un usuario nuevo, el cual despliega un formulario que solicita datos personales (nombre, apellido, contacto), el rol deseado, la \emph{referencia} (Materia en el caso de los profesores y vínculo en el caso de tutores) y una palabra clave de administrador. Esta clave maestra es un requisito de seguridad indispensable para autorizar la creación de perfiles aptos para utilizar el dispositivo con fines académicos. 
 
 (Imagen Login y otra con registro)
 
@@ -559,15 +570,15 @@ Otro botón importante es el de \emph{Recuperar contraseña}, que permite a cual
 
 (Imagen de recuperar contraseña)
 
-Finalmente, la interfaz de inicio de sesión ofrece un botón para ingresar directamente como invitado. Esta vía está pensada para aquellas personas del entorno del estudiante (amigos o familiares) que deseen establecer una comunicación informal sin necesidad de poseer un perfil registrado en la base de datos. Al seleccionar esta última opción, el usuario es redirigido a la pantalla \emph{Invitado}. Esta vista presenta un formulario simplificado de opción múltiple diseñado para estructurar preguntas rápidas.  Posee un campo para la pregunta, cuatro para las posibles respuestas, botones para eliminar o agregar opciones (hasta un máximo de cuatro) y un botón para enviar la pregunta al estudiante.
+Finalmente, la interfaz de inicio de sesión ofrece un botón para ingresar directamente como invitado, ideado para aquellas personas del entorno del estudiante (amigos o familiares) que deseen establecer una comunicación informal sin necesidad de poseer un perfil registrado en la base de datos. Al seleccionar esta última opción, el usuario es redirigido a la pantalla \emph{Invitado}. Esta vista presenta un formulario simplificado de opción múltiple diseñado para estructurar preguntas rápidas.  Posee un campo para la pregunta, cuatro para las posibles respuestas, botones para eliminar o agregar opciones (hasta un máximo de cuatro) y un botón para enviar la pregunta al estudiante.
 
 (Imagen de pantalla invitado)
 
-Por último, se encuentra la pantalla \emph{Alumno}. Al tratarse del usuario principal y prioritario del sistema, su ingreso no requiere autenticación. Sus funciones exclusivas son calibrar la cámara y responder las evaluaciones que lleguen desde otros dispositivos. Al ingresar a esta vista, el usuario observa un panel indicador del estado del sistema y dos botones de acción principal (calibración y examen). Dichos botones permanecen bloqueados por seguridad hasta que el sistema esté en condiciones de operar. Para lograr esto, el frontend le solicita al servidor la descarga del archivo \emph{opencv.js}. Esta librería matemática actuará como el motor de la detección visual, pero adaptada exclusivamente para el método de similaridad de patrones (dejando atrás el enfoque previo de los círculos de Hough). 
+Por otro lado se encuentra la pantalla \emph{Alumno}. Al tratarse del usuario principal y prioritario del sistema, su ingreso no requiere autenticación. Sus funciones exclusivas son calibrar el detector y responder las evaluaciones que lleguen desde otros dispositivos. Al ingresar a esta vista, el usuario observa un panel indicador del estado del sistema y dos botones de acción principal (calibración y examen). Dichos botones permanecen bloqueados por seguridad hasta que el sistema esté en condiciones de operar. Antes de permitir cualquier acción, el frontend le solicita al servidor la descarga del archivo \emph{opencv.js}. Esta librería matemática actuará como el motor de la detección visual, pero adaptada exclusivamente para el método de \emph{Template Matching} (dejando atrás el enfoque previo de los círculos de Hough). 
 
 (Imágenes de panel alumno bloqueado y desbloqueado)
 
-Una vez que el indicador confirma que la librería \emph{OpenCV} fue leída desde la tarjeta microSD, transferida y compilada correctamente por el navegador, los botones de acción se habilitan. El primero de ellos dirige a la interfaz de calibración, la cual está compuesta por seis cuadros de previsualización vacíos, un recuadro de mayor tamaño donde se proyecta el flujo de video en vivo, y los comandos para iniciar o abortar el proceso. Si el sistema detecta una calibración almacenada previamente, advierte al usuario para evitar posibles redundancias.
+Una vez que el indicador confirma que la librería \emph{OpenCV} fue leída desde la tarjeta microSD, transferida y compilada correctamente por el navegador, los botones de acción se habilitan. El primero de ellos dirige a la interfaz de calibración, la cual está compuesta por seis cuadros de previsualización vacíos, un recuadro de mayor tamaño donde se proyecta el flujo de video en vivo y los comandos para iniciar o abortar el proceso. Si el sistema detecta una calibración almacenada previamente, advierte al usuario para evitar posibles redundancias.
 
 (Imagen pantalla de calibración)
 
@@ -575,7 +586,7 @@ Al pulsar el botón de inicio, comienza una secuencia guiada para capturar los f
 
 (Imagen de uno de los pasos de la secuencia)
 
-El segundo botón del panel principal(\emph{Iniciar cuestionario}) redirige a la interfaz operativa de evaluación. Esta pantalla presenta el flujo de video en la esquina superior derecha junto a un control deslizante (\emph{slider}) que permite ajustar dinámicamente el umbral de sensibilidad del algoritmo. En este estado, el cliente aguarda pasivamente hasta que un invitado envíe una consulta o un profesor inicie formalmente un cuestionario. Al recibir los datos, la interfaz se actualiza automáticamente mostrando el enunciado y cuatro cuadrantes coloreados con sus respectivas opciones. Para responder, el alumno debe sostener la mirada hacia el cuadrante deseado (la interfaz lo resaltará visualmente) y ejecutar un parpadeo intencional para confirmar el registro en la base de datos. Adicionalmente, el usuario puede retornar la mirada a la zona neutra (centro) para descansar la vista o revisar su elección sin alterar la selección previa. En paralelo a este proceso, el sistema cliente emite señales periódicas al servidor (heartbeats) para mantener activa la sesión de forma ininterrumpida, permitiendo que el microcontrolador contabilice con precisión el tiempo total empleado en la resolución. 
+El segundo botón del panel principal (\emph{Iniciar cuestionario}) redirige a la interfaz operativa de evaluación. Esta pantalla presenta el flujo de video en la esquina superior derecha junto a un control deslizante (\emph{slider}) que permite ajustar dinámicamente el umbral de sensibilidad del algoritmo. En este estado, el cliente aguarda pasivamente hasta que un invitado envíe una consulta o un profesor inicie formalmente un cuestionario. Al recibir los datos, la interfaz se actualiza automáticamente mostrando el enunciado y cuatro cuadrantes coloreados con sus respectivas opciones. Para responder, el alumno debe sostener la mirada hacia el cuadrante deseado (la interfaz lo resaltará visualmente) y ejecutar un parpadeo intencional para confirmar el registro en la base de datos. Adicionalmente, el usuario puede retornar la mirada a la zona neutra (centro) para descansar la vista o revisar su elección sin alterar la selección previa. En paralelo a este proceso, el sistema cliente emite señales periódicas al servidor (heartbeats) para indicarle al servidor que mantenga activa la sesión.
 
 (Imagenes de todas las posibles pantallas de cuestionario)
 
@@ -592,7 +603,7 @@ En cambio, si el usuario es un tutor, el botón intermedio se adapta a su necesi
 
 (Imagenes de pantalla panel para ambos usuarios)
 
-El botón \emph{Editar perfil}, común a ambos roles, redirige a la pantalla \emph{Perfil}. Esta vista tiene como objetivo ofrecer al usuario la posibilidad de modificar su información personal en todo momento. Al igual que en el panel principal, conserva el encabezado de bienvenida y el botón de cierre de sesión. Debajo de estos elementos, presenta un formulario estructurado con campos de texto para actualizar los siguientes datos: nombre de usuario, nombre, apellido, contacto y, exclusivamente para profesores, la materia. Los cambios realizados en este segmento se envían a la base de datos al pulsar el botón \emph{Guardar datos}.
+El botón \emph{Editar perfil}, común a ambos roles, redirige a la pantalla \emph{Perfil}. Esta vista tiene como objetivo ofrecer al usuario la posibilidad de modificar su información personal en todo momento. Al igual que en el panel principal, conserva el encabezado de bienvenida y el botón de cierre de sesión. Debajo de estos elementos, presenta un formulario estructurado con campos de texto para actualizar los siguientes datos: nombre de usuario, nombre, apellido, contacto y la referencia (materia o vínculo). Los cambios realizados en este segmento se envían a la base de datos al pulsar el botón \emph{Guardar datos}.
 
 (Imagen del primer formulario)
 
@@ -602,7 +613,7 @@ En la parte inferior, la interfaz provee un botón rojo diseñado para eliminar 
 (Imagen del resto)
 
 Retornando al menú principal, el botón central dirige a la pantalla \emph{Contactos}, cuya interfaz y funcionalidad son dinámicas y se adaptan al rol del usuario activo en la sesión.
-Si el usuario posee el rol de profesor y accede mediante la opción \emph{Ver datos tutor}, visualizará una pantalla encabezada por el título \emph{Datos del Tutor}. Debajo, se despliega una tarjeta informativa que contiene los datos básicos del tutor asociado al dispositivo del alumno: nombre, apellido y contacto. Si la base de datos no registra ningún tutor, la interfaz oculta la tarjeta y advierte al usuario mediante un mensaje de texto indicando la ausencia de este perfil. Cabe mencionar que cada tutor debe ser único por cada dispositivo, por lo que se muestra siempre una única tarjeta en caso de haberlo.
+Si el usuario posee el rol de profesor y accede mediante la opción \emph{Ver datos tutor}, visualizará una pantalla encabezada por el título \emph{Datos del Tutor}. Debajo, se despliega una tarjeta informativa que contiene los datos básicos del tutor asociado al dispositivo del alumno: nombre, apellido, vínculo y contacto. Si la base de datos no registra ningún tutor, la interfaz oculta la tarjeta vacía y advierte al usuario mediante un mensaje de texto indicando la ausencia de este perfil. Cabe mencionar que cada tutor debe ser único por cada dispositivo, por lo que se debería mostrar siempre una única tarjeta en caso de haberlo.
 
 (Imagen de ver tutores)
 
@@ -610,35 +621,36 @@ Por el contrario, si el usuario autenticado es un tutor e ingresa mediante el bo
 
 (Imagen de ver profesores)
 
-Finalmente, cabe destacar que, a diferencia del panel principal, esta interfaz prescinde del encabezado de bienvenida y del botón de cierre de sesión, priorizando una visualización limpia que ofrece únicamente un botón inferior denominado \emph{Volver} para retornar de forma segura al menú anterior.
+Finalmente cabe destacar que, a diferencia del panel principal, esta interfaz prescinde del encabezado de bienvenida y del botón de cierre de sesión, priorizando una visualización limpia que ofrece únicamente un botón inferior denominado \emph{Volver} para retornar de forma segura al menú anterior.
+
 La pantalla \emph{Cuestionarios}, accesible a través del panel principal, constituye el núcleo de la gestión académica del dispositivo, presentando múltiples variaciones funcionales dependiendo de la jerarquía del usuario.
-Para el profesor, esta pantalla actúa como el motor integral de las evaluaciones: permite crearlas, modificarlas, controlar su ejecución en tiempo real y eliminarlas. La vista inicial consiste en un listado dinámico de todos los cuestionarios asociados a su materia. Cada elemento de la lista expone datos clave: título, cantidad de preguntas, puntaje obtenido y su condición final (aprobado o desaprobado). El control de cada módulo se gestiona a través de cuatro botones, los cuales se habilitan o deshabilitan respondiendo a la máquina de estados del servidor:
+Para el profesor, esta pantalla actúa como el motor integral de las evaluaciones: permite crearlas, modificarlas, controlar su ejecución en tiempo real, revisar los resultados y eliminarlas. La vista inicial consiste en un listado dinámico de todos los cuestionarios asociados a su materia. Cada elemento de la lista expone datos clave: título, cantidad de preguntas, puntaje obtenido, fecha de inicio y su condición final (aprobado o desaprobado). El control de cada módulo se gestiona a través de cuatro botones, los cuales se habilitan o deshabilitan respondiendo a la máquina de estados del servidor:
 
 \begin{itemize}
 
-\item Estado \keyword{PENDIENTE} (Previo a la ejecución): Se habilitan los botones superiores de acción destructiva/modificadora (\emph{Editar} y \emph{Eliminar}). En el bloque inferior, se habilita el botón \emph{INICIAR} (cuyo accionamiento transiciona el examen al estado \emph{En Progreso}) y se mantiene bloqueado el botón \emph{FINALIZAR}.
+\item Estado \keyword{PENDIENTE} (Previo a la ejecución): Se habilitan los botones superiores de acción destructiva y modificadora (\emph{Editar} y \emph{Eliminar}). En el bloque inferior, se habilita el botón \emph{INICIAR} (cuyo accionamiento transiciona el examen al estado \emph{En Progreso}) y se mantiene bloqueado el botón \emph{FINALIZAR}. 
 
-\item Estado \keyword{EN PROGRESO} (Alumno respondiendo: Para garantizar la integridad de los datos, el sistema bloquea inmediatamente los botones de edición y eliminación. El botón de inicio asume la función de \emph{PAUSAR}, y se habilita el botón de \emph{FINALIZAR} como mecanismo de aborto seguro en caso de contingencias.
+\item Estado \keyword{EN PROGRESO} (Alumno respondiendo): Para garantizar la integridad de los datos, el sistema bloquea inmediatamente los botones de edición y eliminación. El botón de inicio asume la función de \emph{PAUSAR} y se habilita el botón de \emph{FINALIZAR} como mecanismo de aborto seguro en caso de contingencias.
 
 \item Estado \keyword{PAUSADO}: Los controles superiores de edición permanecen bloqueados y el botón de finalización sigue activo. El botón de estado muta a \emph{REANUDAR}, permitiendo al alumno continuar el examen desde la última pregunta contestada.
 
-\item Estado \keyword{FINALIZADO}: Los botones de edición y finalización se desactivan. Se rehabilita la capacidad de eliminar el registro, y el botón de estado principal se transforma en “REVISAR”, redirigiendo al profesor a las analíticas del examen.
+\item Estado \keyword{FINALIZADO}: Los botones de edición y finalización se desactivan. Se rehabilita la capacidad de eliminar el cuestionario y el botón de estado principal se transforma en “REVISAR”, redirigiendo al profesor a la vista de revisión.
 
 \end{itemize}
 
 (Imagen de pantalla cuestionarios de profesor)
 
-Por encima de este listado, un botón etiquetado como \emph{Nuevo +} da acceso a la interfaz de creación y edición. Esta vista presenta una plantilla estructurada encabezada por el título del cuestionario (editable de forma interactiva). A continuación, se despliegan los bloques de las preguntas, los cuales permiten ingresar la incógnita y configurar dinámicamente entre dos y cuatro opciones posibles.
+Por encima de este listado, un botón etiquetado como "\emph{Nuevo +}" da acceso a la interfaz de creación y edición. Esta vista presenta una plantilla estructurada encabezada por el título del cuestionario (editable de forma interactiva). A continuación, se despliegan los bloques de las preguntas, los cuales permiten ingresar la incógnita y configurar dinámicamente entre dos y cuatro opciones posibles.
 
-A nivel de configuración, el docente puede seleccionar la respuesta correcta mediante un botón de selección, establecer el puntaje a sumar por acierto y definir el puntaje a restar por error. Para optimizar la carga de datos, la interfaz incluye herramientas de diseño que permiten replicar un mismo esquema de puntajes a todo el examen (\emph{Aplicar a todas}), reordenar la posición de las preguntas en la lista mediante flechas direccionales, o eliminar preguntas enteras. En el margen inferior, se encuentra un campo numérico para establecer el umbral de aprobación y los tres comandos de cierre: \emph{Añadir Pregunta}, \emph{Guardar Cuestionario} (que empaqueta los datos y los envía al ESP32) y \emph{Volver sin guardar}.
+A nivel de configuración, el docente puede seleccionar la respuesta correcta mediante un botón de selección, establecer el puntaje a sumar por acierto y definir el puntaje a restar por error. Para optimizar la carga de datos, la interfaz incluye herramientas de diseño que permiten replicar un mismo esquema de puntajes a todo el examen (\emph{Aplicar a todas}), reordenar la posición de las preguntas en la lista mediante flechas direccionales o eliminar preguntas enteras. En el margen inferior está disponible un campo numérico para establecer el umbral de aprobación y los tres comandos de cierre: \emph{Añadir Pregunta}, \emph{Guardar Cuestionario} (que empaqueta los datos y los envía al ESP32) y \emph{Volver sin guardar}.
 
 (Imagenes de la pantalla del editor)
 
-Retornando al flujo principal, cuando un cuestionario finalizado es sometido a revisión (mediante el botón \emph{REVISAR}), el sistema despliega una vista analítica. Esta pantalla detalla el tiempo total empleado, el puntaje final, la condición de aprobación, un desglose pregunta por pregunta indicando la opción elegida por el alumno, la opción correcta (si hubo equivocación) y el impacto numérico de dicha respuesta en el puntaje total.
+Retornando a la vista del listado, cuando un cuestionario finalizado es sometido a revisión (mediante el botón \emph{REVISAR}), el sistema despliega una vista analítica. Esta pantalla detalla el tiempo total empleado, el puntaje final, la fecha de inicio, la condición de aprobación, un desglose pregunta por pregunta indicando la opción elegida por el alumno, la opción correcta (si hubo equivocación) y el impacto numérico de dicha respuesta en el puntaje total.
 
 (Imagenes de la vista de revision)
 
-Finalmente, si el usuario que accede a esta sección posee el rol de tutor, la interfaz restringe severamente sus privilegios. El listado mostrará los cuestionarios históricos creados por la totalidad de los profesores, indicando adicionalmente a qué materia pertenece cada uno. Todos los controles de edición, eliminación y alteración de estados se suprimen gráficamente. El tutor únicamente cuenta con el botón de \emph{REVISAR} para consultar las analíticas, el cual permanecerá bloqueado hasta que el sistema registre que el cuestionario ha alcanzado el estado \emph{FINALIZADO}.
+Por otra parte, si el usuario que accede a la pantalla \emph{Cuestionarios} posee el rol de tutor, la interfaz restringe severamente sus privilegios. El listado mostrará los cuestionarios históricos creados por la totalidad de los profesores, indicando adicionalmente a qué materia pertenece cada uno. Todos los controles de edición, eliminación y alteración de estados se suprimen gráficamente. El tutor únicamente cuenta con el botón de \emph{REVISAR} para consultar las analíticas, el cual permanecerá bloqueado hasta que el sistema registre que el cuestionario ha alcanzado el estado \emph{FINALIZADO}.
 
 (Imagen de la pantalla cuestionarios del tutor y otra de la pantalla de revisión)
 
@@ -649,9 +661,9 @@ A diferencia de las interfaces visuales descritas anteriormente, esta categoría
 
 (Imagen de los archivos nucleo en el visual studio)
 
-El punto de entrada (\keyword{index.html} y \keyword{main.jsx}):  En el paradigma SPA, el servidor \emph{ESP32} aloja y transmite un único documento \emph{HTML} (\emph{index.html}) que actúa como un lienzo en blanco. El archivo \emph{main.jsx} es el script principal de inicialización. Su única y vital función es inyectar la librería \emph{React} dentro de ese documento HTML vacío, montar el \emph{Virtual DOM} (Modelo de Objetos del Documento Virtual) y comenzar a renderizar los componentes de la interfaz a la velocidad del procesador del cliente, evitando que la página web deba recargarse al navegar. Como detalle adicional, el archivo \emph{index.html} también se encarga de descargar el script de \emph{OpenCV} (\emph{opencv.js}, almacenado en la tarjeta microSD) para que esté disponible globalmente en la aplicación. 
+El punto de entrada (\keyword{index.html} y \keyword{main.jsx}):  en el paradigma SPA, el servidor \emph{ESP32} aloja y transmite un único documento \emph{HTML} (\emph{index.html}) que actúa como un lienzo en blanco. El archivo \emph{main.jsx} es el script principal de inicialización. Su única y vital función es inyectar la librería \emph{React} dentro de ese documento HTML vacío, montar el \emph{Virtual DOM} (Modelo de Objetos del Documento Virtual) y comenzar a renderizar los componentes de la interfaz a la velocidad del procesador del cliente, evitando que la página web deba recargarse al navegar. Como detalle adicional, el archivo \emph{index.html} también se encarga de descargar el script de \emph{OpenCV} (\emph{opencv.js}, almacenado en la tarjeta microSD) para que esté disponible globalmente en la aplicación. 
 
-El gestor de rutas (\keyword{App.jsx}): Este componente actúa como el controlador de tráfico del sistema. Su función es evaluar continuamente la URL actual del navegador y decidir qué pantalla visual debe renderizarse en cada momento. Además, gestiona la lógica de protección de rutas: antes de permitir que un componente de acceso restringido se monte en pantalla (como el panel o los cuestionarios), \emph{App.jsx} verifica la memoria de sesión (\emph{sessionStorage}) en busca de un token de autorización válido. Si las credenciales no existen o caducaron, bloquea la navegación y redirige el flujo forzosamente hacia la pantalla de \emph{Login}. Además de controlar la navegación, este archivo implementa un monitor de sesión que vigila la inactividad del usuario (10 minutos) y realiza peticiones periódicas (\emph{/api/auth/heartbeat} cada 5 segundos) para asegurar que el token sigue siendo válido en el servidor. Si la validación falla, ejecuta la función \emph{handleLogout}, la cual limpia las credenciales y redirige a la pantalla de inicio de sesión para proteger las herramientas administrativas. 
+El gestor de rutas (\keyword{App.jsx}): este componente actúa como el controlador de tráfico del sistema. Su función es evaluar continuamente la URL actual del navegador y decidir qué pantalla visual debe renderizarse en cada momento. Además, gestiona la lógica de protección de rutas: antes de permitir que un componente de acceso restringido se monte en pantalla (como el panel o los cuestionarios), \emph{App.jsx} verifica la memoria de sesión (\emph{sessionStorage}) en busca de un token de autorización válido. Si las credenciales no existen o caducaron, bloquea la navegación y redirige el flujo forzosamente hacia la pantalla de \emph{Login}. Este archivo también implementa un monitor de sesión que vigila la inactividad del usuario (10 minutos) y realiza peticiones periódicas (\emph{/api/auth/heartbeat} cada 5 segundos) para asegurar que el token sigue siendo válido en el servidor. Si la validación falla, ejecuta la función \emph{handleLogout}, la cual limpia las credenciales y redirige a la pantalla de inicio de sesión para proteger las herramientas administrativas. 
 
 La capa de servicios (\keyword{services/api.js}): Para mantener una arquitectura de software escalable y ordenada, el sistema aísla todas las comunicaciones de red en un módulo de servicios independiente. Este script centraliza todas las peticiones asíncronas (HTTP y REST) dirigidas al backend alojado en el \emph{ESP32}. Su existencia permite que los componentes gráficos soliciten datos (como el estado de un examen o la lista de profesores) invocando funciones simples, mientras este archivo se encarga de la complejidad de estructurar las cabeceras de red, adjuntar los tokens de seguridad y parsear las respuestas JSON provenientes del microcontrolador.
 
@@ -710,7 +722,7 @@ Cuando hay un cuestionario activo, la pantalla cambia mostrando su título y el 
 
 \keyword{Vista 4 - Inicialización}
 
-A diferencia de las anteriores, esta vista se ejecuta de manera exclusiva durante el primer arranque del equipo (o tras un formateo de fábrica). Su objetivo es configurar las credenciales permanentes del sistema operativo. Mediante el uso de un teclado táctil virtual desplegable, el administrador debe ingresar tres parámetros vitales: el nombre del alumno, la palabra clave maestra para profesores y la palabra clave maestra para tutores.
+A diferencia de las anteriores, esta vista se ejecuta de manera exclusiva durante el primer arranque del equipo (o tras un formateo de fábrica). Su objetivo es configurar las credenciales permanentes del sistema operativo. Mediante el uso de un teclado táctil virtual desplegable, el administrador debe ingresar tres parámetros fundamentales: el nombre del alumno, la palabra clave maestra para profesores y la palabra clave maestra para tutores.
 Estas credenciales actúan como la raíz de seguridad del dispositivo. Una vez completados los campos, el usuario debe oprimir el botón de guardado, el cual almacena las variables de forma persistente en la memoria no volátil (NVS) del microcontrolador y fuerza un reinicio automático del sistema, cargando finalmente la vista de bienvenida convencional.
 
 (Vista pantalla de booteo)
@@ -720,15 +732,15 @@ Estas credenciales actúan como la raíz de seguridad del dispositivo. Una vez c
 
 Entre las premisas de este trabajo se estipuló que el dispositivo final debe ser inalámbrico y autosuficiente en términos de consumo energético al momento de utilizarlo. Siguiendo estos lineamientos, se opta por no alimentarlo utilizando cables y entradas USB-C o MicroUSB que se incluyen en los modelos comerciales de los microcontroladores utilizados, sino que se diseñará su propio sistema de alimentación utilizando fuentes de energía independientes de cualquier dispositivo externo al momento de uso. La solución general planteada para este problema recae en el uso de las baterías de litio, una de las fuentes de energía inalámbrica más comunes en los dispositivos electrónicos de bajo consumo. A pesar de su precio relativamente elevado a comparación de las pilas comunes, tienen la particularidad de que son recargables, evitando así que el usuario tenga que comprar repuestos en el momento en que se agote la energía. 
 
-La alimentación a través de estas pilas permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia, ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
+La alimentación a través de estas baterías permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia, ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
 
-Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las pilas de manera sencilla, y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware. 
+Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware. 
 
 \subsection{Soluciones propuestas}
 
 \keyword{1- Alimentación directa + Regulador lineal de tensión + Cargador de pilas externo}
 
-Consiste en alimentar el microcontrolador directamente desde la pila de litio a través de un portapilas. A esto se le suma un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1777}, para ajustar la tensión a 3,3 V estables. Para recargar las pilas se emplearía un cargador comercial externo, que requiere extraer físicamente la pila del dispositivo para colocarla en la ranura y conectarla a la red.
+Consiste en alimentar el microcontrolador directamente desde la batería de litio a través de un portapilas. A esto se le suma un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1777}, para ajustar la tensión a 3,3 V estables. Para la recarga se emplearía un cargador comercial externo, lo que implica extraer físicamente la batería del dispositivo para colocarla en la ranura y conectarla a la red.
 
 (Imagen del LDO)
 
@@ -748,13 +760,13 @@ Desventajas de esta solución:
 
 \begin{itemize}
 
-\item Ergonomía y desgaste mecánico: Resulta impráctico para el usuario el tener que retirar la pila del dispositivo cada vez que se quiera recargar, además de que esto puede provocar desgaste mecánico con el tiempo.
+\item Ergonomía y desgaste mecánico: Resulta impráctico para el usuario el tener que retirar la batería del dispositivo cada vez que se quiera recargar, además de que esto puede provocar desgaste mecánico con el tiempo.
 
-\item Descarga de la pila: Una pila de litio estándar (como la \emph{18650}) de 3,7 V no entrega este valor continuo de tensión a lo largo del tiempo, sino que disminuye progresivamente hasta llegar a un piso mínimo de unos 3,0 V. Este valor es menor a los 3,3 V que necesita el microcontrolador, lo que significa que el dispositivo dejaría de funcionar mucho antes de que la batería se quede sin energía para dar. Se requiere hardware adicional para aumentar el valor de tensión cuando sea necesario, y agregarlo invalida la ventaja de la optimización de espacio.
+\item Descarga de la batería: Una batería de litio estándar (como la \emph{18650}) de 3,7 V no entrega este valor continuo de tensión a lo largo del tiempo, sino que disminuye progresivamente hasta llegar a un piso mínimo de unos 3,0 V. Este valor es menor a los 3,3 V que necesita el microcontrolador, lo que significa que el dispositivo dejaría de funcionar mucho antes de que la batería se quede sin energía para dar. Se requiere hardware adicional para aumentar el valor de tensión cuando sea necesario y agregarlo invalida la ventaja de la optimización de espacio.
 
-\item Dropout: La función del regulador es estabilizar la tensión en 3,3 V. Sin embargo, estos integrados operan con transistores MOSFET en zona activa (es decir, actuando como resistencias variables), lo que implica inevitablemente que habrá una caída de voltaje entre la entrada y la salida. Esta caída se llama \emph{voltaje de dropout}, lo que significa que para tener 3,3 V estables a la salida, necesitaremos una tensión continua mayor que ese valor en la entrada, lo que reduce aún más el tiempo en el que se puede usar el dispositivo antes de que la pila se quede sin energía.
+\item Dropout: La función del regulador es estabilizar la tensión en 3,3 V. Sin embargo, estos integrados operan con transistores MOSFET en zona activa (es decir, actuando como resistencias variables), lo que implica inevitablemente que habrá una caída de voltaje entre la entrada y la salida. Esta caída se llama \emph{voltaje de dropout}, lo que significa que para tener 3,3 V estables a la salida, necesitaremos una tensión continua mayor que ese valor en la entrada, lo que reduce aún más el tiempo en el que se puede usar el dispositivo antes de que la batería se quede sin energía.
 
-\item Picos de corriente: El consumo de corriente de una \emph{ESP32} es dinámico. Hay ocasiones, como al encender el Wi-Fi, en las que el microcontrolador exige grandes transitorios o picos de corriente de hasta 500 mA. Por ley de ohm, al exigir más corriente al regulador, la caída de tensión de dropout por la resistencia del silicio se maximizará. Esto agrava el problema anteriormente mencionado, provocando caídas bruscas en la tensión de alimentación que disparan el detector de bajo voltaje (\emph{brownout detector}) del microcontrolador.
+\item Picos de corriente: El consumo de corriente de un microcontrolador es dinámico. Hay ocasiones, como al encender el Wi-Fi, en las que se exigen grandes transitorios o picos de corriente de hasta 500 mA. Por ley de ohm, al exigir más corriente al regulador, la caída de tensión de dropout por la resistencia del silicio se maximizará. Esto agrava el problema anteriormente mencionado, provocando caídas bruscas en la tensión de alimentación que disparan el detector de bajo voltaje (\emph{brownout detector}) del microcontrolador.
 
 \end{itemize}
 
@@ -771,11 +783,11 @@ Ventajas:
 
 \item Facilidad de mantenimiento: Al ser dos módulos separados, las fallas puntuales pueden repararse fácilmente utilizando un repuesto del módulo necesario sin alterar el sistema completo.
 
-\item Carga térmica: Al ser dos módulos diferentes que se encargan de distintas tareas, la temperatura que alcance cada uno será independiente del otro y se distribuirá uniformemente a lo largo de la PCB.
+\item Carga térmica: Esta separación de tareas implica que la temperatura que alcance cada uno será independiente del otro y se distribuirá uniformemente a lo largo de la PCB.
 
 \item Sin dropout ni picos de corriente: El módulo \emph{MT3608} es un regulador switching, que utiliza transistores MOSFET en zona de corte y saturación, por lo que no hay caídas apreciables de tensión entre la entrada y la salida. A su vez, los picos de corriente pueden ser abastecidos por el ajuste automático del ciclo de trabajo del switch.
 
-\item Doble regulación de tensión: Al alimentar el \emph{ESP32} a través del pin de 5 V, se utiliza el regulador integrado en la placa para reducirlos a 3,3 V aún más estables.
+\item Doble regulación de tensión: Al alimentar el \emph{ESP32} a través del pin de 5 V, éste utiliza el regulador integrado en su placa para reducirlos a 3,3 V aún más estables.
 
 \end{itemize}
 
@@ -785,9 +797,9 @@ Desventajas:
 
 \item Mantenimiento impráctico: A pesar de que las reparaciones son más sencillas y baratas, los módulos mencionados sólo pueden conseguirse en casas especializadas en electrónica, a diferencia del cargador estándar.
 
-\item Menor optimización del espacio: Al tener dos módulos distintos, se requiere una PCB más espaciosa para contenerlos.
+\item Menor optimización del espacio: Al tener dos módulos distintos se requiere una PCB más espaciosa para contenerlos.
 
-\item Pérdida de eficiencia: La ventaja de la doble regulación implica inevitablemente una pérdida de eficiencia. La energía sufre dos conversiones: de la pila a los 5 V y de los 5 V a los 3,3 V en el regulador interno del \emph{ESP32}, lo que aumenta la disipación térmica.
+\item Pérdida de eficiencia: La ventaja de la doble regulación implica inevitablemente una pérdida de eficiencia. La energía sufre dos conversiones (de la batería a los 5 V y de los 5 V a los 3,3 V en el regulador interno del \emph{ESP32}), lo que aumenta la disipación térmica.
 
 \end{itemize}
 
@@ -826,7 +838,7 @@ Desventajas:
 
 \item No es modular: Si se produjera una falla en cualquier parte del sistema, inevitablemente habría que comprar el repuesto completo del chip, lo cual es más costoso que comprar los repuestos separados de los módulos anteriormente vistos.
 
-\item Ripple en la señal de salida: Al estar diseñados para cargar celulares conectándose a un PMIC interno, los chips \emph{IP5306} conmutan a mucha menor frecuencia (entre 300 y 500 kHz), que el módulo \emph{MT3608}, por ejemplo. Además, carece de filtros adecuados a la salida, lo que provoca que este rizado sea más difícil de eliminar. Este ripple es sumamente indeseable para alimentar un servidor Wi-Fi y una cámara que debe transmitir en vivo. 
+\item Ripple en la señal de salida: Al estar diseñados para cargar celulares conectándose a un PMIC interno, los chips \emph{IP5306} conmutan a mucha menor frecuencia (entre 300 y 500 kHz) que el módulo \emph{MT3608}, por ejemplo. Además, carece de filtros adecuados a la salida, lo que provoca que este rizado sea más difícil de eliminar. Este ripple es sumamente indeseable para alimentar un servidor Wi-Fi y una cámara que debe transmitir en vivo. 
 
 \end{itemize}
 
@@ -846,11 +858,11 @@ El funcionamiento en detalle de estos integrados y sus módulos comerciales ser�
 
 \subsection{Recarga y protección}
 
-Como se expuso con anterioridad, el chip \emph{TP4056} sirve para cargar una única celda de baterías de litio, y lo hace en un ciclo de dos fases.
+Como se expuso con anterioridad, el chip \emph{TP4056} sirve para cargar una única celda de baterías de litio y lo hace en un ciclo de dos fases.
 
-En primera instancia carga la batería a corriente constante, es decir, le inyecta un valor fijo de corriente elegida por el diseñador para que la carga comience siendo rápida. Al mismo tiempo, el chip mide constantemente el voltaje de la pila, y cuando llega a los 4,2 V comienza la fase de carga con voltaje constante, y permite a la propia pila que absorba la corriente necesaria para no destruirse. Si toda la carga fuera a corriente constante, se le inyectaría a la pila más energía de la que puede soportar y acabaría destruyéndose. Por el contrario, si toda la carga fuese a voltaje constante, el proceso llevaría demasiado tiempo, lo cual es poco práctico para la experiencia de usuario. Es por eso que este integrado oscila automáticamente entre esos dos modos.
+En primera instancia carga la batería a corriente constante, es decir, le inyecta un valor fijo de corriente elegida por el diseñador para que la carga comience siendo rápida. Al mismo tiempo, el chip mide constantemente el voltaje de la batería, y cuando llega a los 4,2 V comienza la fase de carga con voltaje constante, y permite a la propia batería que absorba la corriente necesaria para no destruirse. Si toda la carga fuera a corriente constante, se le inyectaría más energía de la que puede soportar y acabaría destruyéndose. Por el contrario, si toda la carga fuese a voltaje constante, el proceso llevaría demasiado tiempo, lo cual es poco práctico para la experiencia de usuario. Es por eso que este integrado oscila automáticamente entre esos dos modos.
 
-Por otra parte, el \emph{TP4056} está diseñado para detener la carga en la fase de voltaje constante, cuando la corriente absorbida por la pila sea inferior a una décima del valor programado por el usuario, lo cual evita sobrecargar la pila.
+Por otra parte, el \emph{TP4056} está diseñado para detener la carga en la fase de voltaje constante, cuando la corriente absorbida por la batería sea inferior a una décima del valor programado por el usuario, lo cual evita sobrecargarla.
 
 Para resumir, sus características más relevantes son:
 
@@ -868,7 +880,7 @@ Para resumir, sus características más relevantes son:
 
 UVLO (\emph{Under Voltage Lockout} / Bloqueo por bajo voltaje): Es una funcionalidad del chip que permite que cuando se introduzca una alimentación mala o inestable, la carga se bloquee para evitar que el proceso dañe la pila o los circuitos.
 
-Umbral de carga lenta: Para evitar sobrecargar una pila en mal estado (con voltaje inferior a 3,0), el \emph{TP4056} entra en modo \emph{carga lenta}, enviando solo el 10\% de la corriente programada hasta que supere el umbral. Luego de eso la carga procede con normalidad.
+Umbral de carga lenta: Para evitar sobrecargar una batería en mal estado (con voltaje inferior a 3,0), el \emph{TP4056} entra en modo \emph{carga lenta}, enviando solo el 10\% de la corriente programada hasta que supere el umbral. Luego de eso la carga procede con normalidad.
 
 Arranque suave de corriente: Es una medida de protección a la fuente externa. Garantiza que al enchufar el circuito a la misma, la absorción de corriente no sea tan brusca, sino que aumente gradualmente con el tiempo para evitar daños.
 
@@ -917,11 +929,11 @@ En el siguiente gráfico se ilustran las fases de corriente constante y voltaje 
     \label{fig:tp4056grafico}
 \end{figure}
 
-Con un voltaje menor a 4,2 V, se programó en ese caso una corriente de 800 mA. El ciclo comienza con un aumento gradual de la corriente hasta llegar a ese valor programado. El voltaje mientras tanto va aumentando, y al llegar a los 4,2 V, la corriente disminuye con ese mismo valor hasta finalizar la carga.
+Con un voltaje menor a 4,2 V, se programó en ese caso una corriente de 800 mA. El ciclo comienza con un aumento gradual de la corriente hasta llegar a ese valor programado. El voltaje mientras tanto va aumentando, y al llegar a los 4,2 V la corriente disminuye hasta finalizar la carga.
 
 Se explica a continuación un circuito de uso típico con este chip, correspondiente al módulo que se encuentra comercialmente en las casas de electrónica y se utiliza en este proyecto:
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/tp4056placa.png}
     \caption{Circuito típico de aplicación del \emph{TP4056}}
@@ -936,17 +948,17 @@ En el pin PROG se conecta una resistencia RPROG (o R3 en el diagrama) de 1.2 k�
 
 El pin de sensor de temperatura se conectará a GND ya que no se utiliza, al igual que el pin 9 (EP), que sirve para disipación.
 
-El pin 5 (BAT), no va conectado únicamente a la pila, sino que además pasa por un capacitor de desacople (C1) y por otros dos integrados que vienen conjuntos en el módulo: El \emph{DW01A} y el \emph{FS8205A}. 
+El pin 5 (BAT), no va conectado únicamente a la pila, sino que además pasa por un capacitor de desacople (C1) y por otros dos integrados que también se incluyen en el módulo: El \emph{DW01A} y el \emph{FS8205A}. 
 
-El \emph{DW01A} es básicamente un monitor del voltaje y corriente de la pila. Si nota que el voltaje de la pila es inferior o superior a lo esperado, o detecta algún cortocircuito, le informa al \emph{FS8205A} mediante los pines CHRGGT y DSCHRGGT, para que este último actúe desconectando físicamente la pila del circuito mediante la salida B-.
+El \emph{DW01A} es un monitor del voltaje y corriente de la batería. Si nota que su tensión es inferior o superior a lo esperado, o detecta algún cortocircuito, le informa al \emph{FS8205A} mediante los pines CHRGGT y DSCHRGGT, para que este último actúe desconectando físicamente la pila del circuito mediante el pin B-.
 
-Cuando todo está en condiciones, la pila se conecta mediante los terminales B+ y B- al pin BAT y a GND respectivamente. Si el integrado \emph{FS8205A} actúa, se abre un MOSFET aislando el terminal B- de GND y por lo tanto abriendo el circuito de carga.
+En condiciones normales, la batería se conecta, mediante los terminales B+ y B-, al pin BAT y a GND respectivamente. Si el integrado \emph{FS8205A} actúa, se abre un MOSFET aislando el terminal B- de GND y por lo tanto abriendo el circuito de carga.
 
 \subsection{Estabilización de voltaje}
 
-El chip \emph{MT3608} es un circuito \emph{Convertidor Step-up de alta eficiencia}. O más coloquialmente conocido como \emph{Elevador de tensión}. Su función es complementarse con un circuito externo típicamente conocido como \emph{Elevador boost} para tomar un determinado valor de voltaje a la entrada y obtener a su salida un valor más grande y más estable, listo para alimentar el microcontrolador.
+El chip \emph{MT3608} es un circuito \emph{Convertidor Step-up de alta eficiencia}. O más coloquialmente conocido como \emph{Elevador de tensión}. Su función es complementarse con un circuito externo típicamente conocido como \emph{Elevador boost} para tomar un determinado valor de voltaje a la entrada y obtener a su salida un valor más grande y más estable, acondicionado para alimentar el microcontrolador.
 
-Para entender su funcionalidad, debemos describir la función de un circuito elevador Boost, que se muestra a continuación:
+Para explicar sus características, se comienza por exponer la funcionalidad de un circuito boost mostrado a continuación:
 
 \begin{figure}[htbp]
     \centering
@@ -955,7 +967,7 @@ Para entender su funcionalidad, debemos describir la función de un circuito ele
     \label{fig:boost}
 \end{figure}
 
-Este circuito es el típico que se utiliza para las fuentes de tensión tipo \emph{switching}. En este caso particular, la tensión continua de la entrada es la salida de la pila de Litio, que oscila entre 3,0 y 3,7 V. Esta señal pasa por un conjunto de una bobina, un diodo, un capacitor, y un switch que se abre y cierra intermitentemente para brindar a la salida el valor deseado por el diseñador. Para ello se aprovecha los transitorios de la bobina en los primeros instantes en que esta llave se abre o cierra.
+Este circuito es el típico que se utiliza para las fuentes de tensión tipo \emph{switching}. En este caso particular, la tensión continua de la entrada es la salida de la batería de litio, que oscila entre 3,0 y 3,7 V. Esta señal pasa por un conjunto de una bobina, un diodo, un capacitor y un switch que se abre y cierra intermitentemente para brindar a la salida el valor deseado. Para ello se aprovechan los transitorios de la bobina en los primeros instantes en que esta llave se abre y cierra.
 
 Cuando la llave se cierra, la bobina comienza a cargarse con la energía de la pila, y la tensión a la salida es igual a la tensión previamente almacenada en el capacitor, el cual no puede descargarse en el cortocircuito debido a la presencia del diodo D, que se polariza en inversa y causa que toda la corriente vaya desde el capacitor hacia la carga.
 
@@ -993,7 +1005,7 @@ Su circuito interno es el siguiente:
 
 El transistor M1 es el switch que se observa en el diagrama del circuito boost, que se manipula mediante un bloque lógico de control conectado a su entrada de compuerta.
 
-El control comienza con el amplificador de error, que compara la entrada de feedback del chip (una muestra de la tensión de salida final), con una señal de 0,6 voltios muy estable. A la salida de este amplificador tenemos una señal proporcional al error de la tensión en la carga. El diseñador debe procurar que cuando la tensión en la carga se encuentre en su valor óptimo, la entrada de feedback debe ser igual a esos 0,6 voltios, para que en esa situación la salida sea constante y no afecte a la modulación.
+El control comienza con el amplificador de error, que compara la entrada de feedback del chip (una muestra de la tensión de salida final), con una señal de 0,6 voltios muy estable. A la salida de este amplificador tenemos una señal proporcional al error de la tensión en la carga. Se debe procurar que cuando la tensión en la carga se encuentre en su valor óptimo, la entrada de feedback sea igual a esos 0,6 voltios, para que en esa situación la salida sea constante y no afecte a la modulación.
 
 Cuando la salida es mayor a su valor esperado ($V_{FB} > V_{REF}$), el comparador de error reacciona disminuyendo la señal de error, mientras que cuando la salida es menor ($V_{FB} < V_{REF}$), la señal de error aumenta. Finalmente, si ambas entradas son iguales ($V_{FB} = V_{REF}$), el error será una señal constante, como se mencionó anteriormente. Todo lo anterior se refleja en la siguiente imagen:
 
@@ -1015,9 +1027,9 @@ Este valor de error ingresa en el amplificador comparador PWM junto a una señal
 
 Si la bobina pasa más tiempo cargándose (ciclo de trabajo grande), la tensión que genera al momento de descargarse aumentará junto con la tensión de salida, y si pasa más tiempo descargándose (ciclo de trabajo pequeño), la tensión de descarga será menor disminuyendo la salida final.
 
-De todo este análisis se puede inferir la siguiente conclusión: Si la tensión de salida decae, el ancho del pulso, y por consiguiente la tensión de salida, aumentan. Por el contrario, si ocurre un exceso de voltaje en la carga, tanto el ancho de pulso como la tensión de salida disminuyen.
+De todo este análisis se puede inferir la siguiente conclusión: si la tensión de salida decae, el ancho del pulso, y por consiguiente la tensión de salida, aumentan. Por el contrario, si ocurre un exceso de voltaje en la carga, tanto el ancho de pulso como la tensión de salida disminuyen.
 
-Por último, en el diagrama de bloques se observa un último amplificador que cumple dos funciones importantes: el sensor de corriente. Por un lado, actúa como sistema de protección, detectando situaciones en las que la corriente a través del switch aumenta a valores peligrosos. Para ello, lee la tensión sobre una resistencia del orden de los miliohmios (para interferir lo menos posible con el circuito original) y, ante un pico indeseado, envía una señal a la lógica de control que abre la llave para evitar la destrucción del circuito. Por otro lado, durante el funcionamiento normal, esta misma lectura de corriente se suma a la señal del oscilador para alimentar al comparador PWM, esto permite que el chip ajuste el ancho de pulso instantáneamente en cada ciclo, garantizando estabilidad ante variaciones rápidas de carga. 
+Por último, en el diagrama de bloques se observa un último amplificador (el sensor de corriente), que cumple dos funciones importantes: por un lado actúa como sistema de protección, detectando situaciones en las que la corriente a través del switch aumenta a valores peligrosos. Para ello, lee la tensión sobre una resistencia del orden de los miliohmios (para interferir lo menos posible con el circuito original) y, ante un pico indeseado, envía una señal a la lógica de control que abre la llave para evitar la destrucción del circuito. Por otro lado, durante el funcionamiento normal, esta misma lectura de corriente se suma a la señal del oscilador para alimentar al comparador PWM, esto permite que el chip ajuste el ancho de pulso instantáneamente en cada ciclo, garantizando estabilidad ante variaciones rápidas de carga. 
 
 Con todo el funcionamiento explicado, podemos pasar a mostrar el diagrama de pines:
 
@@ -1040,7 +1052,7 @@ Con todo el funcionamiento explicado, podemos pasar a mostrar el diagrama de pin
 
 \item IN: Tensión de entrada. 
 
-\item No se utiliza.
+\item NC: No se utiliza.
 
 \end{itemize}
 
@@ -1086,7 +1098,7 @@ El circuito comienza con los pines de entrada y habilitación cortocircuitados y
 
 El pin de switch (el drenador del MOSFET), se conecta al otro terminal de la bobina y al ánodo de un diodo de alta velocidad, como indica el modelo del circuito boost expuesto anteriormente.
 
-Finalmente, el pin de feedback se conecta a un potenciómetro de 100 kΩ en serie con una resistencia de 2,2 kΩ. El valor de este potenciómetro se ajusta con un tornillo externo para seleccionar el valor de tensión a la salida (dado por la señal obtenida en el amplificador de error). Se colocan esos valores de resistencia para limitar la tensión de salida a un mínimo de 0,6 V y un máximo absoluto de 28 V.
+Finalmente, el pin de feedback se conecta a un potenciómetro de 100 kΩ en serie con una resistencia de 2,2 kΩ. La resistencia de este potenciómetro se ajusta con un tornillo externo para seleccionar el valor de tensión a la salida (dado por la señal obtenida en el amplificador de error). De este modo, la salida puede variar entre un mínimo de 0,6 V y un máximo absoluto de 28 V.
 
 Se observa también el capacitor C6 del circuito boost, un capacitor C5 de desacople, y el pin de GND conectado a la masa del circuito.
 
