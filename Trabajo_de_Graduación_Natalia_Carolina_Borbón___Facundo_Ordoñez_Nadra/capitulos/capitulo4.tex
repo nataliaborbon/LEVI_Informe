@@ -22,11 +22,11 @@ El esquema de conexiones final para el circuito de alimentación del capturador 
     \label{esquemacapturador}
 \end{figure}
 
-Incluye los módulos \emph{TP4056}, \emph{MT3608}, un switch intermedio entre ellos para desconectar manualmente el dispositivo, y finalmente el zócalo donde se inserta la \emph{ESP32}, al cual se le conecta el LED IR para normalizar la iluminación en el ojo.
+Incluye los módulos \emph{TP4056}, \emph{MT3608}, un switch intermedio entre ellos para desconectar manualmente el dispositivo y finalmente el zócalo donde se inserta la \emph{ESP32}, al cual se le conecta el LED IR para normalizar la iluminación en el ojo.
 
 Al tener los módulos comerciales, el esquemático final de la PCB se reduce a este simple esquema:
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
     \caption{Esquema simplificado de la PCB del circuito capturador}
@@ -37,7 +37,7 @@ La entrada del \emph{TP4056} se conecta mediante USB-C, por lo que no se incluye
 
 A su vez, el esquema de conexiones de la placa que actuará como servidor web es el siguiente:
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemareceptor.png}
     \caption{Esquema simplificado de la PCB del circuito servidor}
@@ -50,7 +50,7 @@ Prácticamente igual al anterior, sin los diodos LED ni la \emph{ESP32-CAM}. En 
 
 A continuación se muestran imágenes del diseño de las PCBs para ambos dispositivos, diseñados en el software web \emph{EasyEDA}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{figuras/layoutcapturador.png}
     \caption{Layout de la PCB del circuito capturador}
@@ -59,7 +59,7 @@ A continuación se muestran imágenes del diseño de las PCBs para ambos disposi
 
 En lugar de colocar directamente el LED de encendido en la PCB, se opta por utilizar una bornera de 3 terminales para conectarlo externamente. Esto para poder decidir con más libertad su posición exacta en el dispositivo final.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{figuras/layoutservidor.png}
     \caption{Layout de la PCB del circuito servidor}
