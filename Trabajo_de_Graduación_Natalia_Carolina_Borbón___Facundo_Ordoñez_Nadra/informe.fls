@@ -189,6 +189,11 @@ INPUT C:\Program Files\MiKTeX\tex\latex\rerunfilecheck\rerunfilecheck.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\rerunfilecheck\rerunfilecheck.sty
 INPUT C:\Program Files\MiKTeX\tex\generic\uniquecounter\uniquecounter.sty
 INPUT C:\Program Files\MiKTeX\tex\generic\uniquecounter\uniquecounter.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\ulem\ulem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\ulem\ulem.sty
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\latex-fonts\lasy6.tfm
 INPUT C:\Program Files\MiKTeX\tex\latex\csquotes\csquotes.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\csquotes\csquotes.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\csquotes\csquotes.def
@@ -493,6 +498,20 @@ INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
 INPUT .\figuras\arduinouno.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32cyd.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
+INPUT .\figuras\esp32wifi.png
 INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\ts1cmbr.fd
@@ -504,6 +523,13 @@ INPUT .\figuras\clienteservidor.png
 INPUT .\figuras\clienteservidor.png
 INPUT .\figuras\clienteservidor.png
 INPUT .\figuras\clienteservidor.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
+INPUT .\figuras\patronmvc.png
 INPUT .\figuras\componente.png
 INPUT .\figuras\componente.png
 INPUT .\figuras\componente.png
@@ -517,55 +543,13 @@ OUTPUT capitulos\capitulo3.aux
 INPUT .\capitulos\capitulo3.tex
 INPUT .\capitulos\capitulo3.tex
 INPUT capitulos\capitulo3.tex
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques1.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\bloques2.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\familiaesp.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\esp32s3.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\ov2640.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\protocolospi.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
-INPUT .\figuras\entornos.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
+INPUT .\figuras\oscuridadpupila.png
 INPUT .\figuras\edgeimpulse.png
 INPUT .\figuras\edgeimpulse.png
 INPUT .\figuras\edgeimpulse.png
@@ -587,6 +571,13 @@ INPUT .\figuras\entornogooglecolab.png
 INPUT .\figuras\entornogooglecolab.png
 INPUT .\figuras\entornogooglecolab.png
 INPUT .\figuras\entornogooglecolab.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
+INPUT .\figuras\fotosojos.png
 INPUT .\figuras\etiquetas.png
 INPUT .\figuras\etiquetas.png
 INPUT .\figuras\etiquetas.png
@@ -601,13 +592,6 @@ INPUT .\figuras\resultadoscolab.png
 INPUT .\figuras\resultadoscolab.png
 INPUT .\figuras\resultadoscolab.png
 INPUT .\figuras\resultadoscolab.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
-INPUT .\figuras\oscuridadpupila.png
 INPUT .\figuras\deteccion_rostro_mediapipe.png
 INPUT .\figuras\deteccion_rostro_mediapipe.png
 INPUT .\figuras\deteccion_rostro_mediapipe.png
