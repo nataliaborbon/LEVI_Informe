@@ -21,25 +21,25 @@ El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocula
     \label{fig:eyetracking}
 \end{figure}
 
-Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Una de estas aplicaciones directas es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
+Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Uno de estos usos directos es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
 
-En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, se implementa el seguimiento ocular enfocado en detectar hacia cuál de las opciones de respuesta a una pregunta, dispuestas en una pantalla, dirige la mirada el alumno. Esta información se procesa para luego registrar la selección correspondiente. De este modo, el alumno puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor en pantalla ni de contar con destreza física.
+En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, el seguimiento ocular se emplea para detectar hacia cuál de las opciones de respuesta dirige la mirada el alumno. Estas opciones se disponen en una pantalla. Luego, esta información se procesa para registrar la selección correspondiente. De este modo, el estudiante puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor ni de contar con destreza física.
 
 \section{Procesamiento de Imágenes y Visión por Computadora}
 
 Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
 
 \subsection{Conceptos fundamentales y biblioteca OpenCV}
-El procesamiento de imágenes puede definirse como una técnica que consiste en modificar una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida (Por ejemplo, para cambiar su resolución, recortarla, cambiar su paleta de colores, entre otros procesos). En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada mediante algoritmos matemáticos para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla o modificar su paleta de colores, entre otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
 
-Por otro lado, la visión computacional es la interpretación que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
+Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
 
 Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
 
 \subsection{Coincidencia de patrones (Template Matching)}
-La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para buscar y encontrar la ubicación de una imagen pequeña (denominada plantilla o molde) dentro de una imagen de mayor tamaño (denominada \emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen principal, de izquierda a derecha y de arriba hacia abajo. 
+La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para encontrar la ubicación de una imagen pequeña, denominada plantilla o molde, dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
 
-Se comienza alineando las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes (es decir, sus esquinas izquierdas superiores), se realiza un análisis matemático y, al terminar, se desplaza la plantilla un píxel hacia la derecha (se alinean las coordenadas \emph{X}=1, \emph{Y}=0). El análisis se repite en esta posición y se continúa desplazando hasta terminar la primera fila. A continuación, vuelve a comenzar, esta vez alineando la plantilla con la \emph{input} una fila más abajo (\emph{X}=0, \emph{Y}=1). Este proceso se repite en cada fila hasta que se cubre por completo la imagen principal (Fig. \ref{fig:templatematching}).
+El recorrido comienza con las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes alineadas, es decir, con sus esquinas superiores izquierdas superpuestas. En esa posición se realiza un cálculo matemático. Luego, la plantilla se desplaza un píxel hacia la derecha, hasta las coordenadas \emph{X}=1, \emph{Y}=0, y el cálculo se vuelve a realizar. Este desplazamiento continúa hasta completar la primera fila. A continuación, la plantilla se alinea con la imagen de entrada una fila más abajo (\emph{X}=0, \emph{Y}=1) y el recorrido vuelve a comenzar. Esta secuencia se repite en cada fila hasta cubrir por completo la imagen de entrada (Fig. \ref{fig:templatematching}).
 
 \begin{figure}[H]
     \centering
@@ -48,7 +48,7 @@ Se comienza alineando las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes 
     \label{fig:templatematching}
 \end{figure}
 
-En cada posición de la plantilla, el algoritmo aplica una fórmula estadística llamada \emph{Coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr1})
+En cada posición de la plantilla, el algoritmo aplica una fórmula estadística denominada \emph{coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr1}).
 
 \begin{figure}[H]
     \centering
@@ -57,22 +57,20 @@ En cada posición de la plantilla, el algoritmo aplica una fórmula estadística
     \label{fig:coefcorr1}
 \end{figure}
 
-Donde \emph{T} es una matriz cuyas celdas representan los píxeles de la imagen de plantilla e \emph{I} es la matriz que representa a la imagen de \emph{Input}. Sus contenidos dependen del formato de las imágenes. 
+En esta fórmula, \emph{T} es la matriz cuyas celdas representan los píxeles de la plantilla, e \emph{I} es la matriz que representa la imagen de entrada. Su contenido depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
 
-Los valores (x,y) son las coordenadas de referencia (aquellas donde se alinean la plantilla y la imagen principal), mientras que (x',y') son las coordenadas de los pixeles locales dentro la plantilla.
+Esta expresión se basa en el \emph{coeficiente de correlación de Pearson}. Evalúa qué tan similar es la plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta y, en función de eso, otorga un valor entre $-1$ y $+1$. Un valor de $+1$ indica que la plantilla es idéntica a la porción de imagen analizada. Un valor de $-1$ significa que la plantilla tiene los colores opuestos a los de la imagen, mientras que un valor de 0 refleja que no existe correlación alguna.
 
-Esta fórmula, basada en la ecuación del \emph{coeficiente de correlación de Pearson}, evalúa qué tan similar es la imagen de plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta, y en base a eso otorga una calificación de entre -1,0 a +1,0. Colocar un 1.0 equivaldría a indicar que la plantilla es exactamente igual a la porción de la imagen que se está analizando, un -1.0 significaría que la plantilla tiene los colores opuestos a la imagen, y un 0.0 indica que no hay correlación alguna.
-
-El resultado es una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta en donde el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
+El resultado del recorrido es una matriz bidimensional de valores. El punto con el valor más alto indica la coordenada en la que el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figuras/resultadotemplate.png}
-    \caption{Imagen ilustrativa de una matriz de resultados aplicando template matching}
+    \caption{Imagen ilustrativa de una matriz de resultados de \emph{Template Matching}}
     \label{fig:resultadotemplate}
 \end{figure}
 
-Con esta matriz se puede obtener fácilmente no solo la ubicación de una coincidencia con la imagen de plantilla, sino también qué tan fuerte o certera es dicha coincidencia.
+Esta matriz permite obtener no solo la ubicación de la coincidencia con la plantilla, sino también su intensidad.
 
 \section{Redes Neuronales Artificiales}
 
@@ -130,9 +128,9 @@ En función de estos requerimientos espaciales, se planteó como hipótesis de t
 
 En el diseño de sistemas embebidos actuales, la optimización de costos, espacio y consumo energético recae fundamentalmente en la implementación de microprocesadores y microcontroladores. 
 
-Un microprocesador (MPU) constituye la unidad central de procesamiento de un sistema. Se trata de un circuito integrado encargado de decodificar y ejecutar instrucciones aritméticas y lógicas. Su arquitectura interna se compone de una Unidad Aritmético Lógica (ALU), registros de memoria ultrarrápida y buses de datos y control que transmiten señales eléctricas binarias. Al carecer de memoria masiva y periféricos integrados, requiere de componentes externos interconectados en una placa base para conformar un sistema funcional. 
+Un microprocesador (MPU) constituye la unidad central de procesamiento de un sistema. Se trata de un circuito integrado encargado de decodificar y ejecutar instrucciones aritméticas y lógicas. Su arquitectura interna se compone de una Unidad Aritmético Lógica (ALU), registros de memoria ultrarrápida y buses de datos y control que transmiten señales eléctricas binarias. Al carecer de memoria masiva y periféricos integrados, requiere de componentes externos interconectados en una placa base para conformar un equipo funcional. 
 
-Por otro lado, un microcontrolador (MCU) es un sistema informático completo encapsulado en un único circuito integrado. Su estructura integra un microprocesador central junto con bloques de memoria interna (tanto volátil para datos como no volátil para el programa) y múltiples periféricos. Estos módulos adicionales pueden incluir conversores analógico-digitales (ADC) y digital-analógicos (DAC), temporizadores, protocolos de comunicación serial y puertos de entrada/salida de propósito general (GPIO), lo que le permite interactuar directamente con el entorno físico y dispositivos externos de manera autónoma. 
+Por otro lado, un microcontrolador (MCU) es un sistema informático completo encapsulado en un único circuito integrado. Su estructura reúne un microprocesador central junto con bloques de memoria interna (tanto volátil para datos como no volátil para el programa) y múltiples periféricos. Estos módulos adicionales pueden incluir conversores analógico-digitales (ADC) y digital-analógicos (DAC), temporizadores, protocolos de comunicación serial y puertos de entrada/salida de propósito general (GPIO), lo que le permite interactuar directamente con el entorno físico y dispositivos externos de manera autónoma. 
 
 Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \emph{Arduino Uno} (Fig. \ref{fig:arduinouno}).
 
@@ -145,7 +143,7 @@ Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \e
 
 \subsection{Familia de microcontroladores ESP32}
 
-Otro modelo de placas de desarrollo que ha ganado enorme popularidad en el desarrollo de sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32. Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
+Otro modelo de placas de desarrollo que ha ganado enorme popularidad en el ámbito de los sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32. Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
 
 Además de sus excelentes capacidades de comunicación, este microcontrolador representa un salto significativo en cuanto a potencia computacional. Al estar generalmente equipado con un procesador de doble núcleo y una memoria considerablemente mayor que la de sus predecesores, permite manejar tareas más complejas, alojar servidores web locales y procesar datos a mayor velocidad. Gracias a este equilibrio entre rendimiento, conectividad y tamaño reducido, el ESP32 se ha convertido en una pieza fundamental para la ingeniería de dispositivos modernos e interconectados.
 
@@ -153,15 +151,15 @@ Además de sus excelentes capacidades de comunicación, este microcontrolador re
 
 El desarrollo de interfaces gráficas de usuario (GUI, por sus siglas en inglés) en sistemas embebidos presenta desafíos asociados a las restricciones de memoria RAM, capacidad de cómputo y consumo de energía de los microcontroladores. A diferencia de los entornos convencionales, donde el sistema operativo gestiona los recursos visuales mediante unidades de procesamiento gráfico dedicadas (GPU), en un microcontrolador el renderizado debe ejecutarse de forma eficiente. Así se garantiza fluidez visual y respuesta táctil en tiempo real sin sobrecargar la CPU.
 
-Para resolver esta problemática, se recurre a bibliotecas gráficas optimizadas para hardware limitado, entre las que destaca \emph{LVGL} (\emph{Light and Versatile Graphics Library}). LVGL es una biblioteca de código abierto escrita en lenguaje C, diseñada para operar con requerimientos mínimos de memoria. Implementa un modelo orientado a objetos basado en elementos visuales predefinidos (\emph{widgets}) como botones, etiquetas, listas, deslizadores y contenedores, los cuales pueden personalizarse mediante estilos y animaciones.
+Para resolver esta problemática, se recurre a bibliotecas gráficas optimizadas para hardware limitado, entre las que destaca \emph{LVGL} (\emph{Light and Versatile Graphics Library}). LVGL es una herramienta de código abierto escrita en lenguaje C, diseñada para operar con requerimientos mínimos de memoria. Implementa un modelo orientado a objetos basado en elementos visuales predefinidos (\emph{widgets}) como botones, etiquetas, listas, deslizadores y contenedores, los cuales pueden personalizarse mediante estilos y animaciones.
 
 La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de la interfaz y el hardware subyacente. Esto se logra a través de dos componentes principales:
 \begin{itemize}
-    \item Controlador de pantalla (\emph{Display Driver}): transfiere los píxeles renderizados desde el búfer de dibujo interno de la biblioteca hacia el controlador físico del panel (por ejemplo, a través de interfaces SPI o paralelas). Además, admite técnicas de doble búfer (\emph{double buffering}) para evitar parpadeos en pantalla.
+    \item Controlador de pantalla (\emph{Display Driver}): transfiere los píxeles renderizados desde el búfer de dibujo interno de la biblioteca hacia el circuito de control del panel (por ejemplo, a través de interfaces SPI o paralelas). Además, admite técnicas de doble búfer (\emph{double buffering}) para evitar parpadeos en pantalla.
     \item Controlador de dispositivo de entrada (\emph{Input Device Driver}): gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
 \end{itemize}
 
-En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estos módulos incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (típicamente XPT2046), interconectados mediante bus SPI. La integración de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
+En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estas placas incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (típicamente XPT2046), interconectados mediante bus SPI. El uso de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
 
 \begin{figure}[htbp]
     \centering
@@ -197,14 +195,14 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
 \begin{itemize}
     \item Protocolo IP (\textit{Internet Protocol}): estructura los datos en paquetes que contienen las direcciones de origen y destino para su entrega en la red. En redes locales bajo la versión IPv4, la dirección de cada dispositivo se establece mediante dos modalidades:
     \begin{itemize}
-        \item Asignación estática: la dirección se define de manera manual en el equipo y permanece fija a lo largo del tiempo, lo que permite localizar siempre al dispositivo en esa misma dirección.
+        \item Asignación estática: la dirección se define de manera manual en el equipo y permanece fija a lo largo del tiempo, lo que permite localizar siempre al dispositivo en esa misma ubicación.
         \item Asignación dinámica: el protocolo de configuración dinámica de host (DHCP, \textit{Dynamic Host Configuration Protocol}) asigna una dirección disponible de forma automática al asociarse el equipo a la red, lo que agiliza la incorporación de nuevos dispositivos sin requerir configuraciones individuales.
     \end{itemize}
 
     \item Resolución de nombres mediante mDNS (\textit{Multicast Domain Name System}): permite que los dispositivos de una red local se identifiquen mediante nombres de dominio legibles por humanos, en lugar de direcciones IP numéricas. 
-    \item Protocolo HTTP (\textit{Hypertext Transfer Protocol}): opera bajo el modelo cliente-servidor mediante un esquema de peticiones y respuestas. Para asegurar que la información no sufra pérdidas ni alteraciones en su secuencia, HTTP utiliza TCP (\textit{Transmission Control Protocol}), el cual establece una conexión confiable previa al intercambio de datos. Mediante este mecanismo se transfieren páginas web, estilos y datos estructurados.
+    \item Protocolo HTTP (\textit{Hypertext Transfer Protocol}): opera bajo el modelo cliente-servidor mediante un esquema de peticiones y respuestas. Para asegurar que la información no sufra pérdidas ni alteraciones en su secuencia, HTTP utiliza TCP (\textit{Transmission Control Protocol}), el cual establece una conexión confiable previa al intercambio de datos. A través de este mecanismo se transfieren páginas web, estilos y datos estructurados.
 
-    \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia continua de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
+    \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia ininterrumpida de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
 \end{itemize}
 
 \section{Arquitectura y Patrones de Software}
@@ -223,7 +221,7 @@ La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo d
 
 \end{itemize}
 
-Esta forma de trabajo es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. Lo contrario incrementaría significativamente los costos y la complejidad de hardware en cada terminal, y volvería ineficientes los procesos.
+Esta modalidad es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. Lo contrario incrementaría significativamente los costos y la complejidad de hardware en cada terminal, y volvería ineficientes los procesos.
 
 \begin{figure}[htbp]
     \centering
@@ -253,15 +251,15 @@ Esta separación de responsabilidades favorece la modularidad, simplifica el man
 
 \subsection{Arquitectura de una aplicación web}
 
-En el desarrollo de software, las aplicaciones web suelen combinar el modelo cliente/servidor con el patrón MVC. Este enfoque distribuye las responsabilidades del sistema entre el cliente y el servidor, a los que se identifica como \emph{frontend} y \emph{backend} respectivamente. El \emph{frontend} opera como la vista del sistema: presenta la interfaz gráfica, captura las acciones del usuario y emite las peticiones. El \emph{backend} reúne las funciones del controlador y del modelo: atiende las solicitudes entrantes, procesa la lógica del sistema y administra la persistencia de los datos. A continuación, se detallan las características y la organización de cada una de estas partes.
+En el desarrollo de software, las aplicaciones web suelen combinar el modelo cliente/servidor con el patrón MVC. Este enfoque distribuye las responsabilidades del sistema entre el cliente y el servidor, a los que se identifica como \emph{frontend} y \emph{backend} respectivamente. El \emph{frontend} opera como la vista del sistema: presenta la interfaz gráfica, captura las acciones del usuario y emite las peticiones. El \emph{backend} reúne las funciones del controlador y del modelo: atiende las solicitudes entrantes, procesa la lógica de la aplicación y administra la persistencia de los datos. A continuación, se detallan las características y la organización de cada una de estas partes.
 
 \subsubsection{Frontend}
 
-Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Este proceso se apoya en tres tecnologías complementarias:
+Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Esta tarea se apoya en tres tecnologías complementarias:
 
 \begin{itemize}
     \item HTML (\textit{HyperText Markup Language}, lenguaje de marcado de hipertexto): define la estructura y el contenido del documento. Mediante etiquetas, especifica qué función cumple cada elemento en la interfaz (títulos, bloques de texto, botones o casillas para ingresar datos) y los organiza en un orden lógico que el navegador interpreta para armar la pantalla.
-    \item CSS (\textit{Cascading Style Sheets}, hojas de estilo en cascada): controla el aspecto visual y la ubicación de los elementos definidos por HTML. Aplica reglas para definir colores, tipografías, tamaños y espacios. También organiza cómo se distribuyen los bloques en la pantalla. De este modo, la vista se adapta al tamaño del dispositivo.
+    \item CSS (\textit{Cascading Style Sheets}, hojas de estilo en cascada): controla el aspecto visual y la ubicación de los elementos definidos por HTML. Aplica reglas para establecer colores, tipografías, tamaños y espacios. También organiza cómo se distribuyen los bloques en la pantalla. De este modo, la vista se adapta al tamaño del dispositivo.
     \item JavaScript: es el lenguaje de programación que se ejecuta directamente en el navegador. Mientras que el HTML define qué elementos existen y el CSS define cómo se ven, JavaScript hace que la página responda a las acciones del usuario. Detecta eventos como clics o el envío de un formulario y altera el contenido en pantalla en tiempo real según esa interacción. Además, se comunica con el servidor para intercambiar información mientras la aplicación está en uso.
 \end{itemize}
 
@@ -315,7 +313,7 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
 
 \begin{itemize}
     \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, lo que elimina la necesidad de configurar, administrar o mantener un servicio en segundo plano.
-    \item Almacenamiento en archivo único: la base de datos completa (esquema, tablas, índices y datos) se almacena dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
+    \item Almacenamiento en archivo único: la base de datos completa (esquema, tablas, índices y datos) se guarda dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
     \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
     \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
 \end{itemize}

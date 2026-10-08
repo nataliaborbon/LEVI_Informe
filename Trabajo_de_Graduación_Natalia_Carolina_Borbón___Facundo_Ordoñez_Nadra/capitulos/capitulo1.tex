@@ -26,15 +26,15 @@ En este capítulo se presenta el dispositivo de seguimiento ocular desarrollado.
 
 En el ámbito educativo, los estudiantes con movilidad reducida enfrentan dificultades tanto para ser evaluados académicamente como para comunicarse con docentes, tutores y compañeros. Esta situación limita su autonomía y participación en las clases, principalmente porque las instituciones no cuentan con herramientas adaptadas a sus posibilidades físicas.
 
-Frente a esto, la tecnología de seguimiento ocular (\emph{eye-tracking}) se presenta como una alternativa práctica. Esta tecnología permite a un usuario interactuar con un sistema mediante la mirada. De este modo, se elimina la necesidad de recurrir al movimiento de los brazos o a la asistencia de terceros.
+Frente a esto, la tecnología de seguimiento ocular (\emph{eye-tracking}) se presenta como una alternativa práctica. Esta herramienta permite a un usuario interactuar con un sistema mediante la mirada. De este modo, se elimina la necesidad de recurrir al movimiento de los brazos o a la asistencia de terceros.
 
-Sin embargo, los sistemas de seguimiento ocular comerciales presentan dos grandes inconvenientes: tienen costos muy elevados y no están enfocados en la dinámica educativa. En la práctica, no existen soluciones accesibles que permitan a los profesores evaluar a alumnos con estas condiciones o que, al mismo tiempo, faciliten su comunicación en el ámbito de estudio.
+Sin embargo, los sistemas de seguimiento ocular comerciales presentan dos grandes inconvenientes. Tienen costos muy elevados y no están enfocados en la dinámica educativa. En la práctica, no existen soluciones accesibles que permitan a los profesores evaluar a alumnos con estas condiciones o que, al mismo tiempo, faciliten su comunicación en el ámbito de estudio.
 
 Para dar respuesta a esta necesidad, este trabajo presenta el desarrollo de un dispositivo de seguimiento ocular de bajo costo, diseñado para que un estudiante con movilidad reducida pueda resolver cuestionarios de opción múltiple y comunicarse con su entorno académico.
 
 \section{Estado del arte}
 
-La tecnología del \emph{eye-tracking} no es una novedad. Desde principios de siglo hasta la actualidad han existido múltiples empresas y desarrolladoras que implementan la detección ocular para dispositivos cotidianos. El caso más conocido es el de la empresa \emph{Tobii AB}, dedicada al desarrollo de artefactos con esta tecnología. Entre sus productos se encuentran los \emph{Tobii Glasses} (anteojos con seguimiento ocular para experiencia de usuario, figura \ref{fig:tobiiglasses}), los \emph{Tobii Pro Fusion} y \emph{Tobii Pro Spectrum}, utilizados principalmente para la investigación.
+La tecnología del \emph{eye-tracking} no es una novedad. Desde principios de siglo hasta la actualidad han existido múltiples empresas y desarrolladoras que implementan la detección ocular para dispositivos cotidianos. El caso más conocido es el de la compañía \emph{Tobii AB}, dedicada al desarrollo de artefactos de seguimiento ocular. Entre sus productos se encuentran los \emph{Tobii Glasses} (anteojos con seguimiento ocular para experiencia de usuario, figura \ref{fig:tobiiglasses}), los \emph{Tobii Pro Fusion} y \emph{Tobii Pro Spectrum}, utilizados principalmente para la investigación.
 
 \begin{figure}[H]
     \centering
@@ -43,39 +43,39 @@ La tecnología del \emph{eye-tracking} no es una novedad. Desde principios de si
     \label{fig:tobiiglasses}
 \end{figure}
 
-Por otro lado, la empresa \emph{EyeComTec} desarrolla productos exclusivamente de software como \emph{ECTKeyboard}, \emph{ECTMouse} y \emph{ECTTracker}, que se utilizan para manipular computadoras con tan solo el movimiento de los ojos.
+Por otro lado, la firma \emph{EyeComTec} desarrolla productos exclusivamente de software como \emph{ECTKeyboard}, \emph{ECTMouse} y \emph{ECTTracker}, que se utilizan para manipular computadoras con tan solo el movimiento de los ojos.
 
-La empresa \emph{LC Technologies} cuenta con el sistema \emph{Eyegaze}, un dispositivo con hardware y software propios diseñado para realizar múltiples tareas como navegar por internet, reproducir contenido multimedia, redactar mensajes y controlar dispositivos externos.
+La compañía \emph{LC Technologies} cuenta con el sistema \emph{Eyegaze}, un dispositivo con hardware y software propios diseñado para realizar múltiples tareas como navegar por internet, reproducir contenido multimedia, redactar mensajes y controlar equipos externos.
 
 También se puede mencionar a \emph{EyeHarp}, un instrumento musical digital que permite tocar música mediante el movimiento de los ojos. Funciona principalmente con rastreadores oculares \emph{Tobii}, aunque también puede utilizarse con otros dispositivos que controlan el puntero del mouse. Está diseñado especialmente para personas con discapacidades físicas o motrices y ofrece una forma inclusiva de expresión musical.
 
-A partir de todos estos desarrollos, se infiere que la tecnología del \emph{eye-tracking} se encuentra sumamente avanzada en el año en el que se realiza este trabajo. Sin embargo, el presente proyecto se enfoca exclusivamente en el ámbito educativo. Además, presenta algunas ventajas en comparación con estos dispositivos, que se comentan más adelante.
+A partir de todos estos desarrollos, se infiere que el seguimiento ocular se encuentra sumamente avanzado en el año en el que se realiza este trabajo. Sin embargo, el presente proyecto se enfoca exclusivamente en el ámbito educativo. Además, presenta algunas ventajas en comparación con estos dispositivos, que se comentan más adelante.
 
 \section{Motivación}
 
 Todos los ejemplos de sistemas que utilizan \emph{eye-tracking} expuestos anteriormente, ya sea por hardware, software o una combinación de ambos, son herramientas de calidad que pueden aplicarse en una gran variedad de campos. Han aportado una amplia gama de dispositivos versátiles que ayudan tanto a investigaciones científicas y de marketing, como también a facilitar acciones cotidianas.
 
-Sin embargo, el principal problema de estos dispositivos es su alto costo económico. El uso de tecnologías de tan alto nivel implica, a su vez, altos costos de desarrollo. En consecuencia, muchos de ellos no resultan accesibles para usuarios en una situación económica desfavorable.
+Sin embargo, el principal problema de estos equipos es su elevado precio. El uso de tecnologías de tan alto nivel implica, a su vez, altos costos de desarrollo. En consecuencia, muchos de ellos no resultan accesibles para usuarios en una situación económica desfavorable.
 
-Otro detalle observado durante la investigación es que ninguno de estos dispositivos está centrado exclusivamente en el ámbito educativo, a pesar de su versatilidad. Por lo tanto, se necesita una alternativa más optimizada, intuitiva y sencilla para resolver este problema.
+Otro detalle observado durante la investigación es que ninguna de estas soluciones está centrada exclusivamente en el ámbito educativo, a pesar de su versatilidad. Por lo tanto, se necesita una alternativa más optimizada, intuitiva y sencilla para resolver este problema.
 
-Por todo lo anteriormente estipulado se propone este proyecto: una solución que mantenga la ergonomía y la portabilidad de los dispositivos mencionados y que, al mismo tiempo, reduzca los costos de producción. Esto último se logra utilizando hardware y software de bajos recursos. Además, su orientación es exclusivamente educativa y está dirigida a personas con discapacidades motoras.
+Por todo lo expuesto, se propone este proyecto. Se trata de una solución que mantiene la ergonomía y la portabilidad de los dispositivos mencionados y que, al mismo tiempo, reduce los costos de producción. Esto último se logra mediante el uso de hardware y software de bajos recursos. Además, su orientación es únicamente educativa y está dirigida a personas con discapacidades motoras.
 
-Este dispositivo tiene la intención de ser utilizado en instituciones educativas y familias de escasos recursos, garantizando una accesibilidad mucho mayor que la de cualquier otro producto de alta tecnología.
+Este equipo tiene la intención de ser utilizado en instituciones educativas y familias de escasos recursos. De este modo, se garantiza una accesibilidad mucho mayor que la de cualquier otro producto de alta tecnología.
 
 
 \section{Alcance y objetivos}
 
-El objetivo general de este proyecto es desarrollar un dispositivo de bajo costo basado en microcontroladores económicos. Debe permitir que personas con movilidad reducida sean evaluadas mediante exámenes de opción múltiple y se puedan comunicar mediante seguimiento ocular (\emph{eye-tracking}). Además, debe funcionar de forma autónoma y sin conexión a internet (\emph{offline}).
+El objetivo general de este proyecto es desarrollar un dispositivo de bajo costo basado en microcontroladores económicos. Debe permitir que personas con movilidad reducida sean evaluadas mediante exámenes de opción múltiple y se puedan comunicar a través del seguimiento ocular (\emph{eye-tracking}). Además, tiene que funcionar de forma autónoma y sin conexión a internet (\emph{offline}).
 
 Para alcanzar esta meta, se plantean los siguientes objetivos específicos:
 
 \begin{itemize}
     \item Diseñar un dispositivo económico, ergonómico y portable, que funcione sin necesidad de acceso a internet.
-    \item Brindar una interfaz intuitiva y de fácil uso, accesible desde cualquier dispositivo con navegador web.
+    \item Brindar una interfaz intuitiva y de fácil uso, accesible desde cualquier equipo con navegador web.
     \item Permitir que los profesores gestionen cuestionarios de opción múltiple personalizados.
-    \item Permitir que los tutores realicen un seguimiento académico integral del alumno.
-    \item Facilitar un canal de comunicación directo para que docentes, tutores y compañeros puedan interactuar con el estudiante realizando preguntas informales.
+    \item Posibilitar que los tutores realicen un seguimiento académico integral del alumno.
+    \item Facilitar un canal de comunicación directo para que docentes, tutores y compañeros puedan interactuar con el estudiante mediante preguntas informales.
     \item Implementar un sistema de registro e inicio de sesión, con una base de datos local para el almacenamiento de usuarios, cuestionarios y respuestas.
     \item Realizar el procesamiento de la imagen del ojo del alumno mediante un microcontrolador embebido en el dispositivo.
 \end{itemize}

@@ -1,6 +1,6 @@
 PWD C:\Users\Natalia\Documents\LEVI_Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Natalia\Documents\LEVI_Informe\Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra\informe.tex
+INPUT informe.tex
 OUTPUT informe.log
 INPUT .\MastersDoctoralThesis.cls
 INPUT MastersDoctoralThesis.cls
@@ -432,10 +432,10 @@ INPUT C:\Program Files\MiKTeX\tex\latex\cmbright\omscmbrs.fd
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\cmbrsy10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\cmbrsy8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\cmbrsy8.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
 INPUT .\informe.toc
 INPUT .\informe.toc
 INPUT informe.toc
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
 OUTPUT informe.toc
 INPUT .\informe.lof
 INPUT .\informe.lof
@@ -445,14 +445,13 @@ INPUT .\informe.lot
 INPUT .\informe.lot
 INPUT informe.lot
 OUTPUT informe.lot
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebmo10.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
 INPUT .\capitulos\capitulo1.tex
 INPUT .\capitulos\capitulo1.tex
 OUTPUT capitulos\capitulo1.aux
 INPUT .\capitulos\capitulo1.tex
 INPUT .\capitulos\capitulo1.tex
 INPUT capitulos\capitulo1.tex
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
 INPUT .\figuras\tobiiglasses.png
 INPUT .\figuras\tobiiglasses.png
@@ -476,14 +475,35 @@ INPUT .\figuras\eyetracking.png
 INPUT .\figuras\eyetracking.png
 INPUT .\figuras\eyetracking.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
-INPUT .\figuras\machinelearning.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
+INPUT .\figuras\templatematching.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebmo10.tfm
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\coefcorr.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\resultadotemplate.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
+INPUT .\figuras\machinelearning.png
 INPUT .\figuras\redneuronal.png
 INPUT .\figuras\redneuronal.png
 INPUT .\figuras\redneuronal.png
@@ -613,13 +633,6 @@ INPUT .\figuras\deteccion_rostro_webgazer.png
 INPUT .\figuras\deteccion_rostro_webgazer.png
 INPUT .\figuras\deteccion_rostro_webgazer.png
 INPUT .\figuras\deteccion_rostro_webgazer.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
-INPUT .\figuras\coefcorr.png
 INPUT .\figuras\tp4056pinout.png
 INPUT .\figuras\tp4056pinout.png
 INPUT .\figuras\tp4056pinout.png
@@ -771,26 +784,26 @@ INPUT .\informe.out
 INPUT .\informe.out
 INPUT informe.run.xml
 OUTPUT informe.run.xml
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrsy10.pk
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrsy10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\tbmr10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\tbmr10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\cmbrmi8.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\cmbrmi8.pk
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbr10.pk
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbr10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrmi10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrmi10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbr10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbr10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrsy10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\cmbrsy10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\ebmo10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\ebmo10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi720\ebbx10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi720\ebbx10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\ebmr10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi600\ebmr10.pk
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi1244\ebbx10.pk
-INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi1244\ebbx10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi864\ebbx10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi864\ebbx10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi1244\ebbx10.pk
+INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi1244\ebbx10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\ebmo10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\ebmo10.pk
 INPUT C:\Users\Natalia\AppData\Local\MiKTeX\fonts\pk\ljfour\public\cmbright\dpi657\ebbx10.pk
