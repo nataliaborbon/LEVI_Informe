@@ -23,14 +23,14 @@ El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocula
 
 Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Uno de estos usos directos es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
 
-En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, el seguimiento ocular se emplea para detectar hacia cuál de las opciones de respuesta dirige la mirada el alumno. Estas opciones se disponen en una pantalla. Luego, esta información se procesa para registrar la selección correspondiente. De este modo, el estudiante puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor ni de contar con destreza física.
+En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, el seguimiento ocular se emplea para detectar hacia cuál de las opciones de respuesta a una pregunta dirige la mirada el alumno. Estas opciones se disponen de manera clara en una pantalla. Luego esa información se procesa para registrar la selección correspondiente. De este modo, el estudiante puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor ni de contar con destreza física.
 
 \section{Procesamiento de Imágenes y Visión por Computadora}
 
 Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
 
 \subsection{Conceptos fundamentales y biblioteca OpenCV}
-El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada mediante algoritmos matemáticos para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla o modificar su paleta de colores, entre otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada mediante algoritmos matemáticos para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
 
 Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
 
@@ -53,15 +53,15 @@ En cada posición de la plantilla, el algoritmo aplica una fórmula estadística
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figuras/coefcorr.png}
-    \caption{Coeficiente de correlación normalizado con media cero}
+    \caption{Coeficiente de correlación normalizado con media cero (ZNCC)}
     \label{fig:coefcorr1}
 \end{figure}
 
 En esta fórmula, \emph{T} es la matriz cuyas celdas representan los píxeles de la plantilla, e \emph{I} es la matriz que representa la imagen de entrada. Su contenido depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
 
-Esta expresión se basa en el \emph{coeficiente de correlación de Pearson}. Evalúa qué tan similar es la plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta y, en función de eso, otorga un valor entre $-1$ y $+1$. Un valor de $+1$ indica que la plantilla es idéntica a la porción de imagen analizada. Un valor de $-1$ significa que la plantilla tiene los colores opuestos a los de la imagen, mientras que un valor de 0 refleja que no existe correlación alguna.
+Esta expresión se basa en el \emph{coeficiente de correlación de Pearson}. Evalúa qué tan similar es la plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta y, en función de eso, otorga un valor flotante entre $-1.0$ y $+1.0$. Un valor de $+1.0$ indica que la plantilla es idéntica a la porción de imagen analizada. Un valor de $-1.0$ significa que la plantilla tiene los colores opuestos a los de la imagen, mientras que un valor de 0 refleja que no existe correlación alguna.
 
-El resultado del recorrido es una matriz bidimensional de valores. El punto con el valor más alto indica la coordenada en la que el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
+El resultado tras todo el recorrido de la plantilla es una matriz bidimensional de valores. El punto con el valor más alto indica la coordenada en la que el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
 
 \begin{figure}[H]
     \centering
@@ -76,7 +76,7 @@ Esta matriz permite obtener no solo la ubicación de la coincidencia con la plan
 
 \subsection{Definición y conceptos básicos}
 
-Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. Para ello, se suministran datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
+Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
 
 \begin{figure}[htbp]
 \centering
@@ -106,7 +106,7 @@ z = \sum w_i x_i + b
 
 Donde $x_i$ representa el dato de entrada individual, $w_i$ es el peso (la importancia relativa asignada a esa entrada específica) y \emph{b} es el sesgo o bias (una constante de adaptación algorítmica). El resultado \emph{z} es evaluado finalmente por una función de activación, la cual determina con qué intensidad la neurona transmite la señal hacia la siguiente capa.
 
-\subsection{Tipos y arquitecturas de redes}
+\subsection{Tipos y arquitecturas de redes neuronales}
 
 La arquitectura del modelo varía estrictamente según la naturaleza del problema a resolver. Se distinguen tres categorías fundamentales:
 
@@ -120,7 +120,7 @@ La arquitectura del modelo varía estrictamente según la naturaleza del problem
 
 \end{itemize}
 
-En función de estos requerimientos espaciales, se planteó como hipótesis de trabajo inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
+En función de los requerimientos espaciales, se planteó como hipótesis de trabajo inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
 
 \section{Sistemas Embebidos y Control Gráfico}
 
@@ -159,9 +159,9 @@ La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de 
     \item Controlador de dispositivo de entrada (\emph{Input Device Driver}): gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
 \end{itemize}
 
-En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estas placas incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (típicamente XPT2046), interconectados mediante bus SPI. El uso de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
+En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estas placas incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (típicamente XPT2046), interconectados mediante bus SPI (Fig. \ref{fig:esp32cyd}) . El uso de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/esp32cyd.png}
     \caption{Placa de desarrollo \emph{ESP32-CYD} (vista frontal y trasera)}
@@ -179,7 +179,7 @@ El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos
     \item Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP): en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Emite periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autentica a los nodos que solicitan conexión y gestiona la tabla de clientes asociados. Así, crea una infraestructura de red local independiente.
 \end{itemize}
 
-En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente. Tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station. Esto permite la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
+En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente. Tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station (Fig. \ref{fig:esp32wifi}). Esto permite la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
 
 \begin{figure}[htbp]
     \centering
@@ -209,7 +209,7 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
 
 \subsection{Modelo Cliente/Servidor}
 
-La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo de diseño de software y redes en el cual las tareas a realizar se distribuyen entre un proveedor de recursos o servicios denominado “Servidor” y un receptor o demandante de dichos servicios denominado “Cliente”. Se basa en una dinámica de petición/respuesta entre ambas entidades. Sus componentes principales son:
+La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo de diseño de software y redes en el cual las tareas a realizar se distribuyen entre un proveedor de recursos o servicios denominado \emph{Servidor} y un receptor o demandante de dichos servicios denominado \emph{Cliente}. Se basa en una dinámica de petición/respuesta entre ambas entidades. Sus componentes principales son:
 
 \begin{itemize}
 
@@ -221,9 +221,9 @@ La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo d
 
 \end{itemize}
 
-Esta modalidad es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. Lo contrario incrementaría significativamente los costos y la complejidad de hardware en cada terminal, y volvería ineficientes los procesos.
+Esta modalidad es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. De requerirlos, se incrementarían significativamente los costos y la complejidad de hardware en cada terminal, volviendo ineficientes los procesos.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/clienteservidor.png}
     \caption{El sistema \emph{Cliente/Servidor}}
@@ -242,7 +242,7 @@ El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una 
 
 Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/patronmvc.png}
     \caption{Patrón de diseño Modelo-Vista-Controlador (MVC)}
@@ -265,16 +265,16 @@ Al solicitar la aplicación, el navegador descarga un conjunto de archivos que p
 
 A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes (Fig.~\ref{fig:componente}), donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/componente.png}
+    \includegraphics[width=0.6\textwidth]{figuras/componente.png}
     \caption{Características de un componente web}
     \label{fig:componente}
 \end{figure}
 
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, el componente hijo no puede alterar directamente los datos o estados del padre. Solo puede emitir peticiones para solicitar cambios. En cambio, el padre sí puede modificar los estados del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 
-Para implementar este esquema se utiliza Preact, una biblioteca orientada a componentes que ofrece las mismas capacidades de desarrollo que React pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
+%Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
 
 \subsubsection{Backend}
 
