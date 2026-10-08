@@ -23,26 +23,56 @@ El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocula
 
 Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Una de estas aplicaciones directas es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
 
-En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, se implementa el seguimiento ocular enfocado en detectar hacia cuál de las opciones disponibles dirige la mirada el alumno. Esta información se procesa para registrar la selección correspondiente. De este modo, el alumno puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor en pantalla ni de contar con destreza física.
+En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, se implementa el seguimiento ocular enfocado en detectar hacia cuál de las opciones de respuesta a una pregunta, dispuestas en una pantalla, dirige la mirada el alumno. Esta información se procesa para luego registrar la selección correspondiente. De este modo, el alumno puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor en pantalla ni de contar con destreza física.
 
 \section{Procesamiento de Imágenes y Visión por Computadora}
 
 Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
 
 \subsection{Conceptos fundamentales y biblioteca OpenCV}
-El procesamiento de imágenes puede definirse como el proceso mediante el cual se modifica una imagen de entrada para obtener otra distinta mediante algoritmos matemáticos (ya sea para aumentar o disminuir su resolución, recortarla o cambiar su paleta de colores, entre otros procedimientos). En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+El procesamiento de imágenes puede definirse como una técnica que consiste en modificar una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida (Por ejemplo, para cambiar su resolución, recortarla, cambiar su paleta de colores, entre otros procesos). En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
 
-Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), con el fin de extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
+Por otro lado, la visión computacional es la interpretación que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
 
 Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
 
 \subsection{Coincidencia de patrones (Template Matching)}
-La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para buscar y encontrar la ubicación de una imagen pequeña (denominada plantilla o molde) dentro de una imagen de mayor tamaño.
+La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para buscar y encontrar la ubicación de una imagen pequeña (denominada plantilla o molde) dentro de una imagen de mayor tamaño (denominada \emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen principal, de izquierda a derecha y de arriba hacia abajo. 
 
-El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen principal, de izquierda a derecha y de arriba hacia abajo. En cada posición evaluada, el algoritmo utiliza una fórmula matemática para calcular un puntaje de similitud entre la plantilla original y el fragmento de la imagen principal que se superpone en ese instante.
+Se comienza alineando las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes (es decir, sus esquinas izquierdas superiores), se realiza un análisis matemático y, al terminar, se desplaza la plantilla un píxel hacia la derecha (se alinean las coordenadas \emph{X}=1, \emph{Y}=0). El análisis se repite en esta posición y se continúa desplazando hasta terminar la primera fila. A continuación, vuelve a comenzar, esta vez alineando la plantilla con la \emph{input} una fila más abajo (\emph{X}=0, \emph{Y}=1). Este proceso se repite en cada fila hasta que se cubre por completo la imagen principal (Fig. \ref{fig:templatematching}).
 
-El resultado de esta operación no es una imagen, sino una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta donde el algoritmo encontró la mayor coincidencia geométrica.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/templatematching.png}
+    \caption{Imagen ilustrativa del proceso de \emph{Template Matching}}
+    \label{fig:templatematching}
+\end{figure}
 
+En cada posición de la plantilla, el algoritmo aplica una fórmula estadística llamada \emph{Coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr})
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/coefcorr.png}
+    \caption{Coeficiente de correlación normalizado con media cero}
+    \label{fig:coefcorr}
+\end{figure}
+
+Donde \emph{T} es una matriz cuyas celdas representan los píxeles de la imagen de plantilla e \emph{I} es la matriz que representa a la imagen de \emph{Input}. Los valores numéricos de sus celdas dependen del formato de la imagen. 
+
+Las coordenadas (x,y) son las coordenadas de referencia (aquellas donde se alinean la plantilla y la imagen principal), mientras que (x',y') son las coordenadas de los pixeles locales dentro la plantilla.
+
+Esta fórmula, basada en la ecuación del \emph{coeficiente de correlación de Pearson}, evalúa qué tan similar es la imagen de plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta, y en base a eso otorga una calificación de entre -1,0 a +1,0. Colocar un 1.0 equivaldría a indicar que la plantilla es exactamente igual a la porción de la imagen que se está analizando, un -1.0 significaría que la plantilla tiene los colores opuestos a la imagen, y un 0.0 indica que no hay correlación alguna.
+
+El resultado es una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta en donde el algoritmo encontró la mayor coincidencia(Fig. \ref{fig:resultadotemplate}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/resultadotemplate.png}
+    \caption{Imagen ilustrativa de una matriz de resultados aplicando template matching}
+    \label{fig:resultadotemplate}
+\end{figure}
+
+Con esta matriz se puede obtener fácilmente no solo la ubicación de una coincidencia con la imagen de plantilla, sino también qué tan fuerte o certera es dicha coincidencia.
 
 \section{Redes Neuronales Artificiales}
 

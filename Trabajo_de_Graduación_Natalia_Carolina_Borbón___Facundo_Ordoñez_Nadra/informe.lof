@@ -1,44 +1,47 @@
 \babel@toc {spanish}{}\relax 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Tobii Glasses}}{2}{figure.caption.10}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Tobii Glasses}}{2}{figure.caption.8}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Representación gráfica del Eye-Tracking}}{4}{figure.caption.15}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces El proceso del \emph {Machine Learning}}}{6}{figure.caption.21}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagrama simplificado de una red neuronal}}{6}{figure.caption.23}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Placa de desarrollo \emph {Arduino Uno}}}{8}{figure.caption.28}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Placa de desarrollo \emph {ESP32-CYD} (vista frontal y trasera)}}{9}{figure.caption.31}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Red Wi-Fi con un microcontrolador ESP32 como punto de acceso}}{10}{figure.caption.34}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces El sistema \emph {Cliente/Servidor}}}{11}{figure.caption.38}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Patrón de diseño Modelo-Vista-Controlador (MVC)}}{12}{figure.caption.40}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Características de un componente web}}{13}{figure.caption.43}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Representación gráfica del Eye-Tracking}}{4}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Imagen ilustrativa del proceso de \emph {Template Matching}}}{5}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Coeficiente de correlación normalizado con media cero}}{6}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Imagen ilustrativa de una matriz de resultados aplicando template matching}}{6}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces El proceso del \emph {Machine Learning}}}{7}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Diagrama simplificado de una red neuronal}}{7}{figure.caption.24}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Placa de desarrollo \emph {Arduino Uno}}}{9}{figure.caption.29}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Placa de desarrollo \emph {ESP32-CYD} (vista frontal y trasera)}}{10}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Red Wi-Fi con un microcontrolador ESP32 como punto de acceso}}{11}{figure.caption.35}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces El sistema \emph {Cliente/Servidor}}}{12}{figure.caption.39}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Patrón de diseño Modelo-Vista-Controlador (MVC)}}{13}{figure.caption.41}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Características de un componente web}}{14}{figure.caption.44}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Distintas partes del ojo y su nivel de oscuridad}}{19}{figure.caption.56}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Pantalla de creación de modelos de \emph {Edge Impulse}}}{21}{figure.caption.58}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Reconocimiento de vegetales con \emph {EdgeImpulse}}}{21}{figure.caption.59}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Entorno de \emph {Google Colab}}}{22}{figure.caption.61}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Una muestra de las imágenes utilizadas para el dataset}}{23}{figure.caption.62}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Planilla con etiquetado de imágenes}}{23}{figure.caption.63}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Resultados del modelo desarrollado en \emph {Google Colab}}}{24}{figure.caption.71}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{26}{figure.caption.75}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Facciones del rostro en \emph {MediaPipe}}}{26}{figure.caption.76}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{26}{figure.caption.77}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Coeficiente de correlación normalizado con media cero.}}{29}{figure.caption.84}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{45}{figure.caption.102}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Corriente vs voltaje de carga}}{46}{figure.caption.112}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{46}{figure.caption.113}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Circuito elevador Boost}}{47}{figure.caption.115}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{48}{figure.caption.117}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{49}{figure.caption.118}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Modulación por ancho de pulso (PWM)}}{49}{figure.caption.119}%
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{50}{figure.caption.120}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Regulación de carga del \emph {MT3608}}}{51}{figure.caption.121}%
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{51}{figure.caption.122}%
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{51}{figure.caption.123}%
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{52}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Distintas partes del ojo y su nivel de oscuridad}}{20}{figure.caption.57}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Pantalla de creación de modelos de \emph {Edge Impulse}}}{22}{figure.caption.59}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Reconocimiento de vegetales con \emph {EdgeImpulse}}}{22}{figure.caption.60}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entorno de \emph {Google Colab}}}{23}{figure.caption.62}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Una muestra de las imágenes utilizadas para el dataset}}{24}{figure.caption.63}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Planilla con etiquetado de imágenes}}{24}{figure.caption.64}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Resultados del modelo desarrollado en \emph {Google Colab}}}{25}{figure.caption.72}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{27}{figure.caption.76}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Facciones del rostro en \emph {MediaPipe}}}{27}{figure.caption.77}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{27}{figure.caption.78}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Coeficiente de correlación normalizado con media cero.}}{30}{figure.caption.85}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{46}{figure.caption.103}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Corriente vs voltaje de carga}}{47}{figure.caption.113}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{47}{figure.caption.114}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Circuito elevador Boost}}{48}{figure.caption.116}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{49}{figure.caption.118}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{50}{figure.caption.119}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Modulación por ancho de pulso (PWM)}}{50}{figure.caption.120}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{51}{figure.caption.121}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Regulación de carga del \emph {MT3608}}}{52}{figure.caption.122}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{52}{figure.caption.123}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{52}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{53}{figure.caption.125}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{54}{figure.caption.129}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{55}{figure.caption.130}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{55}{figure.caption.131}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Layout de la PCB del circuito capturador}}{56}{figure.caption.132}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Layout de la PCB del circuito servidor}}{57}{figure.caption.133}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{55}{figure.caption.130}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{56}{figure.caption.131}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{56}{figure.caption.132}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Layout de la PCB del circuito capturador}}{57}{figure.caption.133}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Layout de la PCB del circuito servidor}}{58}{figure.caption.134}%
 \addvspace {10\p@ }
