@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.5)  7 OCT 2026 21:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.5)  7 OCT 2026 21:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1251,11 +1251,7 @@ LaTeX Info: Redefining \% on input line 12.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
 (babel)             Reported on input line 12.
  (capitulos/capitulo1.aux) (capitulos/capitulo2.aux)
-(capitulos/capitulo3.aux
-
-LaTeX Warning: Label `fig:coefcorr' multiply defined.
-
-) (capitulos/capitulo4.aux) (capitulos/capitulo5.aux))
+(capitulos/capitulo3.aux) (capitulos/capitulo4.aux) (capitulos/capitulo5.aux))
 \openout1 = `informe.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 169.
@@ -1966,9 +1962,6 @@ L3 programming layer <2020/03/25>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `informe.out' has not changed.
 (rerunfilecheck)             Checksum: 7FFF989573DF20C0C0BF5FB17EB6935A;15797.
 Package logreq Info: Writing requests to 'informe.run.xml'.
@@ -1976,10 +1969,10 @@ Package logreq Info: Writing requests to 'informe.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42950 strings out of 467871
- 942180 string characters out of 5418377
- 1761848 words of memory out of 5000000
- 71029 multiletter control sequences out of 15000+600000
+ 42951 strings out of 467871
+ 942195 string characters out of 5418377
+ 1761896 words of memory out of 5000000
+ 71030 multiletter control sequences out of 15000+600000
  645004 words of font info for 70 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  103i,20n,108p,1186b,2952s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2007,7 +2000,7 @@ cuf\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi1493\ebbx10.pk> <C:
 .pk> <C:\Users\facuf\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi72
 0\ebmr17.pk><C:/Users/facuf/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
 sfonts/cm/cmex10.pfb>
-Output written on informe.pdf (67 pages, 8105040 bytes).
+Output written on informe.pdf (67 pages, 8105042 bytes).
 PDF statistics:
  1713 PDF objects out of 1728 (max. 8388607)
  213 named destinations out of 1000 (max. 500000)

@@ -48,13 +48,13 @@ Se comienza alineando las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes 
     \label{fig:templatematching}
 \end{figure}
 
-En cada posición de la plantilla, el algoritmo aplica una fórmula estadística llamada \emph{Coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr})
+En cada posición de la plantilla, el algoritmo aplica una fórmula estadística llamada \emph{Coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr1})
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figuras/coefcorr.png}
     \caption{Coeficiente de correlación normalizado con media cero}
-    \label{fig:coefcorr}
+    \label{fig:coefcorr1}
 \end{figure}
 
 Donde \emph{T} es una matriz cuyas celdas representan los píxeles de la imagen de plantilla e \emph{I} es la matriz que representa a la imagen de \emph{Input}. Los valores numéricos de sus celdas dependen del formato de la imagen. 
@@ -63,7 +63,7 @@ Las coordenadas (x,y) son las coordenadas de referencia (aquellas donde se aline
 
 Esta fórmula, basada en la ecuación del \emph{coeficiente de correlación de Pearson}, evalúa qué tan similar es la imagen de plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta, y en base a eso otorga una calificación de entre -1,0 a +1,0. Colocar un 1.0 equivaldría a indicar que la plantilla es exactamente igual a la porción de la imagen que se está analizando, un -1.0 significaría que la plantilla tiene los colores opuestos a la imagen, y un 0.0 indica que no hay correlación alguna.
 
-El resultado es una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta en donde el algoritmo encontró la mayor coincidencia(Fig. \ref{fig:resultadotemplate}).
+El resultado es una matriz bidimensional de resultados. El punto con el valor estadístico más alto indica la coordenada exacta en donde el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
 
 \begin{figure}[H]
     \centering
