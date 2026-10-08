@@ -57,9 +57,9 @@ En cada posición de la plantilla, el algoritmo aplica una fórmula estadística
     \label{fig:coefcorr1}
 \end{figure}
 
-Donde \emph{T} es una matriz cuyas celdas representan los píxeles de la imagen de plantilla e \emph{I} es la matriz que representa a la imagen de \emph{Input}. Los valores numéricos de sus celdas dependen del formato de la imagen. 
+Donde \emph{T} es una matriz cuyas celdas representan los píxeles de la imagen de plantilla e \emph{I} es la matriz que representa a la imagen de \emph{Input}. Sus contenidos dependen del formato de las imágenes. 
 
-Las coordenadas (x,y) son las coordenadas de referencia (aquellas donde se alinean la plantilla y la imagen principal), mientras que (x',y') son las coordenadas de los pixeles locales dentro la plantilla.
+Los valores (x,y) son las coordenadas de referencia (aquellas donde se alinean la plantilla y la imagen principal), mientras que (x',y') son las coordenadas de los pixeles locales dentro la plantilla.
 
 Esta fórmula, basada en la ecuación del \emph{coeficiente de correlación de Pearson}, evalúa qué tan similar es la imagen de plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta, y en base a eso otorga una calificación de entre -1,0 a +1,0. Colocar un 1.0 equivaldría a indicar que la plantilla es exactamente igual a la porción de la imagen que se está analizando, un -1.0 significaría que la plantilla tiene los colores opuestos a la imagen, y un 0.0 indica que no hay correlación alguna.
 
