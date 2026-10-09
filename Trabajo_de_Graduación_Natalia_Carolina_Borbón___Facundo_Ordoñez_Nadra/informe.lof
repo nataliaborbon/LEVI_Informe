@@ -25,22 +25,22 @@
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{28}{figure.caption.76}%
 \contentsline {figure}{\numberline {3.9}{\ignorespaces Facciones del rostro en \emph {MediaPipe}}}{28}{figure.caption.77}%
 \contentsline {figure}{\numberline {3.10}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{29}{figure.caption.78}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{50}{figure.caption.107}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Corriente vs voltaje de carga}}{50}{figure.caption.117}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{51}{figure.caption.118}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Circuito elevador Boost}}{52}{figure.caption.120}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{53}{figure.caption.122}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{54}{figure.caption.123}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Modulación por ancho de pulso (PWM)}}{54}{figure.caption.124}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{55}{figure.caption.125}%
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Regulación de carga del \emph {MT3608}}}{55}{figure.caption.126}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{56}{figure.caption.127}%
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{56}{figure.caption.128}%
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{56}{figure.caption.129}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{51}{figure.caption.108}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Corriente vs voltaje de carga}}{52}{figure.caption.118}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{52}{figure.caption.119}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Circuito elevador Boost}}{53}{figure.caption.121}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{54}{figure.caption.123}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{55}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Modulación por ancho de pulso (PWM)}}{55}{figure.caption.125}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{56}{figure.caption.126}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Regulación de carga del \emph {MT3608}}}{56}{figure.caption.127}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{57}{figure.caption.128}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{57}{figure.caption.129}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{58}{figure.caption.130}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{58}{figure.caption.134}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{59}{figure.caption.135}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{59}{figure.caption.136}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Layout de la PCB del circuito capturador}}{60}{figure.caption.137}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Layout de la PCB del circuito servidor}}{61}{figure.caption.138}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{59}{figure.caption.135}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{60}{figure.caption.136}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{60}{figure.caption.137}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Layout de la PCB del circuito capturador}}{61}{figure.caption.138}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Layout de la PCB del circuito servidor}}{62}{figure.caption.139}%
 \addvspace {10\p@ }

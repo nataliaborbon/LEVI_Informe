@@ -231,7 +231,7 @@ Interacción mediante la mirada:
 
 \item Selección de respuestas: Cada pregunta tendrá entre dos y cuatro opciones, asociadas a las esquinas de la pantalla. El parpadeo confirmará la opción elegida.
 
-\item Posición neutra: La mirada hacia el centro no ejecutará ninguna acción, permitiendo al alumno corroborar su respuesta o descansar la vista.
+\item Posición neutra: La mirada hacia el centro no ejecutará ninguna acción. Así, el alumno podrá corroborar su respuesta o descansar la vista.
 
 \end{itemize}
 
@@ -322,14 +322,14 @@ Las restricciones de diseño limitan la forma en que se construye el dispositivo
 
 \section{Detector ocular}
 
-El detector ocular es el componente central del sistema. Su función es determinar la dirección de la mirada del alumno a partir de la imagen de su ojo. Los métodos evaluados deben cumplir con dos condiciones fundamentales: la rapidez de respuesta y la precisión de la detección.
+El detector ocular es el componente central del sistema. Su función es determinar la dirección de la mirada del alumno a partir de la imagen de su ojo. Los métodos evaluados deben cumplir con dos condiciones fundamentales, que son la rapidez de respuesta y la precisión de la detección.
 
 En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente. Por último, se detalla la solución adoptada.
 \subsection{Procesamiento local como planteamiento inicial}
 
 En un principio se estableció que el procesamiento de las imágenes se realizaría en el propio microcontrolador, mediante una red neuronal artificial de tipo convolucional. Cuando la placa gestiona todas las tareas de detección, se habla de procesamiento local.
  
-Antes de implementar una red neuronal se optó por intentar un método más sencillo. Se consideró que este tipo de modelo podía ser una complicación innecesaria para este problema. Este primer método se desarrolló en el \emph{ESP32-CAM}, una variante de las placas de desarrollo \emph{ESP32} que incluye un módulo para cámaras. En principio, éste microcontrolador capturaría y procesaría las imágenes. Sin embargo, al no alcanzar la precisión requerida, se recurrió a las redes neuronales. Para poder ejecutarlas, se sustituyó al \emph{ESP32-CAM} por el \emph{ESP32-S3}.
+Antes de implementar una red neuronal se optó por intentar un método más sencillo. Se consideró que este tipo de modelo podía ser una complicación innecesaria para este problema. Este primer método se desarrolló en el \emph{ESP32-CAM}, una variante de las placas de desarrollo \emph{ESP32} que incluye un módulo para cámaras. En principio, este microcontrolador capturaría y procesaría las imágenes. Sin embargo, al no alcanzar la precisión requerida, se recurrió a las redes neuronales. Para poder ejecutarlas, se lo sustituyó por el \emph{ESP32-S3}.
  
 Esta última placa se eligió porque su procesador incorpora instrucciones vectoriales diseñadas para acelerar el cómputo de redes neuronales. Dichas instrucciones permiten procesar varios datos en una sola operación. \emph{Espressif} las pone a disposición mediante la biblioteca \emph{ESP-NN}, cuyas funciones optimizadas están orientadas a modelos cuantizados a números enteros de 8 bits (\emph{int8}). La cuantización reduce el tamaño del modelo y el costo de cada operación. En el \emph{ESP32} clásico (el chip con el que cuenta la placa \emph{ESP32-CAM}), esa misma herramienta utiliza implementaciones genéricas, sin aceleración por hardware. Por estos motivos, el \emph{ESP32-S3} resulta una opción adecuada para ejecutar redes neuronales con recursos limitados.
  
@@ -365,7 +365,7 @@ Al evaluar este método, se descubrió que su precisión dependía exclusivament
 
 Aunque la luz del entorno no puede regularse, sí es posible controlar la iluminación de la imagen que capta el \emph{ESP32}. Si hubiera una fuente de luz junto a la cámara, esta variable sería siempre constante. Así se evitarían las confusiones con sombras o pestañas. Sin embargo, iluminar permanentemente el ojo del usuario con luz visible sería molesto y perjudicial para su visión. Por este motivo, se planteó una fuente de luz que solo pudiera detectar la cámara y que no dañara la vista: la luz infrarroja (IR).
 
-Este tipo de iluminación tiene longitudes de onda mayores que las de la luz visible. Por lo tanto, es indetectable para el ojo humano, mientras que los sensores de las cámaras digitales sí pueden captarla. Como la mayoría de las cámaras actuales incorporan un filtro que bloquea la luz infrarroja, y ésta no era la excepción, fue necesario retirarlo a mano. Luego se colocó un diodo LED emisor de luz infrarroja junto a la cámara. Ésta parecía la solución perfecta, pero había otro impedimento físico: el efecto del brillo corneal.
+Este tipo de iluminación tiene longitudes de onda mayores que las de la luz visible. Por lo tanto, es indetectable para el ojo humano, mientras que los sensores de las cámaras digitales sí pueden captarla. Sin embargo, la mayoría de las cámaras actuales incorpora un filtro que bloquea la luz infrarroja, y la del \emph{ESP32-CAM} no era la excepción. Por este motivo, fue necesario retirar dicho filtro de forma manual. Luego se colocó un diodo LED emisor de luz infrarroja junto a la cámara. No obstante, surgió otro impedimento físico, conocido como efecto del brillo corneal.
 
 Al ser húmeda y curva, la superficie de la córnea actúa como un espejo esférico perfecto para estas ondas infrarrojas. La luz rebota en el ojo y genera en la imagen un punto blanco muy intenso y concentrado, denominado \emph{glint}. Esto ocasionó errores severos en el algoritmo anterior de detección de oscuridad. Por esta razón, se lo modificó para aprovechar este fenómeno físico. Se invirtió la lógica y se detectaron los píxeles más claros mediante un umbral de brillantez.
 
@@ -611,7 +611,7 @@ Cada fotograma acondicionado se compara con las seis plantillas mediante el \emp
 
 Como se observa en el numerador de la fórmula, a cada píxel se le resta el valor promedio de su matriz. Por este motivo, el coeficiente recibe el nombre de media cero. Así, la fórmula no evalúa la intensidad lumínica absoluta de cada píxel, sino cuánto se diferencia del promedio de la imagen. Por ejemplo, si el rostro del alumno se ilumina de forma repentina por una fuente externa, todos los píxeles aumentan su valor, pero la diferencia relativa entre ellos se mantiene. De esta forma, el método resulta inmune a las variaciones uniformes de la iluminación ambiental.
 
-La plantilla mide 96x96 píxeles y el fotograma 128x128, aunque en ambos casos el ojo tiene el mismo tamaño. Esta diferencia permite que la plantilla recorra el fotograma mediante el barrido descrito en el capítulo 2, en lugar de compararse en una única posición.
+La plantilla mide 96x96 píxeles y el fotograma 128x128, aunque en ambos casos el ojo tiene el mismo tamaño. Esta diferencia permite que la plantilla recorra el fotograma mediante el barrido explicado en el capítulo 2, en lugar de compararse en una única posición.
 
 El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si la comparación se realizara en un solo punto, un desplazamiento mínimo del dispositivo, incluso de un milímetro, desalinearía las matrices y haría fallar el cálculo. Al recorrer todo el fotograma, el método obtiene un margen para compensar estas variaciones involuntarias. Así, el sistema tolera los pequeños movimientos de la cabeza del alumno.
 
@@ -779,38 +779,55 @@ La pantalla táctil, en cambio, no era imprescindible. Algunas de sus funciones,
 
 \keyword{(Imagen del ESP32-CYD)}
 
-\section{Intercomunicación de hardware}
+\section{Red y comunicación}
 
-En esta sección se explora la manera en la que se comunican todos los dispositivos que actúan en el sistema final. Se hablará de los datos que se transmiten a través de dichos canales de comunicación y la forma en la que se transmiten.
+En esta sección se describe la infraestructura de comunicación del sistema. Primero se presenta la red Wi-Fi local que genera el módulo central y la forma en que los usuarios acceden a la aplicación. Luego se detalla la transmisión del video desde el módulo de captura. Por último, se explica cómo se comunican los dispositivos cliente con el módulo central.
 
-\subsection{Clientes y servidores}
+\subsection{Red Wi-Fi local}
 
-Como se aclaró en una sección previa, la arquitectura principal utilizada en este proyecto se denomina \emph{Cliente-Servidor}, donde los clientes realizan pedidos a través de los enlaces de comunicación (en este caso particular, comunicación Wi-Fi) y los servidores responden con datos.
-Quien adopta el rol de servidor central es el segundo \emph{ESP32-S3}, que no realiza la tarea de captura de fotogramas. Sus funciones principales son:
+El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, admite hasta cuatro clientes conectados en simultáneo. Durante el uso del sistema intervienen tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
 
-\begin{itemize}
+Dentro de esta red, el módulo central ocupa la dirección 192.168.4.1, que funciona además como puerta de enlace. El módulo de captura, en cambio, utiliza una dirección IP estática, la 192.168.4.50. Así, el dispositivo del alumno siempre encuentra el video en la misma ubicación. Los dispositivos cliente, por su parte, reciben una dirección de forma dinámica al conectarse.
 
-\item \keyword{Gestión de base de datos}: Alojar y administrar la información en una memoria microSD, accediendo a ella cada vez que un cliente solicita datos de usuarios, métricas o cuestionarios.
+\keyword{(Imagen de la red Wi-Fi local) (Natty)}
 
-\item \keyword{Alojamiento web (Web Server)}: Contener los archivos estáticos de la aplicación web en su memoria mediante un sistema de archivos interno (como \emph{SPIFFS} o \emph{LittleFS}), para servirlos a los navegadores de los dispositivos que se conecten.
+Ambas placas utilizan un archivo de configuración con los mismos parámetros de red. Este archivo define el nombre y la contraseña de la red, junto con las direcciones IP de cada módulo. De esta forma, el módulo de captura dispone de las credenciales necesarias para conectarse, y cada placa conoce de antemano la dirección de la otra. Al encenderse, el módulo de captura se une a la red en modo estación. Si la conexión falla, vuelve a intentarlo hasta lograrla.
 
-\item \keyword{Enrutamiento de video}: Actuar como puente o punto de interconexión para permitir la transmisión continua de fotogramas desde el módulo capturador (\emph{ESP32-CAM}) hacia el navegador del usuario.
+Una vez establecida la red, el módulo central supervisa su estado. Por un lado, registra la cantidad de dispositivos conectados a partir de la tabla de clientes que mantiene el punto de acceso. Cuando un celular o una computadora abandona la red, envía un aviso de desconexión y el punto de acceso lo quita de la tabla de inmediato. En cambio, si un equipo deja de responder sin avisar, permanece en la tabla hasta que transcurren cinco minutos sin actividad. Esta situación se da cuando un dispositivo sale del área de cobertura o se apaga de forma repentina.
 
-\item \keyword{Lógica de negocio (Backend)}: Administrar permisos, validar sesiones, procesar peticiones HTTP, manejar la lectura/escritura en la base de datos y coordinar toda la lógica interna del sistema.
+Por otro lado, el módulo de captura se encuentra en este último caso cada vez que se apaga, ya que no se desconecta de la red antes de hacerlo. Si solo se consultara la tabla, la cámara seguiría figurando como conectada durante varios minutos. Por este motivo, su estado se verifica de forma independiente. Con un intervalo de dos segundos, el módulo central envía un mensaje de eco (\emph{ping}) a la dirección de la cámara. Si no obtiene respuesta en 500 milisegundos, la considera desconectada. Así, el sistema conoce su estado prácticamente en tiempo real. Para los demás dispositivos esta verificación no resulta necesaria, ya que normalmente se desconectan de forma explícita. La pantalla táctil utiliza ambos datos para informar el estado del sistema.
 
-\end{itemize}
+\subsection{Acceso a la aplicación}
 
-Por otro lado, los clientes son aquellos nodos de la red que carecen de las funciones de ruteo y almacenamiento central, limitándose a solicitar recursos al servidor para complementar el sistema. En este contexto existen dos tipos de clientes bien diferenciados.
+Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde el navegador.
 
-Uno de ellos es el módulo \emph{ESP32-CAM}, el cual actúa como cliente de transmisión. Su función es solicitar un enlace en la red para enviar el flujo constante de fotogramas capturados.
-Los demás clientes son los dispositivos de usuario finales (el celular del alumno, la computadora del profesor o la tablet de un tutor). Su función de hardware es simplemente proveer un navegador capaz de descargar y ejecutar la aplicación web (\emph{frontend}), donde se renderiza la interfaz visual. Para lograr esto y mantener el sistema operativo, estos dispositivos solicitan datos continuamente al servidor tales como el video en tiempo real, el estado de las sesiones, los cuestionarios activos o cualquier otra variable alojada en la base de datos necesaria para la ejecución del programa.
+El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en el navegador o al escanear un código QR que lo contiene. Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
 
-\emph{(Diagrama más específico del sistema)}
+En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única. Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con esa misma página, que luego muestra la pantalla adecuada.
 
+El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que el módulo central entrega desde la tarjeta microSD. Debido a su tamaño, es el archivo más pesado que transmite el sistema. Por este motivo, el navegador lo guarda en su almacenamiento, de modo que en los accesos siguientes no vuelve a solicitarlo.
 
-\subsection{Servidor Wi-Fi local (Naty)}
+\keyword{(Imagen del acceso a la aplicación) (Natty)}
 
-\subsection{Transmisión de datos (Naty)}
+\subsection{Transmisión de video}
+
+El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno.
+
+La cámara toma cada fotograma con una resolución de 320x240 píxeles y lo comprime en formato JPEG antes de enviarlo. Esta compresión la realiza el codificador por hardware que incorpora el sensor \emph{OV2640}, por lo que no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+
+La aplicación web solicita el video únicamente durante la calibración y el examen. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía los fotogramas de manera continua. Fuera de esas etapas, la aplicación cierra la conexión y la cámara deja de transmitir, por lo que no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo, la transmisión también se detiene hasta recibir una nueva solicitud.
+
+\keyword{(Imagen de la transmisión de video) (Natty)}
+
+\subsection{Comunicación con el módulo central}
+
+Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación. La información viaja en formato JSON, descrito en el capítulo 2. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
+
+La comunicación siempre se inicia desde los dispositivos cliente. Esto se debe a que HTTP opera bajo el modelo cliente-servidor presentado en el capítulo 2, en el que el cliente es quien inicia cada intercambio. El módulo central solo puede enviar información como respuesta a una solicitud, y no por iniciativa propia. Por este motivo, los dispositivos consultan al servidor de manera periódica para mantenerse actualizados.
+
+El dispositivo del alumno realiza una consulta cada dos segundos. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los demás usuarios, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
+
+\keyword{(Imagen de la comunicación con el módulo central) (Natty)}
 
 \section{Base de datos (Naty)}
 

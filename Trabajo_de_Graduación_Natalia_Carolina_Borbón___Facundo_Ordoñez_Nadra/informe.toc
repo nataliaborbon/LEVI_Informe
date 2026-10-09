@@ -57,32 +57,33 @@
 \contentsline {subsection}{\numberline {3.4.1}Elección de la familia ESP32}{35}{subsection.90}%
 \contentsline {subsection}{\numberline {3.4.2}Módulo de captura}{36}{subsection.91}%
 \contentsline {subsection}{\numberline {3.4.3}Módulo central}{37}{subsection.93}%
-\contentsline {section}{\numberline {3.5}Intercomunicación de hardware}{37}{section.94}%
-\contentsline {subsection}{\numberline {3.5.1}Clientes y servidores}{38}{subsection.95}%
-\contentsline {subsection}{\numberline {3.5.2}Servidor Wi-Fi local (Naty)}{38}{subsection.96}%
-\contentsline {subsection}{\numberline {3.5.3}Transmisión de datos (Naty)}{38}{subsection.97}%
-\contentsline {section}{\numberline {3.6}Base de datos (Naty)}{38}{section.98}%
-\contentsline {section}{\numberline {3.7}Aplicación web}{38}{section.99}%
-\contentsline {subsection}{\numberline {3.7.1}Frontend}{38}{subsection.100}%
-\contentsline {subsection}{\numberline {3.7.2}Backend (Naty)}{44}{subsection.101}%
-\contentsline {section}{\numberline {3.8}Interfaz de usuario táctil}{44}{section.102}%
-\contentsline {section}{\numberline {3.9}Alimentación}{45}{section.103}%
-\contentsline {subsection}{\numberline {3.9.1}Soluciones propuestas}{46}{subsection.104}%
-\contentsline {subsection}{\numberline {3.9.2}Descripción del sistema elegido}{48}{subsection.105}%
-\contentsline {subsection}{\numberline {3.9.3}Recarga y protección}{49}{subsection.106}%
-\contentsline {subsection}{\numberline {3.9.4}Estabilización de voltaje}{52}{subsection.119}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{57}{section.130}%
-\contentsline {chapter}{\numberline {4}Ensayos y resultados}{58}{chapter.131}%
-\contentsline {section}{\numberline {4.1}Montaje}{58}{section.132}%
-\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{58}{subsection.133}%
-\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{61}{subsection.139}%
-\contentsline {section}{\numberline {4.2}Pruebas de Software}{61}{section.140}%
-\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{61}{subsection.141}%
-\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{61}{subsection.142}%
-\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{61}{section.143}%
-\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{61}{section.144}%
-\contentsline {section}{\numberline {4.5}Pruebas de integración}{61}{section.145}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{62}{chapter.146}%
-\contentsline {section}{\numberline {5.1}Resultados obtenidos}{62}{section.147}%
-\contentsline {section}{\numberline {5.2}Comparación con productos similares}{62}{section.148}%
-\contentsline {section}{\numberline {5.3}Trabajo futuro}{63}{section.149}%
+\contentsline {section}{\numberline {3.5}Red y comunicación}{37}{section.94}%
+\contentsline {subsection}{\numberline {3.5.1}Red Wi-Fi local}{38}{subsection.95}%
+\contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{38}{subsection.96}%
+\contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{39}{subsection.97}%
+\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{39}{subsection.98}%
+\contentsline {section}{\numberline {3.6}Base de datos (Naty)}{40}{section.99}%
+\contentsline {section}{\numberline {3.7}Aplicación web}{40}{section.100}%
+\contentsline {subsection}{\numberline {3.7.1}Frontend}{40}{subsection.101}%
+\contentsline {subsection}{\numberline {3.7.2}Backend (Naty)}{45}{subsection.102}%
+\contentsline {section}{\numberline {3.8}Interfaz de usuario táctil}{45}{section.103}%
+\contentsline {section}{\numberline {3.9}Alimentación}{46}{section.104}%
+\contentsline {subsection}{\numberline {3.9.1}Soluciones propuestas}{47}{subsection.105}%
+\contentsline {subsection}{\numberline {3.9.2}Descripción del sistema elegido}{50}{subsection.106}%
+\contentsline {subsection}{\numberline {3.9.3}Recarga y protección}{50}{subsection.107}%
+\contentsline {subsection}{\numberline {3.9.4}Estabilización de voltaje}{53}{subsection.120}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{58}{section.131}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{59}{chapter.132}%
+\contentsline {section}{\numberline {4.1}Montaje}{59}{section.133}%
+\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{59}{subsection.134}%
+\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{62}{subsection.140}%
+\contentsline {section}{\numberline {4.2}Pruebas de Software}{62}{section.141}%
+\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{62}{subsection.142}%
+\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{62}{subsection.143}%
+\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{62}{section.144}%
+\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{62}{section.145}%
+\contentsline {section}{\numberline {4.5}Pruebas de integración}{62}{section.146}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{63}{chapter.147}%
+\contentsline {section}{\numberline {5.1}Resultados obtenidos}{63}{section.148}%
+\contentsline {section}{\numberline {5.2}Comparación con productos similares}{63}{section.149}%
+\contentsline {section}{\numberline {5.3}Trabajo futuro}{64}{section.150}%
