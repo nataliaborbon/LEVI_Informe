@@ -67,7 +67,7 @@
 \contentsline {subsection}{\numberline {3.7.1}Frontend}{42}{subsection.106}%
 \contentsline {subsection}{\numberline {3.7.2}Backend (Natty)}{47}{subsection.107}%
 \contentsline {section}{\numberline {3.8}Interfaz de usuario táctil}{47}{section.108}%
-\contentsline {section}{\numberline {3.9}Alimentación}{48}{section.109}%
+\contentsline {section}{\numberline {3.9}Alimentación}{49}{section.109}%
 \contentsline {subsection}{\numberline {3.9.1}Soluciones propuestas}{49}{subsection.110}%
 \contentsline {subsection}{\numberline {3.9.2}Descripción del sistema elegido}{52}{subsection.111}%
 \contentsline {subsection}{\numberline {3.9.3}Recarga y protección}{52}{subsection.112}%
