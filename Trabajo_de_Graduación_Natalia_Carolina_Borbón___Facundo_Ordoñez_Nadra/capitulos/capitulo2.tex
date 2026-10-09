@@ -205,6 +205,8 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
     \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia ininterrumpida de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
 \end{itemize}
 
+\keyword{Alguna imagen ilustrativa o comparativa de los protocolos (Natty)}
+
 \section{Arquitectura y Patrones de Software}
 
 \subsection{Modelo Cliente/Servidor}
@@ -288,6 +290,8 @@ En este desarrollo, el backend adopta una arquitectura en capas basada en el pat
 
 En este trabajo, estas capas se desarrollaron en C++ junto con el resto del código del sistema embebido. Todo el conjunto se ejecuta dentro del microcontrolador.
 
+\keyword{Quiza alguna imagen relacionada? Como el front, que tiene un componente web (Natty)}
+
 \section{Bases de Datos y Persistencia}
 
 \subsection{Conceptos de bases de datos relacionales}
@@ -317,3 +321,5 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
     \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
     \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
 \end{itemize}
+
+\keyword{Yo elegiría uno de los dos (ya sea DB o motores) para poner una sola imagen (Natty)}

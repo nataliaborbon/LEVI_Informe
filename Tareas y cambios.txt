@@ -1,0 +1,14 @@
+Últimos cambios:
+
+- Se etiquetaron futuras imágenes con "Natty" hasta sección 3.5 incluida.
+
+- Se añadieron imágenes: Localremoto // Glint // Glint desplazado // Familia ESP // ESP32CAM
+
+- Correcciones menores en la sección 3.4 y 3.5
+
+Tareas 9/10:
+
+- Explicar el JSON en el capitulo 2
+- Explicar la limitación a 4 conexiones disponibles
+- Añadir imágenes etiquetadas hasta 3.5
+

@@ -320,11 +320,21 @@ Las restricciones de diseño limitan la forma en que se construye el dispositivo
 
 \end{itemize}
 
+
 \section{Detector ocular}
 
 El detector ocular es el componente central del sistema. Su función es determinar la dirección de la mirada del alumno a partir de la imagen de su ojo. Los métodos evaluados deben cumplir con dos condiciones fundamentales, que son la rapidez de respuesta y la precisión de la detección.
 
-En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente. Por último, se detalla la solución adoptada.
+En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente (Fig. \ref{localremoto}). Por último, se detalla la solución adoptada.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/localremoto.png}
+    \caption{Diferencias entre procesamiento local y remoto}
+    \label{fig:localremoto}
+\end{figure}
+
+
 \subsection{Procesamiento local como planteamiento inicial}
 
 En un principio se estableció que el procesamiento de las imágenes se realizaría en el propio microcontrolador, mediante una red neuronal artificial de tipo convolucional. Cuando la placa gestiona todas las tareas de detección, se habla de procesamiento local.
@@ -357,7 +367,7 @@ El algoritmo realiza un barrido inicial, en el que revisa cada píxel para ident
 
 Una vez seleccionada la región de interés (\emph{ROI}) que teóricamente abarca la pupila, el programa ejecuta un segundo barrido. Este calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se suman todas las coordenadas y se dividen por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros).
 
-\keyword{(Imagen del cálculo con centroide en el código?)}
+\keyword{Imagen del cálculo o fórmula con centroide (Natty)}
 
 Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, presenta un problema importante: la iluminación ambiental.
 
@@ -367,13 +377,25 @@ Aunque la luz del entorno no puede regularse, sí es posible controlar la ilumin
 
 Este tipo de iluminación tiene longitudes de onda mayores que las de la luz visible. Por lo tanto, es indetectable para el ojo humano, mientras que los sensores de las cámaras digitales sí pueden captarla. Sin embargo, la mayoría de las cámaras actuales incorpora un filtro que bloquea la luz infrarroja, y la del \emph{ESP32-CAM} no era la excepción. Por este motivo, fue necesario retirar dicho filtro de forma manual. Luego se colocó un diodo LED emisor de luz infrarroja junto a la cámara. No obstante, surgió otro impedimento físico, conocido como efecto del brillo corneal.
 
-Al ser húmeda y curva, la superficie de la córnea actúa como un espejo esférico perfecto para estas ondas infrarrojas. La luz rebota en el ojo y genera en la imagen un punto blanco muy intenso y concentrado, denominado \emph{glint}. Esto ocasionó errores severos en el algoritmo anterior de detección de oscuridad. Por esta razón, se lo modificó para aprovechar este fenómeno físico. Se invirtió la lógica y se detectaron los píxeles más claros mediante un umbral de brillantez.
+Al ser húmeda y curva, la superficie de la córnea actúa como un espejo esférico perfecto para estas ondas infrarrojas. La luz rebota en el ojo y genera en la imagen un punto blanco muy intenso y concentrado, denominado \emph{glint} (Fig. \ref{fig:glint}). Esto ocasionó errores severos en el algoritmo anterior de detección de oscuridad. Por esta razón, se lo modificó para aprovechar este fenómeno físico. Se invirtió la lógica y se detectaron los píxeles más claros mediante un umbral de brillantez.
 
-\keyword{(Imagen del glint?)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{figuras/glint.png}
+    \caption{El \emph{glint} en el centro de la pupila}
+    \label{fig:glint}
+\end{figure}
 
-Esta solución tampoco resultó viable. Durante las pruebas de seguimiento, se comprobó que el glint no se desplaza de la misma forma que la pupila. Su posición relativa depende estrictamente de la geometría del ojo frente a la fuente de luz.
 
-\keyword{(Imagen del glint desplazado?)}
+Esta solución tampoco resultó viable. Durante las pruebas de seguimiento, se comprobó que el glint no se desplaza de la misma forma que la pupila. Su posición relativa depende estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{figuras/glintdesplazado.png}
+    \caption{El \emph{glint} no sigue a la pupila}
+    \label{fig:glintdesplazado}
+\end{figure}
+
 
 Tras estos resultados, se descartó la visión computacional clásica y se dio paso a las redes neuronales.
 
@@ -406,7 +428,7 @@ Antes de cargar cada modelo en la placa, \emph{Edge Impulse} estima su tiempo de
 
 Aun con esta mejora, una latencia de 200 milisegundos es demasiado alta para un seguimiento en tiempo real. Esta fue la razón principal por la que se descartó esta solución: la lentitud.
 
-\keyword{(Imágenes del monitor serial con los tiempos de inferencia en cada placa?)}
+\keyword{Imágenes del monitor serial con los tiempos de inferencia en cada placa? (Natty)}
 
 \subsubsection{TensorFlow Lite}
 
@@ -476,11 +498,11 @@ Se iteró sobre la arquitectura de la red y se ajustaron sus hiperparámetros (l
 
 Este modelo resultó significativamente más rápido, eficiente y controlable que el generado con \emph{Edge Impulse}. Sin embargo, las pruebas empíricas en tiempo real mostraron que no cumplía los requisitos de precisión para el dispositivo final. Durante la operación, las coordenadas predichas eran muy inestables. Oscilaban de forma pequeña y constante (\emph{jittering}) y no lograban mantenerse en un valor firme.
 
-\keyword{(Imágenes de las fallas?)}
+\keyword{Imagen/es de TFLite fallando? (Natty)}
 
 Para reducir esa inestabilidad, se intentó aumentar la complejidad y la profundidad de la red neuronal. Sin embargo, esto elevó la latencia de procesamiento a niveles inaceptables. Por el contrario, simplificar la arquitectura para recuperar velocidad degradaba la exactitud de las coordenadas. Se encontró así un límite de hardware insalvable.
 
-\keyword{(Imágenes del monitor serial con los delays?)}
+\keyword{Imágenes del monitor serial con los delays? (Natty)}
 
 
 \subsubsection{Conclusión del procesamiento local}
@@ -545,15 +567,15 @@ Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complem
 
 Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación se aplica la función de círculos de Hough. Cuando se detecta el contorno del iris, los resultados se grafican sobre la imagen a modo de depuración visual. Un trazo verde delimita la circunferencia detectada y un punto rojo en su centro representa las coordenadas de la pupila.
 
-\keyword{(Imagen de este método funcionando?)}
+\keyword{Imagen de Hough funcionando (Natty)}
 
 Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular. Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica y sumamente indeseable.
 
-\keyword{(Imagen con párpados semicerrados?)}
+\keyword{Imagen de Hough fallando por cerrar ojos (Natty)}
 
 Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
 
-\keyword{(Imagen de falsos positivos?)}
+\keyword{Imagen de falsos positivos (Natty)}
 
 Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real, por lo que esta solución queda definitivamente descartada.
 
@@ -591,7 +613,7 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \end{itemize}
 
-\keyword{(Imagen de las seis plantillas?)}
+\keyword{Imagen de las seis plantillas (Natty)}
 
 Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, por lo que se conservan aunque se cierre la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
 
@@ -599,7 +621,7 @@ Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de gris
 
 Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles, en color. Los fotogramas se envían al navegador del dispositivo cliente a través de la red local. Allí se realiza todo el procesamiento de las imágenes.
 
-\keyword{(Imágenes del stream?)}
+\keyword{Imagen del stream? (Natty)}
 
 Antes de la comparación, cada fotograma se acondiciona. Primero se recorta a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
 
@@ -617,18 +639,16 @@ El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si
 
 De la matriz de resultados de cada plantilla se toma el coeficiente más alto, que corresponde a la posición de mayor coincidencia. Este proceso se repite con las seis plantillas. La plantilla con el mayor de los seis valores indica la acción que realiza el alumno.
 
-\keyword{(Imagen del log indicando el mayor parecido)}
-
 En las pruebas también se detectaron falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para reducir este efecto se incorporó un umbral de similitud, por debajo del cual toda coincidencia se descarta. A partir de los ensayos, el umbral se fijó por defecto en un 80\%, y el usuario puede ajustarlo desde la interfaz web. Con esta medida, el problema quedó resuelto.
 
-\keyword{(Imagen del slider)}
+\keyword{Imagen del slider y el log indicando el mayor parecido (El texto verde que aparece abajo, Natty)}
 
 Tras numerosas evaluaciones, este método basado en la similitud de patrones resultó el más efectivo, estable y eficiente de los evaluados. Por lo tanto, es la solución implementada en el dispositivo final.
 
 
 \section{Arquitectura del sistema}
 
-El sistema definitivo se compone de tres tipos de elementos que se comunican a través de una red Wi-Fi local. El módulo de captura, montado sobre una gorra, obtiene las imágenes del ojo del alumno. El módulo central genera la red, aloja la aplicación web y almacena la información del sistema. Además, cuenta con una pantalla táctil que permite configurar el dispositivo y consultar su estado sin depender de otro equipo. A través de los dispositivos cliente, los distintos usuarios acceden a la aplicación web desde su navegador. Solo uno de ellos corresponde al alumno, y en él se realiza la detección de la mirada.
+El sistema definitivo se compone de tres tipos de elementos que se comunican a través de una red Wi-Fi local. El módulo de captura, montado sobre una gorra, obtiene las imágenes del ojo del alumno y las envía al dispositivo cliente. El módulo central genera la red, aloja la aplicación web y almacena la información del sistema. Además, cuenta con una pantalla táctil que permite configurar el dispositivo y consultar su estado sin depender de otro equipo. A través de los dispositivos cliente, los distintos usuarios acceden a la aplicación web desde su navegador. Solo uno de ellos corresponde al alumno, y en él se realiza la detección de la mirada.
 
 \keyword{(Diagrama de bloques del sistema definitivo)}
 
@@ -638,13 +658,13 @@ Esta distribución permite que cada elemento cumpla una función específica. A 
 
 \keyword{Módulo de captura}
 
-La función del módulo de captura es obtener imágenes del ojo del alumno en tiempo real y enviarlas de forma continua a su dispositivo. No realiza ningún procesamiento sobre ellas, ya que la detección de la mirada ocurre en el navegador. Además, ilumina el ojo con luz infrarroja. Esta iluminación evita las sombras que generan las fuentes de luz externas y mantiene constantes las condiciones de captura.
+La función del módulo de captura es obtener imágenes del ojo del alumno en tiempo real y enviarlas de forma continua a su dispositivo cliente. No realiza ningún procesamiento sobre ellas, ya que la detección de la mirada ocurre en el navegador. Además, ilumina el ojo con luz infrarroja. Esta iluminación evita las sombras que generan las fuentes de luz externas y mantiene constantes las condiciones de captura.
 
 \keyword{Módulo central}
 
 El módulo central coordina el funcionamiento de todo el sistema. En primer lugar, genera la red Wi-Fi local a la que se conectan los demás elementos. Gracias a ella, el conjunto funciona sin acceso a internet. En segundo lugar, actúa como servidor. Entrega la aplicación web y la biblioteca \emph{OpenCV.js} a cada dispositivo que las solicita y responde a sus pedidos de información.
 
-En ese rol, también es responsable de los datos del sistema. Autentica a profesores y tutores, controla las funciones disponibles para cada rol y administra los cuestionarios. Durante un examen, recibe las respuestas del alumno y las registra en una base de datos local. De esta forma, toda la información queda centralizada en un único lugar, al que acceden los distintos usuarios desde sus dispositivos.
+En este rol, funciona además como el núcleo de almacenamiento del sistema. Se encarga de autenticar a profesores y tutores, gestionar los permisos de cada usuario y administrar los cuestionarios. Durante las evaluaciones, recibe y archiva las respuestas de los alumnos en una base de datos local. Así, toda la información queda unificada en un solo nodo central, al cual los distintos clientes acceden desde sus pantallas.
 
 Por último, el módulo central cuenta con una interfaz propia en su pantalla táctil. Desde ella se realiza la configuración inicial del dispositivo, se muestra un código QR para acceder a la aplicación web y se consulta el estado del sistema y el progreso de los exámenes.
 
@@ -654,7 +674,9 @@ Los dispositivos cliente son la vía de acceso de los usuarios al sistema. Cualq
 
 El dispositivo del alumno cumple un papel particular, ya que también realiza la detección de la mirada. Recibe el video del módulo de captura, lo compara con las plantillas de la calibración y traduce cada acción del ojo en una selección dentro de la interfaz. Así, el alumno puede resolver cuestionarios y responder preguntas solo con la mirada.
 
-Los dispositivos de profesores y tutores permiten gestionar los cuestionarios y realizar el seguimiento de los resultados del alumno, según los permisos de cada rol. Por su parte, los compañeros acceden como invitados, sin registrarse, y pueden enviar preguntas informales al alumno. Estas preguntas no se guardan en la base de datos.
+Los dispositivos de profesores y tutores permiten gestionar los cuestionarios y realizar el seguimiento de los resultados del alumno, según los permisos de cada rol. Por otra parte, se les otorga la capacidad de configurar sus datos personales y consultar los de otros usuarios en todo momento.
+
+Por su parte, los compañeros acceden como invitados, sin registrarse, y pueden enviar preguntas informales al alumno. Estas preguntas no se guardan en la base de datos.
 
 \subsection{Interacción entre módulos}
 
@@ -672,7 +694,7 @@ Las preguntas de los compañeros también pasan por el módulo central, pero no 
 
 El módulo central, basado en un microcontrolador \emph{ESP32}, dispone de tres memorias con características distintas. La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
 
-\keyword{(Mapa de memoria del módulo central)}
+\keyword{Mapa de memoria del módulo central (Natty)}
 
 La memoria flash guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
 
@@ -710,15 +732,23 @@ La tarjeta microSD guarda la información que debe conservarse a largo plazo y q
 
 \section{Microcontroladores y periféricos}
 
-Cada módulo del sistema se implementa con una placa de desarrollo basada en un microcontrolador. La elección de estas placas responde a las restricciones del proyecto. Debían ser económicas y fáciles de conseguir. Además, ambas necesitaban conectividad Wi-Fi, ya que toda la comunicación del sistema ocurre de forma inalámbrica. El módulo de captura requería, a su vez, una interfaz para conectar una cámara.
+Tanto el módulo de captura como el módulo central se implementan con una placa de desarrollo basada en un microcontrolador. La elección de estas placas responde a las restricciones del proyecto. Debían ser económicas y fáciles de conseguir. Además, ambas necesitaban conectividad Wi-Fi, ya que toda la comunicación del sistema ocurre de forma inalámbrica. El módulo de captura requería, a su vez, una interfaz física para conectar y manipular una cámara.
 
-En esta sección se justifica primero la elección de la familia \emph{ESP32} frente a otras alternativas del mercado. Luego se describen las placas utilizadas en cada módulo. Para el módulo de captura se detalla también la elección de la cámara. Para el módulo central se consideró además que el modelo contara con una ranura para tarjeta microSD y con una pantalla táctil integrada.
+En esta sección se justifica la elección de la familia \emph{ESP32} frente a otras alternativas del mercado. Luego se describen las placas utilizadas en cada módulo. Para el módulo de captura se detalla también la elección de la cámara. Para el módulo central se consideró, además, que debía contar con una ranura para tarjeta microSD y con una pantalla táctil integrada.
 
 \subsection{Elección de la familia ESP32}
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 15 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems} (Fig. \ref{fig:familiaesp}), cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 15 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/familiaesp.png}
+    \caption{Algunas placas de desarrollo de la familia \emph{ESP32}}
+    \label{fig:familiaesp}
+\end{figure}
+
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
 
@@ -730,7 +760,7 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \item \emph{Raspberry Pi Pico 2 W}: incorpora Wi-Fi y tiene un costo de 7 USD. Sin embargo, tampoco dispone de interfaz para cámara ni de lector de tarjetas microSD. Por lo tanto, ambos módulos requerirían componentes externos adicionales.
 
-\item \emph{Raspberry Pi Zero 2 W}: incluye Wi-Fi y un conector para cámara, con un costo de 15 USD. Sin embargo, no es un microcontrolador, sino una computadora que requiere un sistema operativo. El proyecto, en cambio, se plantea sobre microcontroladores de bajos recursos. Además, la cámara se adquiere por separado, a un precio de entre 25 y 35 USD.
+\item \emph{Raspberry Pi Zero 2 W}: incluye Wi-Fi y un conector para cámara, con un costo de 15 USD. Sin embargo, no es un microcontrolador, sino una computadora que requiere un sistema operativo, y el proyecto se plantea sobre microcontroladores de bajos recursos. Además, la cámara se adquiere por separado a un precio de entre 25 y 35 USD.
 
 \end{itemize}
 
@@ -738,11 +768,11 @@ Por último, las placas de la familia \emph{ESP32} son compatibles con las bibli
 
 \subsection{Módulo de captura}
 
-El módulo de captura se implementa con la placa \emph{ESP32-CAM}. Esta placa combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
+El módulo de captura se implementa con la placa \emph{ESP32-CAM}. Ésta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
 
 Dentro de la familia \emph{ESP32} existen otras placas que también incorporan un conector para cámara, como las basadas en el \emph{ESP32-S3}. Estos modelos ofrecen mayor capacidad de procesamiento y memoria, pero tienen un costo mayor. Una placa genérica con el módulo \emph{ESP32-S3-WROOM N16R8} y cámara cuesta aproximadamente 20 USD a octubre de 2026. El \emph{ESP32-CAM}, en cambio, se basa en el \emph{ESP32} clásico y es la más básica y económica de las opciones con cámara de la familia. Como el módulo de captura solo obtiene y transmite imágenes, no requiere la capacidad adicional del \emph{ESP32-S3}, por lo que esta alternativa resulta suficiente.
 
-Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el bajo costo de la cámara. En esos modelos, incorporar una cámara requiere módulos adicionales o adquirirla por separado, lo que eleva el precio final. La siguiente tabla compara el costo del \emph{ESP32-CAM} con el de estas alternativas, a octubre de 2026.
+Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el bajo costo de inclusión de una cámara. En esos modelos, incorporarla requiere módulos adicionales o adquirirla por separado, lo que eleva el precio final. La siguiente tabla compara el costo del \emph{ESP32-CAM} con el de estas alternativas, a octubre de 2026.
 
 \begin{table}[H]
     \centering
@@ -765,9 +795,15 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
 
 La cámara \emph{OV2640} tiene una resolución máxima de 2 megapíxeles. El sistema no requiere una resolución alta, ya que las imágenes se procesan a 320x240 píxeles. Lo que sí resulta importante es su campo de visión. Al estar montada en la visera de una gorra, la cámara debe captar el ojo sin incluir estímulos ajenos. La lente de la \emph{OV2640} tiene un ángulo de visión de 68°, dentro del rango de entre 60 y 120 grados establecido para esta tarea. Además, se le retiró el filtro infrarrojo para que registre la luz del LED.
 
-También se evaluó la cámara \emph{OV3660}, de 3 megapíxeles, que ofrece resultados similares. Sin embargo, la \emph{OV2640} incluida con la placa resultó adecuada. Utilizar otro sensor habría requerido adquirirla por separado, lo que aumentaría el costo del módulo sin aportar una mejora significativa.
+También se evaluó la cámara \emph{OV3660}, de 3 megapíxeles, que ofrece resultados similares. Sin embargo, la \emph{OV2640} incluida con compra de la placa resultó adecuada. Utilizar otro sensor habría requerido adquirirla por separado, lo que aumentaría el costo total sin aportar una mejora significativa.
 
-\keyword{(Imagen del ESP32-CAM con la cámara OV2640?)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/esp32cam.png}
+    \caption{Placa \emph{ESP32-CAM} con su cámara.}
+    \label{fig:esp32cam}
+\end{figure}
+
 
 \subsection{Módulo central}
 
@@ -775,9 +811,9 @@ El módulo central se implementa con la placa \emph{ESP32-2432S028R}, conocida c
 
 El principal criterio de elección fue la ranura para tarjeta microSD. El módulo central almacena una base de datos que crece con el uso y aloja la biblioteca \emph{OpenCV.js}, cuyo tamaño excede la capacidad de la memoria flash. La microSD ofrece el espacio necesario para ambos archivos sin agregar componentes externos. Otro aspecto favorable es la versatilidad de almacenamiento de la placa, descrita en el mapa de memoria.
 
-La pantalla táctil, en cambio, no era imprescindible. Algunas de sus funciones, como la consulta del estado del sistema, podrían haberse implementado en la aplicación web. Sin embargo, la placa ya la incluye y la diferencia de precio con otros modelos \emph{ESP32} no es significativa. Por este motivo, se decidió aprovecharla, ya que aporta un valor agregado al dispositivo. Permite configurarlo y supervisarlo directamente desde el módulo central.
+La pantalla táctil, en cambio, no era imprescindible. Algunas de sus funciones, como la consulta del estado del sistema, podrían haberse implementado en la aplicación web. Sin embargo, la placa la incluye y la diferencia de precio con otros modelos \emph{ESP32} no es significativa. Por este valor agregado que aporta al dispositivo, se decidió aprovecharla con esta funcionalidad adicional. Permite configurar datos de inicio y supervisar el estado del sistema directamente desde el módulo central.
 
-\keyword{(Imagen del ESP32-CYD)}
+\keyword{Imagen del ESP32-CYD? (Ya la mostramos, pero podriamos poner otra. Natty)}
 
 \section{Red y comunicación}
 
@@ -799,11 +835,11 @@ Por otro lado, el módulo de captura se encuentra en este último caso cada vez 
 
 \subsection{Acceso a la aplicación}
 
-Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde el navegador.
+Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde su navegador a disposición.
 
-El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en el navegador o al escanear un código QR que lo contiene. Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
+El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en el buscador web o al escanear un código QR que lo contiene. Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
 
-En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única. Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con esa misma página, que luego muestra la pantalla adecuada.
+En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única (\emph{Single Page Application)}. Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con esa misma página, que luego muestra la pantalla adecuada.
 
 El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que el módulo central entrega desde la tarjeta microSD. Debido a su tamaño, es el archivo más pesado que transmite el sistema. Por este motivo, el navegador lo guarda en su almacenamiento, de modo que en los accesos siguientes no vuelve a solicitarlo.
 
@@ -829,7 +865,7 @@ El dispositivo del alumno realiza una consulta cada dos segundos. En ella inform
 
 \keyword{(Imagen de la comunicación con el módulo central) (Natty)}
 
-\section{Base de datos (Naty)}
+\section{Base de datos (Natty)}
 
 \section{Aplicación web}
 
@@ -957,7 +993,7 @@ La capa de servicios (\keyword{services/api.js}): Para mantener una arquitectura
 Compilación y despliegue (\keyword{dist/}): Cabe destacar que el código fuente desarrollado en React no puede ser interpretado nativamente por los navegadores ni almacenado de forma eficiente en un microcontrolador. Por este motivo, el proyecto utiliza una herramienta de construcción (en este caso, \emph{Vite}) que compila, minimiza y empaqueta todo el código fuente en un conjunto de archivos estáticos altamente optimizados (ubicados en el directorio \emph{dist/}). Son exclusivamente estos archivos livianos los que finalmente se transfieren a la memoria microSD del \emph{ESP32} principal para ser servidos a los usuarios.
 
 
-\subsection{Backend (Naty)}
+\subsection{Backend (Natty)}
 
 \section{Interfaz de usuario táctil}
 
@@ -1415,4 +1451,4 @@ Con todo el sistema explicado, se listan a continuación todos los materiales ne
 
 \section{Costo total de desarrollo}
 
-(Tabla hecha por naty)
+(Tabla hecha por natty)
