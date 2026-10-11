@@ -865,11 +865,161 @@ El dispositivo del alumno realiza una consulta cada dos segundos. En ella inform
 
 \keyword{(Imagen de la comunicación con el módulo central) (Natty)}
 
-\section{Base de datos (Natty)}
-
 \section{Aplicación web}
 
-En esta sección se describen todas las funcionalidades de la aplicación web (\emph{frontend}) y el gestor encargado de asegurar su correcto funcionamiento (\emph{backend})
+La aplicación web reúne todo el software que permite a los usuarios interactuar con el sistema. Se organiza en tres capas, que son la base de datos, el \emph{backend} y el \emph{frontend}. Las dos primeras se ejecutan en el módulo central. El \emph{backend} forma parte del \emph{firmware}, escrito en C++, y la base de datos es un archivo \emph{SQLite} ubicado en la tarjeta microSD, que el propio \emph{firmware} lee y escribe. El \emph{frontend}, en cambio, funciona en el navegador de cada dispositivo cliente.
+
+\keyword{(Diagrama de la arquitectura de la aplicación web) (Natty)}
+
+A continuación se describe cada capa, en el orden en que se apoyan unas sobre otras. Primero se presenta la base de datos, luego el \emph{backend} y, por último, el \emph{frontend}.
+
+\subsection{Base de datos}
+
+\subsubsection{Creación y configuración}
+
+La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se eligió este motor porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
+
+La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite}. Allí se definieron las tablas, sus campos, las relaciones y las restricciones. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear las tablas al iniciar, sino que abre directamente el archivo existente.
+
+Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento de \emph{SQLite} (\emph{PRAGMA}). Estas opciones responden a la memoria acotada del microcontrolador y a las características de la tarjeta microSD.
+
+\begin{itemize}
+
+\item Claves foráneas (\emph{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
+
+\item Tamaño de la caché (\emph{cache\_size}): se limita a 16 KB, para reducir el consumo de RAM.
+
+\item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas se guardan en la tarjeta y no en la RAM.
+
+\item Registro de transacciones (\emph{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, en lugar de borrarlo y crearlo cada vez. Esto reduce las escrituras en la microSD.
+
+\item Sincronización (\emph{synchronous}): se emplea un nivel intermedio, que equilibra la protección ante cortes de energía con la velocidad de escritura.
+
+\item Tiempo de espera (\emph{busy\_timeout}): si la base está ocupada, la operación espera hasta tres segundos antes de fallar.
+
+\end{itemize}
+
+\keyword{(Captura de DB Browser for SQLite con la estructura de la base) (Natty)}
+
+\subsubsection{Estructura de las tablas}
+
+La base de datos se compone de cuatro tablas, que son usuarios, cuestionarios, preguntas y opciones. En todas ellas, cada registro se identifica con un número entero, su clave primaria, que \emph{SQLite} asigna de forma automática al insertarlo. A continuación se describe el contenido de cada tabla.
+
+\keyword{Usuarios}
+
+La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno no forma parte de ella, ya que cada dispositivo pertenece a un único alumno y no hace falta una tabla para identificarlo. Por este motivo, su nombre se define en la configuración inicial y se guarda en la NVS del módulo central. Los invitados tampoco se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
+
+\begin{itemize}
+
+\item Usuario: nombre que se utiliza para iniciar sesión. Debe ser único en todo el sistema y tener entre 4 y 30 caracteres, sin espacios.
+
+\item Nombre y apellido: datos personales del usuario.
+
+\item Rol: indica si se trata de un profesor o de un tutor, y no admite otros valores.
+
+\item Referencia: su significado depende del rol. Para un profesor indica la materia que dicta, mientras que para un tutor indica su relación con el alumno, como madre o padre.
+
+\item Contacto: medio para comunicarse con el usuario, como un teléfono o un correo electrónico.
+
+\item \emph{Hash} de la contraseña: resultado de aplicar la función de \emph{hash} a la contraseña.
+
+\item \emph{Salt}: cadena aleatoria que se combina con la contraseña antes de calcular el \emph{hash}.
+
+\end{itemize}
+
+Ninguno de los campos de texto puede quedar vacío.
+
+Las contraseñas no se almacenan en texto plano. En su lugar, se guarda el resultado de aplicarles la función de \emph{hash} SHA-256, descrita en el capítulo 2. Esta función es irreversible, por lo que a partir del valor guardado no es posible recuperar la contraseña original. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas de los usuarios. Esto resulta relevante porque los usuarios suelen repetir sus contraseñas en otros servicios.
+
+Para su implementación se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo del \emph{ESP32}. Además, este microcontrolador cuenta con un acelerador por hardware para el algoritmo SHA. Así, el cálculo no requiere bibliotecas adicionales y se realiza con rapidez, sin comprometer los recursos del módulo central.
+
+El \emph{salt} se genera de forma aleatoria al crear cada usuario. Sin este valor, dos usuarios con la misma contraseña tendrían el mismo \emph{hash}, y quien accediera a la base podría advertirlo. Con el \emph{salt}, en cambio, cada resultado es distinto. Al iniciar sesión, el sistema combina la contraseña ingresada con el \emph{salt} almacenado, repite el cálculo y compara el resultado con el valor guardado.
+
+\keyword{Cuestionarios}
+
+La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Como cada dispositivo pertenece a un único alumno, no hace falta una tabla aparte para los resultados, sino que se almacenan directamente en el cuestionario. Cada uno cuenta con los siguientes campos.
+
+\begin{itemize}
+
+\item Profesor: referencia al profesor que creó el cuestionario.
+
+\item Título: nombre del cuestionario. No puede quedar vacío ni repetirse entre los cuestionarios de un mismo profesor.
+
+\item Puntaje para aprobar: puntaje mínimo que debe alcanzar el alumno. No puede ser negativo.
+
+\item Estado: etapa en la que se encuentra el cuestionario.
+
+\item Puntaje obtenido: resultado del alumno, que se completa al finalizar.
+
+\item Fecha de inicio: momento en que el cuestionario se inició por primera vez.
+
+\item Tiempo: duración de la resolución, expresada en segundos. No contabiliza los períodos en que el cuestionario estuvo pausado.
+
+\end{itemize}
+
+El estado de un cuestionario solo puede tomar uno de los siguientes valores.
+
+\begin{itemize}
+
+\item Pendiente: el cuestionario fue creado, pero todavía no se inició.
+
+\item En progreso: el alumno lo está resolviendo. Solo un cuestionario puede encontrarse en este estado a la vez.
+
+\item Pausado: la resolución se interrumpió de forma temporal y puede retomarse.
+
+\item Finalizado: la resolución terminó y el resultado quedó registrado.
+
+\end{itemize}
+
+Al crearse, todo cuestionario queda en estado pendiente. Cuando el profesor lo inicia, pasa a en progreso y se registra la fecha de inicio. Desde ese estado puede pasar a pausado en tres casos. El primero es cuando el profesor lo pausa. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso. Un cuestionario pausado vuelve a en progreso cuando el profesor lo reanuda.
+
+Por último, el cuestionario pasa a finalizado cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado. El profesor puede hacerlo tanto si está en progreso como si está pausado. En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
+
+\keyword{(Diagrama de transición de estados del cuestionario) (Natty)}
+
+\keyword{Preguntas}
+
+La tabla de preguntas guarda el contenido de cada pregunta y la respuesta del alumno. Cada una cuenta con los siguientes campos.
+
+\begin{itemize}
+
+\item Cuestionario: referencia al cuestionario al que pertenece la pregunta.
+
+\item Enunciado: texto de la pregunta. No puede quedar vacío.
+
+\item Puntaje si es correcta: puntos que se suman al resultado cuando el alumno elige la opción correcta.
+
+\item Puntaje si es incorrecta: puntos que se restan al resultado cuando el alumno elige otra opción. Permite penalizar las respuestas erróneas.
+
+\item Opción correcta: referencia a la opción que responde correctamente la pregunta.
+
+\item Opción elegida: referencia a la opción que seleccionó el alumno. Permanece vacía hasta que responde.
+
+\end{itemize}
+
+La opción correcta se registra en la pregunta y no como una marca dentro de cada opción. De esta forma, cada pregunta tiene siempre una única opción correcta. Por su parte, la opción elegida también se guarda en la pregunta, ya que el sistema contempla un único alumno.
+
+\keyword{Opciones}
+
+La tabla de opciones guarda las respuestas posibles de cada pregunta. Cada pregunta cuenta con entre dos y cuatro opciones, y cada una tiene los siguientes campos.
+
+\begin{itemize}
+
+\item Pregunta: referencia a la pregunta a la que pertenece la opción.
+
+\item Texto: contenido de la opción. No puede quedar vacío.
+
+\end{itemize}
+
+\keyword{Relaciones}
+
+Las tablas se vinculan mediante claves foráneas. Un profesor puede crear varios cuestionarios, un cuestionario contiene varias preguntas y cada pregunta reúne varias opciones. Además, cada pregunta se relaciona con dos de sus opciones, la correcta y la elegida por el alumno.
+
+\keyword{(Diagrama entidad-relación de la base de datos) (Natty)}
+
+Estas relaciones definen el orden en que se crean los registros. Un cuestionario requiere que su profesor ya exista, y una pregunta requiere que exista su cuestionario. En el caso de las preguntas, primero se crea la pregunta, luego sus opciones y, por último, se indica cuál de ellas es la correcta.
+
+Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma, no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
 
 \subsection{Frontend}
 

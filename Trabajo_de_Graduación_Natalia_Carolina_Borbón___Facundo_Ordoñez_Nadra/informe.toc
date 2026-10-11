@@ -62,28 +62,30 @@
 \contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{40}{subsection.101}%
 \contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{41}{subsection.102}%
 \contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{41}{subsection.103}%
-\contentsline {section}{\numberline {3.6}Base de datos (Natty)}{42}{section.104}%
-\contentsline {section}{\numberline {3.7}Aplicación web}{42}{section.105}%
-\contentsline {subsection}{\numberline {3.7.1}Frontend}{42}{subsection.106}%
-\contentsline {subsection}{\numberline {3.7.2}Backend (Natty)}{47}{subsection.107}%
-\contentsline {section}{\numberline {3.8}Interfaz de usuario táctil}{47}{section.108}%
-\contentsline {section}{\numberline {3.9}Alimentación}{49}{section.109}%
-\contentsline {subsection}{\numberline {3.9.1}Soluciones propuestas}{49}{subsection.110}%
-\contentsline {subsection}{\numberline {3.9.2}Descripción del sistema elegido}{52}{subsection.111}%
-\contentsline {subsection}{\numberline {3.9.3}Recarga y protección}{52}{subsection.112}%
-\contentsline {subsection}{\numberline {3.9.4}Estabilización de voltaje}{55}{subsection.125}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{60}{section.136}%
-\contentsline {chapter}{\numberline {4}Ensayos y resultados}{61}{chapter.137}%
-\contentsline {section}{\numberline {4.1}Montaje}{61}{section.138}%
-\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{61}{subsection.139}%
-\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{64}{subsection.145}%
-\contentsline {section}{\numberline {4.2}Pruebas de Software}{64}{section.146}%
-\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{64}{subsection.147}%
-\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{64}{subsection.148}%
-\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{64}{section.149}%
-\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{64}{section.150}%
-\contentsline {section}{\numberline {4.5}Pruebas de integración}{64}{section.151}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{65}{chapter.152}%
-\contentsline {section}{\numberline {5.1}Resultados obtenidos}{65}{section.153}%
-\contentsline {section}{\numberline {5.2}Comparación con productos similares}{65}{section.154}%
-\contentsline {section}{\numberline {5.3}Trabajo futuro}{66}{section.155}%
+\contentsline {section}{\numberline {3.6}Aplicación web}{42}{section.104}%
+\contentsline {subsection}{\numberline {3.6.1}Base de datos}{42}{subsection.105}%
+\contentsline {subsubsection}{Creación y configuración}{42}{section*.106}%
+\contentsline {subsubsection}{Estructura de las tablas}{43}{section*.107}%
+\contentsline {subsection}{\numberline {3.6.2}Frontend}{45}{subsection.108}%
+\contentsline {subsection}{\numberline {3.6.3}Backend (Natty)}{50}{subsection.109}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{50}{section.110}%
+\contentsline {section}{\numberline {3.8}Alimentación}{52}{section.111}%
+\contentsline {subsection}{\numberline {3.8.1}Soluciones propuestas}{52}{subsection.112}%
+\contentsline {subsection}{\numberline {3.8.2}Descripción del sistema elegido}{55}{subsection.113}%
+\contentsline {subsection}{\numberline {3.8.3}Recarga y protección}{55}{subsection.114}%
+\contentsline {subsection}{\numberline {3.8.4}Estabilización de voltaje}{59}{subsection.127}%
+\contentsline {section}{\numberline {3.9}Costo total de desarrollo}{64}{section.138}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{65}{chapter.139}%
+\contentsline {section}{\numberline {4.1}Montaje}{65}{section.140}%
+\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{65}{subsection.141}%
+\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{68}{subsection.147}%
+\contentsline {section}{\numberline {4.2}Pruebas de Software}{68}{section.148}%
+\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{68}{subsection.149}%
+\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{68}{subsection.150}%
+\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{68}{section.151}%
+\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{68}{section.152}%
+\contentsline {section}{\numberline {4.5}Pruebas de integración}{68}{section.153}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{69}{chapter.154}%
+\contentsline {section}{\numberline {5.1}Resultados obtenidos}{69}{section.155}%
+\contentsline {section}{\numberline {5.2}Comparación con productos similares}{69}{section.156}%
+\contentsline {section}{\numberline {5.3}Trabajo futuro}{70}{section.157}%

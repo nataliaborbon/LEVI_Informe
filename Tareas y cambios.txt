@@ -12,3 +12,7 @@ Tareas 9/10:
 - Explicar la limitación a 4 conexiones disponibles
 - Añadir imágenes etiquetadas hasta 3.5
 
+Tareas 10/10:
+
+- Explicar en el capitulo 2 qué es SHA-256 y cómo funciona una función de hash (la sección 3.6, Base de datos, remite al capitulo 2 para eso)
+
