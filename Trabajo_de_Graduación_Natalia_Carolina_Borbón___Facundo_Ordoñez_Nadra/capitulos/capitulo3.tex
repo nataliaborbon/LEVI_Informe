@@ -875,6 +875,8 @@ A continuación se describe cada capa, en el orden en que se apoyan unas sobre o
 
 \subsection{Base de datos}
 
+La base de datos almacena de forma permanente la información del sistema, que incluye los usuarios registrados, los cuestionarios con sus preguntas y opciones, y los resultados del alumno. Así, estos registros se conservan aunque el módulo central se apague. En esta subsección se explica primero cómo se creó y configuró la base, y luego la estructura de sus tablas.
+
 \subsubsection{Creación y configuración}
 
 La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se eligió este motor porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
@@ -1021,6 +1023,138 @@ Estas relaciones definen el orden en que se crean los registros. Un cuestionario
 
 Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma, no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
 
+\subsection{Backend}
+
+El \emph{backend} se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte, que utilizan tanto los controladores como los servicios.
+
+\subsubsection{Modelos}
+
+Los modelos son las estructuras con las que el \emph{backend} agrupa la información para pasarla de una capa a otra. No realizan operaciones, sino que solo contienen datos. Según su función, se distinguen tres tipos.
+
+\begin{itemize}
+
+\item Entidades: reflejan los registros de la base de datos según se almacenan. Existe una por cada tabla, con su misma estructura.
+
+\item Objetos de transferencia de datos (\emph{Data Transfer Object}, DTO): transportan la información que se intercambia con el \emph{frontend}, organizada según lo que requiere cada caso y no según cómo está guardada. De esta forma, lo que se expone hacia afuera queda separado del modelo interno. Así, un DTO puede agregar valores calculados, como el resultado de un cuestionario, que reúne el puntaje obtenido, el máximo posible y el necesario para aprobar. También puede omitir campos reservados, como la opción correcta en la pregunta que recibe el alumno.
+
+\item Resultados de operación: indican si una acción se completó correctamente o, en caso contrario, cuál fue el error. Los repositorios y los servicios los devuelven a la capa que les hizo el pedido.
+
+\end{itemize}
+
+Por la memoria limitada del módulo central, los modelos que agrupan varios elementos tienen una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
+
+\subsubsection{Controladores}
+
+Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema, y existen cuatro, dedicados a la autenticación, los usuarios, los cuestionarios y el alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
+
+Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. De esta forma, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
+
+La acción que se solicita sobre cada recurso se indica mediante el método HTTP.
+
+\begin{itemize}
+
+\item GET: consulta información, como el listado de cuestionarios o el estado del examen.
+
+\item POST: crea registros, como un usuario o un cuestionario, o ejecuta acciones, como iniciar sesión o registrar una respuesta.
+
+\item PUT: reemplaza todos los datos de un registro por los que se envían. Se utiliza, por ejemplo, para editar un cuestionario pendiente. En ese caso, el profesor envía nuevamente el cuestionario completo, que sustituye al anterior.
+
+\item PATCH: modifica solo una parte de un registro. Se utiliza para cambiar el estado de un cuestionario, es decir, para iniciarlo, pausarlo, reanudarlo o finalizarlo, sin alterar su contenido.
+
+\item DELETE: elimina un registro.
+
+\end{itemize}
+
+Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
+
+\begin{itemize}
+
+\item 400: los datos enviados son inválidos o están incompletos.
+
+\item 401: la sesión no existe o expiró.
+
+\item 403: el rol del usuario no tiene permiso para la acción.
+
+\item 404: el recurso solicitado no existe.
+
+\item 409: la acción entra en conflicto con la situación actual del sistema, como cuando un invitado intenta ingresar durante un examen.
+
+\end{itemize}
+
+Gracias a este formato común, el \emph{frontend} interpreta todas las respuestas de la misma manera.
+
+Al crear o editar un cuestionario, el cuerpo de la petición puede superar el tamaño que el servidor entrega de una sola vez. En ese caso llega dividido en fragmentos, y el controlador los reúne antes de interpretar el JSON.
+
+\subsubsection{Servicios}
+
+Los servicios concentran las reglas del sistema. Existen cuatro, dedicados a la autenticación, los usuarios, los cuestionarios y las respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo.
+
+\keyword{Autenticación}
+
+El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos. Si el usuario no existe o la contraseña no coincide, responde con el mismo mensaje en ambos casos. De esta forma, no revela qué nombres de usuario están registrados. Cuando la verificación es correcta, solicita al gestor de sesiones que abra una nueva sesión.
+
+\keyword{Usuarios}
+
+Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
+
+Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial las opciones, las preguntas y los cuestionarios del profesor, y por último el usuario. Así, cada operación afecta a pocos registros, lo que optimiza el uso de la memoria.
+
+\keyword{Cuestionarios}
+
+El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes, y la eliminación, en cualquier estado salvo en progreso o pausado. Esta última sigue el mismo criterio de borrado secuencial que la de usuarios.
+
+Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta. Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y recién después borra las anteriores. De esta manera, ante un error, el cuestionario conserva su contenido original.
+
+Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo, solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar, se recupera.
+
+Por último, al finalizar un cuestionario, el servicio calcula el puntaje. Suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
+
+\keyword{Respuestas}
+
+El servicio de respuestas determina qué se muestra en el dispositivo del alumno. En cada consulta, si hay un examen en progreso, entrega la primera pregunta sin responder. Si no lo hay y un invitado cargó una pregunta, entrega esa pregunta. En cualquier otro caso, indica que no hay nada pendiente.
+
+Al recibir una respuesta, comprueba que la pregunta pertenezca al examen en curso y que la opción corresponda a esa pregunta. Luego la guarda y, si era la última, finaliza el cuestionario y devuelve el resultado. En cambio, la respuesta a una pregunta de invitado no se guarda, y la pregunta se descarta.
+
+\subsubsection{Repositorios}
+
+Los repositorios son la única capa que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar, y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
+
+Todos los repositorios comparten una única conexión con la base de datos. El módulo central la abre al encender, configura las opciones de \emph{SQLite} descritas en la sección de base de datos y la mantiene abierta mientras funciona. Así se evita abrir y cerrar el archivo en cada petición, lo que demandaría tiempo y memoria adicionales.
+
+Las consultas se ejecutan como sentencias preparadas. Primero se define la instrucción con marcadores en lugar de los valores, y luego se asocian a ellos los datos recibidos. Como estos nunca forman parte del texto de la instrucción, se impide la inyección de SQL, es decir, que un dato ingresado por el usuario se interprete como una orden para la base.
+
+Los listados de cuestionarios, por su parte, se obtienen mediante sentencias simples. En lugar de combinar varias tablas en una sola operación, primero se leen los cuestionarios y luego se obtiene por separado, para cada uno, la cantidad de preguntas y, en el caso del tutor, la materia del profesor. Este enfoque implica más accesos a la base, pero cada uno procesa menos datos a la vez, lo que reduce el consumo de RAM.
+
+\subsubsection{Gestión de sesiones}
+
+La gestión de sesiones controla quién está conectado al sistema y con qué rol. Funciona como un componente independiente de las capas anteriores, ya que la utilizan tanto los controladores, para verificar cada petición, como los servicios, para abrir y cerrar sesiones o consultar su estado.
+
+\keyword{Tokens de sesión}
+
+Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador, que lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición, basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central, y los usuarios deben volver a ingresar.
+
+En aplicaciones web con muchos usuarios suele emplearse el \emph{JSON Web Token} (JWT), un \emph{token} firmado que el servidor valida sin almacenar las sesiones. En este caso no resulta conveniente, ya que el sistema necesita registrar las sesiones activas para aplicar las prioridades y la expiración que se describen a continuación.
+
+\keyword{Lugares de sesión}
+
+El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra, al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
+
+En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza.
+
+\keyword{Expiración}
+
+Cada sesión registra el momento de su última actividad, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. El módulo central revisa estos registros de forma continua. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Cada tipo de sesión cuenta con su propio tiempo límite. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
+
+Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. De esta forma, el cronómetro se detiene hasta que el profesor lo reanuda.
+
+\keyword{Invitado}
+
+El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso, no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse esta. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+
+\keyword{Verificación de peticiones}
+
+Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} del encabezado y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
+
 \subsection{Frontend}
 
 El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend} (quien gestiona los datos y los permisos), y el usuario.
@@ -1142,8 +1276,6 @@ La capa de servicios (\keyword{services/api.js}): Para mantener una arquitectura
 
 Compilación y despliegue (\keyword{dist/}): Cabe destacar que el código fuente desarrollado en React no puede ser interpretado nativamente por los navegadores ni almacenado de forma eficiente en un microcontrolador. Por este motivo, el proyecto utiliza una herramienta de construcción (en este caso, \emph{Vite}) que compila, minimiza y empaqueta todo el código fuente en un conjunto de archivos estáticos altamente optimizados (ubicados en el directorio \emph{dist/}). Son exclusivamente estos archivos livianos los que finalmente se transfieren a la memoria microSD del \emph{ESP32} principal para ser servidos a los usuarios.
 
-
-\subsection{Backend (Natty)}
 
 \section{Interfaz de usuario táctil}
 

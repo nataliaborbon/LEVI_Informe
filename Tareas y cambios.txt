@@ -16,3 +16,7 @@ Tareas 10/10:
 
 - Explicar en el capitulo 2 qué es SHA-256 y cómo funciona una función de hash (la sección 3.6, Base de datos, remite al capitulo 2 para eso)
 
+Tareas 12/10:
+
+- Revisar el formato de las subsubsecciones y los apartados. Antes las subsubsecciones (sin número) se veían igual que los apartados con \keyword. Se agregó \setcounter{secnumdepth}{3} en informe.tex para numerarlas (ej.: 3.6.2.2 Controladores), lo que afecta a todo el documento. No termina de convencer; se probó \paragraph para los apartados y tampoco gustó.
+

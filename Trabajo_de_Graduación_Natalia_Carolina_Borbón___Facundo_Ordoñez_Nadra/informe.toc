@@ -20,13 +20,13 @@
 \contentsline {subsection}{\numberline {2.4.3}Interfaces gráficas embebidas y biblioteca LVGL}{10}{subsection.31}%
 \contentsline {section}{\numberline {2.5}Redes y Comunicaciones}{11}{section.33}%
 \contentsline {subsection}{\numberline {2.5.1}Redes locales Wi-Fi}{11}{subsection.34}%
-\contentsline {subsubsection}{Direccionamiento IP y transmisión de datos}{11}{section*.36}%
+\contentsline {subsubsection}{\numberline {2.5.1.1}Direccionamiento IP y transmisión de datos}{11}{subsubsection.36}%
 \contentsline {section}{\numberline {2.6}Arquitectura y Patrones de Software}{12}{section.37}%
 \contentsline {subsection}{\numberline {2.6.1}Modelo Cliente/Servidor}{12}{subsection.38}%
 \contentsline {subsection}{\numberline {2.6.2}Patrón de diseño Modelo-Vista-Controlador (MVC)}{13}{subsection.40}%
 \contentsline {subsection}{\numberline {2.6.3}Arquitectura de una aplicación web}{14}{subsection.42}%
-\contentsline {subsubsection}{Frontend}{14}{section*.43}%
-\contentsline {subsubsection}{Backend}{15}{section*.45}%
+\contentsline {subsubsection}{\numberline {2.6.3.1}Frontend}{14}{subsubsection.43}%
+\contentsline {subsubsection}{\numberline {2.6.3.2}Backend}{15}{subsubsection.45}%
 \contentsline {section}{\numberline {2.7}Bases de Datos y Persistencia}{16}{section.46}%
 \contentsline {subsection}{\numberline {2.7.1}Conceptos de bases de datos relacionales}{16}{subsection.47}%
 \contentsline {subsection}{\numberline {2.7.2}Motores de bases de datos embebidos}{16}{subsection.48}%
@@ -37,18 +37,18 @@
 \contentsline {subsection}{\numberline {3.1.3}Restricciones de diseño}{20}{subsection.53}%
 \contentsline {section}{\numberline {3.2}Detector ocular}{20}{section.54}%
 \contentsline {subsection}{\numberline {3.2.1}Procesamiento local como planteamiento inicial}{21}{subsection.56}%
-\contentsline {subsubsection}{Umbral de oscuridad y brillantez}{22}{section*.57}%
-\contentsline {subsubsection}{Edge Impulse}{24}{section*.61}%
-\contentsline {subsubsection}{TensorFlow Lite}{25}{section*.64}%
-\contentsline {subsubsection}{Conclusión del procesamiento local}{29}{section*.76}%
+\contentsline {subsubsection}{\numberline {3.2.1.1}Umbral de oscuridad y brillantez}{22}{subsubsection.57}%
+\contentsline {subsubsection}{\numberline {3.2.1.2}Edge Impulse}{24}{subsubsection.61}%
+\contentsline {subsubsection}{\numberline {3.2.1.3}TensorFlow Lite}{25}{subsubsection.64}%
+\contentsline {subsubsection}{\numberline {3.2.1.4}Conclusión del procesamiento local}{29}{subsubsection.76}%
 \contentsline {subsection}{\numberline {3.2.2}Procesamiento remoto por coordenadas}{29}{subsection.77}%
-\contentsline {subsubsection}{MediaPipe y WebGazer}{29}{section*.78}%
-\contentsline {subsubsection}{OpenCV y Transformada de Hough}{31}{section*.82}%
-\contentsline {subsubsection}{Conclusión de la detección por coordenadas}{32}{section*.83}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}MediaPipe y WebGazer}{29}{subsubsection.78}%
+\contentsline {subsubsection}{\numberline {3.2.2.2}OpenCV y Transformada de Hough}{31}{subsubsection.82}%
+\contentsline {subsubsection}{\numberline {3.2.2.3}Conclusión de la detección por coordenadas}{32}{subsubsection.83}%
 \contentsline {subsection}{\numberline {3.2.3}Template Matching como solución adoptada}{32}{subsection.84}%
-\contentsline {subsubsection}{Calibración}{32}{section*.85}%
-\contentsline {subsubsection}{Preprocesamiento de fotogramas}{33}{section*.86}%
-\contentsline {subsubsection}{Comparación de plantillas}{33}{section*.87}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}Calibración}{32}{subsubsection.85}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}Preprocesamiento de fotogramas}{33}{subsubsection.86}%
+\contentsline {subsubsection}{\numberline {3.2.3.3}Comparación de plantillas}{33}{subsubsection.87}%
 \contentsline {section}{\numberline {3.3}Arquitectura del sistema}{34}{section.88}%
 \contentsline {subsection}{\numberline {3.3.1}Funciones de cada módulo}{34}{subsection.89}%
 \contentsline {subsection}{\numberline {3.3.2}Interacción entre módulos}{35}{subsection.90}%
@@ -64,28 +64,33 @@
 \contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{41}{subsection.103}%
 \contentsline {section}{\numberline {3.6}Aplicación web}{42}{section.104}%
 \contentsline {subsection}{\numberline {3.6.1}Base de datos}{42}{subsection.105}%
-\contentsline {subsubsection}{Creación y configuración}{42}{section*.106}%
-\contentsline {subsubsection}{Estructura de las tablas}{43}{section*.107}%
-\contentsline {subsection}{\numberline {3.6.2}Frontend}{45}{subsection.108}%
-\contentsline {subsection}{\numberline {3.6.3}Backend (Natty)}{50}{subsection.109}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{50}{section.110}%
-\contentsline {section}{\numberline {3.8}Alimentación}{52}{section.111}%
-\contentsline {subsection}{\numberline {3.8.1}Soluciones propuestas}{52}{subsection.112}%
-\contentsline {subsection}{\numberline {3.8.2}Descripción del sistema elegido}{55}{subsection.113}%
-\contentsline {subsection}{\numberline {3.8.3}Recarga y protección}{55}{subsection.114}%
-\contentsline {subsection}{\numberline {3.8.4}Estabilización de voltaje}{59}{subsection.127}%
-\contentsline {section}{\numberline {3.9}Costo total de desarrollo}{64}{section.138}%
-\contentsline {chapter}{\numberline {4}Ensayos y resultados}{65}{chapter.139}%
-\contentsline {section}{\numberline {4.1}Montaje}{65}{section.140}%
-\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{65}{subsection.141}%
-\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{68}{subsection.147}%
-\contentsline {section}{\numberline {4.2}Pruebas de Software}{68}{section.148}%
-\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{68}{subsection.149}%
-\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{68}{subsection.150}%
-\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{68}{section.151}%
-\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{68}{section.152}%
-\contentsline {section}{\numberline {4.5}Pruebas de integración}{68}{section.153}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{69}{chapter.154}%
-\contentsline {section}{\numberline {5.1}Resultados obtenidos}{69}{section.155}%
-\contentsline {section}{\numberline {5.2}Comparación con productos similares}{69}{section.156}%
-\contentsline {section}{\numberline {5.3}Trabajo futuro}{70}{section.157}%
+\contentsline {subsubsection}{\numberline {3.6.1.1}Creación y configuración}{42}{subsubsection.106}%
+\contentsline {subsubsection}{\numberline {3.6.1.2}Estructura de las tablas}{43}{subsubsection.107}%
+\contentsline {subsection}{\numberline {3.6.2}Backend}{45}{subsection.108}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}Modelos}{45}{subsubsection.109}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}Controladores}{46}{subsubsection.110}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}Servicios}{46}{subsubsection.111}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}Repositorios}{48}{subsubsection.112}%
+\contentsline {subsubsection}{\numberline {3.6.2.5}Gestión de sesiones}{48}{subsubsection.113}%
+\contentsline {subsection}{\numberline {3.6.3}Frontend}{49}{subsection.114}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{55}{section.115}%
+\contentsline {section}{\numberline {3.8}Alimentación}{56}{section.116}%
+\contentsline {subsection}{\numberline {3.8.1}Soluciones propuestas}{57}{subsection.117}%
+\contentsline {subsection}{\numberline {3.8.2}Descripción del sistema elegido}{59}{subsection.118}%
+\contentsline {subsection}{\numberline {3.8.3}Recarga y protección}{59}{subsection.119}%
+\contentsline {subsection}{\numberline {3.8.4}Estabilización de voltaje}{63}{subsection.132}%
+\contentsline {section}{\numberline {3.9}Costo total de desarrollo}{68}{section.143}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{69}{chapter.144}%
+\contentsline {section}{\numberline {4.1}Montaje}{69}{section.145}%
+\contentsline {subsection}{\numberline {4.1.1}Conexiones y PCB}{69}{subsection.146}%
+\contentsline {subsection}{\numberline {4.1.2}Ensamblaje del prototipo}{72}{subsection.152}%
+\contentsline {section}{\numberline {4.2}Pruebas de Software}{72}{section.153}%
+\contentsline {subsection}{\numberline {4.2.1}Pruebas del tracker}{72}{subsection.154}%
+\contentsline {subsection}{\numberline {4.2.2}Pruebas unitarias}{72}{subsection.155}%
+\contentsline {section}{\numberline {4.3}Pruebas de Hardware}{72}{section.156}%
+\contentsline {section}{\numberline {4.4}Pruebas de rendimiento}{72}{section.157}%
+\contentsline {section}{\numberline {4.5}Pruebas de integración}{72}{section.158}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{73}{chapter.159}%
+\contentsline {section}{\numberline {5.1}Resultados obtenidos}{73}{section.160}%
+\contentsline {section}{\numberline {5.2}Comparación con productos similares}{73}{section.161}%
+\contentsline {section}{\numberline {5.3}Trabajo futuro}{74}{section.162}%
