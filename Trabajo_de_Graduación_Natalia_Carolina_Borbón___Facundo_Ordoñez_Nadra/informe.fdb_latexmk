@@ -1,11 +1,11 @@
 # Fdb version 4
-["biber informe"] 1787721308.81205 "informe.bcf" "informe.bbl" "informe" 1791859339.48808 0
-  "informe.bcf" 1791859337.83465 107749 a3b90cfd8abf723dd6d9cbcbf0fcd13f "pdflatex"
+["biber informe"] 1787721308.81205 "informe.bcf" "informe.bbl" "informe" 1791860924.67576 0
+  "informe.bcf" 1791860922.41693 107749 a3b90cfd8abf723dd6d9cbcbf0fcd13f "pdflatex"
   (generated)
   "informe.bbl"
   "informe.blg"
   (rewritten before read)
-["pdflatex"] 1791859313.70371 "c:/Users/Natalia/Documents/LEVI_Informe/Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra/informe.tex" "informe.pdf" "informe" 1791859339.49263 0
+["pdflatex"] 1791860898.27628 "c:/Users/Natalia/Documents/LEVI_Informe/Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra/informe.tex" "informe.pdf" "informe" 1791860924.68204 0
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1095.tfm" 993062124 3172 eb6efaa83c6c52473a1c403f376eab0f ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmr10.tfm" 1136765053 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/cmbright/cmbr10.tfm" 864677342 1304 95ad082f6791446dc43df559d5c79878 ""
@@ -226,15 +226,15 @@
   "C:/Users/Natalia/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1787567623.60323 13323426 fabb9b8d5b09bb1a53d6f2bb6fac4a96 ""
   "MastersDoctoralThesis.cls" 1787566600.89383 16312 2585a76ea634ef804e51f5f79396dab1 ""
   "c:/Users/Natalia/Documents/LEVI_Informe/Trabajo_de_Graduación_Natalia_Carolina_Borbón___Facundo_Ordoñez_Nadra/informe.tex" 1791842553.37169 12375 731be9c7865e5effc4516e286da11408 ""
-  "capitulos/capitulo1.aux" 1791859324.08953 5181 35e7e1b9d2fd9ce59bde1769457d2fdd "pdflatex"
+  "capitulos/capitulo1.aux" 1791860906.5816 5181 35e7e1b9d2fd9ce59bde1769457d2fdd "pdflatex"
   "capitulos/capitulo1.tex" 1791523183.72434 8699 be51ecd20bd3247203c3f62968eda983 ""
-  "capitulos/capitulo2.aux" 1791859325.80812 11258 563cf334021de9ac2789275b5b1f1946 "pdflatex"
+  "capitulos/capitulo2.aux" 1791860908.11034 11258 563cf334021de9ac2789275b5b1f1946 "pdflatex"
   "capitulos/capitulo2.tex" 1791585424.43104 34299 ba4f54635413209f8db75166185aac60 ""
-  "capitulos/capitulo3.aux" 1791859336.97736 19838 8a2502fc7250360fc755d0fc0c375e3d "pdflatex"
-  "capitulos/capitulo3.tex" 1791858470.74682 180019 9f1a7836509d46ce623f62d080999808 ""
-  "capitulos/capitulo4.aux" 1791859337.6744 7000 12e693cd3205f9ad373fc32dbba3b1ad "pdflatex"
+  "capitulos/capitulo3.aux" 1791860921.1736 20215 400477b0e9184292e807b2a8a49dfa8e "pdflatex"
+  "capitulos/capitulo3.tex" 1791860830.39749 186295 014fe7509c16b998b2b38241950eb72c ""
+  "capitulos/capitulo4.aux" 1791860922.14362 7000 da42e6ac1b7fab4dff787ea85d9c7140 "pdflatex"
   "capitulos/capitulo4.tex" 1790642006.77941 3154 606f45db3c880b05cd2b90e177066ebc ""
-  "capitulos/capitulo5.aux" 1791859337.74104 4816 5540ade88c513f276b0ee5660263e752 "pdflatex"
+  "capitulos/capitulo5.aux" 1791860922.27739 4817 3a7a906d6e9b0a5ce5a01e8769e0b6e2 "pdflatex"
   "capitulos/capitulo5.tex" 1790642006.7814 4468 72e67758743764b0ad93dd7eccddfa96 ""
   "figuras/arduinouno.png" 1791523183.74382 199612 48172c83d5444e141aa4b206de16e36e ""
   "figuras/boost.png" 1787566601.34253 19873 7271724987a59d25bec1629f870706a1 ""
@@ -283,13 +283,13 @@
   "figuras/tp4056pinout.png" 1787566602.39497 18875 94833ec37461e15f995e288a2a304b97 ""
   "figuras/tp4056placa.png" 1787566602.42928 142299 6323249f45f4d86efb293b62f050fac1 ""
   "figuras/unt.png" 1787566602.45333 159591 c857aebdccfc777d5fef1d8e1fe7eeb7 ""
-  "informe.aux" 1791859337.74504 735 e388a0e8a928cbbce07c3bb3072e51ed "pdflatex"
+  "informe.aux" 1791860922.28641 735 e388a0e8a928cbbce07c3bb3072e51ed "pdflatex"
   "informe.bbl" 1790640911.8275 486 e75d7e0db03f09d45b25df2f538bb294 "biber informe"
-  "informe.lof" 1791859337.84667 5917 3599af2d8f95b300f1097b2ad19f9cf3 "pdflatex"
-  "informe.lot" 1791859337.84766 418 60cd74d5cf2eb71fa0e2b2ff17ddfa44 "pdflatex"
-  "informe.out" 1791859337.79157 18438 d5da4012dcab1f4348f50f4ce8838caf "pdflatex"
-  "informe.run.xml" 1791859337.84566 2362 11c7e8f8b07a886b4f064aee0c941b04 "pdflatex"
-  "informe.toc" 1791859337.84667 9092 6ba7916676ed257f3cc6554bb3d80313 "pdflatex"
+  "informe.lof" 1791860922.43065 5917 18c588b99fed3e4b01d017f747b1ceb7 "pdflatex"
+  "informe.lot" 1791860922.43065 418 60cd74d5cf2eb71fa0e2b2ff17ddfa44 "pdflatex"
+  "informe.out" 1791860922.37292 18862 90d792bb70a9a400005c6930879a6a38 "pdflatex"
+  "informe.run.xml" 1791860922.42963 2362 11c7e8f8b07a886b4f064aee0c941b04 "pdflatex"
+  "informe.toc" 1791860922.42963 9346 09df3c94c7177b04d635dd4bca97eb00 "pdflatex"
   (generated)
   "capitulos/capitulo1.aux"
   "capitulos/capitulo2.aux"

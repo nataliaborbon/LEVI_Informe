@@ -1187,7 +1187,7 @@ Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 
 \subsubsection{Estructura interna}
 
-El \emph{frontend} se estructuró en pantallas, cada una de las cuales cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un panel. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme, y una misma ruta base en el navegador.
+El \emph{frontend} se estructuró en pantallas, cada una de las cuales cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un panel. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme, y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular, incluso en posición horizontal.
 
 Los componentes se organizan de forma jerárquica. En la raíz se encuentra el componente principal, que contiene a todas las pantallas. A su vez, algunas pantallas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios reúne el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene, y es ella la que realiza la petición al servidor y actualiza la lista.
 
@@ -1408,58 +1408,110 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \section{Interfaz de usuario táctil}
 
-Con el fin de aumentar y mejorar la accesibilidad al momento de utilizar el dispositivo, se optó por incorporar una interfaz visual directamente en el microcontrolador servidor. En el mercado existen diversas variantes de módulos \emph{ESP32} que difieren según sus periféricos integrados. Uno de ellos es el modelo \emph{ESP32-2432S028}, conocido coloquialmente como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Este hardware incorpora el mismo procesador utilizado a lo largo de este proyecto, con el agregado particular de una pantalla LED táctil integrada.
+Con el fin de facilitar el uso del dispositivo, se incorporó una interfaz gráfica en la pantalla táctil del módulo central. Desde ella se realiza la configuración inicial del equipo y se supervisa el estado del sistema. La interfaz se desarrolló con la biblioteca \emph{LVGL}, presentada en el capítulo 2.
 
-(Imagen de CYD)
+\subsection{Bibliotecas y controladores}
 
-Este componente permite renderizar elementos interactivos como textos, imágenes, botones y teclados virtuales, mejorando significativamente la experiencia de usuario de forma autónoma (sin depender de un dispositivo externo). Para gestionar y dibujar esta interfaz gráfica, el sistema emplea dos librerías fundamentales:
+La interfaz se apoya en dos bibliotecas. \emph{TFT\_eSPI} provee los controladores de bajo nivel que comunican el microcontrolador con la pantalla mediante SPI. Por sí sola, sin embargo, solo permite dibujar elementos básicos, como píxeles, líneas y texto. \emph{LVGL}, en cambio, aporta los elementos que requiere la interfaz, como las vistas deslizables, los campos de texto, el teclado virtual y los botones, y gestiona los toques del usuario. Sin ella, todos estos elementos habrían tenido que programarse desde cero.
 
-\begin{itemize}
+Además, \emph{LVGL} puede dibujar la pantalla por partes. En lugar de reservar memoria para la imagen completa, que ocuparía unos 150 KB, utiliza un búfer de alrededor de 4 KB, equivalente a una franja angosta de la pantalla. La biblioteca dibuja cada franja en ese búfer y la envía a la pantalla antes de pasar a la siguiente. Así, la interfaz ocupa una fracción mínima de la RAM del módulo central.
 
-\item \keyword{TFT\_eSPI}: Otorga los controladores (drivers) de bajo nivel necesarios para la comunicación por hardware con el display.
+El panel táctil, por su parte, también se comunica mediante SPI. Sin embargo, el \emph{ESP32} dispone de dos controladores SPI de uso general, y ambos ya están ocupados por la pantalla y por la tarjeta microSD. Además, en la placa el panel táctil está conectado a otros pines. Por este motivo, su lectura se implementó por software, generando desde el código la señal de reloj y leyendo los datos bit a bit.
 
-\item \keyword{LVGL}: Es una librería gráfica de alto nivel que permite renderizar y gestionar la lógica de los elementos visuales y las interacciones táctiles del usuario.
+\subsection{Funcionamiento}
 
-\end{itemize}
+La interfaz forma parte del mismo \emph{firmware} que el resto del módulo central y se actualiza en cada repetición de su ciclo principal. Los datos que muestra no viajan por la red, sino que se leen directamente de la memoria del microcontrolador. Así, la interfaz consulta el gestor de sesiones para conocer el usuario conectado, y el monitor de red para obtener el estado de la cámara y la cantidad de dispositivos.
 
-A nivel arquitectónico, la interfaz se divide en dos grandes bloques lógicos: un contenedor deslizante (\emph{TileView}) que agrupa tres vistas de uso continuo, y una cuarta vista aislada destinada a la configuración inicial del sistema. Toda la información necesaria la consigue mediante comandos sencillos que comunican el backend con el frontend.
+La información del examen requiere un tratamiento particular. Consultarla en la base de datos en cada ciclo implicaría acceder a la tarjeta microSD de forma continua. Por este motivo, cada vez que el alumno consulta el estado del examen, el servicio de respuestas guarda en la RAM un resumen con los datos que muestra la pantalla, y la interfaz solo lee esa copia.
 
-\keyword{Vista 1 - Bienvenida}
+Para no ocupar al microcontrolador de forma innecesaria, cada dato se vuelve a dibujar solo cuando cambia. Por ejemplo, el nombre del usuario conectado o el estado de la cámara se actualizan únicamente cuando difieren del valor que ya se muestra.
 
-Es la primera interfaz que visualiza el usuario al encender el dispositivo ya configurado. Su diseño es minimalista y consta de un texto de bienvenida acompañado de un código QR. Al escanear este código con cualquier teléfono móvil, el usuario es redirigido automáticamente a la URL local del servidor (\emph{levi.local}), simplificando el acceso y evitando la introducción manual de direcciones IP. 
+Al encender el equipo, la pantalla se inicia antes que la tarjeta microSD, la base de datos, la red y el servidor web. De esta forma, el usuario observa la interfaz desde los primeros instantes, mientras el resto del sistema termina de arrancar.
 
-(Imagen vista 1)
+Por otra parte, para reducir el consumo de la batería, la retroiluminación de la pantalla se apaga tras un minuto sin que se la toque. El primer toque posterior solo vuelve a encenderla, sin activar ningún elemento de la interfaz, de modo que el usuario no ejecuta una acción por accidente.
+
+\subsection{Vistas}
+
+La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un contenedor deslizante, en el que el usuario pasa de una a otra con un gesto horizontal. La cuarta, en cambio, solo aparece durante la configuración inicial del equipo.
+
+\keyword{Bienvenida}
+
+Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada, en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
+
+\keyword{(Imagen de la vista de bienvenida)}
+
+\keyword{Estado del sistema}
+
+Al deslizar la pantalla, se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
+
+\keyword{(Imágenes de la vista de estado del sistema, en distintas situaciones)}
+
+\keyword{Examen}
+
+La tercera vista permite seguir el examen desde el propio módulo central. Mientras no hay un cuestionario en curso, muestra un mensaje de espera. Durante el examen, presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar, muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
+
+\keyword{(Imágenes de la vista de examen en espera, en curso y finalizado)}
+
+\keyword{Configuración inicial}
+
+Esta vista aparece solo cuando la NVS no contiene los datos de configuración, como ocurre en el primer encendido del equipo. En ella se ingresan el nombre del alumno y las claves maestras de profesores y tutores. Para escribirlos, la interfaz despliega un teclado virtual. Si el teclado tapa el campo seleccionado, el formulario se desplaza hacia arriba para mantenerlo visible. Las claves se muestran ocultas, aunque un botón permite verlas, y no es posible guardar con campos vacíos. Al guardar, los datos se almacenan en la NVS y el equipo se reinicia para cargar las vistas habituales.
+
+\keyword{(Imagen de la vista de configuración inicial)}
+
+% ===== Texto original de la Interfaz táctil (Facundo), comentado =====
+
+%Con el fin de aumentar y mejorar la accesibilidad al momento de utilizar el dispositivo, se optó por incorporar una interfaz visual directamente en el microcontrolador servidor. En el mercado existen diversas variantes de módulos \emph{ESP32} que difieren según sus periféricos integrados. Uno de ellos es el modelo \emph{ESP32-2432S028}, conocido coloquialmente como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Este hardware incorpora el mismo procesador utilizado a lo largo de este proyecto, con el agregado particular de una pantalla LED táctil integrada.
+
+%(Imagen de CYD)
+
+%Este componente permite renderizar elementos interactivos como textos, imágenes, botones y teclados virtuales, mejorando significativamente la experiencia de usuario de forma autónoma (sin depender de un dispositivo externo). Para gestionar y dibujar esta interfaz gráfica, el sistema emplea dos librerías fundamentales:
+
+%\begin{itemize}
+
+%\item \keyword{TFT\_eSPI}: Otorga los controladores (drivers) de bajo nivel necesarios para la comunicación por hardware con el display.
+
+%\item \keyword{LVGL}: Es una librería gráfica de alto nivel que permite renderizar y gestionar la lógica de los elementos visuales y las interacciones táctiles del usuario.
+
+%\end{itemize}
+
+%A nivel arquitectónico, la interfaz se divide en dos grandes bloques lógicos: un contenedor deslizante (\emph{TileView}) que agrupa tres vistas de uso continuo, y una cuarta vista aislada destinada a la configuración inicial del sistema. Toda la información necesaria la consigue mediante comandos sencillos que comunican el backend con el frontend.
+
+%\keyword{Vista 1 - Bienvenida}
+
+%Es la primera interfaz que visualiza el usuario al encender el dispositivo ya configurado. Su diseño es minimalista y consta de un texto de bienvenida acompañado de un código QR. Al escanear este código con cualquier teléfono móvil, el usuario es redirigido automáticamente a la URL local del servidor (\emph{levi.local}), simplificando el acceso y evitando la introducción manual de direcciones IP. 
+
+%(Imagen vista 1)
 
 
-\keyword{Vista 2 - Estado del sistema}
+%\keyword{Vista 2 - Estado del sistema}
 
-Al deslizar la pantalla hacia la derecha, se accede a un panel de monitoreo. Su función es exponer en tiempo real los datos críticos sobre el funcionamiento de la red local y los nodos conectados. La información expuesta incluye:
+%Al deslizar la pantalla hacia la derecha, se accede a un panel de monitoreo. Su función es exponer en tiempo real los datos críticos sobre el funcionamiento de la red local y los nodos conectados. La información expuesta incluye:
 
-\begin{itemize}
+%\begin{itemize}
 
-\item Nombre del alumno propietario del dispositivo.
-\item Nombre del usuario administrativo (profesor o tutor) con sesión activa.
-\item Estado del módulo de captura visual (indicando si la cámara está \emph{Transmitiendo} o \emph{Desconectada}).
-\item Cantidad total de clientes conectados al servidor.
+%\item Nombre del alumno propietario del dispositivo.
+%\item Nombre del usuario administrativo (profesor o tutor) con sesión activa.
+%\item Estado del módulo de captura visual (indicando si la cámara está \emph{Transmitiendo} o \emph{Desconectada}).
+%\item Cantidad total de clientes conectados al servidor.
 
-\end{itemize}
+%\end{itemize}
 
-En condiciones normales de uso deberían haber tres dispositivos conectados: el alumno, el profesor y la cámara.
+%En condiciones normales de uso deberían haber tres dispositivos conectados: el alumno, el profesor y la cámara.
 
-(Imagen vista 2, varias posibilidades)
+%(Imagen vista 2, varias posibilidades)
 
-\keyword{Vista 3 - Examen}
+%\keyword{Vista 3 - Examen}
 
-Es la última pantalla del flujo continuo. Su propósito es brindar un seguimiento de las evaluaciones activas, permitiendo al docente (u observador externo) conocer el progreso del alumno directamente desde la carcasa del dispositivo. Cuando no hay cuestionario activo, esta pantalla está en modo de espera, con un texto azul centrado que indica \emph{'Esperando cuestionario'}
+%Es la última pantalla del flujo continuo. Su propósito es brindar un seguimiento de las evaluaciones activas, permitiendo al docente (u observador externo) conocer el progreso del alumno directamente desde la carcasa del dispositivo. Cuando no hay cuestionario activo, esta pantalla está en modo de espera, con un texto azul centrado que indica \emph{'Esperando cuestionario'}
 
-Cuando hay un cuestionario activo, la pantalla cambia mostrando su título y el progreso actual del alumno.
+%Cuando hay un cuestionario activo, la pantalla cambia mostrando su título y el progreso actual del alumno.
 
-\keyword{Vista 4 - Inicialización}
+%\keyword{Vista 4 - Inicialización}
 
-A diferencia de las anteriores, esta vista se ejecuta de manera exclusiva durante el primer arranque del equipo (o tras un formateo de fábrica). Su objetivo es configurar las credenciales permanentes del sistema operativo. Mediante el uso de un teclado táctil virtual desplegable, el administrador debe ingresar tres parámetros fundamentales: el nombre del alumno, la palabra clave maestra para profesores y la palabra clave maestra para tutores.
-Estas credenciales actúan como la raíz de seguridad del dispositivo. Una vez completados los campos, el usuario debe oprimir el botón de guardado, el cual almacena las variables de forma persistente en la memoria no volátil (NVS) del microcontrolador y fuerza un reinicio automático del sistema, cargando finalmente la vista de bienvenida convencional.
+%A diferencia de las anteriores, esta vista se ejecuta de manera exclusiva durante el primer arranque del equipo (o tras un formateo de fábrica). Su objetivo es configurar las credenciales permanentes del sistema operativo. Mediante el uso de un teclado táctil virtual desplegable, el administrador debe ingresar tres parámetros fundamentales: el nombre del alumno, la palabra clave maestra para profesores y la palabra clave maestra para tutores.
+%Estas credenciales actúan como la raíz de seguridad del dispositivo. Una vez completados los campos, el usuario debe oprimir el botón de guardado, el cual almacena las variables de forma persistente en la memoria no volátil (NVS) del microcontrolador y fuerza un reinicio automático del sistema, cargando finalmente la vista de bienvenida convencional.
 
-(Vista pantalla de booteo)
+%(Vista pantalla de booteo)
 
 
 \section{Alimentación}
