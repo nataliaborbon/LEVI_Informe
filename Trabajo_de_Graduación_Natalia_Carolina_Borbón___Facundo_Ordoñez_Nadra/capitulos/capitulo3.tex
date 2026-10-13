@@ -607,7 +607,7 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \item Esquina inferior derecha: imagen del ojo con la mirada hacia abajo a la derecha, asociada a la opción 4.
 
-\item Centro: imagen del ojo con la mirada hacia el centro de la pantalla. Corresponde a la zona neutra, en la que el alumno puede descansar la vista sin realizar ninguna acción.
+\item Centro: imagen del ojo con la mirada hacia el centro de la pantalla. Corresponde a la zona neutra, en la que el alumno puede descansar la vista sin realizar ninguna acción. Si antes resaltó una opción, esta se conserva hasta que la confirma o mira hacia otra.
 
 \item Parpadeo: imagen del ojo cerrado. Permite confirmar la opción elegida después de mirar hacia una de las esquinas.
 
@@ -615,7 +615,7 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \keyword{Imagen de las seis plantillas (Natty)}
 
-Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, por lo que se conservan aunque se cierre la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
+Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, donde se conservan mientras no se cierre la pestaña de la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
 
 \subsubsection{Preprocesamiento de fotogramas}
 
@@ -1025,7 +1025,9 @@ Las relaciones también determinan qué ocurre al eliminar un registro. Si se el
 
 \subsection{Backend}
 
-El \emph{backend} se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte, que utilizan tanto los controladores como los servicios.
+Las herramientas habituales para desarrollar un \emph{backend}, como \emph{Node.js} o \emph{Django}, requieren un sistema operativo y una cantidad de memoria muy superior a la del módulo central. Por este motivo, el \emph{backend} se escribió en C++, como parte del mismo \emph{firmware} que controla la red, la pantalla y la tarjeta microSD.
+
+Su código se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte, que utilizan tanto los controladores como los servicios.
 
 \subsubsection{Modelos}
 
@@ -1157,124 +1159,251 @@ Antes de procesar una petición protegida, los controladores recurren a un compo
 
 \subsection{Frontend}
 
-El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend} (quien gestiona los datos y los permisos), y el usuario.
-En este trabajo se optó por desarrollarlo en \emph{React}, una librería de \emph{JavaScript} de código abierto, creada y mantenida por \emph{META}, diseñada específicamente para construir interfaces de usuario (UI) dinámicas e interactivas para aplicaciones web. Es una herramienta muy versátil, ya que se puede utilizar en el entorno de \emph{Visual Studio Code} y trabaja con arquitectura basada en componentes (CBA), lo cual vuelve al código más modular, ordenado y sencillo de depurar.
-La estructura del programa se divide por páginas o pantallas. Cada pantalla cumple un conjunto limitado de funciones que conforman un subsistema común. Para funcionar requieren de dos archivos: un archivo \emph{.jsx} que declara y enlaza cada entidad con la función que deben cumplir (botones, campos de texto, títulos, entre otros) y un archivo \emph{.css} que describe el aspecto de cada una de estas entidades (el color de los botones, el tamaño del texto que contengan, la extensión de los campos de texto y otros).
-Las pantallas se podrían dividir en tres categorías: 
+El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo 2.
 
-\keyword{Pantallas de acceso universal}
+\subsubsection{Preact y despliegue}
 
-Son aquellas interfaces a las que cualquier usuario puede acceder independientemente de su rol, permisos o jerarquía. En esta categoría se agrupan cuatro vistas principales: \emph{Home}, \emph{Login}, \emph{Invitado} y \emph{Alumno}. 
-La pantalla \emph{Home} es la interfaz de bienvenida que el usuario visualiza instantáneamente al ingresar a la dirección IP del servidor local. Cuenta con un diseño minimalista que incluye un texto de presentación y dos botones de navegación para indicar qué tipo de usuario está ingresando. Si se presiona el botón destinado al estudiante, el sistema redirige a la pantalla \emph{Alumno}; caso contrario, el botón de usuario externo deriva el flujo hacia la pantalla \emph{Login}.
+Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} de código abierto, diseñada para construir interfaces de usuario dinámicas e interactivas a partir de componentes. Ofrece las mismas capacidades de desarrollo que \emph{React}, la biblioteca más difundida para este fin, creada y mantenida por \emph{Meta}, pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias, el código resultante es más liviano, lo que reduce el tamaño de los archivos que el módulo central debe almacenar y transmitir al navegador.
 
-(Imagen Home)
+El código fuente se escribió en computadora. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
-La pantalla \emph{Login}, como su nombre indica, es aquella que los usuarios que no son alumnos utilizan para identificarse antes de comenzar su sesión con el dispositivo. Los usuarios con jerarquía (profesores y tutores) deben ingresar sus credenciales para acceder al núcleo del sistema. Además de los campos de texto donde se ingresan estos datos, esta vista incorpora un botón para registrar un usuario nuevo, el cual despliega un formulario que solicita datos personales (nombre, apellido, contacto), el rol deseado, la \emph{referencia} (Materia en el caso de los profesores y vínculo en el caso de tutores) y una palabra clave de administrador. Esta clave maestra es un requisito de seguridad indispensable para autorizar la creación de perfiles aptos para utilizar el dispositivo con fines académicos. 
+Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontrolador, y viceversa.
 
-(Imagen Login y otra con registro)
+Una vez terminado el \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 60\% menos, mientras que la hoja de estilos no varió.
 
-Otro botón importante es el de \emph{Recuperar contraseña}, que permite a cualquier usuario restablecer su contraseña en caso de haberla olvidado. Naturalmente, esta acción requiere de la palabra clave maestra. 
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\hline
+Biblioteca & Tamaño del archivo \emph{JavaScript} \\
+\hline
+\emph{React} & 292,5 KB \\
+\emph{Preact} & 116,3 KB \\
+\hline
+\end{tabular}
+\caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
+\label{tab:preactreact}
+\end{table}
 
-(Imagen de recuperar contraseña)
+\subsubsection{Estructura interna}
 
-Finalmente, la interfaz de inicio de sesión ofrece un botón para ingresar directamente como invitado, ideado para aquellas personas del entorno del estudiante (amigos o familiares) que deseen establecer una comunicación informal sin necesidad de poseer un perfil registrado en la base de datos. Al seleccionar esta última opción, el usuario es redirigido a la pantalla \emph{Invitado}. Esta vista presenta un formulario simplificado de opción múltiple diseñado para estructurar preguntas rápidas.  Posee un campo para la pregunta, cuatro para las posibles respuestas, botones para eliminar o agregar opciones (hasta un máximo de cuatro) y un botón para enviar la pregunta al estudiante.
+El \emph{frontend} se estructuró en pantallas, cada una de las cuales cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un panel. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme, y una misma ruta base en el navegador.
 
-(Imagen de pantalla invitado)
+Los componentes se organizan de forma jerárquica. En la raíz se encuentra el componente principal, que contiene a todas las pantallas. A su vez, algunas pantallas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios reúne el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene, y es ella la que realiza la petición al servidor y actualiza la lista.
 
-Por otro lado se encuentra la pantalla \emph{Alumno}. Al tratarse del usuario principal y prioritario del sistema, su ingreso no requiere autenticación. Sus funciones exclusivas son calibrar el detector y responder las evaluaciones que lleguen desde otros dispositivos. Al ingresar a esta vista, el usuario observa un panel indicador del estado del sistema y dos botones de acción principal (calibración y examen). Dichos botones permanecen bloqueados por seguridad hasta que el sistema esté en condiciones de operar. Antes de permitir cualquier acción, el frontend le solicita al servidor la descarga del archivo \emph{opencv.js}. Esta librería matemática actuará como el motor de la detección visual, pero adaptada exclusivamente para el método de \emph{Template Matching} (dejando atrás el enfoque previo de los círculos de Hough). 
+El componente principal actúa además como gestor de rutas. Según la dirección del navegador, decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Gracias a la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo, o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
 
-(Imágenes de panel alumno bloqueado y desbloqueado)
+El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario, que el navegador guarda al iniciar sesión, y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
 
-Una vez que el indicador confirma que la librería \emph{OpenCV} fue leída desde la tarjeta microSD, transferida y compilada correctamente por el navegador, los botones de acción se habilitan. El primero de ellos dirige a la interfaz de calibración, la cual está compuesta por seis cuadros de previsualización vacíos, un recuadro de mayor tamaño donde se proyecta el flujo de video en vivo y los comandos para iniciar o abortar el proceso. Si el sistema detecta una calibración almacenada previamente, advierte al usuario para evitar posibles redundancias.
+Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente, que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
 
-(Imagen pantalla de calibración)
+\subsubsection{Recepción de datos y ejecución del detector}
 
-Al pulsar el botón de inicio, comienza una secuencia guiada para capturar los fotogramas de referencia: un indicador visual le señala al usuario hacia qué cuadrante debe dirigir la mirada y, tras una cuenta regresiva de tres segundos, el algoritmo captura la imagen. Este procedimiento se repite para todas las direcciones y para el parpadeo final. Una vez concluida la secuencia, los patrones capturados se exhiben en los cuadros de previsualización, otorgando la opción de guardar dicha calibración o reiniciar el proceso.
+En la 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos.
 
-(Imagen de uno de los pasos de la secuencia)
+\keyword{Carga de la aplicación}
 
-El segundo botón del panel principal (\emph{Iniciar cuestionario}) redirige a la interfaz operativa de evaluación. Esta pantalla presenta el flujo de video en la esquina superior derecha junto a un control deslizante (\emph{slider}) que permite ajustar dinámicamente el umbral de sensibilidad del algoritmo. En este estado, el cliente aguarda pasivamente hasta que un invitado envíe una consulta o un profesor inicie formalmente un cuestionario. Al recibir los datos, la interfaz se actualiza automáticamente mostrando el enunciado y cuatro cuadrantes coloreados con sus respectivas opciones. Para responder, el alumno debe sostener la mirada hacia el cuadrante deseado (la interfaz lo resaltará visualmente) y ejecutar un parpadeo intencional para confirmar el registro en la base de datos. Adicionalmente, el usuario puede retornar la mirada a la zona neutra (centro) para descansar la vista o revisar su elección sin alterar la selección previa. En paralelo a este proceso, el sistema cliente emite señales periódicas al servidor (heartbeats) para indicarle al servidor que mantenga activa la sesión.
+Cuando un usuario ingresa a levi.local, el módulo central envía al navegador los tres archivos del \emph{frontend}. El documento HTML llega prácticamente vacío y solo indica qué otros dos archivos descargar. Una vez recibidos, el navegador ejecuta el código \emph{JavaScript}, que arma la interfaz y muestra la pantalla solicitada. A partir de ese momento, todo el funcionamiento de la interfaz ocurre en el dispositivo del usuario.
 
-(Imagenes de todas las posibles pantallas de cuestionario)
+\keyword{Obtención de OpenCV.js}
 
-Si la pregunta provino del modo \emph{Invitado}, la sesión concluye inmediatamente mostrando la respuesta enviada. Si se trata de un examen oficial, el sistema muestra todas las preguntas en orden hasta alcanzar la pantalla final, donde se expone el puntaje obtenido, el tiempo transcurrido y la condición de aprobación. Cabe destacar que el profesor posee control total sobre el flujo del examen, pudiendo pausarlo, reanudarlo o finalizarlo remotamente en cualquier momento, lo cual fuerza la actualización inmediata de la pantalla del alumno hacia los estados correspondientes.
+La biblioteca \emph{OpenCV.js} no se envía junto con la aplicación, sino solo cuando se abre la pantalla del alumno, que es la única que la necesita. Como es el archivo más pesado del sistema, el navegador guarda una copia después de la primera descarga, de modo que en los accesos siguientes no vuelve a pedirla al módulo central. Cuando debe descargarla, verifica que el archivo haya llegado completo y, si la descarga falla, la vuelve a intentar de forma automática.
 
-\keyword{Pantallas de acceso restringido}
+La biblioteca incluye una parte de su código que el navegador debe compilar antes de ejecutarla, lo que demora algunos segundos. Durante ese tiempo, la pantalla del alumno muestra un aviso y mantiene deshabilitados los botones de calibración y de examen.
 
-Son aquellas interfaces a las que solo pueden acceder los usuarios registrados mediante el ingreso de sus credenciales (nombre de usuario y contraseña). A todas estas vistas se accede de forma exclusiva superando la validación de la pantalla de login. Si el servidor central (\emph{ESP32}) detecta que un dispositivo intenta conectarse a estas rutas sin poseer un token de sesión activo y válido, el sistema emite una alerta de seguridad y redirige automáticamente al usuario de regreso a la pantalla de inicio de sesión. También posee un límite de tiempo que cierra la sesión automáticamente tras varios minutos de inactividad. En esta categoría se agrupan las pantallas: \emph{Panel}, \emph{Perfil}, \emph{Contactos} y \emph{Cuestionarios}. 
+\keyword{Recepción del video}
 
-La pantalla \emph{Panel} es la interfaz principal que el usuario visualiza inmediatamente tras autenticarse con éxito. Presenta un encabezado con un texto de bienvenida que incluye el nombre y apellido del usuario activo, junto a un botón rojo destinado a cerrar la sesión en cualquier momento. A continuación, se despliegan tres grandes botones de navegación cuyo contenido es dinámico y depende de la jerarquía de la cuenta:
+Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo, sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza. Sobre esa imagen se dibuja un recuadro que marca la zona que se captura como plantilla durante la calibración. Así, el ojo puede centrarse dentro de esa zona antes de cada captura.
 
-Si el usuario posee el rol de profesor, visualizará las opciones: \emph{Ver cuestionarios}, \emph{Ver datos tutor} y \emph{Editar perfil}.
-En cambio, si el usuario es un tutor, el botón intermedio se adapta a su necesidad y es reemplazado por la opción \emph{Ver profesores}.
+La conexión se abre al ingresar a la calibración o al examen y se cierra al salir de ellos o ante un error. Cada vez que se abre, se fuerza una conexión nueva, para que el navegador no muestre una imagen antigua guardada de un acceso anterior.
 
-(Imagenes de pantalla panel para ambos usuarios)
+\keyword{Ejecución del seguimiento}
 
-El botón \emph{Editar perfil}, común a ambos roles, redirige a la pantalla \emph{Perfil}. Esta vista tiene como objetivo ofrecer al usuario la posibilidad de modificar su información personal en todo momento. Al igual que en el panel principal, conserva el encabezado de bienvenida y el botón de cierre de sesión. Debajo de estos elementos, presenta un formulario estructurado con campos de texto para actualizar los siguientes datos: nombre de usuario, nombre, apellido, contacto y la referencia (materia o vínculo). Los cambios realizados en este segmento se envían a la base de datos al pulsar el botón \emph{Guardar datos}.
+Una vez compilada, la biblioteca pone sus funciones a disposición del código \emph{JavaScript} de la aplicación, que las invoca como si fueran propias. Los cálculos pesados, como la conversión a escala de grises o la comparación de plantillas, se ejecutan en el código compilado de la biblioteca. \emph{JavaScript}, en cambio, solo coordina el proceso y actualiza la interfaz con los resultados.
 
-(Imagen del primer formulario)
+Para trabajar con las imágenes, \emph{OpenCV.js} las representa como matrices ubicadas en una zona de memoria propia, separada de la que administra el navegador. Por este motivo, la aplicación reserva una única vez las matrices del fotograma, del recorte y de su versión en escala de grises, y las reutiliza en cada ciclo. Las matrices temporales, en cambio, se liberan de forma explícita después de cada uso, ya que el navegador no las elimina por sí solo. Sin esta precaución, la memoria ocupada crecería con cada fotograma.
 
-Seguidamente, la interfaz dispone de una sección independiente dedicada a la actualización de credenciales. Para cambiar la contraseña, el sistema solicita ingresar la clave actual seguida de la nueva, omitiendo la necesidad de utilizar la palabra clave maestra, dado que la identidad del usuario ya se encuentra validada por su sesión activa.
-En la parte inferior, la interfaz provee un botón rojo diseñado para eliminar definitivamente la cuenta del usuario activo. Como medida de seguridad, al accionar este botón el navegador despliega un cuadro de diálogo de confirmación antes de ejecutar el borrado en la base de datos. Finalmente, existe un botón de navegación para regresar al panel anterior, el cual cuenta con una validación interna que advierte al usuario si intenta abandonar la vista existiendo modificaciones sin guardar.
+Las plantillas obtenidas en la calibración también se conservan como matrices de \emph{OpenCV.js}. Para guardarlas en el navegador, se convierten en imágenes y, al volver a la pantalla del alumno, se transforman nuevamente en matrices.
 
-(Imagen del resto)
+\subsubsection{Pantallas}
 
-Retornando al menú principal, el botón central dirige a la pantalla \emph{Contactos}, cuya interfaz y funcionalidad son dinámicas y se adaptan al rol del usuario activo en la sesión.
-Si el usuario posee el rol de profesor y accede mediante la opción \emph{Ver datos tutor}, visualizará una pantalla encabezada por el título \emph{Datos del Tutor}. Debajo, se despliega una tarjeta informativa que contiene los datos básicos del tutor asociado al dispositivo del alumno: nombre, apellido, vínculo y contacto. Si la base de datos no registra ningún tutor, la interfaz oculta la tarjeta vacía y advierte al usuario mediante un mensaje de texto indicando la ausencia de este perfil. Cabe mencionar que cada tutor debe ser único por cada dispositivo, por lo que se debería mostrar siempre una única tarjeta en caso de haberlo.
+Las pantallas se agrupan en tres categorías, según quién las utiliza: las de acceso, la del alumno y las del panel.
 
-(Imagen de ver tutores)
+\keyword{Pantallas de acceso}
 
-Por el contrario, si el usuario autenticado es un tutor e ingresa mediante el botón \emph{Ver profesores}, el encabezado cambia a \emph{Profesores} y la vista presenta una lista dinámica. Esta lista renderiza, en formato de tarjetas individuales, la información de todos los docentes registrados en el dispositivo, detallando para cada uno: Materia, nombre, apellido y contacto. Asimismo, cada tarjeta incorpora un botón de acción destructiva que permite al tutor eliminar manualmente a cualquier profesor del sistema. Al accionar este comando, la interfaz exige una confirmación explícita antes de ejecutar el borrado definitivo en la base de datos (acción que, por diseño del servidor, elimina en cascada los cuestionarios asociados a dicho docente). Al igual que en la vista anterior, si no existen profesores registrados, se notifica la situación con un breve texto en pantalla.
-
-(Imagen de ver profesores)
-
-Finalmente cabe destacar que, a diferencia del panel principal, esta interfaz prescinde del encabezado de bienvenida y del botón de cierre de sesión, priorizando una visualización limpia que ofrece únicamente un botón inferior denominado \emph{Volver} para retornar de forma segura al menú anterior.
-
-La pantalla \emph{Cuestionarios}, accesible a través del panel principal, constituye el núcleo de la gestión académica del dispositivo, presentando múltiples variaciones funcionales dependiendo de la jerarquía del usuario.
-Para el profesor, esta pantalla actúa como el motor integral de las evaluaciones: permite crearlas, modificarlas, controlar su ejecución en tiempo real, revisar los resultados y eliminarlas. La vista inicial consiste en un listado dinámico de todos los cuestionarios asociados a su materia. Cada elemento de la lista expone datos clave: título, cantidad de preguntas, puntaje obtenido, fecha de inicio y su condición final (aprobado o desaprobado). El control de cada módulo se gestiona a través de cuatro botones, los cuales se habilitan o deshabilitan respondiendo a la máquina de estados del servidor:
+Son las pantallas a las que cualquier usuario puede ingresar, sin importar su rol.
 
 \begin{itemize}
 
-\item Estado \keyword{PENDIENTE} (Previo a la ejecución): Se habilitan los botones superiores de acción destructiva y modificadora (\emph{Editar} y \emph{Eliminar}). En el bloque inferior, se habilita el botón \emph{INICIAR} (cuyo accionamiento transiciona el examen al estado \emph{En Progreso}) y se mantiene bloqueado el botón \emph{FINALIZAR}. 
+\item Inicio: es la primera pantalla que se muestra al acceder a levi.local. Presenta un mensaje de bienvenida y dos botones, uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
 
-\item Estado \keyword{EN PROGRESO} (Alumno respondiendo): Para garantizar la integridad de los datos, el sistema bloquea inmediatamente los botones de edición y eliminación. El botón de inicio asume la función de \emph{PAUSAR} y se habilita el botón de \emph{FINALIZAR} como mecanismo de aborto seguro en caso de contingencias.
+\item Inicio de sesión: los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse, completando un formulario con sus datos, o recuperar una contraseña olvidada. En ambos casos se solicita la clave maestra del rol.
 
-\item Estado \keyword{PAUSADO}: Los controles superiores de edición permanecen bloqueados y el botón de finalización sigue activo. El botón de estado muta a \emph{REANUDAR}, permitiendo al alumno continuar el examen desde la última pregunta contestada.
-
-\item Estado \keyword{FINALIZADO}: Los botones de edición y finalización se desactivan. Se rehabilita la capacidad de eliminar el cuestionario y el botón de estado principal se transforma en “REVISAR”, redirigiendo al profesor a la vista de revisión.
+\item Invitado: se accede desde la pantalla de inicio de sesión. Presenta un campo para la pregunta y entre dos y cuatro campos para las opciones, que pueden agregarse o quitarse. Al enviarla, la pregunta aparece en la pantalla del alumno.
 
 \end{itemize}
 
-(Imagen de pantalla cuestionarios de profesor)
+\keyword{(Imágenes de las pantallas de inicio, inicio de sesión, registro, recuperación de contraseña e invitado)}
 
-Por encima de este listado, un botón etiquetado como "\emph{Nuevo +}" da acceso a la interfaz de creación y edición. Esta vista presenta una plantilla estructurada encabezada por el título del cuestionario (editable de forma interactiva). A continuación, se despliegan los bloques de las preguntas, los cuales permiten ingresar la incógnita y configurar dinámicamente entre dos y cuatro opciones posibles.
+\keyword{Pantalla del alumno}
 
-A nivel de configuración, el docente puede seleccionar la respuesta correcta mediante un botón de selección, establecer el puntaje a sumar por acierto y definir el puntaje a restar por error. Para optimizar la carga de datos, la interfaz incluye herramientas de diseño que permiten replicar un mismo esquema de puntajes a todo el examen (\emph{Aplicar a todas}), reordenar la posición de las preguntas en la lista mediante flechas direccionales o eliminar preguntas enteras. En el margen inferior está disponible un campo numérico para establecer el umbral de aprobación y los tres comandos de cierre: \emph{Añadir Pregunta}, \emph{Guardar Cuestionario} (que empaqueta los datos y los envía al ESP32) y \emph{Volver sin guardar}.
+El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas, que se alternan según la etapa en la que se encuentra.
 
-(Imagenes de la pantalla del editor)
+\begin{itemize}
 
-Retornando a la vista del listado, cuando un cuestionario finalizado es sometido a revisión (mediante el botón \emph{REVISAR}), el sistema despliega una vista analítica. Esta pantalla detalla el tiempo total empleado, el puntaje final, la fecha de inicio, la condición de aprobación, un desglose pregunta por pregunta indicando la opción elegida por el alumno, la opción correcta (si hubo equivocación) y el impacto numérico de dicha respuesta en el puntaje total.
+\item Menú: presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
 
-(Imagenes de la vista de revision)
+\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración, el botón de inicio ofrece recalibrar.
 
-Por otra parte, si el usuario que accede a la pantalla \emph{Cuestionarios} posee el rol de tutor, la interfaz restringe severamente sus privilegios. El listado mostrará los cuestionarios históricos creados por la totalidad de los profesores, indicando adicionalmente a qué materia pertenece cada uno. Todos los controles de edición, eliminación y alteración de estados se suprimen gráficamente. El tutor únicamente cuenta con el botón de \emph{REVISAR} para consultar las analíticas, el cual permanecerá bloqueado hasta que el sistema registre que el cuestionario ha alcanzado el estado \emph{FINALIZADO}.
+\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no hay un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta, presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante conserva el color de la esquina correspondiente en la calibración. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En ese caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
-(Imagen de la pantalla cuestionarios del tutor y otra de la pantalla de revisión)
+\item Resultado: en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen, informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
+
+\end{itemize}
+
+\keyword{(Imágenes del menú, la calibración, el examen y el resultado)}
+
+\keyword{Pantallas del panel}
+
+Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las acciones que no pueden deshacerse, como eliminar un registro o finalizar un cuestionario, solicitan una confirmación antes de ejecutarse.
+
+\begin{itemize}
+
+\item Principal: muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último, al perfil. El botón central depende del rol, ya que el profesor accede a los datos de los tutores y el tutor, a los de los profesores.
+
+\item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva, sin la clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
+
+\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, el tutor puede eliminar a un profesor.
+
+\item Cuestionarios: para el profesor, presenta el listado de sus cuestionarios, con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan según su estado actual. El botón de estado cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, la fecha se toma del dispositivo del profesor, ya que el módulo central no dispone de un reloj de tiempo real ni de acceso a internet para conocerla. El tutor, en cambio, ve los cuestionarios de todos los profesores, con la materia de cada uno, y solo puede revisarlos una vez finalizados.
+
+\item Editor: se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse.
+
+\item Revisión: muestra el resultado de un cuestionario finalizado. Detalla, para cada pregunta, la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
+
+\end{itemize}
+
+\keyword{(Imágenes de las pantallas principal, perfil, contactos, cuestionarios, editor y revisión, para ambos roles cuando corresponda)}
+
+% ===== Texto original del Frontend (Facundo), comentado =====
+%El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend} (quien gestiona los datos y los permisos), y el usuario.
+%En este trabajo se optó por desarrollarlo en \emph{React}, una librería de \emph{JavaScript} de código abierto, creada y mantenida por \emph{META}, diseñada específicamente para construir interfaces de usuario (UI) dinámicas e interactivas para aplicaciones web. Es una herramienta muy versátil, ya que se puede utilizar en el entorno de \emph{Visual Studio Code} y trabaja con arquitectura basada en componentes (CBA), lo cual vuelve al código más modular, ordenado y sencillo de depurar.
+%La estructura del programa se divide por páginas o pantallas. Cada pantalla cumple un conjunto limitado de funciones que conforman un subsistema común. Para funcionar requieren de dos archivos: un archivo \emph{.jsx} que declara y enlaza cada entidad con la función que deben cumplir (botones, campos de texto, títulos, entre otros) y un archivo \emph{.css} que describe el aspecto de cada una de estas entidades (el color de los botones, el tamaño del texto que contengan, la extensión de los campos de texto y otros).
+%Las pantallas se podrían dividir en tres categorías: 
+
+%\keyword{Pantallas de acceso universal}
+
+%Son aquellas interfaces a las que cualquier usuario puede acceder independientemente de su rol, permisos o jerarquía. En esta categoría se agrupan cuatro vistas principales: \emph{Home}, \emph{Login}, \emph{Invitado} y \emph{Alumno}. 
+%La pantalla \emph{Home} es la interfaz de bienvenida que el usuario visualiza instantáneamente al ingresar a la dirección IP del servidor local. Cuenta con un diseño minimalista que incluye un texto de presentación y dos botones de navegación para indicar qué tipo de usuario está ingresando. Si se presiona el botón destinado al estudiante, el sistema redirige a la pantalla \emph{Alumno}; caso contrario, el botón de usuario externo deriva el flujo hacia la pantalla \emph{Login}.
+
+%(Imagen Home)
+
+%La pantalla \emph{Login}, como su nombre indica, es aquella que los usuarios que no son alumnos utilizan para identificarse antes de comenzar su sesión con el dispositivo. Los usuarios con jerarquía (profesores y tutores) deben ingresar sus credenciales para acceder al núcleo del sistema. Además de los campos de texto donde se ingresan estos datos, esta vista incorpora un botón para registrar un usuario nuevo, el cual despliega un formulario que solicita datos personales (nombre, apellido, contacto), el rol deseado, la \emph{referencia} (Materia en el caso de los profesores y vínculo en el caso de tutores) y una palabra clave de administrador. Esta clave maestra es un requisito de seguridad indispensable para autorizar la creación de perfiles aptos para utilizar el dispositivo con fines académicos. 
+
+%(Imagen Login y otra con registro)
+
+%Otro botón importante es el de \emph{Recuperar contraseña}, que permite a cualquier usuario restablecer su contraseña en caso de haberla olvidado. Naturalmente, esta acción requiere de la palabra clave maestra. 
+
+%(Imagen de recuperar contraseña)
+
+%Finalmente, la interfaz de inicio de sesión ofrece un botón para ingresar directamente como invitado, ideado para aquellas personas del entorno del estudiante (amigos o familiares) que deseen establecer una comunicación informal sin necesidad de poseer un perfil registrado en la base de datos. Al seleccionar esta última opción, el usuario es redirigido a la pantalla \emph{Invitado}. Esta vista presenta un formulario simplificado de opción múltiple diseñado para estructurar preguntas rápidas.  Posee un campo para la pregunta, cuatro para las posibles respuestas, botones para eliminar o agregar opciones (hasta un máximo de cuatro) y un botón para enviar la pregunta al estudiante.
+
+%(Imagen de pantalla invitado)
+
+%Por otro lado se encuentra la pantalla \emph{Alumno}. Al tratarse del usuario principal y prioritario del sistema, su ingreso no requiere autenticación. Sus funciones exclusivas son calibrar el detector y responder las evaluaciones que lleguen desde otros dispositivos. Al ingresar a esta vista, el usuario observa un panel indicador del estado del sistema y dos botones de acción principal (calibración y examen). Dichos botones permanecen bloqueados por seguridad hasta que el sistema esté en condiciones de operar. Antes de permitir cualquier acción, el frontend le solicita al servidor la descarga del archivo \emph{opencv.js}. Esta librería matemática actuará como el motor de la detección visual, pero adaptada exclusivamente para el método de \emph{Template Matching} (dejando atrás el enfoque previo de los círculos de Hough). 
+
+%(Imágenes de panel alumno bloqueado y desbloqueado)
+
+%Una vez que el indicador confirma que la librería \emph{OpenCV} fue leída desde la tarjeta microSD, transferida y compilada correctamente por el navegador, los botones de acción se habilitan. El primero de ellos dirige a la interfaz de calibración, la cual está compuesta por seis cuadros de previsualización vacíos, un recuadro de mayor tamaño donde se proyecta el flujo de video en vivo y los comandos para iniciar o abortar el proceso. Si el sistema detecta una calibración almacenada previamente, advierte al usuario para evitar posibles redundancias.
+
+%(Imagen pantalla de calibración)
+
+%Al pulsar el botón de inicio, comienza una secuencia guiada para capturar los fotogramas de referencia: un indicador visual le señala al usuario hacia qué cuadrante debe dirigir la mirada y, tras una cuenta regresiva de tres segundos, el algoritmo captura la imagen. Este procedimiento se repite para todas las direcciones y para el parpadeo final. Una vez concluida la secuencia, los patrones capturados se exhiben en los cuadros de previsualización, otorgando la opción de guardar dicha calibración o reiniciar el proceso.
+
+%(Imagen de uno de los pasos de la secuencia)
+
+%El segundo botón del panel principal (\emph{Iniciar cuestionario}) redirige a la interfaz operativa de evaluación. Esta pantalla presenta el flujo de video en la esquina superior derecha junto a un control deslizante (\emph{slider}) que permite ajustar dinámicamente el umbral de sensibilidad del algoritmo. En este estado, el cliente aguarda pasivamente hasta que un invitado envíe una consulta o un profesor inicie formalmente un cuestionario. Al recibir los datos, la interfaz se actualiza automáticamente mostrando el enunciado y cuatro cuadrantes coloreados con sus respectivas opciones. Para responder, el alumno debe sostener la mirada hacia el cuadrante deseado (la interfaz lo resaltará visualmente) y ejecutar un parpadeo intencional para confirmar el registro en la base de datos. Adicionalmente, el usuario puede retornar la mirada a la zona neutra (centro) para descansar la vista o revisar su elección sin alterar la selección previa. En paralelo a este proceso, el sistema cliente emite señales periódicas al servidor (heartbeats) para indicarle al servidor que mantenga activa la sesión.
+
+%(Imagenes de todas las posibles pantallas de cuestionario)
+
+%Si la pregunta provino del modo \emph{Invitado}, la sesión concluye inmediatamente mostrando la respuesta enviada. Si se trata de un examen oficial, el sistema muestra todas las preguntas en orden hasta alcanzar la pantalla final, donde se expone el puntaje obtenido, el tiempo transcurrido y la condición de aprobación. Cabe destacar que el profesor posee control total sobre el flujo del examen, pudiendo pausarlo, reanudarlo o finalizarlo remotamente en cualquier momento, lo cual fuerza la actualización inmediata de la pantalla del alumno hacia los estados correspondientes.
+
+%\keyword{Pantallas de acceso restringido}
+
+%Son aquellas interfaces a las que solo pueden acceder los usuarios registrados mediante el ingreso de sus credenciales (nombre de usuario y contraseña). A todas estas vistas se accede de forma exclusiva superando la validación de la pantalla de login. Si el servidor central (\emph{ESP32}) detecta que un dispositivo intenta conectarse a estas rutas sin poseer un token de sesión activo y válido, el sistema emite una alerta de seguridad y redirige automáticamente al usuario de regreso a la pantalla de inicio de sesión. También posee un límite de tiempo que cierra la sesión automáticamente tras varios minutos de inactividad. En esta categoría se agrupan las pantallas: \emph{Panel}, \emph{Perfil}, \emph{Contactos} y \emph{Cuestionarios}. 
+
+%La pantalla \emph{Panel} es la interfaz principal que el usuario visualiza inmediatamente tras autenticarse con éxito. Presenta un encabezado con un texto de bienvenida que incluye el nombre y apellido del usuario activo, junto a un botón rojo destinado a cerrar la sesión en cualquier momento. A continuación, se despliegan tres grandes botones de navegación cuyo contenido es dinámico y depende de la jerarquía de la cuenta:
+
+%Si el usuario posee el rol de profesor, visualizará las opciones: \emph{Ver cuestionarios}, \emph{Ver datos tutor} y \emph{Editar perfil}.
+%En cambio, si el usuario es un tutor, el botón intermedio se adapta a su necesidad y es reemplazado por la opción \emph{Ver profesores}.
+
+%(Imagenes de pantalla panel para ambos usuarios)
+
+%El botón \emph{Editar perfil}, común a ambos roles, redirige a la pantalla \emph{Perfil}. Esta vista tiene como objetivo ofrecer al usuario la posibilidad de modificar su información personal en todo momento. Al igual que en el panel principal, conserva el encabezado de bienvenida y el botón de cierre de sesión. Debajo de estos elementos, presenta un formulario estructurado con campos de texto para actualizar los siguientes datos: nombre de usuario, nombre, apellido, contacto y la referencia (materia o vínculo). Los cambios realizados en este segmento se envían a la base de datos al pulsar el botón \emph{Guardar datos}.
+
+%(Imagen del primer formulario)
+
+%Seguidamente, la interfaz dispone de una sección independiente dedicada a la actualización de credenciales. Para cambiar la contraseña, el sistema solicita ingresar la clave actual seguida de la nueva, omitiendo la necesidad de utilizar la palabra clave maestra, dado que la identidad del usuario ya se encuentra validada por su sesión activa.
+%En la parte inferior, la interfaz provee un botón rojo diseñado para eliminar definitivamente la cuenta del usuario activo. Como medida de seguridad, al accionar este botón el navegador despliega un cuadro de diálogo de confirmación antes de ejecutar el borrado en la base de datos. Finalmente, existe un botón de navegación para regresar al panel anterior, el cual cuenta con una validación interna que advierte al usuario si intenta abandonar la vista existiendo modificaciones sin guardar.
+
+%(Imagen del resto)
+
+%Retornando al menú principal, el botón central dirige a la pantalla \emph{Contactos}, cuya interfaz y funcionalidad son dinámicas y se adaptan al rol del usuario activo en la sesión.
+%Si el usuario posee el rol de profesor y accede mediante la opción \emph{Ver datos tutor}, visualizará una pantalla encabezada por el título \emph{Datos del Tutor}. Debajo, se despliega una tarjeta informativa que contiene los datos básicos del tutor asociado al dispositivo del alumno: nombre, apellido, vínculo y contacto. Si la base de datos no registra ningún tutor, la interfaz oculta la tarjeta vacía y advierte al usuario mediante un mensaje de texto indicando la ausencia de este perfil. Cabe mencionar que cada tutor debe ser único por cada dispositivo, por lo que se debería mostrar siempre una única tarjeta en caso de haberlo.
+
+%(Imagen de ver tutores)
+
+%Por el contrario, si el usuario autenticado es un tutor e ingresa mediante el botón \emph{Ver profesores}, el encabezado cambia a \emph{Profesores} y la vista presenta una lista dinámica. Esta lista renderiza, en formato de tarjetas individuales, la información de todos los docentes registrados en el dispositivo, detallando para cada uno: Materia, nombre, apellido y contacto. Asimismo, cada tarjeta incorpora un botón de acción destructiva que permite al tutor eliminar manualmente a cualquier profesor del sistema. Al accionar este comando, la interfaz exige una confirmación explícita antes de ejecutar el borrado definitivo en la base de datos (acción que, por diseño del servidor, elimina en cascada los cuestionarios asociados a dicho docente). Al igual que en la vista anterior, si no existen profesores registrados, se notifica la situación con un breve texto en pantalla.
+
+%(Imagen de ver profesores)
+
+%Finalmente cabe destacar que, a diferencia del panel principal, esta interfaz prescinde del encabezado de bienvenida y del botón de cierre de sesión, priorizando una visualización limpia que ofrece únicamente un botón inferior denominado \emph{Volver} para retornar de forma segura al menú anterior.
+
+%La pantalla \emph{Cuestionarios}, accesible a través del panel principal, constituye el núcleo de la gestión académica del dispositivo, presentando múltiples variaciones funcionales dependiendo de la jerarquía del usuario.
+%Para el profesor, esta pantalla actúa como el motor integral de las evaluaciones: permite crearlas, modificarlas, controlar su ejecución en tiempo real, revisar los resultados y eliminarlas. La vista inicial consiste en un listado dinámico de todos los cuestionarios asociados a su materia. Cada elemento de la lista expone datos clave: título, cantidad de preguntas, puntaje obtenido, fecha de inicio y su condición final (aprobado o desaprobado). El control de cada módulo se gestiona a través de cuatro botones, los cuales se habilitan o deshabilitan respondiendo a la máquina de estados del servidor:
+
+%\begin{itemize}
+
+%\item Estado \keyword{PENDIENTE} (Previo a la ejecución): Se habilitan los botones superiores de acción destructiva y modificadora (\emph{Editar} y \emph{Eliminar}). En el bloque inferior, se habilita el botón \emph{INICIAR} (cuyo accionamiento transiciona el examen al estado \emph{En Progreso}) y se mantiene bloqueado el botón \emph{FINALIZAR}. 
+
+%\item Estado \keyword{EN PROGRESO} (Alumno respondiendo): Para garantizar la integridad de los datos, el sistema bloquea inmediatamente los botones de edición y eliminación. El botón de inicio asume la función de \emph{PAUSAR} y se habilita el botón de \emph{FINALIZAR} como mecanismo de aborto seguro en caso de contingencias.
+
+%\item Estado \keyword{PAUSADO}: Los controles superiores de edición permanecen bloqueados y el botón de finalización sigue activo. El botón de estado muta a \emph{REANUDAR}, permitiendo al alumno continuar el examen desde la última pregunta contestada.
+
+%\item Estado \keyword{FINALIZADO}: Los botones de edición y finalización se desactivan. Se rehabilita la capacidad de eliminar el cuestionario y el botón de estado principal se transforma en “REVISAR”, redirigiendo al profesor a la vista de revisión.
+
+%\end{itemize}
+
+%(Imagen de pantalla cuestionarios de profesor)
+
+%Por encima de este listado, un botón etiquetado como "\emph{Nuevo +}" da acceso a la interfaz de creación y edición. Esta vista presenta una plantilla estructurada encabezada por el título del cuestionario (editable de forma interactiva). A continuación, se despliegan los bloques de las preguntas, los cuales permiten ingresar la incógnita y configurar dinámicamente entre dos y cuatro opciones posibles.
+
+%A nivel de configuración, el docente puede seleccionar la respuesta correcta mediante un botón de selección, establecer el puntaje a sumar por acierto y definir el puntaje a restar por error. Para optimizar la carga de datos, la interfaz incluye herramientas de diseño que permiten replicar un mismo esquema de puntajes a todo el examen (\emph{Aplicar a todas}), reordenar la posición de las preguntas en la lista mediante flechas direccionales o eliminar preguntas enteras. En el margen inferior está disponible un campo numérico para establecer el umbral de aprobación y los tres comandos de cierre: \emph{Añadir Pregunta}, \emph{Guardar Cuestionario} (que empaqueta los datos y los envía al ESP32) y \emph{Volver sin guardar}.
+
+%(Imagenes de la pantalla del editor)
+
+%Retornando a la vista del listado, cuando un cuestionario finalizado es sometido a revisión (mediante el botón \emph{REVISAR}), el sistema despliega una vista analítica. Esta pantalla detalla el tiempo total empleado, el puntaje final, la fecha de inicio, la condición de aprobación, un desglose pregunta por pregunta indicando la opción elegida por el alumno, la opción correcta (si hubo equivocación) y el impacto numérico de dicha respuesta en el puntaje total.
+
+%(Imagenes de la vista de revision)
+
+%Por otra parte, si el usuario que accede a la pantalla \emph{Cuestionarios} posee el rol de tutor, la interfaz restringe severamente sus privilegios. El listado mostrará los cuestionarios históricos creados por la totalidad de los profesores, indicando adicionalmente a qué materia pertenece cada uno. Todos los controles de edición, eliminación y alteración de estados se suprimen gráficamente. El tutor únicamente cuenta con el botón de \emph{REVISAR} para consultar las analíticas, el cual permanecerá bloqueado hasta que el sistema registre que el cuestionario ha alcanzado el estado \emph{FINALIZADO}.
+
+%(Imagen de la pantalla cuestionarios del tutor y otra de la pantalla de revisión)
 
 
-\keyword{Núcleos de la aplicación}
+%\keyword{Núcleos de la aplicación}
 
-A diferencia de las interfaces visuales descritas anteriormente, esta categoría abarca los archivos y scripts estructurales que operan en segundo plano. No poseen una representación gráfica directa para el usuario, pero constituyen el motor lógico que sostiene la arquitectura de \emph{Aplicación de Página Única} (SPA, por sus siglas en inglés) y gestionan la comunicación con el servidor central.
+%A diferencia de las interfaces visuales descritas anteriormente, esta categoría abarca los archivos y scripts estructurales que operan en segundo plano. No poseen una representación gráfica directa para el usuario, pero constituyen el motor lógico que sostiene la arquitectura de \emph{Aplicación de Página Única} (SPA, por sus siglas en inglés) y gestionan la comunicación con el servidor central.
 
-(Imagen de los archivos nucleo en el visual studio)
+%(Imagen de los archivos nucleo en el visual studio)
 
-El punto de entrada (\keyword{index.html} y \keyword{main.jsx}):  en el paradigma SPA, el servidor \emph{ESP32} aloja y transmite un único documento \emph{HTML} (\emph{index.html}) que actúa como un lienzo en blanco. El archivo \emph{main.jsx} es el script principal de inicialización. Su única y vital función es inyectar la librería \emph{React} dentro de ese documento HTML vacío, montar el \emph{Virtual DOM} (Modelo de Objetos del Documento Virtual) y comenzar a renderizar los componentes de la interfaz a la velocidad del procesador del cliente, evitando que la página web deba recargarse al navegar. Como detalle adicional, el archivo \emph{index.html} también se encarga de descargar el script de \emph{OpenCV} (\emph{opencv.js}, almacenado en la tarjeta microSD) para que esté disponible globalmente en la aplicación. 
+%El punto de entrada (\keyword{index.html} y \keyword{main.jsx}):  en el paradigma SPA, el servidor \emph{ESP32} aloja y transmite un único documento \emph{HTML} (\emph{index.html}) que actúa como un lienzo en blanco. El archivo \emph{main.jsx} es el script principal de inicialización. Su única y vital función es inyectar la librería \emph{React} dentro de ese documento HTML vacío, montar el \emph{Virtual DOM} (Modelo de Objetos del Documento Virtual) y comenzar a renderizar los componentes de la interfaz a la velocidad del procesador del cliente, evitando que la página web deba recargarse al navegar. Como detalle adicional, el archivo \emph{index.html} también se encarga de descargar el script de \emph{OpenCV} (\emph{opencv.js}, almacenado en la tarjeta microSD) para que esté disponible globalmente en la aplicación. 
 
-El gestor de rutas (\keyword{App.jsx}): este componente actúa como el controlador de tráfico del sistema. Su función es evaluar continuamente la URL actual del navegador y decidir qué pantalla visual debe renderizarse en cada momento. Además, gestiona la lógica de protección de rutas: antes de permitir que un componente de acceso restringido se monte en pantalla (como el panel o los cuestionarios), \emph{App.jsx} verifica la memoria de sesión (\emph{sessionStorage}) en busca de un token de autorización válido. Si las credenciales no existen o caducaron, bloquea la navegación y redirige el flujo forzosamente hacia la pantalla de \emph{Login}. Este archivo también implementa un monitor de sesión que vigila la inactividad del usuario (10 minutos) y realiza peticiones periódicas (\emph{/api/auth/heartbeat} cada 5 segundos) para asegurar que el token sigue siendo válido en el servidor. Si la validación falla, ejecuta la función \emph{handleLogout}, la cual limpia las credenciales y redirige a la pantalla de inicio de sesión para proteger las herramientas administrativas. 
+%El gestor de rutas (\keyword{App.jsx}): este componente actúa como el controlador de tráfico del sistema. Su función es evaluar continuamente la URL actual del navegador y decidir qué pantalla visual debe renderizarse en cada momento. Además, gestiona la lógica de protección de rutas: antes de permitir que un componente de acceso restringido se monte en pantalla (como el panel o los cuestionarios), \emph{App.jsx} verifica la memoria de sesión (\emph{sessionStorage}) en busca de un token de autorización válido. Si las credenciales no existen o caducaron, bloquea la navegación y redirige el flujo forzosamente hacia la pantalla de \emph{Login}. Este archivo también implementa un monitor de sesión que vigila la inactividad del usuario (10 minutos) y realiza peticiones periódicas (\emph{/api/auth/heartbeat} cada 5 segundos) para asegurar que el token sigue siendo válido en el servidor. Si la validación falla, ejecuta la función \emph{handleLogout}, la cual limpia las credenciales y redirige a la pantalla de inicio de sesión para proteger las herramientas administrativas. 
 
-La capa de servicios (\keyword{services/api.js}): Para mantener una arquitectura de software escalable y ordenada, el sistema aísla todas las comunicaciones de red en un módulo de servicios independiente. Este script centraliza todas las peticiones asíncronas (HTTP y REST) dirigidas al backend alojado en el \emph{ESP32}. Su existencia permite que los componentes gráficos soliciten datos (como el estado de un examen o la lista de profesores) invocando funciones simples, mientras este archivo se encarga de la complejidad de estructurar las cabeceras de red, adjuntar los tokens de seguridad y parsear las respuestas JSON provenientes del microcontrolador.
+%La capa de servicios (\keyword{services/api.js}): Para mantener una arquitectura de software escalable y ordenada, el sistema aísla todas las comunicaciones de red en un módulo de servicios independiente. Este script centraliza todas las peticiones asíncronas (HTTP y REST) dirigidas al backend alojado en el \emph{ESP32}. Su existencia permite que los componentes gráficos soliciten datos (como el estado de un examen o la lista de profesores) invocando funciones simples, mientras este archivo se encarga de la complejidad de estructurar las cabeceras de red, adjuntar los tokens de seguridad y parsear las respuestas JSON provenientes del microcontrolador.
 
-Compilación y despliegue (\keyword{dist/}): Cabe destacar que el código fuente desarrollado en React no puede ser interpretado nativamente por los navegadores ni almacenado de forma eficiente en un microcontrolador. Por este motivo, el proyecto utiliza una herramienta de construcción (en este caso, \emph{Vite}) que compila, minimiza y empaqueta todo el código fuente en un conjunto de archivos estáticos altamente optimizados (ubicados en el directorio \emph{dist/}). Son exclusivamente estos archivos livianos los que finalmente se transfieren a la memoria microSD del \emph{ESP32} principal para ser servidos a los usuarios.
+%Compilación y despliegue (\keyword{dist/}): Cabe destacar que el código fuente desarrollado en React no puede ser interpretado nativamente por los navegadores ni almacenado de forma eficiente en un microcontrolador. Por este motivo, el proyecto utiliza una herramienta de construcción (en este caso, \emph{Vite}) que compila, minimiza y empaqueta todo el código fuente en un conjunto de archivos estáticos altamente optimizados (ubicados en el directorio \emph{dist/}). Son exclusivamente estos archivos livianos los que finalmente se transfieren a la memoria microSD del \emph{ESP32} principal para ser servidos a los usuarios.
 
 
 \section{Interfaz de usuario táctil}
