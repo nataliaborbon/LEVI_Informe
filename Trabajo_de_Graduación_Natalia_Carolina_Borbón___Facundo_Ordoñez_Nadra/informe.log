@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.24)  13 OCT 2026 00:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.24)  13 OCT 2026 00:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1534,11 +1534,11 @@ LaTeX Info: Redefining \% on input line 1232.
 LaTeX Info: Redefining \. on input line 1269.
 LaTeX Info: Redefining \% on input line 1269.
  [52]
-LaTeX Info: Redefining \. on input line 1418.
-LaTeX Info: Redefining \% on input line 1418.
+LaTeX Info: Redefining \. on input line 1417.
+LaTeX Info: Redefining \% on input line 1417.
  [53]
-LaTeX Info: Redefining \. on input line 1446.
-LaTeX Info: Redefining \% on input line 1446.
+LaTeX Info: Redefining \. on input line 1443.
+LaTeX Info: Redefining \% on input line 1443.
  [54]
 LaTeX Info: Redefining \. on input line 1524.
 LaTeX Info: Redefining \% on input line 1524.
@@ -1731,7 +1731,7 @@ Here is how much of TeX's memory you used:
  1142 hyphenation exceptions out of 8191
  103i,20n,108p,1297b,2977s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\tbmr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi600\cmbrmi8.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\cmbrmi10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\cmbr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\cmbrsy10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi600\ebmo10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi720\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi600\ebmr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi864\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi1244\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\ebmo10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi720\ebmo17.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi657\ebmr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi720\ebmo10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi720\ebmr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi1037\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi1493\ebbx10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi864\ebmr10.pk> <C:\Users\Natalia\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright/dpi720\ebmr17.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-Output written on informe.pdf (81 pages, 9851055 bytes).
+Output written on informe.pdf (81 pages, 9851147 bytes).
 PDF statistics:
  1904 PDF objects out of 2073 (max. 8388607)
  252 named destinations out of 1000 (max. 500000)
