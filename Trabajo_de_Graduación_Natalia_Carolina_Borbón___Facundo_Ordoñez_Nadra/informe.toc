@@ -77,14 +77,14 @@
 \contentsline {subsubsection}{\numberline {3.6.3.2}Estructura interna}{50}{subsubsection.117}%
 \contentsline {subsubsection}{\numberline {3.6.3.3}Recepción de datos y ejecución del detector}{51}{subsubsection.118}%
 \contentsline {subsubsection}{\numberline {3.6.3.4}Pantallas}{52}{subsubsection.119}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{53}{section.120}%
-\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{53}{subsection.121}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{54}{section.120}%
+\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{54}{subsection.121}%
 \contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{54}{subsection.122}%
-\contentsline {subsection}{\numberline {3.7.3}Vistas}{54}{subsection.123}%
+\contentsline {subsection}{\numberline {3.7.3}Vistas}{55}{subsection.123}%
 \contentsline {section}{\numberline {3.8}Alimentación}{55}{section.124}%
 \contentsline {subsection}{\numberline {3.8.1}Soluciones propuestas}{56}{subsection.125}%
 \contentsline {subsection}{\numberline {3.8.2}Descripción del sistema elegido}{58}{subsection.126}%
-\contentsline {subsection}{\numberline {3.8.3}Recarga y protección}{58}{subsection.127}%
+\contentsline {subsection}{\numberline {3.8.3}Recarga y protección}{59}{subsection.127}%
 \contentsline {subsection}{\numberline {3.8.4}Estabilización de voltaje}{62}{subsection.140}%
 \contentsline {section}{\numberline {3.9}Costo total de desarrollo}{67}{section.151}%
 \contentsline {chapter}{\numberline {4}Ensayos y resultados}{68}{chapter.152}%

@@ -28,3 +28,8 @@ Tareas 12/10:
 - Revisar el título de la segunda subsubsección del Frontend (3.6), "Estructura interna": quedó provisoriamente.
 - OBLIGATORIO: pasar el frontend de React a Preact (el informe dice que se usó Preact). Cambios: desinstalar react, react-dom, @vitejs/plugin-react y @types/react*; instalar preact@10 y, como dependencia de desarrollo, @preact/preset-vite; en vite.config.js usar el plugin preact() en lugar de react(); en main.jsx usar render() de 'preact'. Las pantallas y react-router-dom no se tocan. Probado en una copia local (rama migracion-preact): compila y Home, Login y Panel cargan igual que con React. JS compilado: 292,5 KB con React -> 116,3 KB con Preact (gzip: 89,8 KB -> 37,6 KB). Falta probarlo con el módulo central (alumno, invitado, calibración y examen) y cargar el nuevo dist/ en data/ del firmware.
 
+
+Tareas 13/10:
+
+- Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
+

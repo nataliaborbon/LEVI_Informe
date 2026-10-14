@@ -875,11 +875,11 @@ A continuación se describe cada capa, en el orden en que se apoyan unas sobre o
 
 \subsection{Base de datos}
 
-La base de datos almacena de forma permanente la información del sistema, que incluye los usuarios registrados, los cuestionarios con sus preguntas y opciones, y los resultados del alumno. Así, estos registros se conservan aunque el módulo central se apague. En esta subsección se explica primero cómo se creó y configuró la base, y luego la estructura de sus tablas.
+La base de datos almacena de forma permanente la información del sistema, que incluye los usuarios registrados, los cuestionarios (con sus preguntas y opciones) y los resultados del alumno. Así, estos registros se conservan aunque el módulo central se apague. En esta subsección se explica primero cómo se creó y configuró la base, y luego la estructura de sus tablas.
 
 \subsubsection{Creación y configuración}
 
-La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se eligió este motor porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
+La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se lo eligió porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
 
 La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite}. Allí se definieron las tablas, sus campos, las relaciones y las restricciones. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear las tablas al iniciar, sino que abre directamente el archivo existente.
 
@@ -889,7 +889,7 @@ Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento d
 
 \item Claves foráneas (\emph{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
 
-\item Tamaño de la caché (\emph{cache\_size}): se limita a 16 KB, para reducir el consumo de RAM.
+\item Tamaño de la caché (\emph{cache\_size}): se limita a 16 KB para reducir el consumo de RAM.
 
 \item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas se guardan en la tarjeta y no en la RAM.
 
@@ -905,11 +905,11 @@ Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento d
 
 \subsubsection{Estructura de las tablas}
 
-La base de datos se compone de cuatro tablas, que son usuarios, cuestionarios, preguntas y opciones. En todas ellas, cada registro se identifica con un número entero, su clave primaria, que \emph{SQLite} asigna de forma automática al insertarlo. A continuación se describe el contenido de cada tabla.
+La base de datos se compone de cuatro tablas, que son: usuarios, cuestionarios, preguntas y opciones. En todas ellas, cada registro se identifica con un número entero (su clave primaria), que \emph{SQLite} asigna de forma automática al insertarlo. A continuación se describe el contenido de cada tabla.
 
 \keyword{Usuarios}
 
-La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno no forma parte de ella, ya que cada dispositivo pertenece a un único alumno y no hace falta una tabla para identificarlo. Por este motivo, su nombre se define en la configuración inicial y se guarda en la NVS del módulo central. Los invitados tampoco se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
+La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno no forma parte de ella, ya que cada dispositivo pertenece a un único alumno y no es necesaria una tabla para identificarlo. Por este motivo, su nombre se define en la configuración inicial y se guarda en la NVS del módulo central. Los invitados tampoco se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
 
 \begin{itemize}
 
@@ -917,7 +917,7 @@ La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno
 
 \item Nombre y apellido: datos personales del usuario.
 
-\item Rol: indica si se trata de un profesor o de un tutor, y no admite otros valores.
+\item Rol: indica si se trata de un profesor o de un tutor. No admite otros valores.
 
 \item Referencia: su significado depende del rol. Para un profesor indica la materia que dicta, mientras que para un tutor indica su relación con el alumno, como madre o padre.
 
@@ -939,7 +939,7 @@ El \emph{salt} se genera de forma aleatoria al crear cada usuario. Sin este valo
 
 \keyword{Cuestionarios}
 
-La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Como cada dispositivo pertenece a un único alumno, no hace falta una tabla aparte para los resultados, sino que se almacenan directamente en el cuestionario. Cada uno cuenta con los siguientes campos.
+La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Considerando que cada dispositivo pertenece a un único alumno, no hace falta una tabla aparte para los resultados, sino que se pueden almacenar directamente en el cuestionario. Cada uno cuenta con los siguientes campos.
 
 \begin{itemize}
 
@@ -973,9 +973,9 @@ El estado de un cuestionario solo puede tomar uno de los siguientes valores.
 
 \end{itemize}
 
-Al crearse, todo cuestionario queda en estado pendiente. Cuando el profesor lo inicia, pasa a en progreso y se registra la fecha de inicio. Desde ese estado puede pasar a pausado en tres casos. El primero es cuando el profesor lo pausa. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso. Un cuestionario pausado vuelve a en progreso cuando el profesor lo reanuda.
+Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda.
 
-Por último, el cuestionario pasa a finalizado cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado. El profesor puede hacerlo tanto si está en progreso como si está pausado. En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
+Por último, el cuestionario pasa a \emph{finalizado} cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado (independiente de que esté en progreso o pausado). En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
 
 \keyword{(Diagrama de transición de estados del cuestionario) (Natty)}
 
@@ -1003,8 +1003,7 @@ La opción correcta se registra en la pregunta y no como una marca dentro de cad
 
 \keyword{Opciones}
 
-La tabla de opciones guarda las respuestas posibles de cada pregunta. Cada pregunta cuenta con entre dos y cuatro opciones, y cada una tiene los siguientes campos.
-
+La tabla de opciones guarda las respuestas posibles de cada pregunta. Cada pregunta tiene entre dos y cuatro opciones, cuyos campos son los siguientes.
 \begin{itemize}
 
 \item Pregunta: referencia a la pregunta a la que pertenece la opción.
@@ -1021,17 +1020,17 @@ Las tablas se vinculan mediante claves foráneas. Un profesor puede crear varios
 
 Estas relaciones definen el orden en que se crean los registros. Un cuestionario requiere que su profesor ya exista, y una pregunta requiere que exista su cuestionario. En el caso de las preguntas, primero se crea la pregunta, luego sus opciones y, por último, se indica cuál de ellas es la correcta.
 
-Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma, no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
+Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
 
 \subsection{Backend}
 
 Las herramientas habituales para desarrollar un \emph{backend}, como \emph{Node.js} o \emph{Django}, requieren un sistema operativo y una cantidad de memoria muy superior a la del módulo central. Por este motivo, el \emph{backend} se escribió en C++, como parte del mismo \emph{firmware} que controla la red, la pantalla y la tarjeta microSD.
 
-Su código se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte, que utilizan tanto los controladores como los servicios.
+Su código se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte que utiliza tanto los controladores como los servicios.
 
 \subsubsection{Modelos}
 
-Los modelos son las estructuras con las que el \emph{backend} agrupa la información para pasarla de una capa a otra. No realizan operaciones, sino que solo contienen datos. Según su función, se distinguen tres tipos.
+Los modelos son las estructuras con las que el \emph{backend} agrupa la información para transmitirla de una capa a otra. No realizan operaciones, sino que solo contienen datos. Según su función se distinguen tres tipos.
 
 \begin{itemize}
 
@@ -1043,13 +1042,13 @@ Los modelos son las estructuras con las que el \emph{backend} agrupa la informac
 
 \end{itemize}
 
-Por la memoria limitada del módulo central, los modelos que agrupan varios elementos tienen una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
+Por la memoria limitada del módulo central, los modelos que agrupan varios elementos deberán tener una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
 
 \subsubsection{Controladores}
 
-Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema, y existen cuatro, dedicados a la autenticación, los usuarios, los cuestionarios y el alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
+Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema y existen cuatro: controlador de autenticación, de usuarios, de cuestionarios y del alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
 
-Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. De esta forma, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
+Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. En resumen, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
 
 La acción que se solicita sobre cada recurso se indica mediante el método HTTP.
 
@@ -1057,7 +1056,7 @@ La acción que se solicita sobre cada recurso se indica mediante el método HTTP
 
 \item GET: consulta información, como el listado de cuestionarios o el estado del examen.
 
-\item POST: crea registros, como un usuario o un cuestionario, o ejecuta acciones, como iniciar sesión o registrar una respuesta.
+\item POST: crea registros, como un usuario o un cuestionario; o ejecuta acciones, como iniciar sesión o registrar una respuesta.
 
 \item PUT: reemplaza todos los datos de un registro por los que se envían. Se utiliza, por ejemplo, para editar un cuestionario pendiente. En ese caso, el profesor envía nuevamente el cuestionario completo, que sustituye al anterior.
 
@@ -1085,15 +1084,15 @@ Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si
 
 Gracias a este formato común, el \emph{frontend} interpreta todas las respuestas de la misma manera.
 
-Al crear o editar un cuestionario, el cuerpo de la petición puede superar el tamaño que el servidor entrega de una sola vez. En ese caso llega dividido en fragmentos, y el controlador los reúne antes de interpretar el JSON.
+Al crear o editar un cuestionario, el cuerpo de la petición puede superar el tamaño que el servidor entrega de una sola vez. En ese caso llega dividido en fragmentos y el controlador los reúne antes de interpretar el JSON.
 
 \subsubsection{Servicios}
 
-Los servicios concentran las reglas del sistema. Existen cuatro, dedicados a la autenticación, los usuarios, los cuestionarios y las respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo.
+Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo.
 
 \keyword{Autenticación}
 
-El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos. Si el usuario no existe o la contraseña no coincide, responde con el mismo mensaje en ambos casos. De esta forma, no revela qué nombres de usuario están registrados. Cuando la verificación es correcta, solicita al gestor de sesiones que abra una nueva sesión.
+El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos. Si el usuario no existe o la contraseña no coincide, responde con el mismo mensaje en ambos casos. De esta forma no revela qué nombres de usuario están registrados. Cuando la verificación es correcta, solicita al gestor de sesiones que abra una nueva sesión.
 
 \keyword{Usuarios}
 
@@ -1103,43 +1102,43 @@ Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base 
 
 \keyword{Cuestionarios}
 
-El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes, y la eliminación, en cualquier estado salvo en progreso o pausado. Esta última sigue el mismo criterio de borrado secuencial que la de usuarios.
+El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado. Esta última sigue el mismo criterio de borrado secuencial que la de usuarios.
 
-Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta. Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y recién después borra las anteriores. De esta manera, ante un error, el cuestionario conserva su contenido original.
+Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta. Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y luego borra las anteriores. De esta forma, ante un error, el cuestionario conserva su contenido original.
 
-Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo, solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar, se recupera.
+Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
 
-Por último, al finalizar un cuestionario, el servicio calcula el puntaje. Suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
+Por último, al finalizar un cuestionario el servicio calcula el puntaje: ssuma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
 
 \keyword{Respuestas}
 
-El servicio de respuestas determina qué se muestra en el dispositivo del alumno. En cada consulta, si hay un examen en progreso, entrega la primera pregunta sin responder. Si no lo hay y un invitado cargó una pregunta, entrega esa pregunta. En cualquier otro caso, indica que no hay nada pendiente.
+El servicio de respuestas determina qué se muestra en el dispositivo del alumno. En cada consulta, si hay un examen en progreso, entrega la primera pregunta sin responder. Si no lo hay y un invitado cargó una pregunta, entrega esa pregunta. En cualquier otro caso indica que no hay nada pendiente.
 
-Al recibir una respuesta, comprueba que la pregunta pertenezca al examen en curso y que la opción corresponda a esa pregunta. Luego la guarda y, si era la última, finaliza el cuestionario y devuelve el resultado. En cambio, la respuesta a una pregunta de invitado no se guarda, y la pregunta se descarta.
+Al recibir una respuesta, comprueba que la pregunta pertenezca al examen en curso y que la opción corresponda a esa pregunta. Luego la guarda y, si era la última, finaliza el cuestionario y devuelve el resultado. En cambio, la respuesta a una pregunta de invitado no se guarda y la pregunta se descarta.
 
 \subsubsection{Repositorios}
 
-Los repositorios son la única capa que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar, y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
+La capa de respositorios es la única que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
 
 Todos los repositorios comparten una única conexión con la base de datos. El módulo central la abre al encender, configura las opciones de \emph{SQLite} descritas en la sección de base de datos y la mantiene abierta mientras funciona. Así se evita abrir y cerrar el archivo en cada petición, lo que demandaría tiempo y memoria adicionales.
 
-Las consultas se ejecutan como sentencias preparadas. Primero se define la instrucción con marcadores en lugar de los valores, y luego se asocian a ellos los datos recibidos. Como estos nunca forman parte del texto de la instrucción, se impide la inyección de SQL, es decir, que un dato ingresado por el usuario se interprete como una orden para la base.
+Las consultas se ejecutan como sentencias preparadas. Primero se define la instrucción con marcadores en lugar de los valores y luego se asocian a ellos los datos recibidos. Como estos nunca forman parte del texto de la instrucción, se impide la inyección de SQL, es decir, que un dato ingresado por el usuario se interprete como una orden para la base.
 
-Los listados de cuestionarios, por su parte, se obtienen mediante sentencias simples. En lugar de combinar varias tablas en una sola operación, primero se leen los cuestionarios y luego se obtiene por separado, para cada uno, la cantidad de preguntas y, en el caso del tutor, la materia del profesor. Este enfoque implica más accesos a la base, pero cada uno procesa menos datos a la vez, lo que reduce el consumo de RAM.
+Los listados de cuestionarios, por su parte, se obtienen mediante sentencias simples. En lugar de combinar varias tablas en una sola operación, primero se leen los cuestionarios y luego se obtiene por separado, para cada uno, la cantidad de preguntas y la materia del profesor (esto último solo para el caso de los tutores). Este enfoque implica más accesos a la base, pero cada uno procesa menos datos a la vez, lo que reduce el consumo de RAM.
 
 \subsubsection{Gestión de sesiones}
 
-La gestión de sesiones controla quién está conectado al sistema y con qué rol. Funciona como un componente independiente de las capas anteriores, ya que la utilizan tanto los controladores, para verificar cada petición, como los servicios, para abrir y cerrar sesiones o consultar su estado.
+La gestión de sesiones controla quién está conectado al sistema y con qué rol. Funciona como un componente independiente de las capas anteriores, ya que lo utilizan tanto los controladores, para verificar cada petición, como los servicios para abrir y cerrar sesiones o consultar su estado.
 
 \keyword{Tokens de sesión}
 
-Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador, que lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición, basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central, y los usuarios deben volver a ingresar.
+Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador y éste lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
 En aplicaciones web con muchos usuarios suele emplearse el \emph{JSON Web Token} (JWT), un \emph{token} firmado que el servidor valida sin almacenar las sesiones. En este caso no resulta conveniente, ya que el sistema necesita registrar las sesiones activas para aplicar las prioridades y la expiración que se describen a continuación.
 
 \keyword{Lugares de sesión}
 
-El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra, al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
+El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
 
 En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza.
 
@@ -1151,7 +1150,7 @@ Si la sesión que expira es la del alumno y hay un examen en progreso, el sistem
 
 \keyword{Invitado}
 
-El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso, no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse esta. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
 
 \keyword{Verificación de peticiones}
 
@@ -1159,7 +1158,7 @@ Antes de procesar una petición protegida, los controladores recurren a un compo
 
 \subsection{Frontend}
 
-El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo 2.
+El \emph{frontend} es la parte visual del código. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo 2.
 
 \subsubsection{Preact y despliegue}
 
@@ -1167,9 +1166,9 @@ Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScrip
 
 El código fuente se escribió en computadora. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
-Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontrolador, y viceversa.
+Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontroladors y viceversa.
 
-Una vez terminado el \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 60\% menos, mientras que la hoja de estilos no varió.
+Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 60\% menos, mientras que la hoja de estilos no varió.
 
 \begin{table}[H]
 \centering
@@ -1177,8 +1176,8 @@ Una vez terminado el \emph{frontend}, se verificó la elección de la biblioteca
 \hline
 Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 \hline
-\emph{React} & 292,5 KB \\
-\emph{Preact} & 116,3 KB \\
+\emph{React} & 286 KB \\
+\emph{Preact} & 113 KB \\
 \hline
 \end{tabular}
 \caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
@@ -1187,43 +1186,47 @@ Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 
 \subsubsection{Estructura interna}
 
-El \emph{frontend} se estructuró en pantallas, cada una de las cuales cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un panel. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme, y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular, incluso en posición horizontal.
+El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (En el caso del alumno, en posición horizontal).
 
-Los componentes se organizan de forma jerárquica. En la raíz se encuentra el componente principal, que contiene a todas las pantallas. A su vez, algunas pantallas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios reúne el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene, y es ella la que realiza la petición al servidor y actualiza la lista.
+\keyword{Imagen de un diagrama con la estructura interna}
 
-El componente principal actúa además como gestor de rutas. Según la dirección del navegador, decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Gracias a la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo, o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
+Los componentes se organizan de forma jerárquica: en la raíz se encuentra el componente principal que contiene a todas las pantallas. A su vez, algunas de ellas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios contiene el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene y es ella la que realiza la petición al servidor y actualiza la lista.
 
-El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario, que el navegador guarda al iniciar sesión, y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
+El componente principal actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Utilizando la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
+
+El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario (que el navegador guarda al iniciar sesión), y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
 
 Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente, que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
 
 \subsubsection{Recepción de datos y ejecución del detector}
 
-En la 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos.
+En la sección 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos.
+
+\keyword{Alguna imagen que ilustre todo esto}
 
 \keyword{Carga de la aplicación}
 
-Cuando un usuario ingresa a levi.local, el módulo central envía al navegador los tres archivos del \emph{frontend}. El documento HTML llega prácticamente vacío y solo indica qué otros dos archivos descargar. Una vez recibidos, el navegador ejecuta el código \emph{JavaScript}, que arma la interfaz y muestra la pantalla solicitada. A partir de ese momento, todo el funcionamiento de la interfaz ocurre en el dispositivo del usuario.
+Cuando un usuario ingresa a \emph{levi.local}, el módulo central envía al navegador los tres archivos del \emph{frontend}. El documento HTML llega prácticamente vacío y solo indica qué otros dos archivos descargar. Una vez recibidos, el navegador ejecuta el código \emph{JavaScript}, que arma la interfaz y muestra la pantalla solicitada. A partir de ese momento, todo el funcionamiento de la interfaz ocurre en el dispositivo del usuario.
 
 \keyword{Obtención de OpenCV.js}
 
 La biblioteca \emph{OpenCV.js} no se envía junto con la aplicación, sino solo cuando se abre la pantalla del alumno, que es la única que la necesita. Como es el archivo más pesado del sistema, el navegador guarda una copia después de la primera descarga, de modo que en los accesos siguientes no vuelve a pedirla al módulo central. Cuando debe descargarla, verifica que el archivo haya llegado completo y, si la descarga falla, la vuelve a intentar de forma automática.
 
-La biblioteca incluye una parte de su código que el navegador debe compilar antes de ejecutarla, lo que demora algunos segundos. Durante ese tiempo, la pantalla del alumno muestra un aviso y mantiene deshabilitados los botones de calibración y de examen.
+La biblioteca incluye una parte de su código que el navegador debe compilar antes de ejecutarla, lo que demora algunos segundos. Durante ese tiempo, la pantalla del alumno muestra un aviso y mantiene deshabilitados los botones.
 
 \keyword{Recepción del video}
 
-Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo, sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza. Sobre esa imagen se dibuja un recuadro que marca la zona que se captura como plantilla durante la calibración. Así, el ojo puede centrarse dentro de esa zona antes de cada captura.
+Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza. Sobre esa imagen se dibuja un recuadro que marca la región de interés (ROI), que indica toda el área en la que el detector se aplica y ayuda a centrar el ojo.
 
-La conexión se abre al ingresar a la calibración o al examen y se cierra al salir de ellos o ante un error. Cada vez que se abre, se fuerza una conexión nueva, para que el navegador no muestre una imagen antigua guardada de un acceso anterior.
+La conexión se abre al ingresar a la calibración o al examen y se cierra al salir de ellos o ante un error. Cada vez que se abre se fuerza una conexión nueva, para que el navegador no muestre una imagen antigua guardada de un acceso anterior.
 
 \keyword{Ejecución del seguimiento}
 
 Una vez compilada, la biblioteca pone sus funciones a disposición del código \emph{JavaScript} de la aplicación, que las invoca como si fueran propias. Los cálculos pesados, como la conversión a escala de grises o la comparación de plantillas, se ejecutan en el código compilado de la biblioteca. \emph{JavaScript}, en cambio, solo coordina el proceso y actualiza la interfaz con los resultados.
 
-Para trabajar con las imágenes, \emph{OpenCV.js} las representa como matrices ubicadas en una zona de memoria propia, separada de la que administra el navegador. Por este motivo, la aplicación reserva una única vez las matrices del fotograma, del recorte y de su versión en escala de grises, y las reutiliza en cada ciclo. Las matrices temporales, en cambio, se liberan de forma explícita después de cada uso, ya que el navegador no las elimina por sí solo. Sin esta precaución, la memoria ocupada crecería con cada fotograma.
+Para trabajar con las imágenes, \emph{OpenCV.js} las representa como matrices ubicadas en una zona de memoria propia, separada de la que administra el navegador. Por este motivo, la aplicación reserva una única vez las matrices del fotograma, del recorte y de su versión en escala de grises y las reutiliza en cada ciclo. Las matrices temporales, en cambio, se liberan de forma explícita después de cada uso, ya que el navegador no las elimina por sí solo. Sin esta precaución, la memoria ocupada crecería con cada fotograma.
 
-Las plantillas obtenidas en la calibración también se conservan como matrices de \emph{OpenCV.js}. Para guardarlas en el navegador, se convierten en imágenes y, al volver a la pantalla del alumno, se transforman nuevamente en matrices.
+Las plantillas obtenidas en la calibración también se conservan como matrices de \emph{OpenCV.js}. Para guardarlas en el navegador se convierten en imágenes y, al volver a la pantalla del alumno, se transforman nuevamente en matrices.
 
 \subsubsection{Pantallas}
 
@@ -1231,11 +1234,11 @@ Las pantallas se agrupan en tres categorías, según quién las utiliza: las de 
 
 \keyword{Pantallas de acceso}
 
-Son las pantallas a las que cualquier usuario puede ingresar, sin importar su rol.
+Son las pantallas a las que cualquier usuario puede ingresar sin importar su rol.
 
 \begin{itemize}
 
-\item Inicio: es la primera pantalla que se muestra al acceder a levi.local. Presenta un mensaje de bienvenida y dos botones, uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
+\item Inicio (o \emph{Home}): es la primera pantalla que se muestra al acceder a levi.local. Presenta un mensaje de bienvenida y dos botones: uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
 
 \item Inicio de sesión: los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse, completando un formulario con sus datos, o recuperar una contraseña olvidada. En ambos casos se solicita la clave maestra del rol.
 
@@ -1247,17 +1250,17 @@ Son las pantallas a las que cualquier usuario puede ingresar, sin importar su ro
 
 \keyword{Pantalla del alumno}
 
-El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas, que se alternan según la etapa en la que se encuentra.
+El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alternan según la etapa en la que se encuentra.
 
 \begin{itemize}
 
 \item Menú: presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
 
-\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración, el botón de inicio ofrece recalibrar.
+\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en caché, se mantiene viva mientras el dispositivo esté conectado a la red.
 
-\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no hay un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta, presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante conserva el color de la esquina correspondiente en la calibración. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En ese caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
+\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En ese caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
-\item Resultado: en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen, informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
+\item Resultado: en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
 
 \end{itemize}
 
@@ -1271,15 +1274,15 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \item Principal: muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último, al perfil. El botón central depende del rol, ya que el profesor accede a los datos de los tutores y el tutor, a los de los profesores.
 
-\item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva, sin la clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
+\item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva. No se requiere clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
 
 \item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, el tutor puede eliminar a un profesor.
 
-\item Cuestionarios: para el profesor, presenta el listado de sus cuestionarios, con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan según su estado actual. El botón de estado cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, la fecha se toma del dispositivo del profesor, ya que el módulo central no dispone de un reloj de tiempo real ni de acceso a internet para conocerla. El tutor, en cambio, ve los cuestionarios de todos los profesores, con la materia de cada uno, y solo puede revisarlos una vez finalizados.
+\item Cuestionarios: para el profesor, presenta el listado de sus cuestionarios con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan según su estado actual. El botón de estado cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, la fecha se toma del dispositivo del profesor, ya que el módulo central no dispone de un reloj de tiempo real ni de acceso a internet para conocerla. El tutor, en cambio, ve los cuestionarios de todos los profesores, con la materia de cada uno, y solo puede revisarlos una vez finalizados.
 
-\item Editor: se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse.
+\item Editor: exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse.
 
-\item Revisión: muestra el resultado de un cuestionario finalizado. Detalla, para cada pregunta, la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
+\item Revisión: muestra el resultado de un cuestionario finalizado. Detalla para cada pregunta la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
 
 \end{itemize}
 
@@ -1412,7 +1415,7 @@ Con el fin de facilitar el uso del dispositivo, se incorporó una interfaz gráf
 
 \subsection{Bibliotecas y controladores}
 
-La interfaz se apoya en dos bibliotecas. \emph{TFT\_eSPI} provee los controladores de bajo nivel que comunican el microcontrolador con la pantalla mediante SPI. Por sí sola, sin embargo, solo permite dibujar elementos básicos, como píxeles, líneas y texto. \emph{LVGL}, en cambio, aporta los elementos que requiere la interfaz, como las vistas deslizables, los campos de texto, el teclado virtual y los botones, y gestiona los toques del usuario. Sin ella, todos estos elementos habrían tenido que programarse desde cero.
+La interfaz se apoya en dos bibliotecas. \emph{TFT\_eSPI} provee los controladores de bajo nivel que comunican el microcontrolador con la pantalla mediante SPI. Por sí sola, sin embargo, solo permite dibujar elementos básicos como píxeles, líneas y texto. \emph{LVGL}, en cambio, aporta los elementos que requiere la interfaz, como las vistas deslizables, los campos de texto, el teclado virtual y los botones, y gestiona los toques del usuario. Sin ella, todos estos elementos habrían tenido que programarse desde cero.
 
 Además, \emph{LVGL} puede dibujar la pantalla por partes. En lugar de reservar memoria para la imagen completa, que ocuparía unos 150 KB, utiliza un búfer de alrededor de 4 KB, equivalente a una franja angosta de la pantalla. La biblioteca dibuja cada franja en ese búfer y la envía a la pantalla antes de pasar a la siguiente. Así, la interfaz ocupa una fracción mínima de la RAM del módulo central.
 
@@ -1428,7 +1431,7 @@ Para no ocupar al microcontrolador de forma innecesaria, cada dato se vuelve a d
 
 Al encender el equipo, la pantalla se inicia antes que la tarjeta microSD, la base de datos, la red y el servidor web. De esta forma, el usuario observa la interfaz desde los primeros instantes, mientras el resto del sistema termina de arrancar.
 
-Por otra parte, para reducir el consumo de la batería, la retroiluminación de la pantalla se apaga tras un minuto sin que se la toque. El primer toque posterior solo vuelve a encenderla, sin activar ningún elemento de la interfaz, de modo que el usuario no ejecuta una acción por accidente.
+Por otra parte, para reducir el consumo de la batería, la retroiluminación de la pantalla se apaga tras un minuto sin que se la toque. El primer toque posterior solo vuelve a encenderla sin activar ningún elemento de la interfaz, de modo que el usuario no ejecute una acción por accidente.
 
 \subsection{Vistas}
 
@@ -1436,19 +1439,19 @@ La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un conte
 
 \keyword{Bienvenida}
 
-Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada, en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
+Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
 
 \keyword{(Imagen de la vista de bienvenida)}
 
 \keyword{Estado del sistema}
 
-Al deslizar la pantalla, se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
+Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
 
 \keyword{(Imágenes de la vista de estado del sistema, en distintas situaciones)}
 
 \keyword{Examen}
 
-La tercera vista permite seguir el examen desde el propio módulo central. Mientras no hay un cuestionario en curso, muestra un mensaje de espera. Durante el examen, presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar, muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
+La tercera vista permite seguir el examen desde el propio módulo central. Mientras no haya un cuestionario en curso muestra un mensaje de espera. Durante el examen presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
 
 \keyword{(Imágenes de la vista de examen en espera, en curso y finalizado)}
 
