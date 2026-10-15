@@ -1,10 +1,24 @@
-Últimos cambios:
+Últimos cambios 15/10:
 
-- Se etiquetaron futuras imágenes con "Natty" hasta sección 3.5 incluida.
+- Se cambio la imagen del front en el capitulo 2 y se cambiaron un par de lineas
 
-- Se añadieron imágenes: Localremoto // Glint // Glint desplazado // Familia ESP // ESP32CAM
+- Lo de cejas y pestañas si estaba explicado
 
-- Correcciones menores en la sección 3.4 y 3.5
+- Se añadió lo de la cámara con flex mas largo y una imagen de las camaras
+
+- Se cambión "Preact y despliege" por "herramientas y entorno"
+
+- "Estructura interna" parece buen título
+
+- Se aclaro que se usa visual para el front
+
+- Alimentación: Añadida presentación y reestructuradas subsecciones
+
+- Se trasladó todo lo de montaje y PCB a una subsección del cap 3
+
+- Capitulo 4: Se transfirió todo lo del capítulo 5
+
+- Se eliminó el capítulo 5
 
 Tareas:
 
@@ -35,29 +49,22 @@ Natty:
 
 -3.2.1.1: Imagen de centroide
 
+
+
 Jokin:
 
 - Añadir imágenes etiquetadas hasta 3.5
 
+- Sacar imágenes del sistema funcionando
+
+- 3.1.2.3: TFlite fallando ==> Top 10 errores
+
 - OBLIGATORIO: sacar del frontend el ping a la cámara. En PantallaAlumno.jsx (efecto cameraHeartbeat) se llama cada 2 segundos a pingCamara() de services/api.js, que pide /api/camara/ping al módulo central, pero esa ruta no existe en el backend (siempre responde 404). Eliminar la función pingCamara de api.js y el efecto que la usa, y volver a compilar y cargar el front en el módulo central.
 
-- En la sección 3.4 (Módulo de captura), donde se habla de la cámara: agregar que se consideró usar una cámara con un cable flexible más largo, pero su costo era elevado, por lo que se mantuvo la cámara que viene incluida con la placa, que no tiene costo extra.
-
-- Revisar el título de la primera subsubsección del Frontend (3.6), "Preact y despliegue": quedó provisoriamente pero no convence.
-
-- Revisar el título de la segunda subsubsección del Frontend (3.6), "Estructura interna": quedó provisoriamente.
-
--Re estructurar alimentación y agregar introducción a la sección
+- "Estructura interna" en front: Me parece bien
 
 - Actualizar costos de 3.8
 
-2.6.3.1.1: Elegir imagen mas clara
-
-3.2.1.1: Agregar que el centroide fallaba con la ceja y el anteojo
-
-3.1.2.3: TFlite fallando ==> Top 10 errores
-
-Sacar imágenes del sistema funcionando
 
 Consultar:
 

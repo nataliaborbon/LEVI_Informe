@@ -1,83 +1,32 @@
 % Chapter 4
 
-\chapter{Ensayos y resultados} % Main chapter title
+\chapter{Conclusiones} % Main chapter title
 
 \label{Chapter4} % For referencing the chapter elsewhere, use \ref{Chapter4} 
-\label{resultados}
+\label{conclusiones}
 
 %----------------------------------------------------------------------------------------
 
-\section{Montaje}
+\section{Resultados obtenidos}
 
-En esta sección se describe y expone el diseño físico final del dispositivo, comenzando exclusivamente por los circuitos de alimentación y posteriormente con el armado final.
+Como resultado de este trabajo se obtuvo un dispositivo de sólido funcionamiento, cómodo, práctico y económico. Si bien no se cumplieron las expectativas iniciales de implementar el seguimiento ocular mediante redes neuronales, se encontró una alternativa matemática que resultó ser mucho más efectiva y eficiente. Este cambio de rumbo fue fundamental para lograr que un hardware tan limitado pudiera cumplir a la perfección su función de actuar como un sistema de evaluación de opción múltiple.
 
-\subsection{Conexiones y PCB}
+A lo largo del desarrollo, muchas de las ideas y procedimientos propuestos al principio tuvieron que ser descartados debido a problemas inevitables de precisión, latencia y disponibilidad de recursos. Es importante destacar la cantidad y variedad de áreas en las que se tuvo que profundizar para llegar a la solución definitiva: programación de sistemas embebidos, desarrollo de aplicaciones web, protocolos de comunicación (como SPI y Wi-Fi), diseño de redes y electrónica básica, entre otros conceptos que ya fueron expuestos a lo largo de este informe.
 
-El esquema de conexiones final para el circuito de alimentación del capturador de imágenes es el siguiente:
+Fue justamente esta mezcla de conceptos y ámbitos tan distintos lo que permitió construir el sistema actual. Se logró crear una solución que gestiona usuarios y sesiones de forma segura, administra cuidadosamente la escasa memoria y potencia del procesador, aprovecha al máximo la comunicación inalámbrica aislada, ofrece interfaces de usuario interactivas y, lo más destacable: todo esto se consiguió utilizando componentes fácilmente accesibles, económicos y con gran disponibilidad en el mercado.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figuras/esquemacapturador.png}
-    \caption{Esquema de conexiones para la PCB del circuito capturador}
-    \label{esquemacapturador}
-\end{figure}
+Por todo lo expuesto se puede concluir que, pese a que el dispositivo final acabó teniendo una funcionalidad técnica distinta a la propuesta originalmente y presenta mejoras a tratar en futuras versiones, el desarrollo fué un éxito. Se puede considerar un desarrollo satisfactorio especialmente si se tiene en cuenta la premisa social impuesta desde el primer día: se logró fabricar un artefacto de asistencia sumamente versátil, portable e intuitivo para cualquier tipo de usuario.
 
-Incluye los módulos \emph{TP4056}, \emph{MT3608}, un switch intermedio entre ellos para desconectar manualmente el dispositivo y finalmente el zócalo donde se inserta la \emph{ESP32}, al cual se le conecta el LED IR para normalizar la iluminación en el ojo.
 
-Al tener los módulos comerciales, el esquemático final de la PCB se reduce a este simple esquema:
+\section{Comparación con productos similares}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
-    \caption{Esquema simplificado de la PCB del circuito capturador}
-    \label{esquemacapturadorsimple}
-\end{figure}
+Como bien se puede deducir por lo expuesto en la sección anterior, este dispositivo no busca competir en potencia y velocidad de hardware con los equipos comerciales de detección ocular de gama alta. Al depender de los recursos limitados de un microprocesador sencillo, es lógico que sus especificaciones técnicas sean inferiores. Lo mismo ocurre con el software: al ser un programa embebido en un microcontrolador, no cuenta con un sistema operativo complejo ni con la infraestructura de ciberseguridad necesaria para una comercialización masiva a gran escala.
 
-La entrada del \emph{TP4056} se conecta mediante USB-C, por lo que no se incluye en el esquemático de la PCB.
+Sin embargo, como contrapartida a estas limitaciones técnicas, el proyecto presenta un punto fuerte fundamental frente a todos sus competidores: su precio y nivel de accesibilidad. Mientras que dispositivos como los \emph{Tobii Glasses} tienen precios que rondan los miles de dólares, el costo total del hardware utilizado para construir este dispositivo fue de apenas unas decenas de dólares. Además, aquellos productos rara vez se encuentran disponibles en los mercados locales de la región desde donde se desarrolló este trabajo, lo que suma costos de envío e importación que dificultan aún más su adquisición.
 
-A su vez, el esquema de conexiones de la placa que actuará como servidor web es el siguiente:
+Otra gran ventaja, si lo comparamos con alternativas de software puro como las de \emph{EyeComTec}, es que este proyecto cuenta con una interfaz y funcionalidades diseñadas de manera exclusiva para el entorno académico y familiar del estudiante. El sistema fue pensado desde cero para crear y responder preguntas altamente personalizables, brindando comodidad a docentes y usuarios en general que no están familiarizados con tecnologías complejas, y evitando el tener que realizar configuraciones previas que suelen ralentizar el proceso.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figuras/esquemareceptor.png}
-    \caption{Esquema simplificado de la PCB del circuito servidor}
-    \label{esquemareceptor}
-\end{figure}
+En resumen, si bien no es un dispositivo pulido para competir en el mercado del hardware de alto rendimiento, cumple con creces su objetivo principal: ofrecer una experiencia de comunicación sencilla, intuitiva y a un precio realmente accesible para cada usuario.
 
-Prácticamente igual al anterior, sin los diodos LED ni la \emph{ESP32-CAM}. En su lugar se coloca una bornera doble de la que saldrán cables para alimentar a la CYD.
 
-\keyword{Diseño de PCB}
-
-A continuación se muestran imágenes del diseño de las PCBs para ambos dispositivos, diseñados en el software web \emph{EasyEDA}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\textwidth]{figuras/layoutcapturador.png}
-    \caption{Layout de la PCB del circuito capturador}
-    \label{layoutcapturador}
-\end{figure}
-
-En lugar de colocar directamente el LED de encendido en la PCB, se opta por utilizar una bornera de 3 terminales para conectarlo externamente. Esto para poder decidir con más libertad su posición exacta en el dispositivo final.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\textwidth]{figuras/layoutservidor.png}
-    \caption{Layout de la PCB del circuito servidor}
-    \label{layoutservidor}
-\end{figure}
-
-\subsection{Ensamblaje del prototipo}
-
-\section{Pruebas de Software}
-
-\subsection{Pruebas del tracker} 
-
-\subsection{Pruebas unitarias}
-
-\section{Pruebas de Hardware}
-
-(Cambiar todas las imagenes por tablas)
-
-\section{Pruebas de rendimiento}
-
-\section{Pruebas de integración}
+\section{Trabajo futuro}

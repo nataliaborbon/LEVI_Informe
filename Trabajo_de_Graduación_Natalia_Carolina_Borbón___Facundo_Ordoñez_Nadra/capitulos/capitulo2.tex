@@ -272,16 +272,14 @@ Al solicitar la aplicación, el navegador descarga un conjunto de archivos que p
     \item JavaScript: es el lenguaje de programación que se ejecuta directamente en el navegador. Mientras que el HTML define qué elementos existen y el CSS define cómo se ven, JavaScript hace que la página responda a las acciones del usuario. Detecta eventos como clics o el envío de un formulario y altera el contenido en pantalla en tiempo real según esa interacción. Además, se comunica con el servidor para intercambiar información mientras la aplicación está en uso.
 \end{itemize}
 
-A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes (Fig.~\ref{fig:componente}), donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{figuras/componente.png}
-    \caption{Características de un componente web}
+    \includegraphics[width=0.5\textwidth]{figuras/arquitecturaweb.png}
+    \caption{Arquitectura del frontend: HTML (su estructura), CSS (cómo se ve) y JavaScript (cómo funciona)}
     \label{fig:componente}
 \end{figure}
 
-\keyword{(Elegir una imagen mas clara)}
+A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes (Fig.~\ref{fig:componente}), donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada (Sus propios códigos HTML, CSS y JavaScript independientes del resto).
 
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, el componente hijo no puede alterar directamente los datos o estados del padre. Solo puede emitir peticiones para solicitar cambios. En cambio, el padre sí puede modificar los estados del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 

@@ -373,7 +373,7 @@ Una vez seleccionada la región de interés (\emph{ROI}) que teóricamente abarc
 
 Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, presenta un problema importante: la iluminación ambiental.
 
-Al evaluar este método, se descubrió que su precisión dependía exclusivamente de la luminosidad de la imagen. Un ambiente con mucha luz genera sombras pronunciadas que el algoritmo puede confundir con pupilas. Por el contrario, en un ambiente con poca luz, el nivel de oscuridad de la pupila y el de otras áreas (como pestañas o cejas) se vuelve demasiado similar. El umbral de oscuridad puede ajustarse por código. Sin embargo, resulta poco práctico, porque la luz ambiental es una variable incontrolable y sumamente dinámica.
+Al evaluar este método, se descubrió que su precisión dependía exclusivamente de la luminosidad de la imagen. Un ambiente con mucha luz genera sombras pronunciadas que el algoritmo puede confundir con pupilas. Por el contrario, en un ambiente con poca luz, el nivel de oscuridad de la pupila y el de otras áreas (como pestañas, cejas o anteojos) se vuelve demasiado similar. El umbral de oscuridad puede ajustarse por código. Sin embargo, resulta poco práctico, porque la luz ambiental es una variable incontrolable y sumamente dinámica.
 
 Aunque la luz del entorno no puede regularse, sí es posible controlar la iluminación de la imagen que capta el \emph{ESP32}. Si hubiera una fuente de luz junto a la cámara, esta variable sería siempre constante. Así se evitarían las confusiones con sombras o pestañas. Sin embargo, iluminar permanentemente el ojo del usuario con luz visible sería molesto y perjudicial para su visión. Por este motivo, se planteó una fuente de luz que solo pudiera detectar la cámara y que no dañara la vista: la luz infrarroja (IR).
 
@@ -698,6 +698,8 @@ El módulo central, basado en un microcontrolador \emph{ESP32}, dispone de tres 
 
 La memoria flash guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
 
+\keyword{Imagen del mapa de memoria (natty)}
+
 \begin{itemize}
 
 \item NVS (\emph{Non-Volatile Storage}): almacena las claves maestras de profesores y tutores y el nombre del alumno. Estos datos se definen una única vez, durante la configuración inicial, y se consultan al encender el equipo. La NVS está diseñada para guardar pocos valores de pequeño tamaño, por lo que resulta adecuada para esta configuración.
@@ -761,7 +763,14 @@ Por último, las placas de la familia \emph{ESP32} son compatibles con las bibli
 
 \subsection{Módulo de captura}
 
-El módulo de captura se implementa con la placa \emph{ESP32-CAM}. Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
+El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/esp32cam.png}
+    \caption{Placa \emph{ESP32-CAM} con su cámara.}
+    \label{fig:esp32cam}
+\end{figure}
 
 Dentro de la familia \emph{ESP32} existen otras placas que también incorporan un conector para cámara, como las basadas en el \emph{ESP32-S3}. Estos modelos ofrecen mayor capacidad de procesamiento y memoria, pero tienen un costo mayor. Una placa genérica con el módulo \emph{ESP32-S3-WROOM N16R8} y cámara cuesta aproximadamente 20 USD a octubre de 2026. El \emph{ESP32-CAM}, en cambio, se basa en el \emph{ESP32} clásico y es la más básica y económica de las opciones con cámara de la familia. Como el módulo de captura solo obtiene y transmite imágenes, no requiere la capacidad adicional del \emph{ESP32-S3}, por lo que esta alternativa resulta suficiente.
 
@@ -786,15 +795,17 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
     \end{tabular}
 \end{table}
 
-La cámara \emph{OV2640} tiene una resolución máxima de 2 megapíxeles. El sistema no requiere una resolución alta, ya que las imágenes se procesan a 320x240 píxeles. Lo que sí resulta importante es su campo de visión. Al estar montada en la visera de una gorra, la cámara debe captar el ojo sin incluir estímulos ajenos. La lente de la \emph{OV2640} tiene un ángulo de visión de 68°, dentro del rango de entre 60 y 120 grados establecido para esta tarea. Además, se le retiró el filtro infrarrojo para que registre la luz del LED.
+Como se mencionó con anterioridad, se utilizará cámara \emph{OV2640}, que tiene una resolución máxima de 2 megapíxeles (Fig: \ref{fig:ov2640}) . El sistema no requiere una resolución alta, ya que las imágenes se procesan a 320x240 píxeles. Lo que sí resulta importante es su campo de visión. Al estar montada en la visera de una gorra, la cámara debe captar el ojo sin incluir estímulos ajenos. La lente de la \emph{OV2640} tiene un ángulo de visión de 68°, dentro del rango de entre 60 y 120 grados establecido para esta tarea. Además, se le retiró el filtro infrarrojo para que registre la luz del LED.
 
 También se evaluó la cámara \emph{OV3660}, de 3 megapíxeles, que ofrece resultados similares. Sin embargo, la \emph{OV2640} incluida con la compra de la placa resultó adecuada. Utilizar otro sensor habría requerido adquirirla por separado, lo que aumentaría el costo total sin aportar una mejora significativa.
 
+Se consideró, además, la posibilidad de utilizar una cámara \emph{OV2640} con un conector flex de meyor longitud. Esto hubiera permitido una mayor flexibilidad a la hora del montaje final. Sin embargo, se optó por utilizar la cámara de flex corto ue llegó junto a la compra del \emph{ESP32-CAM} para abaratar costos.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/esp32cam.png}
-    \caption{Placa \emph{ESP32-CAM} con su cámara.}
-    \label{fig:esp32cam}
+    \includegraphics[width=0.3\textwidth]{figuras/ov2640.png}
+    \caption{Cámaras OV2640 con distintos ángulos de visión y longitud de conector}
+    \label{fig:ov2640}
 \end{figure}
 
 
@@ -1153,11 +1164,11 @@ Antes de procesar una petición protegida, los controladores recurren a un compo
 
 El \emph{frontend} es la parte visual del código. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo 2.
 
-\subsubsection{Preact y despliegue}
+\subsubsection{Entorno y herramientas}
 
 Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} de código abierto, diseñada para construir interfaces de usuario dinámicas e interactivas a partir de componentes. Ofrece las mismas capacidades de desarrollo que \emph{React}, la biblioteca más difundida para este fin, creada y mantenida por \emph{Meta}, pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias, el código resultante es más liviano, lo que reduce el tamaño de los archivos que el módulo central debe almacenar y transmitir al navegador.
 
-El código fuente se escribió en computadora. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
+El código fuente se escribió en computador, utilizando el software \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
 Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontroladors y viceversa.
 
@@ -1510,13 +1521,17 @@ Esta vista aparece solo cuando la NVS no contiene los datos de configuración, c
 %(Vista pantalla de booteo)
 
 
-\section{Alimentación}
+\section{Alimentación} 
+
+En esta sección se explicará acerca del sistema de alimentación autónomo utilizado en este trabajo. Se comenzará por nombrar los requisitos, expuestos en el capítulo 1, luego se expondrán algunas soluciones propuestas. Finalmente, se explorará en detalle el sistema elegido junto a su diseño en físico.
+
+\subsection{Requisitos previos}
 
 Entre las premisas de este trabajo se estipuló que el dispositivo final debe ser inalámbrico y autosuficiente en términos de consumo energético al momento de utilizarlo. Siguiendo estos lineamientos, se opta por no alimentarlo utilizando cables y entradas USB-C o MicroUSB que se incluyen en los modelos comerciales de los microcontroladores utilizados, sino que se diseñará su propio sistema de alimentación utilizando fuentes de energía independientes de cualquier dispositivo externo al momento de uso. La solución general planteada para este problema recae en el uso de las baterías de litio, una de las fuentes de energía inalámbrica más comunes en los dispositivos electrónicos de bajo consumo. A pesar de su precio relativamente elevado a comparación de las pilas comunes, tienen la particularidad de que son recargables, evitando así que el usuario tenga que comprar repuestos en el momento en que se agote la energía. 
 
 La alimentación a través de estas baterías permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia, ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
 
-Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware. 
+Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware.
 
 \subsection{Soluciones propuestas}
 
@@ -1638,7 +1653,7 @@ El primer circuito integrado que utilizaremos es el chip \emph{TP4056}, cuyo dat
 El funcionamiento en detalle de estos integrados y sus módulos comerciales serán descritos en las siguientes secciones.
 
 
-\subsection{Recarga y protección}
+\subsubsection{Recarga y protección}
 
 Como se expuso con anterioridad, el chip \emph{TP4056} sirve para cargar una única celda de baterías de litio y lo hace en un ciclo de dos fases.
 
@@ -1736,7 +1751,7 @@ El \emph{DW01A} es un monitor del voltaje y corriente de la batería. Si nota qu
 
 En condiciones normales, la batería se conecta, mediante los terminales B+ y B-, al pin BAT y a GND respectivamente. Si el integrado \emph{FS8205A} actúa, se abre un MOSFET aislando el terminal B- de GND y por lo tanto abriendo el circuito de carga.
 
-\subsection{Estabilización de voltaje}
+\subsubsection{Estabilización de voltaje}
 
 El chip \emph{MT3608} es un circuito \emph{Convertidor Step-up de alta eficiencia}. O más coloquialmente conocido como \emph{Elevador de tensión}. Su función es complementarse con un circuito externo típicamente conocido como \emph{Elevador boost} para tomar un determinado valor de voltaje a la entrada y obtener a su salida un valor más grande y más estable, acondicionado para alimentar el microcontrolador.
 
@@ -1884,7 +1899,7 @@ Finalmente, el pin de feedback se conecta a un potenciómetro de 100 kΩ en ser
 
 Se observa también el capacitor C6 del circuito boost, un capacitor C5 de desacople, y el pin de GND conectado a la masa del circuito.
 
-\keyword {Componentes a utilizar en el dispositivo final}
+\subsubsection{Componentes a utilizar en el dispositivo final}
 
 Con todo el sistema explicado, se listan a continuación todos los materiales necesarios para construir los circuitos de alimentación:
 
@@ -1907,6 +1922,66 @@ Con todo el sistema explicado, se listan a continuación todos los materiales ne
 
 \end{itemize}
 
+\section{Diseño físico}
+
+\subsection{Montaje}
+
+En esta sección se describe y expone el diseño físico final del dispositivo, comenzando exclusivamente por los circuitos de alimentación y posteriormente con el armado final.
+
+\subsubsection{Conexiones y PCB}
+
+El esquema de conexiones final para el circuito de alimentación del capturador de imágenes es el siguiente:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/esquemacapturador.png}
+    \caption{Esquema de conexiones para la PCB del circuito capturador}
+    \label{esquemacapturador}
+\end{figure}
+
+Incluye los módulos \emph{TP4056}, \emph{MT3608}, un switch intermedio entre ellos para desconectar manualmente el dispositivo y finalmente el zócalo donde se inserta la \emph{ESP32}, al cual se le conecta el LED IR para normalizar la iluminación en el ojo.
+
+Al tener los módulos comerciales, el esquemático final de la PCB se reduce a este simple esquema:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
+    \caption{Esquema simplificado de la PCB del circuito capturador}
+    \label{esquemacapturadorsimple}
+\end{figure}
+
+La entrada del \emph{TP4056} se conecta mediante USB-C, por lo que no se incluye en el esquemático de la PCB.
+
+A su vez, el esquema de conexiones de la placa que actuará como servidor web es el siguiente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/esquemareceptor.png}
+    \caption{Esquema simplificado de la PCB del circuito servidor}
+    \label{esquemareceptor}
+\end{figure}
+
+Prácticamente igual al anterior, sin los diodos LED ni la \emph{ESP32-CAM}. En su lugar se coloca una bornera doble de la que saldrán cables para alimentar a la CYD.
+
+\keyword{Diseño de PCB}
+
+A continuación se muestran imágenes del diseño de las PCBs para ambos dispositivos, diseñados en el software web \emph{EasyEDA}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figuras/layoutcapturador.png}
+    \caption{Layout de la PCB del circuito capturador}
+    \label{layoutcapturador}
+\end{figure}
+
+En lugar de colocar directamente el LED de encendido en la PCB, se opta por utilizar una bornera de 3 terminales para conectarlo externamente. Esto para poder decidir con más libertad su posición exacta en el dispositivo final.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figuras/layoutservidor.png}
+    \caption{Layout de la PCB del circuito servidor}
+    \label{layoutservidor}
+\end{figure}
 
 \section{Costo total de desarrollo}
 
