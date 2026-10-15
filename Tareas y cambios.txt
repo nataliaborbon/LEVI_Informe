@@ -6,30 +6,117 @@
 
 - Correcciones menores en la sección 3.4 y 3.5
 
-Tareas 9/10:
+Tareas:
 
-- Explicar el JSON en el capitulo 2
-- Explicar la limitación a 4 conexiones disponibles
-- Añadir imágenes etiquetadas hasta 3.5
-
-Tareas 10/10:
+Natty:
 
 - Explicar en el capitulo 2 qué es SHA-256 y cómo funciona una función de hash (la sección 3.6, Base de datos, remite al capitulo 2 para eso)
 
-Tareas 12/10:
+- Explicar el JSON en el capitulo 2
 
-- Revisar el formato de las subsubsecciones y los apartados. Antes las subsubsecciones (sin número) se veían igual que los apartados con \keyword. Se agregó \setcounter{secnumdepth}{3} en informe.tex para numerarlas (ej.: 3.6.2.2 Controladores), lo que afecta a todo el documento. No termina de convencer; se probó \paragraph para los apartados y tampoco gustó.
-- OBLIGATORIO: sacar del frontend el ping a la cámara. En PantallaAlumno.jsx (efecto cameraHeartbeat) se llama cada 2 segundos a pingCamara() de services/api.js, que pide /api/camara/ping al módulo central, pero esa ruta no existe en el backend (siempre responde 404). Eliminar la función pingCamara de api.js y el efecto que la usa, y volver a compilar y cargar el front en el módulo central.
-- En la sección 3.4 (Módulo de captura), donde se habla de la cámara: agregar que se consideró usar una cámara con un cable flexible más largo, pero su costo era elevado, por lo que se mantuvo la cámara que viene incluida con la placa, que no tiene costo extra.
+- Explicar la limitación a 4 conexiones disponibles
+
 - En la sección 3.4 (Módulo central), agregar el hardware de la pantalla después de "integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD": pantalla LCD TFT de 320x240 píxeles, comunicada por SPI mediante el controlador ILI9341, y panel táctil resistivo con el controlador XPT2046. Al hacerlo, cambiar "Este chip resulta suficiente" por "El ESP32 clásico resulta suficiente", porque "este chip" queda lejos del ESP32.
-- Definir dónde ubicar la explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección de la pantalla táctil queda fuera de contexto, porque ya se las nombra en la Aplicación web (3.6, Servicios), así que debe ir antes. Una opción posible es el Mapa de memoria (3.3).
+
+- Agregar conexión SD
+
+- Agregar explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección del mapa de memoria.
+
+
 - En el capítulo 2, mover la sección de base de datos ("Bases de Datos y Persistencia") para que quede dentro de "Arquitectura de una aplicación web", junto con Frontend y Backend.
-- Revisar el título de la primera subsubsección del Frontend (3.6), "Preact y despliegue": quedó provisoriamente pero no convence.
-- Revisar el título de la segunda subsubsección del Frontend (3.6), "Estructura interna": quedó provisoriamente.
-- OBLIGATORIO: pasar el frontend de React a Preact (el informe dice que se usó Preact). Cambios: desinstalar react, react-dom, @vitejs/plugin-react y @types/react*; instalar preact@10 y, como dependencia de desarrollo, @preact/preset-vite; en vite.config.js usar el plugin preact() en lugar de react(); en main.jsx usar render() de 'preact'. Las pantallas y react-router-dom no se tocan. Probado en una copia local (rama migracion-preact): compila y Home, Login y Panel cargan igual que con React. JS compilado: 292,5 KB con React -> 116,3 KB con Preact (gzip: 89,8 KB -> 37,6 KB). Falta probarlo con el módulo central (alumno, invitado, calibración y examen) y cargar el nuevo dist/ en data/ del firmware.
-
-
-Tareas 13/10:
 
 - Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
+
+- Ver donde colocar las reglas de negocio. Si quedan en el service, o si no quedan, ¿Qué va en los services?
+
+- 2.5.1.1: Imagen de protocolos con circulitos
+
+- 2.7.1: Imagen de tablas/base de datos
+
+-3.2.1.1: Imagen de centroide
+
+Jokin:
+
+- Añadir imágenes etiquetadas hasta 3.5
+
+- OBLIGATORIO: sacar del frontend el ping a la cámara. En PantallaAlumno.jsx (efecto cameraHeartbeat) se llama cada 2 segundos a pingCamara() de services/api.js, que pide /api/camara/ping al módulo central, pero esa ruta no existe en el backend (siempre responde 404). Eliminar la función pingCamara de api.js y el efecto que la usa, y volver a compilar y cargar el front en el módulo central.
+
+- En la sección 3.4 (Módulo de captura), donde se habla de la cámara: agregar que se consideró usar una cámara con un cable flexible más largo, pero su costo era elevado, por lo que se mantuvo la cámara que viene incluida con la placa, que no tiene costo extra.
+
+- Revisar el título de la primera subsubsección del Frontend (3.6), "Preact y despliegue": quedó provisoriamente pero no convence.
+
+- Revisar el título de la segunda subsubsección del Frontend (3.6), "Estructura interna": quedó provisoriamente.
+
+-Re estructurar alimentación y agregar introducción a la sección
+
+- Actualizar costos de 3.8
+
+2.6.3.1.1: Elegir imagen mas clara
+
+3.2.1.1: Agregar que el centroide fallaba con la ceja y el anteojo
+
+3.1.2.3: TFlite fallando ==> Top 10 errores
+
+Sacar imágenes del sistema funcionando
+
+Consultar:
+
+
+- Revisar el formato de las subsubsecciones y los apartados. Antes las subsubsecciones (sin número) se veían igual que los apartados con \keyword. Se agregó \setcounter{secnumdepth}{3} en informe.tex para numerarlas (ej.: 3.6.2.2 Controladores), lo que afecta a todo el documento. No termina de convencer; se probó \paragraph para los apartados y tampoco gustó.
+
+- Imagen para requisitos?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.8 Alimentación
+
+ 3.8.1 Requisitos (portabilidad y autonomía)
+ 3.8.2 Alternativas evaluadas
+ 3.8.3 Sistema elegido
+  3.8.3.1 Recarga y protección
+  3.8.3.2 Estabilización de voltaje
+ 3.8.4 Estimación de autonomia* (Cambiar)
+
+3.9 Diseño físico
+
+ 3.9.1 Circuitos
+ 3.9.2 PCB
+ 3.9.3 Modelos 3D
+ 3.9.4 Ensamblaje
+
+3.10 Costo total
+
+4 Conclusiones
+ 4.1 Resultados obtenidos
+ 4.2 Comparación con productos similares
+ 4.3 Trabajo futuro
+
+
+
+
+
+
+
+
+
+
+
+
+
 

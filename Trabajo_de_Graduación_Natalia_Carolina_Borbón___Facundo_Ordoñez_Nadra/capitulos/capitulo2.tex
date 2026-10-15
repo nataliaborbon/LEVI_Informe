@@ -143,9 +143,16 @@ Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \e
 
 \subsection{Familia de microcontroladores ESP32}
 
-Otro modelo de placas de desarrollo que ha ganado enorme popularidad en el ámbito de los sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32. Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
+Otro modelo de placas de desarrollo que ha ganado enorme popularidad en el ámbito de los sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32 (Fig. \ref{fig:familiaesp}). Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
 
 Además de sus excelentes capacidades de comunicación, este microcontrolador representa un salto significativo en cuanto a potencia computacional. Al estar generalmente equipado con un procesador de doble núcleo y una memoria considerablemente mayor que la de sus predecesores, permite manejar tareas más complejas, alojar servidores web locales y procesar datos a mayor velocidad. Gracias a este equilibrio entre rendimiento, conectividad y tamaño reducido, el ESP32 se ha convertido en una pieza fundamental para la ingeniería de dispositivos modernos e interconectados.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/familiaesp.png}
+    \caption{Algunas placas de desarrollo de la familia \emph{ESP32}}
+    \label{fig:familiaesp}
+\end{figure}
 
 \subsection{Interfaces gráficas embebidas y biblioteca LVGL}
 
@@ -205,7 +212,7 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
     \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia ininterrumpida de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
 \end{itemize}
 
-\keyword{Alguna imagen ilustrativa o comparativa de los protocolos (Natty)}
+\keyword{Imagen de protocolos con circulitos para señalar (Natty)}
 
 \section{Arquitectura y Patrones de Software}
 
@@ -274,6 +281,8 @@ A medida que una aplicación suma pantallas y funciones, mantener el código fue
     \label{fig:componente}
 \end{figure}
 
+\keyword{(Elegir una imagen mas clara)}
+
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, el componente hijo no puede alterar directamente los datos o estados del padre. Solo puede emitir peticiones para solicitar cambios. En cambio, el padre sí puede modificar los estados del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 
 %Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
@@ -290,7 +299,7 @@ En este desarrollo, el backend adopta una arquitectura en capas basada en el pat
 
 En este trabajo, estas capas se desarrollaron en C++ junto con el resto del código del sistema embebido. Todo el conjunto se ejecuta dentro del microcontrolador.
 
-\keyword{Quiza alguna imagen relacionada? Como el front, que tiene un componente web (Natty)}
+\keyword{Imagen de Controller/Service/Repository (Natty)}
 
 \section{Bases de Datos y Persistencia}
 
@@ -307,6 +316,8 @@ Los fundamentos de este modelo se basan en los siguientes conceptos:
     \item Transacciones y propiedades ACID: una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID. Estas son: Atomicidad (la operación se completa en su totalidad o no se aplica), Consistencia (se respetan todas las reglas e integridad del esquema), Aislamiento (las operaciones simultáneas no interfieren entre sí) y Durabilidad (los cambios confirmados persisten ante fallos o cortes de energía).
 \end{itemize}
 
+\keyword{Agregar imagen para base de datos (Natty)}
+
 \subsection{Motores de bases de datos embebidos}
 
 En el desarrollo de software existen dos formas principales de gestionar una base de datos: mediante sistemas basados en un servidor independiente (que atienden peticiones a través de una red) o mediante motores embebidos.
@@ -321,5 +332,3 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
     \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
     \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
 \end{itemize}
-
-\keyword{Yo elegiría uno de los dos (ya sea DB o motores) para poner una sola imagen (Natty)}
