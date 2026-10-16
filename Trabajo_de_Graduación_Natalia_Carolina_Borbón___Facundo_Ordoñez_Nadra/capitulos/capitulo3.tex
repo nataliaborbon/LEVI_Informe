@@ -1527,17 +1527,19 @@ En esta sección se explicará acerca del sistema de alimentación autónomo uti
 
 \subsection{Requisitos previos}
 
-Entre las premisas de este trabajo se estipuló que el dispositivo final debe ser inalámbrico y autosuficiente en términos de consumo energético al momento de utilizarlo. Siguiendo estos lineamientos, se opta por no alimentarlo utilizando cables y entradas USB-C o MicroUSB que se incluyen en los modelos comerciales de los microcontroladores utilizados, sino que se diseñará su propio sistema de alimentación utilizando fuentes de energía independientes de cualquier dispositivo externo al momento de uso. La solución general planteada para este problema recae en el uso de las baterías de litio, una de las fuentes de energía inalámbrica más comunes en los dispositivos electrónicos de bajo consumo. A pesar de su precio relativamente elevado a comparación de las pilas comunes, tienen la particularidad de que son recargables, evitando así que el usuario tenga que comprar repuestos en el momento en que se agote la energía. 
+Entre las premisas de este trabajo se estipuló que el dispositivo final debe ser inalámbrico y autosuficiente en términos de consumo energético al momento de utilizarlo. Siguiendo estos lineamientos, se opta por no alimentarlo utilizando cables y entradas USB-C o MicroUSB que se incluyen en los modelos comerciales de los microcontroladores utilizados, sino que se diseñará su propio sistema de alimentación utilizando fuentes de energía independientes de cualquier dispositivo externo al momento de uso. La solución general planteada para este problema recae en el uso de baterías de litio, una de las fuentes de energía inalámbrica más comunes en los dispositivos electrónicos de bajo consumo. A pesar de su precio relativamente elevado a comparación de las pilas comunes, tienen la particularidad de que son recargables, evitando así que el usuario tenga que comprar repuestos en el momento en que se agote la energía. 
 
-La alimentación a través de estas baterías permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia, ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
+La alimentación a través de estas baterías permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
 
 Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware.
 
+A continuación se analizarán cuatro alternativas para solucionar estos problemas (suponiendo que se utilizarán baterías de litio 18650 de 3000 mAh)
+
 \subsection{Soluciones propuestas}
 
-\keyword{1- Alimentación directa + Regulador lineal de tensión + Cargador de pilas externo}
+\keyword{1- Regulador lineal de tensión + Cargador de pilas externo}
 
-Consiste en alimentar el microcontrolador directamente desde la batería de litio a través de un portapilas. A esto se le suma un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1777}, para ajustar la tensión a 3,3 V estables. Para la recarga se emplearía un cargador comercial externo, lo que implica extraer físicamente la batería del dispositivo para colocarla en la ranura y conectarla a la red.
+Consiste en alimentar el microcontrolador directamente desde la batería de litio a través de un portapilas (15,5 USD). A esto se le suma un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1117} (1,8 USD), para ajustar la tensión a 3,3 V estables. Para la recarga se emplearía un cargador comercial externo (5 USD), lo que implica extraer físicamente la batería del dispositivo para colocarla en la ranura y conectarla a la red.
 
 (Imagen del LDO)
 
@@ -1545,9 +1547,9 @@ Ventajas de esta solución:
 
 \begin{itemize}
 
-\item Mantenimiento práctico: Los cargadores comerciales son componentes estándar y fáciles de conseguir en el mercado.
+\item Mantenimiento práctico: los cargadores comerciales son componentes estándar y fáciles de conseguir en el mercado.
 
-\item Optimización de espacio: Al requerir únicamente un portapilas, el regulador lineal y un par de capacitores de filtrado, se reduce considerablemente el espacio ocupado en una PCB.
+\item Optimización de espacio: al requerir únicamente un portapilas, el regulador lineal y un par de capacitores de filtrado, se reduce considerablemente el espacio ocupado en una PCB.
 
 
 \end{itemize}
@@ -1557,20 +1559,20 @@ Desventajas de esta solución:
 
 \begin{itemize}
 
-\item Ergonomía y desgaste mecánico: Resulta impráctico para el usuario el tener que retirar la batería del dispositivo cada vez que se quiera recargar, además de que esto puede provocar desgaste mecánico con el tiempo.
+\item Ergonomía y desgaste mecánico: resulta impráctico para el usuario el tener que retirar la batería del dispositivo cada vez que se quiera recargar, además de que esto puede provocar desgaste mecánico con el tiempo.
 
-\item Descarga de la batería: Una batería de litio estándar (como la \emph{18650}) de 3,7 V no entrega este valor continuo de tensión a lo largo del tiempo, sino que disminuye progresivamente hasta llegar a un piso mínimo de unos 3,0 V. Este valor es menor a los 3,3 V que necesita el microcontrolador, lo que significa que el dispositivo dejaría de funcionar mucho antes de que la batería se quede sin energía para dar. Se requiere hardware adicional para aumentar el valor de tensión cuando sea necesario y agregarlo invalida la ventaja de la optimización de espacio.
+\item Descarga de la batería: una batería de litio estándar (como la \emph{18650}) de 3,7 V no entrega este valor continuo de tensión a lo largo del tiempo, sino que disminuye progresivamente hasta llegar a un piso mínimo de unos 3,0 V. Este valor es menor a los 3,3 V que necesita el microcontrolador, lo que significa que el dispositivo dejaría de funcionar mucho antes de que la batería se quede sin energía para dar. Se requiere hardware adicional para aumentar el valor de tensión cuando sea necesario y agregarlo invalida la ventaja de la optimización de espacio.
 
-\item Dropout: La función del regulador es estabilizar la tensión en 3,3 V. Sin embargo, estos integrados operan con transistores MOSFET en zona activa (es decir, actuando como resistencias variables), lo que implica inevitablemente que habrá una caída de voltaje entre la entrada y la salida. Esta caída se llama \emph{voltaje de dropout}, lo que significa que para tener 3,3 V estables a la salida, necesitaremos una tensión continua mayor que ese valor en la entrada, lo que reduce aún más el tiempo en el que se puede usar el dispositivo antes de que la batería se quede sin energía.
+\item Dropout: la función del regulador es estabilizar la tensión en 3,3 V. Sin embargo, estos integrados operan con transistores MOSFET en zona activa (es decir, actuando como resistencias variables), lo que implica inevitablemente que habrá una caída de voltaje entre la entrada y la salida. Esta caída se llama \emph{voltaje de dropout}, lo que significa que para tener 3,3 V estables a la salida, necesitaremos una tensión continua mayor que ese valor en la entrada, lo que reduce aún más el tiempo en el que se puede usar el dispositivo antes de que la batería se quede sin energía.
 
-\item Picos de corriente: El consumo de corriente de un microcontrolador es dinámico. Hay ocasiones, como al encender el Wi-Fi, en las que se exigen grandes transitorios o picos de corriente de hasta 500 mA. Por ley de ohm, al exigir más corriente al regulador, la caída de tensión de dropout por la resistencia del silicio se maximizará. Esto agrava el problema anteriormente mencionado, provocando caídas bruscas en la tensión de alimentación que disparan el detector de bajo voltaje (\emph{brownout detector}) del microcontrolador.
+\item Picos de corriente: el consumo de corriente de un microcontrolador es dinámico. Hay ocasiones, como al encender el Wi-Fi, en las que se exigen grandes transitorios o picos de corriente de hasta 500 mA. Por ley de ohm, al exigir más corriente al regulador, la caída de tensión de dropout por la resistencia del silicio se maximizará. Esto agrava el problema anteriormente mencionado, provocando caídas bruscas en la tensión de alimentación que disparan el detector de bajo voltaje (\emph{brownout detector}) del microcontrolador.
 
 \end{itemize}
 
 
 \keyword{2- Placa de alimentación (Módulo TP4056 + Módulo MT3608)}
 
-El módulo \emph{TP4056} es un circuito integrado utilizado para recargar baterías como las que se usarán en este proyecto, mientras que el \emph{MT3608} es un módulo elevador de voltaje (boost) que entrega a la salida una señal muy estable del valor elegido por el diseñador. Si se interconectan ambos módulos se formaría un conjunto que cumpliría los requisitos de recarga y regulación, y se podría alimentar al \emph{ESP32} desde el pin de 5 voltios.
+El módulo \emph{TP4056} (1,5 USD), es un circuito integrado utilizado para recargar baterías como las implementadas en este proyecto, mientras que el \emph{MT3608} (1,8 USD), es un módulo elevador de voltaje (boost) que entrega a la salida una señal muy estable del valor elegido por el diseñador. Si se interconectan ambos módulos se formaría un conjunto que cumpliría los requisitos de recarga y regulación, y se podría alimentar al \emph{ESP32} desde el pin de 5 voltios.
 
 (Imagen de los modulos en cuestión)
 
@@ -1578,11 +1580,11 @@ Ventajas:
 
 \begin{itemize}
 
-\item Facilidad de mantenimiento: Al ser dos módulos separados, las fallas puntuales pueden repararse fácilmente utilizando un repuesto del módulo necesario sin alterar el sistema completo.
+\item Facilidad de mantenimiento: al ser dos circuitos separados, las fallas puntuales pueden repararse fácilmente utilizando un repuesto del módulo necesario sin alterar el sistema completo.
 
-\item Carga térmica: Esta separación de tareas implica que la temperatura que alcance cada uno será independiente del otro y se distribuirá uniformemente a lo largo de la PCB.
+\item Carga térmica distribuida: esta separación de tareas implica que la temperatura que alcance cada uno será independiente del otro y se distribuirá uniformemente a lo largo de la PCB.
 
-\item Sin dropout ni picos de corriente: El módulo \emph{MT3608} es un regulador switching, que utiliza transistores MOSFET en zona de corte y saturación, por lo que no hay caídas apreciables de tensión entre la entrada y la salida. A su vez, los picos de corriente pueden ser abastecidos por el ajuste automático del ciclo de trabajo del switch.
+\item Sin dropout ni picos de corriente: el módulo \emph{MT3608} contiene un regulador switching, que utiliza transistores MOSFET en zona de corte y saturación, por lo que no hay caídas apreciables de tensión entre la entrada y la salida. A su vez, los picos de corriente pueden ser abastecidos por el ajuste automático del ciclo de trabajo del switch.
 
 \item Doble regulación de tensión: Al alimentar el \emph{ESP32} a través del pin de 5 V, éste utiliza el regulador integrado en su placa para reducirlos a 3,3 V aún más estables.
 
@@ -1592,7 +1594,7 @@ Desventajas:
 
 \begin{itemize}
 
-\item Mantenimiento impráctico: A pesar de que las reparaciones son más sencillas y baratas, los módulos mencionados sólo pueden conseguirse en casas especializadas en electrónica, a diferencia del cargador estándar.
+\item Mantenimiento impráctico: A pesar de que las reparaciones son sencillas y baratas, los módulos mencionados sólo pueden conseguirse en casas especializadas en electrónica.
 
 \item Menor optimización del espacio: Al tener dos módulos distintos se requiere una PCB más espaciosa para contenerlos.
 
@@ -1600,14 +1602,16 @@ Desventajas:
 
 \end{itemize}
 
-\keyword{3- Placa de alimentación con un regulador Buck-Boost}
+\keyword{3- Regulador Buck-Boost}
 
-Se podría pensar que para evitar esa pérdida de eficiencia con el \emph{MT3608} y alimentar al microcontrolador con 3,3 V se pudiera utilizar un regulador Buck-Boost (como el \emph{XL6009}) en lugar del elevador Boost para alimentarlo a 5 V. Pero la ventaja de la eficiencia contrasta con el aumento del costo y la complejidad del circuito integrado. Más adelante se realizará un análisis de mercado para comprobar este punto.
+Se podría pensar que para evitar esa pérdida de eficiencia con el \emph{MT3608} y alimentar al microcontrolador con 3,3 V se pudiera utilizar un regulador Buck-Boost, como el \emph{XL6009} (3,0 USD), en lugar del elevador Boost para alimentarlo a 5 V. Pero la ventaja de la eficiencia contrasta con el ligero aumento del costo y la complejidad del circuito. Además, revisando la hoja de datos, se observa que este regulador funciona con una tensión nominal de entrada de 5 V, mayor a la que la batería puede suministrar. 
+
+La frecuencia de llaveo es otra desventaja. A diferencia del módulo MT3608 que conmuta a 1.2 MHz, éste lo hace a 400 kHz, lo cual puede generar tensión de ripple o rizado a la salida mucho mayor. Esto es sumamente indeseable para alimentar un servidor Wi-Fi y una cámara que debe transmitir en vivo, y suprimirlo requeriría colocar capacitores de mayor valor. 
 
 (Imagen del BuckBoost)
 
 \keyword{4- Integrado \emph{Power Bank} todo en uno}
-El integrado \emph{IP5306} cumple la misma función que la placa de alimentación utilizando un solo chip integrado que realiza internamente el proceso de carga y de regulación de tensión.
+El integrado \emph{IP5306} (4,5 USD) cumple la misma función que la placa de alimentación utilizando un solo chip integrado que realiza internamente el proceso de carga y de regulación de tensión.
 
 (Imagen del IP5306)
 
@@ -1631,11 +1635,11 @@ Desventajas:
 
 \item Pérdida de eficiencia por usar doble regulación.
 
-\item Carga térmica: Al ser un solo chip el que hace la tarea de carga de batería y regulación de voltaje, todo el calor disipado se acumulará en un único punto del dispositivo, lo que influirá negativamente en el funcionamiento del mismo.
+\item Carga térmica: al ser un solo chip el que hace la tarea de carga de batería y regulación de voltaje, todo el calor disipado se acumulará en un único punto del dispositivo, lo que influirá negativamente en el funcionamiento del mismo.
 
-\item No es modular: Si se produjera una falla en cualquier parte del sistema, inevitablemente habría que comprar el repuesto completo del chip, lo cual es más costoso que comprar los repuestos separados de los módulos anteriormente vistos.
+\item No es modular: si se produjera una falla en cualquier parte del sistema, inevitablemente habría que comprar el repuesto completo del chip, lo cual es más costoso y complicado que comprar los repuestos separados de los módulos anteriormente vistos.
 
-\item Ripple en la señal de salida: Al estar diseñados para cargar celulares conectándose a un PMIC interno, los chips \emph{IP5306} conmutan a mucha menor frecuencia (entre 300 y 500 kHz) que el módulo \emph{MT3608}, por ejemplo. Además, carece de filtros adecuados a la salida, lo que provoca que este rizado sea más difícil de eliminar. Este ripple es sumamente indeseable para alimentar un servidor Wi-Fi y una cámara que debe transmitir en vivo. 
+\item Ripple en la señal de salida: al estar diseñados para cargar celulares conectándose a un PMIC interno, los chips \emph{IP5306} conmutan a mucha menor frecuencia (entre 300 y 500 kHz) que el módulo \emph{MT3608}, por ejemplo. Al igual que con el XL6009, se requeriría mucha capacitancia para suprimirlo lo suficiente. 
 
 \end{itemize}
 
@@ -1643,10 +1647,38 @@ Para solucionar el problema del ripple, se podría utilizar directamente un PMIC
 
 \keyword{Análisis de mercado}
 
-(Tabla con las comparaciones de precios)
+A continuación se muestra un resumen comparativo de los costos de cada alternativa, suponiendo que las baterías utilizadas son baterías de litio de 3000 mAh y sin tener en cuenta costos menores (como borneras, botones, LEDs, etc.).
 
+\begin{table}[H]
+    \centering
+    \caption{Análisis de costos de todos los métodos de alimentación propuestos (octubre 2026)}
+    \label{tab:costo_camaras}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Método propuesto} & \textbf{Costo} \\
+        \hline
+ 	     Batería de Litio + LDO + Cargador externo & 22,3 USD \\
+        \hline
+        Regulador switching + Elevador & 18,8 USD  \\
+        \hline
+        Regulador Buck-Boost & 20 USD  \\
+        \hline
+        Power Bank & 20 USD \\
+        \hline
+    \end{tabular}
+\end{table}
 
-\subsection{Descripción del sistema elegido}
+Como podemos observar, todas las alterativas evaluadas rondan los 20 USD, siendo la batería de litio el componente más costoso (un 75\% del precio final). Es por esto que el criterio económico no fue considerado como prioritario a la hora de elegir una solución definitiva.
+
+\keyword{Veredicto final}
+
+La primera alternativa se descartó por la baja eficiencia de los reguladores lineales, que podrían sencillamente ser reemplazados por reguladores switching sin mucha pérdida económica ni dificultad agregada.
+
+Tanto la tercera como la cuarta alternativa se descartaron debido a la tensión de rizado que generan a la salida, la cual es mucho mayor que el resto y requiere mas costos adicionales para filtrarla.
+
+Por lo tanto, en una búsqueda del equilibro entre eficiencia, sencillez y estabilidad de tensión de salida es que se opta por la segunda alternativa: el regulador TP4056 y el elevador MT3608
+
+\subsection{Descripción detallada del sistema elegido}
 
 El primer circuito integrado que utilizaremos es el chip \emph{TP4056}, cuyo datasheet lo describe como un cargador lineal de corriente constante/tensión constante completo para baterías Li-ion de una sola celda. Este chip toma energía de una fuente externa y la adapta para recargar la batería. La energía que proveen estas baterías de larga duración suele ser de 3,7 voltios. Por lo tanto, para adecuar y estabilizar este nivel de tensión se utiliza otro circuito integrado fundamental: el \emph{MT3608}; el cual, en términos sencillos, se trata de un circuito elevador boost que en la salida entrega una señal continua y estable según el ajuste que realice el diseñador. Esa salida irá directamente conectada a la entrada de 5 voltios de la placa \emph{ESP32}.
 

@@ -20,6 +20,8 @@
 
 - Se eliminó el capítulo 5
 
+- Se añadió la tabla comparativa de costos
+
 Tareas:
 
 Natty:
@@ -63,15 +65,24 @@ Jokin:
 
 - "Estructura interna" en front: Me parece bien
 
-- Actualizar costos de 3.8
+- Cambiar imágenes de layouts
+
+
 
 
 Consultar:
 
+En general:
 
 - Revisar el formato de las subsubsecciones y los apartados. Antes las subsubsecciones (sin número) se veían igual que los apartados con \keyword. Se agregó \setcounter{secnumdepth}{3} en informe.tex para numerarlas (ej.: 3.6.2.2 Controladores), lo que afecta a todo el documento. No termina de convencer; se probó \paragraph para los apartados y tampoco gustó.
 
+Capitulo 1:
+
 - Imagen para requisitos?
+
+Capitulo 3:
+
+- Especificamos mas los costos?
 
 
 
