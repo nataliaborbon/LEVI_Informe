@@ -7,7 +7,7 @@
 
 %----------------------------------------------------------------------------------------
 
-En este capítulo se explorarán en términos muy generales las distintas tecnologías, arquitecturas, paradigmas y técnicas que resultaron útiles para el desarrollo del trabajo.
+En este capítulo se explorarán en términos muy generales los distintos conceptos,  tecnologías, arquitecturas, paradigmas y técnicas que resultaron útiles para el desarrollo del trabajo.
 
 
 \section{Seguimiento Ocular (Eye-tracking)}
@@ -27,19 +27,19 @@ En el caso del presente trabajo, orientado a la inclusión en el ámbito educati
 
 \section{Procesamiento de Imágenes y Visión por Computadora}
 
-Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
+%Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
 
 \subsection{Conceptos fundamentales y biblioteca OpenCV}
-El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada mediante algoritmos matemáticos para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
 
-Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo, se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
+Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
 
 Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
 
 \subsection{Coincidencia de patrones (Template Matching)}
-La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para encontrar la ubicación de una imagen pequeña, denominada plantilla o molde, dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
+La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para encontrar la ubicación de una imagen pequeña, denominada molde o plantilla (\emph{template}), dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
 
-El recorrido comienza con las coordenadas \emph{X}=0, \emph{Y}=0 de ambas imágenes alineadas, es decir, con sus esquinas superiores izquierdas superpuestas. En esa posición se realiza un cálculo matemático. Luego, la plantilla se desplaza un píxel hacia la derecha, hasta las coordenadas \emph{X}=1, \emph{Y}=0, y el cálculo se vuelve a realizar. Este desplazamiento continúa hasta completar la primera fila. A continuación, la plantilla se alinea con la imagen de entrada una fila más abajo (\emph{X}=0, \emph{Y}=1) y el recorrido vuelve a comenzar. Esta secuencia se repite en cada fila hasta cubrir por completo la imagen de entrada (Fig. \ref{fig:templatematching}).
+El recorrido comienza con las coordenadas \emph{X}=0 e \emph{Y}=0 de ambas imágenes alineadas, es decir, con sus esquinas superiores izquierdas superpuestas. En esa posición se realiza un cálculo matemático. Luego, la plantilla se desplaza un píxel hacia la derecha, hasta las coordenadas \emph{X}=1 e \emph{Y}=0 y el cálculo se vuelve a realizar. Este desplazamiento continúa hasta completar la primera fila. A continuación, la plantilla se alinea con la imagen de entrada una fila más abajo (\emph{X}=0, \emph{Y}=1) y el recorrido vuelve a comenzar. Esta secuencia se repite en cada fila hasta cubrir por completo la imagen de entrada (Fig. \ref{fig:templatematching}).
 
 \begin{figure}[H]
     \centering
@@ -57,7 +57,7 @@ En cada posición de la plantilla, el algoritmo aplica una fórmula estadística
     \label{fig:coefcorr1}
 \end{figure}
 
-En esta fórmula, \emph{T} es la matriz cuyas celdas representan los píxeles de la plantilla, e \emph{I} es la matriz que representa la imagen de entrada. Su contenido depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
+En esta fórmula, \emph{T} corresponde a la imagen de la plantilla e \emph{I} a la imagen de entrada. Ambas son matrices cuyos elementos representan sus píxeles, y su valor depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
 
 Esta expresión se basa en el \emph{coeficiente de correlación de Pearson}. Evalúa qué tan similar es la plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta y, en función de eso, otorga un valor flotante entre $-1.0$ y $+1.0$. Un valor de $+1.0$ indica que la plantilla es idéntica a la porción de imagen analizada. Un valor de $-1.0$ significa que la plantilla tiene los colores opuestos a los de la imagen, mientras que un valor de 0 refleja que no existe correlación alguna.
 
@@ -70,24 +70,22 @@ El resultado tras todo el recorrido de la plantilla es una matriz bidimensional 
     \label{fig:resultadotemplate}
 \end{figure}
 
-Esta matriz permite obtener no solo la ubicación de la coincidencia con la plantilla, sino también su intensidad.
+Esta matriz permite obtener no solo la ubicación de la coincidencia con la plantilla, sino también su nivel de semejanza.
 
 \section{Redes Neuronales Artificiales}
 
-\subsection{Definición y conceptos básicos}
+\subsection{Definición y funcionamiento}
 
 Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.5\textwidth]{figuras/machinelearning.png}
+\includegraphics[width=0.7\textwidth]{figuras/machinelearning.png}
 \caption{El proceso del \emph{Machine Learning}}
 \label{fig:machinelearning}
 \end{figure}
 
 Dentro de los modelos de ML, algunos de los más eficaces son las Redes Neuronales Artificiales. Reciben este nombre debido a que su estructura (basada en celdas o nodos interconectados para el procesamiento de información) se inspira directamente en el comportamiento biológico del sistema nervioso.
-
-\subsection{Principio de funcionamiento}
 
 Estas redes organizan sus neuronas en tres niveles jerárquicos principales. La capa de entrada recibe los datos en crudo, como los píxeles de una imagen. Las capas ocultas constituyen el núcleo de procesamiento y detectan desde características básicas hasta patrones complejos. La capa de salida entrega el resultado final, como las coordenadas de una pupila (Fig. \ref{fig:redneuronal}).
 
@@ -114,38 +112,21 @@ La arquitectura del modelo varía estrictamente según la naturaleza del problem
 
 \item Prealimentadas (\emph{Feedforward}): La información viaja de forma unidireccional (de entrada a salida). Son ideales para problemas sencillos con datos livianos que no requieren memoria temporal.
 
-\item Convolucionales (\emph{CNN}): Utilizan filtros matemáticos para analizar los datos espaciales por secciones. Son la arquitectura por excelencia para procesar imágenes y video en tiempo real.
+\item Convolucionales (\emph{CNN}): Utilizan filtros matemáticos para analizar datos espaciales por secciones. Son la arquitectura por excelencia para procesar imágenes y video en tiempo real.
 
 \item Recurrentes (\emph{RNN}): Poseen bucles internos que les otorgan memoria secuencial, perfectas para contextos de análisis temporal (como procesamiento de lenguaje natural o secuencias largas de video).
 
 \end{itemize}
 
-En función de los requerimientos espaciales, se planteó como hipótesis de trabajo inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
+En función de los requerimientos de este proyecto, se planteó como hipótesis inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
 
 \section{Sistemas Embebidos y Control Gráfico}
 
-\subsection{Microcontroladores y microprocesadores}
+\subsection{Microcontroladores y familia ESP32}
 
-En el diseño de sistemas embebidos actuales, la optimización de costos, espacio y consumo energético recae fundamentalmente en la implementación de microprocesadores y microcontroladores. 
+Un microcontrolador (MCU) es un sistema informático completo encapsulado en un único circuito integrado. Su estructura reúne un microprocesador central junto con bloques de memoria interna (tanto volátil para datos como no volátil para el programa) y múltiples periféricos. Estos módulos adicionales pueden incluir temporizadores, protocolos de comunicación serial y puertos de entrada/salida de propósito general (GPIO), lo que le permite interactuar directamente con el entorno físico y dispositivos externos de manera autónoma. 
 
-Un microprocesador (MPU) constituye la unidad central de procesamiento de un sistema. Se trata de un circuito integrado encargado de decodificar y ejecutar instrucciones aritméticas y lógicas. Su arquitectura interna se compone de una Unidad Aritmético Lógica (ALU), registros de memoria ultrarrápida y buses de datos y control que transmiten señales eléctricas binarias. Al carecer de memoria masiva y periféricos integrados, requiere de componentes externos interconectados en una placa base para conformar un equipo funcional. 
-
-Por otro lado, un microcontrolador (MCU) es un sistema informático completo encapsulado en un único circuito integrado. Su estructura reúne un microprocesador central junto con bloques de memoria interna (tanto volátil para datos como no volátil para el programa) y múltiples periféricos. Estos módulos adicionales pueden incluir conversores analógico-digitales (ADC) y digital-analógicos (DAC), temporizadores, protocolos de comunicación serial y puertos de entrada/salida de propósito general (GPIO), lo que le permite interactuar directamente con el entorno físico y dispositivos externos de manera autónoma. 
-
-Un ejemplo sumamente conocido de microcontroladores es la placa de desarrollo \emph{Arduino Uno} (Fig. \ref{fig:arduinouno}).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/arduinouno.png}
-    \caption{Placa de desarrollo \emph{Arduino Uno}}
-    \label{fig:arduinouno}
-\end{figure}
-
-\subsection{Familia de microcontroladores ESP32}
-
-Otro modelo de placas de desarrollo que ha ganado enorme popularidad en el ámbito de los sistemas embebidos y el Internet de las Cosas (IoT) es el microcontrolador ESP32 (Fig. \ref{fig:familiaesp}). Creado por la compañía Espressif Systems, este dispositivo surgió como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth (tanto clásico como de baja energía) directamente dentro del mismo chip.
-
-Además de sus excelentes capacidades de comunicación, este microcontrolador representa un salto significativo en cuanto a potencia computacional. Al estar generalmente equipado con un procesador de doble núcleo y una memoria considerablemente mayor que la de sus predecesores, permite manejar tareas más complejas, alojar servidores web locales y procesar datos a mayor velocidad. Gracias a este equilibrio entre rendimiento, conectividad y tamaño reducido, el ESP32 se ha convertido en una pieza fundamental para la ingeniería de dispositivos modernos e interconectados.
+Una familia de placas de desarrollo que ha ganado enorme popularidad en el ámbito de los sistemas embebidos y el Internet de las Cosas (IoT) son los microcontrolador ESP32 (Fig. \ref{fig:familiaesp}). Creados por la compañía Espressif Systems, estos dispositivos surgieron como una solución de bajo costo y alta eficiencia energética diseñada para suplir la creciente necesidad de conectividad inalámbrica en proyectos electrónicos. A diferencia de las placas más tradicionales, el ESP32 destaca por integrar módulos de Wi-Fi y Bluetooth directamente dentro del mismo chip.
 
 \begin{figure}[H]
     \centering
@@ -153,6 +134,8 @@ Además de sus excelentes capacidades de comunicación, este microcontrolador re
     \caption{Algunas placas de desarrollo de la familia \emph{ESP32}}
     \label{fig:familiaesp}
 \end{figure}
+
+Al estar generalmente equipado con un procesador de doble núcleo y una memoria considerablemente mayor que la de sus predecesores, permite manejar tareas más complejas, alojar servidores web locales y procesar datos a mayor velocidad. Con todo esto logra un equilibrio entre rendimiento, conectividad y tamaño reducido.
 
 \subsection{Interfaces gráficas embebidas y biblioteca LVGL}
 
@@ -166,7 +149,7 @@ La arquitectura de LVGL se fundamenta en el desacoplamiento entre la lógica de 
     \item Controlador de dispositivo de entrada (\emph{Input Device Driver}): gestiona la lectura y calibración de periféricos interactivos, como pantallas táctiles resistivas o capacitivas, teclados y codificadores rotativos.
 \end{itemize}
 
-En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estas placas incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (típicamente XPT2046), interconectados mediante bus SPI (Fig. \ref{fig:esp32cyd}) . El uso de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
+En el ámbito del hardware comercial de bajo costo, esta combinación de pantalla, interfaz táctil y microcontrolador suele integrarse en módulos compactos denominados comúnmente \emph{Cheap Yellow Display} (CYD). Estas placas incorporan un SoC ESP32, un panel TFT y un controlador táctil resistivo (Fig. \ref{fig:esp32cyd}). El uso de LVGL sobre estas plataformas permite ejecutar interfaces interactivas fluidas directamente en el dispositivo embebido de manera autónoma.
 
 \begin{figure}[H]
     \centering
@@ -186,21 +169,21 @@ El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos
     \item Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP): en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Emite periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autentica a los nodos que solicitan conexión y gestiona la tabla de clientes asociados. Así, crea una infraestructura de red local independiente.
 \end{itemize}
 
-En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente. Tanto el módulo de captura de imagen como los dispositivos de los usuarios se conectan a dicha red en modo Station (Fig. \ref{fig:esp32wifi}). Esto permite la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
+En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente, mientras que los dispositivos de los usuarios se conectan a dicha red en modo Station (Fig. \ref{fig:esp32wifi}). Esto permite la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/esp32wifi.png}
     \caption{Red Wi-Fi con un microcontrolador ESP32 como punto de acceso}
     \label{fig:esp32wifi}
 \end{figure}
 
-\subsubsection{Direccionamiento IP y transmisión de datos}
+\subsection{Direccionamiento IP y transmisión de datos}
 
 La comunicación en una red de datos se rige por protocolos que definen cómo se estructura, transmite y recibe la información. Dentro de estas reglas, el direccionamiento lógico permite identificar a cada dispositivo de manera unívoca para asegurar que los datos alcancen su destino.
 
 \begin{itemize}
-    \item Protocolo IP (\textit{Internet Protocol}): estructura los datos en paquetes que contienen las direcciones de origen y destino para su entrega en la red. En redes locales bajo la versión IPv4, la dirección de cada dispositivo se establece mediante dos modalidades:
+    \item Protocolo IP (\textit{Internet Protocol}): estructura los datos en paquetes que contienen las direcciones de origen y destino para su entrega en la red. En redes locales la dirección de cada dispositivo se establece mediante dos modalidades:
     \begin{itemize}
         \item Asignación estática: la dirección se define de manera manual en el equipo y permanece fija a lo largo del tiempo, lo que permite localizar siempre al dispositivo en esa misma ubicación.
         \item Asignación dinámica: el protocolo de configuración dinámica de host (DHCP, \textit{Dynamic Host Configuration Protocol}) asigna una dirección disponible de forma automática al asociarse el equipo a la red, lo que agiliza la incorporación de nuevos dispositivos sin requerir configuraciones individuales.
@@ -218,19 +201,19 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
 
 \subsection{Modelo Cliente/Servidor}
 
-La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo de diseño de software y redes en el cual las tareas a realizar se distribuyen entre un proveedor de recursos o servicios denominado \emph{Servidor} y un receptor o demandante de dichos servicios denominado \emph{Cliente}. Se basa en una dinámica de petición/respuesta entre ambas entidades. Sus componentes principales son:
+La arquitectura cliente/servidor (Fig. \ref{fig:clienteservidor}) es un modelo de diseño de software y redes en el cual las tareas a realizar se distribuyen entre un proveedor de recursos denominado \emph{Servidor} y un demandante de dichos recursos denominado \emph{Cliente}. Se basa en una dinámica de petición/respuesta entre ambas entidades, las cuales se detallan a continuación:
 
 \begin{itemize}
 
-\item El \keyword{cliente}: Es el dispositivo o aplicación que interactúa con el usuario final. Su función principal es elaborar y enviar peticiones de datos o ejecución de tareas a través de una red. Luego, recibe, formatea y presenta los resultados obtenidos en la interfaz de usuario. Es el componente que siempre inicia la comunicación.
+\item El cliente: Es el dispositivo o aplicación que interactúa con el usuario final. Su función principal es elaborar y enviar peticiones de datos o ejecución de tareas a través de una red. Luego, recibe, formatea y presenta los resultados obtenidos en la interfaz de usuario. Es el componente que siempre inicia la comunicación.
 
-\item El \keyword{servidor}: Es el dispositivo o programa en ejecución continua diseñado para escuchar, recibir y procesar las peticiones de uno o múltiples clientes. Su función es la de administrar los recursos y servicios para devolver al cliente la respuesta solicitada.
+\item El servidor: Es el dispositivo o programa en ejecución continua diseñado para escuchar, recibir y procesar las peticiones de uno o múltiples clientes. Su función es la de administrar los recursos y servicios para devolver al cliente la respuesta solicitada.
 
 %       \item La \keyword{red} y los \keyword{protocolos}: La red es la vía física o inalámbrica por la cual se comunican los dispositivos (generalmente internet), mientras que los protocolos son el conjunto de reglas o parámetros que estos dispositivos cumplen para que la comunicación sea efectiva.
 
 \end{itemize}
 
-Esta modalidad es muy utilizada en los sistemas embebidos modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. De requerirlos, se incrementarían significativamente los costos y la complejidad de hardware en cada terminal. Además, los procesos se volverían ineficientes.
+Esta modalidad es muy utilizada en los sistemas modernos para centralizar la carga de trabajo en un único dispositivo (el servidor). De este modo, los clientes no necesitan su propia base de datos ni sus propios recursos. De requerirlos, se incrementarían significativamente los costos y la complejidad de hardware en cada terminal. Además, los procesos se volverían ineficientes.
 
 \begin{figure}[H]
     \centering
@@ -279,23 +262,21 @@ Al solicitar la aplicación, el navegador descarga un conjunto de archivos que p
     \label{fig:componente}
 \end{figure}
 
-A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes (Fig.~\ref{fig:componente}), donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada (Sus propios códigos HTML, CSS y JavaScript independientes del resto).
+A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes, donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada (Sus propios códigos HTML, CSS y JavaScript independientes del resto).
 
-Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, el componente hijo no puede alterar directamente los datos o estados del padre. Solo puede emitir peticiones para solicitar cambios. En cambio, el padre sí puede modificar los estados del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
+Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, únicamente el componente padre puede alterar el estado del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 
 %Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
 
 \subsubsection{Backend}
 
-En este desarrollo, el backend adopta una arquitectura en capas basada en el patrón Controlador-Servicio-Repositorio. Esta estructura deriva directamente de MVC. La Vista se resuelve de forma independiente en el cliente web. Por lo tanto, los Controladores conservan su rol original, mientras que el Modelo tradicional se divide en dos capas separadas. Esta división diferencia la lógica de la persistencia de datos.
+En este desarrollo, el backend adopta una arquitectura en capas basada en el patrón Controlador-Servicio-Repositorio, que deriva directamente de MVC. La Vista se resuelve de forma independiente en el cliente web. En consecuencia, los Controladores conservan su rol original y el Modelo tradicional se divide en dos capas separadas. Esta división diferencia la lógica de la persistencia de datos.
 
 \begin{itemize}
     \item Controladores (\textit{controllers}): reciben las peticiones que llegan desde el cliente web, extraen los datos de la solicitud y llaman al servicio correspondiente para devolver luego la respuesta. No aplican reglas de funcionamiento ni interactúan con los datos guardados.
     \item Servicios (\textit{services}): representan la parte del Modelo encargada de la lógica del sistema. Reciben los datos procesados por el controlador, aplican las reglas operativas, realizan validaciones y coordinan cuándo consultar o modificar información mediante los repositorios.
-    \item Repositorios (\textit{repositories}): representan la parte del Modelo dedicada exclusivamente a los datos y su almacenamiento. Son los únicos que leen y escriben en la base de datos o en la memoria, aislando los detalles de la persistencia del resto del sistema.
+    \item Repositorios (\textit{repositories}): representan la parte del Modelo dedicada exclusivamente a los datos y su almacenamiento. Son los únicos que leen y escriben en la base de datos, aislando los detalles de la persistencia del resto del sistema.
 \end{itemize}
-
-En este trabajo, estas capas se desarrollaron en C++ junto con el resto del código del sistema embebido. Todo el conjunto se ejecuta dentro del microcontrolador.
 
 \keyword{Imagen de Controller/Service/Repository (Natty)}
 
@@ -311,7 +292,20 @@ Los fundamentos de este modelo se basan en los siguientes conceptos:
     \item Estructura y esquemas: cada tabla posee un esquema definido que determina el tipo de dato que puede almacenar cada columna (numérico, texto, fecha, etc.), lo que garantiza la consistencia del formato.
     \item Claves e integridad relacional: para identificar de forma unívoca cada registro se utiliza una clave primaria (\emph{Primary Key}). La vinculación entre distintas tablas se establece mediante claves foráneas (\emph{Foreign Keys}), lo que permite relacionar entidades sin duplicar información (integridad referencial).
     \item Lenguaje de consulta estructurado (SQL): es el lenguaje formal estándar (\emph{Structured Query Language}) empleado para definir la estructura de los datos, realizar búsquedas mediante filtros, e insertar, modificar o eliminar información de manera declarativa.
-    \item Transacciones y propiedades ACID: una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID. Estas son: Atomicidad (la operación se completa en su totalidad o no se aplica), Consistencia (se respetan todas las reglas e integridad del esquema), Aislamiento (las operaciones simultáneas no interfieren entre sí) y Durabilidad (los cambios confirmados persisten ante fallos o cortes de energía).
+    \item Transacciones y propiedades ACID: una transacción es un conjunto de operaciones que se ejecutan como una única unidad lógica. Para garantizar la confiabilidad, los sistemas relacionales implementan las propiedades ACID. Estas son: 
+    
+\begin{itemize}    
+
+\item Atomicidad: la operación se completa en su totalidad o no se aplica.
+
+\item Consistencia: se respetan todas las reglas e integridad del esquema.
+
+\item Aislamiento: las operaciones simultáneas no interfieren entre sí
+
+\item Durabilidad: los cambios confirmados persisten ante fallos o cortes de energía
+
+\end{itemize}
+    
 \end{itemize}
 
 \keyword{Agregar imagen para base de datos (Natty)}
