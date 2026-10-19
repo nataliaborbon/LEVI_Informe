@@ -1,3 +1,15 @@
+Últimos cambios 19/10:
+
+- Numeración e índice hasta 3 niveles (las subsubsecciones no llevan número ni aparecen en el índice)
+
+- 2.5.2 renombrada "Protocolos de comunicación y transmisión de video" (MJPEG no es un protocolo)
+
+- Capítulo 2: "Arquitectura y Patrones de Software" pasó a "Arquitectura de una aplicación web", con intro, Cliente/Servidor, MVC, Frontend, Backend y Base de datos como subsecciones. La sección "Bases de Datos y Persistencia" quedó dentro, como 2.6.5 (texto corrido). La versión vieja quedó comentada debajo
+
+- Explicado JSON en el capitulo 2 (dentro del ítem de HTTP, en 2.5.2)
+
+- Explicada la función de hash y SHA-256 en el capitulo 2 (último párrafo de 2.6.5 Base de datos)
+
 Últimos cambios 15/10:
 
 - Se cambio la imagen del front en el capitulo 2 y se cambiaron un par de lineas
@@ -26,10 +38,6 @@ Tareas:
 
 Natty:
 
-- Explicar en el capitulo 2 qué es SHA-256 y cómo funciona una función de hash (la sección 3.6, Base de datos, remite al capitulo 2 para eso)
-
-- Explicar el JSON en el capitulo 2
-
 - Explicar la limitación a 4 conexiones disponibles
 
 - En la sección 3.4 (Módulo central), agregar el hardware de la pantalla después de "integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD": pantalla LCD TFT de 320x240 píxeles, comunicada por SPI mediante el controlador ILI9341, y panel táctil resistivo con el controlador XPT2046. Al hacerlo, cambiar "Este chip resulta suficiente" por "El ESP32 clásico resulta suficiente", porque "este chip" queda lejos del ESP32.
@@ -39,17 +47,19 @@ Natty:
 - Agregar explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección del mapa de memoria.
 
 
-- En el capítulo 2, mover la sección de base de datos ("Bases de Datos y Persistencia") para que quede dentro de "Arquitectura de una aplicación web", junto con Frontend y Backend.
+- Revisar todas las intros del capítulo 2.
+
+- Capítulo 2: agregar una introducción a cada sección. Por ahora solo la tiene "Arquitectura de una aplicación web" (su intro es el párrafo que antes abría la subsección del mismo nombre).
 
 - Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
 
 - Ver donde colocar las reglas de negocio. Si quedan en el service, o si no quedan, ¿Qué va en los services?
 
-- 2.5.1.1: Imagen de protocolos con circulitos
+- 2.5.2 (Protocolos de comunicación y transmisión de video): Imagen de protocolos con circulitos
 
-- 2.7.1: Imagen de tablas/base de datos
+- 2.6.5 (Base de datos): Imagen de tablas/base de datos
 
--3.2.1.1: Imagen de centroide
+- 3.3.1 (Umbral de oscuridad y brillantez): Imagen de centroide
 
 
 
@@ -59,7 +69,7 @@ Jokin:
 
 - Sacar imágenes del sistema funcionando
 
-- 3.1.2.3: TFlite fallando ==> Top 10 errores
+- 3.3.1 (TensorFlow Lite): TFlite fallando ==> Top 10 errores
 
 - OBLIGATORIO: sacar del frontend el ping a la cámara. En PantallaAlumno.jsx (efecto cameraHeartbeat) se llama cada 2 segundos a pingCamara() de services/api.js, que pide /api/camara/ping al módulo central, pero esa ruta no existe en el backend (siempre responde 404). Eliminar la función pingCamara de api.js y el efecto que la usa, y volver a compilar y cargar el front en el módulo central.
 
