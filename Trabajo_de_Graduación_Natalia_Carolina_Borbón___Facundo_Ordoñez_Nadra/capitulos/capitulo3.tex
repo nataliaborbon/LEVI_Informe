@@ -348,30 +348,30 @@ A continuación se desarrollan los tres métodos evaluados.
 
 \subsubsection{Umbral de oscuridad y brillantez}
 
-Se trata de un método de visión computacional clásica. Consiste en capturar constantemente una imagen en escala de grises y analizar en tiempo real sus patrones de oscuridad (intensidad lumínica).
+Este método de visión computacional clásica consiste en capturar una imagen en escala de grises de forma continua para analizar sus patrones de oscuridad (intensidad lumínica) en tiempo real.
 
-Cuando se toma una imagen del ojo, en la inmensa mayoría de los casos el punto más oscuro es la pupila (Figura \ref{fig:oscuridadpupila}). El resto del cuadro está compuesto por porciones irregulares de distintos tonos grises más claros. Este método aprovecha esa oscuridad extrema para detectar las coordenadas de la pupila. A partir de ellas, se infiere la dirección de la mirada.
+Cuando se toma una imagen del ojo, el punto más oscuro suele ser la pupila (Figura \ref{fig:oscuridadpupila}). El resto del cuadro presenta porciones irregulares con tonos grises más claros. El algoritmo aprovecha este contraste extremo para localizar las coordenadas pupilares y, a partir de ellas, inferir la dirección de la mirada.
 
-Para entender este método, se debe aclarar antes cómo el microcontrolador procesa una imagen. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado y estructurado como una matriz bidimensional. En formato de escala de grises, cada elemento de esta matriz contiene un número entero entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial (0 equivale a oscuridad absoluta y 255 a saturación blanca).
+Para entender este método, se debe aclarar antes cómo el microcontrolador procesa una imagen. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado y estructurado como una matriz bidimensional. En formato de escala de grises, cada elemento de esta matriz contiene un número entero entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial (un 0 equivale a oscuridad absoluta y 255 a saturación blanca).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/oscuridadpupila.png}
     \caption{Distintas partes del ojo y su nivel de oscuridad}
     \label{fig:oscuridadpupila}
 \end{figure}
 
-El algoritmo realiza un barrido inicial, en el que revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Si la detección dependiera de un único píxel, se arriesgaría la estabilidad. Por este motivo, se establece un umbral de oscuridad dinámico. Así, el algoritmo no aísla solamente el píxel más oscuro, sino toda una región de píxeles cuyos valores de intensidad se encuentran por debajo de dicho umbral.
+El algoritmo realiza un barrido inicial, en el que revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Como depender de un único píxel comprometería la estabilidad del sistema, se establece un umbral de oscuridad dinámico. De esta manera, el programa no aísla un solo punto, sino toda una región cuyos valores caen por debajo de dicho límite.
 
-Una vez seleccionada la región de interés (\emph{ROI}) que teóricamente abarca la pupila, el programa ejecuta un segundo barrido. Éste calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se suman todas las coordenadas y se dividen por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros).
+Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la pupila, el programa ejecuta un segundo barrido. Éste calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se sumarían todas las coordenadas para luego dividirlas por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros).
 
-Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método, se descubrió que su precisión dependía de la luminosidad de la imagen. A pesar de que la pupila se mantenía como uno de los puntos más oscuros, las variaciones de la luz pueden generar confusiones con otras zonas de oscuridad similar. El umbral de oscuridad puede ajustarse por código. Sin embargo, resulta poco práctico porque la luz ambiental es una variable incontrolable y sumamente dinámica.
+Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método se descubrió que la precisión era insuficiente. Las sombras proyectadas sobre el rostro por la iluminación ambiental, sumadas a la presencia de cejas, pestañas o armazones de anteojos, confundían fácilmente al detector. Si bien la pupila seguía siendo el punto de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable al seguimiento.
 
-Aunque la luz del entorno no puede regularse, sí es posible controlar la iluminación de la imagen que capta el \emph{ESP32}. Si hubiera una fuente de luz junto a la cámara, esta variable sería siempre constante. Así se evitarían las confusiones con sombras. Sin embargo, iluminar permanentemente el ojo del usuario con luz visible sería molesto y perjudicial para su visión. Por este motivo, se planteó una fuente de luz que solo pudiera detectar la cámara y que no dañara la vista: la luz infrarroja (IR).
+Ante este obstáculo, se decidió cambiar de enfoque. En lugar de buscar objetos por su nivel de oscuridad, se buscó aprovechar un fenómeno físico conocido como \emph{efecto de brilo corneal}. Al apuntar una fuente de luz hacia el globo ocular, la superficie húmeda y curva de la córnea actúa como un espejo esférico. Esto hace que la luz rebote y forme un punto blanco concentrado e intenso en la imagen, denominado \emph{glint} (Figura \ref{fig:glint}).
 
-Este tipo de iluminación tiene longitudes de onda mayores que las de la luz visible. Por lo tanto, es indetectable para el ojo humano, mientras que los sensores de las cámaras digitales sí pueden captarla. Sin embargo, la mayoría de las cámaras actuales incorpora un filtro que bloquea la luz infrarroja, y la del \emph{ESP32-CAM} no era la excepción. Por este motivo fue necesario retirar dicho filtro de forma manual. Luego se colocó un diodo LED emisor de luz infrarroja junto a la cámara. No obstante, surgió otro impedimento físico conocido como \emph{efecto del brillo corneal}.
+Como la ubicación de este destello suele coincidir con la de la pupila, parecía una alternativa viable para reemplazar el algoritmo anterior por un detector de brillantez. Sin embargo, iluminar de forma constante el ojo del usuario con luz visible resultaría molesto y perjudicial para su visión.  Para solucionarlo, se planteó utilizar luz infrarroja (IR).
 
-Al ser húmeda y curva, la superficie de la córnea actúa como un espejo esférico perfecto para estas ondas infrarrojas. La luz rebota en el ojo y genera en la imagen un punto blanco muy intenso y concentrado, denominado \emph{glint} (Fig. \ref{fig:glint}). Esto ocasionó errores severos en el algoritmo anterior de detección de oscuridad. Por esta razón, se lo modificó para aprovechar este fenómeno físico. Se invirtió la lógica y se detectaron los píxeles más claros mediante un umbral de brillantez.
+Este tipo de iluminación tiene una longitud mayor a la del espectro visible. Por lo tanto, el ojo no las percibe, pero los sensores fotográficos sí logran captarlas. Dado que la cámara del \emph{ESP32-CAM} venía de fábrica con un filtro bloqueador de luz infrarroja, fue necesario removerlo de forma manual. Luego se colocó un diodo LED IR junto a la cámara.
 
 \begin{figure}[H]
     \centering
@@ -380,8 +380,7 @@ Al ser húmeda y curva, la superficie de la córnea actúa como un espejo esfér
     \label{fig:glint}
 \end{figure}
 
-
-Esta solución tampoco resultó viable. Durante las pruebas de seguimiento, se comprobó que el glint no se desplaza de la misma forma que la pupila. Su posición relativa depende estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
+Esta solución tampoco resultó viable. Durante las pruebas de seguimiento, se comprobó que el glint no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
 
 \begin{figure}[H]
     \centering
@@ -432,7 +431,8 @@ Aun con esta mejora, una latencia de 200 milisegundos es demasiado alta para un 
 
 Una herramienta muy utilizada en \emph{Machine Learning} es el framework de código abierto \emph{TensorFlow} (\emph{TF}). Está diseñado para entrenar y ejecutar modelos de redes neuronales propios o ya existentes. Sin embargo, no está optimizado para correr redes en sistemas con hardware limitado como los \emph{ESP32}. Por este motivo, \emph{Google} desarrolló una versión más liviana, llamada \emph{TensorFlow Lite} (\emph{TFLite}). Su variante específica para arquitecturas sin sistema operativo es \emph{TensorFlow Lite for Microcontrollers} (\emph{TFLM}).
 
-Como siguiente paso, se desarrolló un modelo propio con imágenes capturadas por el \emph{ESP32-CAM}. Este enfoque permite un control absoluto de la arquitectura, optimización y la exportación del modelo. Es una enorme ventaja respecto de \emph{Edge Impulse}, ya que además de permitir una alta personalización del modelo, posibilita gestionar exactamente cómo se comprime la red para el microcontrolador. Además, evita las limitaciones y la sobrecarga de código de una plataforma cerrada.
+Como siguiente paso, se optó por entrenar un modelo propio utilizando imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque otorga una libertad de personalización absoluta. Permite tener control total sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia exacta de compresión y exportación. Esta independencia resulta vital para adaptar el modelo a las limitaciones del microcontrolador y además se elimina la sobrecarga de código genérico que suele imponer una plataforma cerrada.
+
 
 Para facilitar la creación del modelo, \emph{Google} ofrece también \emph{Keras}, una API de alto nivel que agiliza y simplifica enormemente la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab}). Se trata de una plataforma basada en la nube que permite ejecutar código Python en \emph{notebooks} interactivos.
 
@@ -490,7 +490,7 @@ Se iteró sobre la arquitectura de la red y se ajustaron sus hiperparámetros (l
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{figuras/resultadoscolab.png}
-    \caption{Resultados del modelo desarrollado en \emph{Google Colab}}
+    \caption{Resultados del modelo desarrollado en \emph{Google Colab}. Con un punto verde se indica el valor etiquetado, mientras que la cruz roja muestra la posición que la red predice}
     \label{fig:resultadoscolab}
 \end{figure}
 

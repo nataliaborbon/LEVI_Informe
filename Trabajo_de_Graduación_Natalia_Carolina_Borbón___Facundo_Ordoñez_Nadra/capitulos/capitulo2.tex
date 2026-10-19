@@ -48,14 +48,11 @@ El recorrido comienza con las coordenadas \emph{X}=0 e \emph{Y}=0 de ambas imág
     \label{fig:templatematching}
 \end{figure}
 
-En cada posición de la plantilla, el algoritmo aplica una fórmula estadística denominada \emph{coeficiente de correlación normalizado con media cero} (Fig. \ref{fig:coefcorr1}).
+En cada posición de la plantilla, el algoritmo aplica una fórmula estadística denominada \emph{coeficiente de correlación normalizado con media cero}, presentada a continuación:
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{figuras/coefcorr.png}
-    \caption{Coeficiente de correlación normalizado con media cero (ZNCC)}
-    \label{fig:coefcorr1}
-\end{figure}
+\begin{equation}
+    R(x,y) = \frac{\sum_{x',y'} (T(x',y') - \bar{T}) \cdot (I(x+x',y+y') - \bar{I})}{\sqrt{\sum_{x',y'} (T(x',y') - \bar{T})^2 \cdot \sum_{x',y'} (I(x+x',y+y') - \bar{I})^2}}
+\end{equation}
 
 En esta fórmula, \emph{T} corresponde a la imagen de la plantilla e \emph{I} a la imagen de entrada. Ambas son matrices cuyos elementos representan sus píxeles, y su valor depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
 
@@ -247,7 +244,7 @@ Esta separación de responsabilidades favorece la modularidad, simplifica el man
 
 El \emph{frontend} opera como la Vista del patrón MVC. Presenta la interfaz gráfica, captura las acciones del usuario y emite las peticiones.
 
-Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Esta tarea se apoya en tres tecnologías complementarias:
+Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Esta tarea se apoya en tres tecnologías complementarias (Fig, \ref{fig:componente}):
 
 \begin{itemize}
     \item HTML (\textit{HyperText Markup Language}, lenguaje de marcado de hipertexto): define la estructura y el contenido del documento. Mediante etiquetas, especifica qué función cumple cada elemento en la interfaz (títulos, bloques de texto, botones o casillas para ingresar datos) y los organiza en un orden lógico que el navegador interpreta para armar la pantalla.
@@ -265,6 +262,9 @@ Al solicitar la aplicación, el navegador descarga un conjunto de archivos que p
 A medida que una aplicación suma pantallas y funciones, mantener el código fuente en archivos globales vuelve el sistema denso y difícil de ordenar. Para resolver esto, el desarrollo adopta una arquitectura basada en componentes (CBA, \textit{Component-Based Architecture}). En este enfoque, la interfaz se estructura a partir de componentes independientes, donde cada elemento funciona como una entidad autónoma que reúne su estructura, presentación y lógica asociada (sus propios códigos HTML, CSS y JavaScript independientes del resto).
 
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, únicamente el componente padre puede alterar el estado del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
+
+Existen diversas herramientas disponibles para implementar este esquema, entre las cuales destaca \emph{React}, una biblioteca de JavaScript enfocada en la construcción de interfaces de usuario mediante componentes reutilizables. Por otra parte, \emph{Preact} se presenta como una alternativa más ligera y eficiente para entornos con recursos limitados. Esta herramienta ofrece las mismas capacidades de desarrollo que \emph{React}, pero omite características accesorias, lo que optimiza drásticamente el peso del empaquetado final (\emph{bundle}). En consecuencia, se reduce en gran medida el tamaño de los archivos estáticos que el microcontrolador debe alojar en su memoria y transferir posteriormente al navegador al momento de utilizar la interfaz.
+
 
 %Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
 
