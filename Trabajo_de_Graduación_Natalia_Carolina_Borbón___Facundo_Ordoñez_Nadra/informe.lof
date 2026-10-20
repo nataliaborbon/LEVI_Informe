@@ -8,13 +8,13 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces El proceso del \emph {Machine Learning}}}{7}{figure.caption.22}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Diagrama simplificado de una red neuronal}}{7}{figure.caption.23}%
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Algunas placas de desarrollo de la familia \emph {ESP32}}}{8}{figure.caption.28}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Placa de desarrollo \emph {ESP32-CYD} (vista frontal y trasera)}}{10}{figure.caption.30}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Red Wi-Fi con un microcontrolador ESP32 como punto de acceso}}{11}{figure.caption.33}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Placa de desarrollo \emph {ESP32-CYD} (vista frontal y trasera)}}{9}{figure.caption.30}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Red Wi-Fi con un microcontrolador ESP32 como punto de acceso}}{10}{figure.caption.33}%
 \contentsline {figure}{\numberline {2.9}{\ignorespaces El sistema \emph {Cliente/Servidor}}}{12}{figure.caption.37}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Patrón de diseño Modelo-Vista-Controlador (MVC)}}{13}{figure.caption.39}%
 \contentsline {figure}{\numberline {2.11}{\ignorespaces Arquitectura del frontend: HTML (su estructura), CSS (cómo se ve) y JavaScript (cómo funciona)}}{14}{figure.caption.41}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diferencias entre procesamiento local y remoto}}{20}{figure.caption.50}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diferencias entre procesamiento local y remoto}}{21}{figure.caption.50}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Distintas partes del ojo y su nivel de oscuridad}}{22}{figure.caption.53}%
 \contentsline {figure}{\numberline {3.3}{\ignorespaces El \emph {glint} en el centro de la pupila}}{23}{figure.caption.54}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces El \emph {glint} no sigue a la pupila}}{23}{figure.caption.55}%

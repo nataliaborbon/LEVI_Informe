@@ -327,9 +327,9 @@ En esta sección se describe la evolución del detector. Primero se presentan lo
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{figuras/localremoto.png}
+    \includegraphics[width=0.9\textwidth]{figuras/localremoto2.png}
     \caption{Diferencias entre procesamiento local y remoto}
-    \label{fig:localremoto}
+    \label{fig:localremoto2}
 \end{figure}
 
 
@@ -406,13 +406,13 @@ Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}. Se
 
 Su funcionamiento se basa en una estructura de trabajo lineal (conocida como \emph{pipeline} o \emph{Impulse}). Este flujo unifica todas las etapas del desarrollo de un modelo predictivo. Comienza con la adquisición y el etiquetado de datos estructurados. Continúa con bloques de procesamiento digital de señales, que extraen las características más relevantes de las imágenes. Sigue con el entrenamiento de la red neuronal propiamente dicha y finaliza con el empaquetado del modelo. Todo esto se realiza mediante una interfaz de usuario intuitiva.
 
-Gracias a sus técnicas de cuantización y a sus métodos de aceleración de hardware, resulta una opción prometedora que optimiza todo el proceso de aprendizaje. Funciona muy bien en tareas sencillas, como el reconocimiento de objetos o rostros (Figura \ref{fig:deteccionverduras}).
+Gracias a sus técnicas de cuantización y a sus métodos de aceleración de hardware, resulta una opción prometedora que optimiza todo el proceso de aprendizaje. Funciona muy bien en tareas sencillas, como el reconocimiento de objetos o rostros (Figura \ref{fig:deteccionverduras2}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/deteccionverduras.png}
+    \includegraphics[width=0.5\textwidth]{figuras/deteccionverduras2.png}
     \caption{Reconocimiento de vegetales con \emph{EdgeImpulse}}
-    \label{fig:deteccionverduras}
+    \label{fig:deteccionverduras2}
 \end{figure}
 
 La plataforma permite elegir entre distintas arquitecturas de red preentrenadas para la detección de objetos. En este proyecto se seleccionó \emph{FOMO} (\emph{Faster Objects, More Objects}), un algoritmo diseñado específicamente para dispositivos con recursos extremadamente limitados.
@@ -434,26 +434,26 @@ Una herramienta muy utilizada en \emph{Machine Learning} es el framework de cód
 Como siguiente paso, se optó por entrenar un modelo propio utilizando imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque otorga una libertad de personalización absoluta. Permite tener control total sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia exacta de compresión y exportación. Esta independencia resulta vital para adaptar el modelo a las limitaciones del microcontrolador y además se elimina la sobrecarga de código genérico que suele imponer una plataforma cerrada.
 
 
-Para facilitar la creación del modelo, \emph{Google} ofrece también \emph{Keras}, una API de alto nivel que agiliza y simplifica enormemente la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab}). Se trata de una plataforma basada en la nube que permite ejecutar código Python en \emph{notebooks} interactivos.
+Para facilitar la creación del modelo, \emph{Google} ofrece también \emph{Keras}, una API de alto nivel que agiliza y simplifica enormemente la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab2}). Se trata de una plataforma basada en la nube que permite ejecutar código Python en \emph{notebooks} interactivos.
 
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figuras/entornogooglecolab.png}
+    \includegraphics[width=0.75\textwidth]{figuras/entornogooglecolab2.png}
     \caption{Entorno de \emph{Google Colab}}
-    \label{fig:entornogooglecolab}
+    \label{fig:entornogooglecolab2}
 \end{figure}
 
 Antes de empezar a codificar es necesario un \emph{dataset} (conjunto de datos de entrada). Para una red de este tipo, normalmente se utilizan cientos de imágenes asociadas a lo que se denomina \emph{etiquetas}. Una etiqueta representa el valor objetivo que el modelo debe predecir y aprender. En este proyecto, las etiquetas son números enteros fijos que representan las coordenadas espaciales (\emph{X} e \emph{Y}) del centro de la pupila.
 
-Las imágenes de entrenamiento se capturaron con el módulo \emph{ESP32-CAM}, en escala de grises (\emph{Grayscale}) y con una resolución de 96x96 píxeles. Esta configuración se seleccionó para minimizar el consumo de recursos computacionales sin comprometer los detalles necesarios de la imagen. Para garantizar cantidad y variabilidad, se tomó un conjunto total de 1315 capturas de cinco personas distintas (Figura \ref{fig:fotosojos}). Se contemplaron distintas condiciones de iluminación y variaciones físicas, como la presencia y la ausencia de anteojos.
+Las imágenes de entrenamiento se capturaron con el módulo \emph{ESP32-CAM}, en escala de grises (\emph{Grayscale}) y con una resolución de 96x96 píxeles. Esta configuración se seleccionó para minimizar el consumo de recursos computacionales sin comprometer los detalles necesarios de la imagen. Para garantizar cantidad y variabilidad, se tomó un conjunto total de 1315 capturas de cinco personas distintas (Figura \ref{fig:fotosojos2}). Se contemplaron distintas condiciones de iluminación y variaciones físicas, como la presencia y la ausencia de anteojos.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figuras/fotosojos.png}
+    \includegraphics[width=0.7\textwidth]{figuras/fotosojos2.png}
     \caption{Una muestra de las imágenes utilizadas para el dataset}
-    \label{fig:fotosojos}
+    \label{fig:fotosojos2}
 \end{figure}
 
 En paralelo, las coordenadas de cada imagen (expresadas en píxeles dentro de una imagen de 96x96) se anotaron en una hoja de cálculo. De este modo, los datos quedaron estructurados para su posterior utilización en el entrenamiento (Figura \ref{fig:etiquetas}).
