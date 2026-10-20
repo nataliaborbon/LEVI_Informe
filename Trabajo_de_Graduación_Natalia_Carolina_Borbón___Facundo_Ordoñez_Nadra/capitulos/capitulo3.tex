@@ -579,7 +579,7 @@ Ambos problemas presentan un compromiso técnico recíproco, ya que si se intent
 
 Ninguno de los dos métodos alcanzó un resultado satisfactorio. \emph{MediaPipe} y \emph{WebGazer} requerían una mayor resolución de imagen, que no podía obtenerse sin comprometer el diseño del dispositivo, y su estimación de la mirada resultaba inestable. Con \emph{OpenCV} y la Transformada de Hough no se logró detectar el iris con precisión, ya que la oclusión de los párpados y los falsos positivos presentaban un compromiso que no pudo resolverse.
 
-Las dos alternativas compartían un mismo enfoque, que consistía en detectar coordenadas espaciales específicas del ojo. Por este motivo, se tomó una decisión radical en el desarrollo de este trabajo. Se dejó atrás la detección de coordenadas y se pasó a identificar patrones de orientación de la mirada. Este cambio busca simplificar el detector y eliminar las causas de error encontradas en los métodos anteriores. El objetivo es lograr un algoritmo independiente de la luz ambiental, de la resolución de la cámara y de las variaciones en la forma del ojo. Esta estrategia se describe en la siguiente subsección.
+Las dos alternativas compartían un mismo enfoque, que consistía en detectar coordenadas espaciales específicas del ojo. Por este motivo, se tomó una decisión radical en el desarrollo de este trabajo. Se dejó atrás la detección de coordenadas y se pasó a identificar patrones de orientación de la mirada. Este cambio busca simplificar el detector y eliminar las causas de error encontradas en los métodos anteriores. El objetivo es lograr un algoritmo independiente de la luz ambiental, de la resolución de la cámara, del nivel de oscuridad de los elementos del rostro y de las variaciones en la forma del ojo. Esta estrategia se describe en la siguiente subsección.
 
 \subsection{Template Matching como solución adoptada}
 
@@ -615,13 +615,17 @@ Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de gris
 
 \subsubsection{Preprocesamiento de fotogramas}
 
-Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles, en color. Los fotogramas se envían al navegador del dispositivo cliente a través de la red local. Allí se realiza todo el procesamiento de las imágenes.
+Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color. Esta configuración se debe a motivos técnicos y de rendimiento. En primer lugar, se transmite a color porque el compresor JPEG integrado por hardware en el microcontrolador requiere este formato para funcionar. Una imagen comprimida de este tipo resulta significativamente más liviana que una transmisión de píxeles crudos en escala de grises, lo que evita saturar el ancho de banda y mantiene una tasa fluida de fotogramas. Además, incluso si se transmitiera en escala de grises, el navegador web del cliente fuerza internamente la decodificación de las imágenes a un formato RGBA de 4 canales, por lo que este formato es imprescindible para transmitir.
+
+En segundo lugar, se eligió la resolución \emph{QVGA} (320x240) por ser un estándar del hardware de la cámara que resulta ideal. Una resolución mayor generaría fotogramas muy pesados que saturarían la red y reducirían la fluidez del video. Una menor perdería la nitidez necesaria para que el sistema reconozca la pupila correctamente. Cabe destacar que utilizar una resolución personalizada requeriría que el microcontrolador recorte y recomprima las imágenes por software. Este proceso ralentizaría drásticamente el sistema y arruinaría su eficiencia.
+
+Una vez seleccionado el formato de transmisión, la imagen se envía al navegador del dispositivo cliente a través de la red local. Allí se realiza todo el procesamiento de las imágenes.
 
 \keyword{Imagen del stream? (Natty)}
 
-Antes de la comparación, cada fotograma se acondiciona. Primero se recorta a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
+Antes de la comparación, cada fotograma se acondiciona. Primero se recorta internamente a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
 
-Durante las pruebas también se observó un problema relacionado con la iluminación. El método de comparación tolera los cambios uniformes de luz ambiental, como se detalla más adelante. Sin embargo, las sombras que proyecta una fuente de luz externa inclinada dificultan el procesamiento. Por este motivo, se volvió a incorporar el LED infrarrojo al diseño. Este LED proporciona una iluminación frontal uniforme sobre el ojo y evita la aparición de esas sombras.
+Durante las pruebas también se observó un problema relacionado con la iluminación. El método de comparación tolera los cambios uniformes de luz ambiental, como se detalla más adelante. Sin embargo, las sombras que proyecta una fuente de luz externa inclinada dificultan el procesamiento, puesto que el bajo contraste impide a la cámara distinguir si la pupila realmente se está moviendo dentro de dicha sombra. Por este motivo, se volvió a incorporar el LED infrarrojo al diseño. Este LED proporciona una iluminación frontal uniforme sobre el ojo y evita la aparición de esas sombras.
 
 \subsubsection{Comparación de plantillas}
 
@@ -631,7 +635,7 @@ Como se observa en el numerador de la fórmula, a cada píxel se le resta el val
 
 La plantilla mide 96x96 píxeles y el fotograma 128x128, aunque en ambos casos el ojo tiene el mismo tamaño. Esta diferencia permite que la plantilla recorra el fotograma mediante el barrido explicado en el capítulo 2, en lugar de compararse en una única posición.
 
-El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si la comparación se realizara en un solo punto, un desplazamiento mínimo del dispositivo, incluso de un milímetro, desalinearía las matrices y haría fallar el cálculo. Al recorrer todo el fotograma, el método obtiene un margen para compensar estas variaciones involuntarias. Así, el sistema tolera los pequeños movimientos de la cabeza del alumno.
+El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si la comparación se realizara en un solo punto de 96x96, un desplazamiento mínimo del dispositivo, incluso de un milímetro, desalinearía las matrices y haría fallar el cálculo. Al recorrer todo el fotograma, el método obtiene un margen para compensar estas variaciones involuntarias. Así, el sistema tolera los pequeños movimientos de la cabeza del alumno.
 
 De la matriz de resultados de cada plantilla se toma el coeficiente más alto, que corresponde a la posición de mayor coincidencia. Este proceso se repite con las seis plantillas. La plantilla con el mayor de los seis valores indica la acción que realiza el alumno.
 
@@ -791,11 +795,10 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
     \end{tabular}
 \end{table}
 
-Como se mencionó con anterioridad, se utilizará cámara \emph{OV2640}, que tiene una resolución máxima de 2 megapíxeles (Fig: \ref{fig:ov2640}) . El sistema no requiere una resolución alta, ya que las imágenes se procesan a 320x240 píxeles. Lo que sí resulta importante es su campo de visión. Al estar montada en la visera de una gorra, la cámara debe captar el ojo sin incluir estímulos ajenos. La lente de la \emph{OV2640} tiene un ángulo de visión de 68°, dentro del rango de entre 60 y 120 grados establecido para esta tarea. Además, se le retiró el filtro infrarrojo para que registre la luz del LED.
+Para seleccionar la cámara se tuvieron en cuenta dos criterios principales. Por un lado, se requería una resolución que permitiera trabajar con imágenes de 320x240 píxeles. Por otro lado, debía tener un campo de visión dentro del rango de entre 60 y 120 grados establecido con anterioridad. Para ello se contaba con múltiples posibilidades, entre ellas, la cámara que se adquiría junto a la compra de la \emph{ESP32-CAM}, que contaba con una resolución de 2 megapíxeles y un ángulo de visión de 68°.
 
-También se evaluó la cámara \emph{OV3660}, de 3 megapíxeles, que ofrece resultados similares. Sin embargo, la \emph{OV2640} incluida con la compra de la placa resultó adecuada. Utilizar otro sensor habría requerido adquirirla por separado, lo que aumentaría el costo total sin aportar una mejora significativa.
+Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Sin embargo, adquirir cualquiera de estos modelos implicaría un costo adicional que las pequeñas ventajas expuestas no logran compensar. Por lo tanto, se concluye que el uso del modelo incluido por defecto resulta suficiente, siendo únicamente necesario retirarle el filtro infrarrojo de fábrica para que logre registrar la luz del LED IR.
 
-Se consideró, además, la posibilidad de utilizar una cámara \emph{OV2640} con un conector flex de mayor longitud. Esto hubiera permitido una mayor flexibilidad a la hora del montaje final. Sin embargo, se optó por utilizar la cámara de flex corto que llegó junto a la compra del \emph{ESP32-CAM} para abaratar costos.
 
 \begin{figure}[H]
     \centering
@@ -1146,7 +1149,7 @@ El \emph{frontend} es la parte visual del código. Su función es actuar como in
 
 \subsubsection{Entorno y herramientas}
 
-Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} de código abierto, diseñada para construir interfaces de usuario dinámicas e interactivas a partir de componentes. Ofrece las mismas capacidades de desarrollo que \emph{React}, la biblioteca más difundida para este fin, creada y mantenida por \emph{Meta}, pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias, el código resultante es más liviano, lo que reduce el tamaño de los archivos que el módulo central debe almacenar y transmitir al navegador.
+Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} cuyas características fueron descritas en el capítulo 2.
 
 El código fuente se escribió en computador, utilizando el software \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
@@ -1200,7 +1203,7 @@ La biblioteca incluye una parte de su código que el navegador debe compilar ant
 
 \keyword{Recepción del video}
 
-Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza. Sobre esa imagen se dibuja un recuadro que marca la región de interés (ROI), que indica toda el área en la que el detector se aplica y ayuda a centrar el ojo.
+Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza (128x128). Sobre esa imagen se dibuja un recuadro que marca la región que se guardará en la plantilla al momento de calibrar (96x96). Esto ayuda al alumno a mantener centrado su ojo durante el proceso.
 
 La conexión se abre al ingresar a la calibración o al examen y se cierra al salir de ellos o ante un error. Cada vez que se abre se fuerza una conexión nueva, para que el navegador no muestre una imagen antigua guardada de un acceso anterior.
 
