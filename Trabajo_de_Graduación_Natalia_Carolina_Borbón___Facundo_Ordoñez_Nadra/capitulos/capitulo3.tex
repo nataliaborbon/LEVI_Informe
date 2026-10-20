@@ -644,7 +644,7 @@ Tras numerosas evaluaciones, este método basado en la similitud de patrones res
 
 \section{Arquitectura del sistema}
 
-El sistema definitivo se compone de tres tipos de elementos que se comunican a través de una red Wi-Fi local. El módulo de captura, montado sobre una gorra, obtiene las imágenes del ojo del alumno y las envía a su dispositivo. El módulo central genera la red, aloja la aplicación web y almacena la información del sistema. Además, cuenta con una pantalla táctil que permite configurar el dispositivo y consultar su estado sin depender de otro equipo. A través de los dispositivos cliente, los distintos usuarios acceden a la aplicación web desde su navegador. Solo uno de ellos corresponde al alumno, y en él se realiza la detección de la mirada.
+El sistema definitivo se compone de tres tipos de elementos que se comunican a través de una red Wi-Fi local. El módulo de captura, montado sobre una gorra, obtiene las imágenes del ojo del alumno y las envía a su dispositivo. El módulo central genera la red, aloja la aplicación web y almacena la información del sistema. Además, cuenta con una pantalla táctil que permite configurar el dispositivo y consultar su estado sin depender de otro equipo. Por último se encuentran los dispositivos cliente, a través de los cuales los distintos usuarios acceden a la aplicación web desde su navegador. Solo uno de ellos corresponde al alumno, y en él se realiza la detección de la mirada.
 
 \keyword{(Diagrama de bloques del sistema definitivo)}
 
@@ -654,7 +654,7 @@ Esta distribución permite que cada elemento cumpla una función específica. A 
 
 \keyword{Módulo de captura}
 
-La función del módulo de captura es obtener imágenes del ojo del alumno en tiempo real y enviarlas de forma continua a su dispositivo. No realiza ningún procesamiento sobre ellas, ya que la detección de la mirada ocurre en el navegador. Además, ilumina el ojo con luz infrarroja. Esta iluminación evita las sombras que generan las fuentes de luz externas y mantiene constantes las condiciones de captura.
+La función del módulo de captura es obtener imágenes del ojo del alumno en tiempo real y enviarlas de forma continua a su dispositivo. No realiza ningún procesamiento sobre ellas, ya que la detección de la mirada ocurre en el navegador. Además, ilumina el ojo con luz infrarroja, lo que evita las sombras que generan las fuentes de luz externas y mantiene constantes las condiciones de captura.
 
 \keyword{Módulo central}
 
@@ -668,9 +668,9 @@ Por último, el módulo central cuenta con una interfaz propia en su pantalla t�
 
 Los dispositivos cliente son la vía de acceso de los usuarios al sistema. Cualquier equipo con navegador web puede cumplir esta función, sin instalar software adicional. Todos utilizan la misma aplicación web, pero la función de cada dispositivo depende de quien lo opere.
 
-El dispositivo del alumno cumple un papel particular, ya que también realiza la detección de la mirada. Recibe el video del módulo de captura, lo compara con las plantillas de la calibración y traduce cada acción del ojo en una selección dentro de la interfaz. Así, el alumno puede resolver cuestionarios y responder preguntas solo con la mirada.
-
 Desde estos dispositivos, los profesores y tutores gestionan los cuestionarios y realizan el seguimiento de los resultados del alumno, según los permisos de cada rol. Además, cada uno puede editar sus datos personales. Los profesores, a su vez, acceden a los datos de contacto de los tutores, mientras que los tutores consultan los de los profesores.
+
+El dispositivo del alumno cumple un papel particular, ya que también realiza la detección de la mirada. Recibe el video del módulo de captura, lo compara con las plantillas de la calibración y traduce cada acción del ojo en una selección dentro de la interfaz. Así, el alumno puede resolver cuestionarios y responder preguntas solo con la mirada.
 
 Por su parte, los compañeros acceden como invitados, sin registrarse, y pueden enviar preguntas informales al alumno. Estas preguntas no se guardan en la base de datos.
 
@@ -682,9 +682,9 @@ El video viaja desde el módulo de captura hasta el dispositivo del alumno, que 
 
 Los datos del sistema, en cambio, son procesados por el módulo central. Al conectarse, cada dispositivo cliente descarga desde él la aplicación web. El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que conserva en el navegador para los accesos siguientes. Luego, cada vez que un usuario realiza una acción, su dispositivo envía la información al módulo central, que la gestiona y la pone a disposición de los demás.
 
-Durante un examen, este intercambio ocurre de forma continua. El alumno confirma cada respuesta con un parpadeo, y su dispositivo la envía en ese momento al módulo central. Este la registra en la base de datos y actualiza el progreso del examen.
+Durante un examen, este intercambio ocurre de forma continua. El alumno confirma cada respuesta con un parpadeo y su dispositivo la envía en ese momento al módulo central. Este la registra en la base de datos y actualiza el progreso del examen.
 
-Las preguntas de los compañeros también pasan por el módulo central, pero no se guardan en la base de datos. El dispositivo del invitado la envía a ese módulo, que la conserva temporalmente en su memoria de trabajo y la entrega al dispositivo del alumno.
+Las preguntas de los compañeros también pasan por el módulo central, pero no se guardan en la base de datos.  En lugar de eso, se conservan temporalmente en la memoria de trabajo y se entregan al dispositivo del alumno.
 
 \subsection{Mapa de memoria}
 
@@ -730,7 +730,7 @@ La tarjeta microSD guarda la información que debe conservarse a largo plazo y q
 
 \section{Microcontroladores y periféricos}
 
-Tanto el módulo de captura como el módulo central se implementan con una placa de desarrollo basada en un microcontrolador. La elección de estas placas responde a las restricciones del proyecto. Debían ser económicas y fáciles de conseguir. Además, ambas necesitaban conectividad Wi-Fi, ya que toda la comunicación del sistema ocurre de forma inalámbrica. El módulo de captura requería, a su vez, una interfaz física para conectar y manipular una cámara.
+Tanto el módulo de captura como el módulo central se implementan con una placa de desarrollo basada en un microcontrolador. La elección de estas placas responde a las restricciones del proyecto, que exigían que fueran económicas y fáciles de conseguir. Además, ambas necesitaban conectividad Wi-Fi, ya que toda la comunicación del sistema ocurre de forma inalámbrica. El módulo de captura requería, a su vez, una interfaz física para conectar y manipular una cámara.
 
 En esta sección se justifica la elección de la familia \emph{ESP32} frente a otras alternativas del mercado. Luego se describen las placas utilizadas en cada módulo. Para el módulo de captura se detalla también la elección de la cámara. Para el módulo central se consideró, además, que debía contar con una ranura para tarjeta microSD y con una pantalla táctil integrada.
 
@@ -738,7 +738,7 @@ En esta sección se justifica la elección de la familia \emph{ESP32} frente a o
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 15 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo.
 
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
@@ -747,7 +747,7 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \item \emph{Arduino Uno}: es una de las placas más difundidas, pero no cuenta con conectividad Wi-Fi. Además, sus 2 KB de memoria RAM resultan insuficientes para alojar una aplicación web.
 
-\item \emph{Arduino UNO R4 WiFi}, \emph{Arduino Nano 33 IoT} y \emph{Arduino Nano ESP32}: incorporan Wi-Fi y cuentan con el respaldo de la marca \emph{Arduino}. Sin embargo, su costo, de entre 18 y 28 USD, es considerablemente mayor que el de las placas de \emph{Espressif}. Además, ninguna integra una interfaz para cámara ni una ranura para tarjeta microSD.
+\item \emph{Arduino UNO R4 WiFi}, \emph{Arduino Nano 33 IoT} y \emph{Arduino Nano ESP32}: incorporan Wi-Fi y cuentan con el respaldo de la marca \emph{Arduino}. Sin embargo, su costo, de entre 18 y 28 USD, es mayor que el de las placas de \emph{Espressif}. Además, ninguna integra una interfaz para cámara ni una ranura para tarjeta microSD.
 
 \item \emph{Raspberry Pi Pico 2 W}: incorpora Wi-Fi y tiene un costo de 7 USD. Sin embargo, tampoco dispone de interfaz para cámara ni de lector de tarjetas microSD. Por lo tanto, ambos módulos requerirían componentes externos adicionales.
 
@@ -755,7 +755,7 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \end{itemize}
 
-Por último, las placas de la familia \emph{ESP32} son compatibles con las bibliotecas de \emph{Arduino}. Esto agilizó el desarrollo y las pruebas durante las etapas iniciales del proyecto.
+Por su parte, las placas de la familia \emph{ESP32} son compatibles con las bibliotecas de \emph{Arduino}. Esto agilizó el desarrollo y las pruebas durante las etapas iniciales del proyecto.
 
 \subsection{Módulo de captura}
 
@@ -795,7 +795,7 @@ Como se mencionó con anterioridad, se utilizará cámara \emph{OV2640}, que tie
 
 También se evaluó la cámara \emph{OV3660}, de 3 megapíxeles, que ofrece resultados similares. Sin embargo, la \emph{OV2640} incluida con la compra de la placa resultó adecuada. Utilizar otro sensor habría requerido adquirirla por separado, lo que aumentaría el costo total sin aportar una mejora significativa.
 
-Se consideró, además, la posibilidad de utilizar una cámara \emph{OV2640} con un conector flex de meyor longitud. Esto hubiera permitido una mayor flexibilidad a la hora del montaje final. Sin embargo, se optó por utilizar la cámara de flex corto ue llegó junto a la compra del \emph{ESP32-CAM} para abaratar costos.
+Se consideró, además, la posibilidad de utilizar una cámara \emph{OV2640} con un conector flex de mayor longitud. Esto hubiera permitido una mayor flexibilidad a la hora del montaje final. Sin embargo, se optó por utilizar la cámara de flex corto que llegó junto a la compra del \emph{ESP32-CAM} para abaratar costos.
 
 \begin{figure}[H]
     \centering
@@ -813,7 +813,7 @@ El principal criterio de elección fue la ranura para tarjeta microSD. El módul
 
 La pantalla táctil, en cambio, no era imprescindible. Algunas de sus funciones, como la consulta del estado del sistema, podrían haberse implementado en la aplicación web. Sin embargo, la placa la incluye y la diferencia de precio con otros modelos \emph{ESP32} no es significativa. Por este motivo, se decidió aprovecharla como una funcionalidad adicional. Permite configurar datos de inicio y supervisar el estado del sistema directamente desde el módulo central.
 
-\keyword{Imagen del ESP32-CYD? (Ya la mostramos, pero podriamos poner otra. Natty)}
+\keyword{Imagen de la plaquita negra?}
 
 \section{Red y comunicación}
 
@@ -821,7 +821,7 @@ En esta sección se describe la infraestructura de comunicación del sistema. Pr
 
 \subsection{Red Wi-Fi local}
 
-El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
+El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen hasta tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
 
 Dentro de esta red, el módulo central ocupa la dirección 192.168.4.1, que funciona además como puerta de enlace. El módulo de captura, en cambio, utiliza una dirección IP estática, la 192.168.4.50. Así, el dispositivo del alumno siempre encuentra el video en la misma ubicación. Los dispositivos cliente, por su parte, reciben una dirección de forma dinámica al conectarse. El módulo central asigna estas direcciones en orden creciente, a partir de la 192.168.4.2. En consecuencia, para la cámara se eligió un valor alejado del inicio. Como la red tolera como máximo cuatro conexiones, resulta prácticamente imposible que la asignación dinámica alcance esa dirección y que dos equipos compartan la misma.
 
@@ -953,7 +953,7 @@ La tabla de cuestionarios guarda tanto la configuración de cada evaluación com
 
 \item Puntaje obtenido: resultado del alumno, que se completa al finalizar.
 
-\item Fecha de inicio: momento en que el cuestionario se inició por primera vez.
+\item Fecha de inicio: momento en el que el profesor inició el cuestionario.
 
 \item Tiempo: duración de la resolución, expresada en segundos. No contabiliza los períodos en que el cuestionario estuvo pausado.
 
@@ -999,7 +999,7 @@ La tabla de preguntas guarda el contenido de cada pregunta y la respuesta del al
 
 \end{itemize}
 
-La opción correcta se registra en la pregunta y no como una marca dentro de cada opción. De esta forma, cada pregunta tiene siempre una única opción correcta. Por su parte, la opción elegida también se guarda en la pregunta, ya que el sistema contempla un único alumno.
+Tanto la opción correcta como la elegida se registran en la pregunta, ya que el sistema requiere que sean unicas.
 
 \keyword{Opciones}
 
@@ -1050,23 +1050,7 @@ Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno a
 
 Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. En resumen, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
 
-La acción que se solicita sobre cada recurso se indica mediante el método HTTP.
-
-\begin{itemize}
-
-\item GET: consulta información, como el listado de cuestionarios o el estado del examen.
-
-\item POST: crea registros, como un usuario o un cuestionario; o ejecuta acciones, como iniciar sesión o registrar una respuesta.
-
-\item PUT: reemplaza todos los datos de un registro por los que se envían. Se utiliza, por ejemplo, para editar un cuestionario pendiente. En ese caso, el profesor envía nuevamente el cuestionario completo, que sustituye al anterior.
-
-\item PATCH: modifica solo una parte de un registro. Se utiliza para cambiar el estado de un cuestionario, es decir, para iniciarlo, pausarlo, reanudarlo o finalizarlo, sin alterar su contenido.
-
-\item DELETE: elimina un registro.
-
-\end{itemize}
-
-Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
+%Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
 
 \begin{itemize}
 
@@ -1098,17 +1082,17 @@ El servicio de autenticación verifica las credenciales de profesores y tutores 
 
 Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
 
-Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial las opciones, las preguntas y los cuestionarios del profesor, y por último el usuario. Así, cada operación afecta a pocos registros, lo que optimiza el uso de la memoria.
+Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial los cuestionarios del profesor y luego el usuario. Así, cada operación afecta a pocos registros, lo que optimiza el uso de la memoria.
 
 \keyword{Cuestionarios}
 
-El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado. Esta última sigue el mismo criterio de borrado secuencial que la de usuarios.
+El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado.
 
 Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta. Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y luego borra las anteriores. De esta forma, ante un error, el cuestionario conserva su contenido original.
 
 Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
 
-Por último, al finalizar un cuestionario el servicio calcula el puntaje: ssuma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
+Por último, al finalizar un cuestionario el servicio calcula el puntaje: suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
 
 \keyword{Respuestas}
 
@@ -1166,7 +1150,7 @@ Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScrip
 
 El código fuente se escribió en computador, utilizando el software \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
-Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontroladors y viceversa.
+Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontrolador y viceversa.
 
 Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 60\% menos, mientras que la hoja de estilos no varió.
 
@@ -1186,7 +1170,7 @@ Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 
 \subsubsection{Estructura interna}
 
-El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (En el caso del alumno, en posición horizontal).
+El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (en el caso del alumno, únicamente en posición horizontal).
 
 \keyword{Imagen de un diagrama con la estructura interna}
 
@@ -1258,7 +1242,7 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 
 \item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en caché, se mantiene viva mientras el dispositivo esté conectado a la red.
 
-\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En ese caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
+\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En este último caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
 \item Resultado: en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
 
@@ -1272,7 +1256,7 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \begin{itemize}
 
-\item Principal: muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último, al perfil. El botón central depende del rol, ya que el profesor accede a los datos de los tutores y el tutor, a los de los profesores.
+\item Principal: muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último al perfil. El botón central depende del rol, ya que el profesor accede a los datos de los tutores y el tutor, a los de los profesores.
 
 \item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva. No se requiere clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
 
