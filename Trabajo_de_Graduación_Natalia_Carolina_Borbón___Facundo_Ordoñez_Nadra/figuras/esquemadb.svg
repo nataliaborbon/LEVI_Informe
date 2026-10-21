@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1415" height="445" viewBox="0 0 1415 445" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker></defs>
+<rect width="1415" height="445" fill="#FFFFFF"/>
+<rect x="20" y="30" width="260" height="46" fill="#2F3E4E"/>
+<text x="150.0" y="61" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">usuarios</text>
+<rect x="20" y="76" width="260" height="32" fill="#FFF1C9"/>
+<text x="32" y="98" font-size="17" font-weight="700" fill="#7A5800">🔑 idUsuario</text>
+<text x="268" y="98" text-anchor="end" font-size="14" font-style="italic" fill="#7A5800">INTEGER · PK</text>
+<rect x="20" y="108" width="260" height="32" fill="#F7F9FB"/>
+<text x="32" y="130" font-size="17" font-weight="400" fill="#1F2937">usuario</text>
+<text x="268" y="130" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT · UNIQUE</text>
+<line x1="20" y1="108" x2="280" y2="108" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="140" width="260" height="32" fill="#FFFFFF"/>
+<text x="32" y="162" font-size="17" font-weight="400" fill="#1F2937">nombre</text>
+<text x="268" y="162" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="140" x2="280" y2="140" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="172" width="260" height="32" fill="#F7F9FB"/>
+<text x="32" y="194" font-size="17" font-weight="400" fill="#1F2937">apellido</text>
+<text x="268" y="194" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="172" x2="280" y2="172" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="204" width="260" height="32" fill="#FFFFFF"/>
+<text x="32" y="226" font-size="17" font-weight="400" fill="#1F2937">rol</text>
+<text x="268" y="226" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="204" x2="280" y2="204" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="236" width="260" height="32" fill="#F7F9FB"/>
+<text x="32" y="258" font-size="17" font-weight="400" fill="#1F2937">referencia</text>
+<text x="268" y="258" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="236" x2="280" y2="236" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="268" width="260" height="32" fill="#FFFFFF"/>
+<text x="32" y="290" font-size="17" font-weight="400" fill="#1F2937">contacto</text>
+<text x="268" y="290" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="268" x2="280" y2="268" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="300" width="260" height="32" fill="#F7F9FB"/>
+<text x="32" y="322" font-size="17" font-weight="400" fill="#1F2937">hashPassword</text>
+<text x="268" y="322" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="300" x2="280" y2="300" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="332" width="260" height="32" fill="#FFFFFF"/>
+<text x="32" y="354" font-size="17" font-weight="400" fill="#1F2937">salt</text>
+<text x="268" y="354" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="20" y1="332" x2="280" y2="332" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="20" y="30" width="260" height="334" fill="none" stroke="#2F3E4E" stroke-width="2"/>
+<rect x="355" y="30" width="290" height="46" fill="#2F3E4E"/>
+<text x="500.0" y="61" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">cuestionarios</text>
+<rect x="355" y="76" width="290" height="32" fill="#FFF1C9"/>
+<text x="367" y="98" font-size="17" font-weight="700" fill="#7A5800">🔑 idCuestionario</text>
+<text x="633" y="98" text-anchor="end" font-size="14" font-style="italic" fill="#7A5800">INTEGER · PK</text>
+<rect x="355" y="108" width="290" height="32" fill="#DCE8FF"/>
+<text x="367" y="130" font-size="17" font-weight="700" fill="#1E40AF">🔗 idUsuario</text>
+<text x="633" y="130" text-anchor="end" font-size="14" font-style="italic" fill="#1E40AF">INTEGER · FK</text>
+<line x1="355" y1="108" x2="645" y2="108" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="140" width="290" height="32" fill="#FFFFFF"/>
+<text x="367" y="162" font-size="17" font-weight="400" fill="#1F2937">titulo</text>
+<text x="633" y="162" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="355" y1="140" x2="645" y2="140" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="172" width="290" height="32" fill="#F7F9FB"/>
+<text x="367" y="194" font-size="17" font-weight="400" fill="#1F2937">puntajeParaAprobar</text>
+<text x="633" y="194" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">REAL</text>
+<line x1="355" y1="172" x2="645" y2="172" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="204" width="290" height="32" fill="#FFFFFF"/>
+<text x="367" y="226" font-size="17" font-weight="400" fill="#1F2937">estado</text>
+<text x="633" y="226" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="355" y1="204" x2="645" y2="204" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="236" width="290" height="32" fill="#F7F9FB"/>
+<text x="367" y="258" font-size="17" font-weight="400" fill="#1F2937">puntajeObtenido</text>
+<text x="633" y="258" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">REAL</text>
+<line x1="355" y1="236" x2="645" y2="236" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="268" width="290" height="32" fill="#FFFFFF"/>
+<text x="367" y="290" font-size="17" font-weight="400" fill="#1F2937">fechaInicio</text>
+<text x="633" y="290" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="355" y1="268" x2="645" y2="268" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="300" width="290" height="32" fill="#F7F9FB"/>
+<text x="367" y="322" font-size="17" font-weight="400" fill="#1F2937">tiempoSegundos</text>
+<text x="633" y="322" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">INTEGER</text>
+<line x1="355" y1="300" x2="645" y2="300" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="355" y="30" width="290" height="302" fill="none" stroke="#2F3E4E" stroke-width="2"/>
+<rect x="720" y="30" width="290" height="46" fill="#2F3E4E"/>
+<text x="865.0" y="61" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">preguntas</text>
+<rect x="720" y="76" width="290" height="32" fill="#FFF1C9"/>
+<text x="732" y="98" font-size="17" font-weight="700" fill="#7A5800">🔑 idPregunta</text>
+<text x="998" y="98" text-anchor="end" font-size="14" font-style="italic" fill="#7A5800">INTEGER · PK</text>
+<rect x="720" y="108" width="290" height="32" fill="#DCE8FF"/>
+<text x="732" y="130" font-size="17" font-weight="700" fill="#1E40AF">🔗 idCuestionario</text>
+<text x="998" y="130" text-anchor="end" font-size="14" font-style="italic" fill="#1E40AF">INTEGER · FK</text>
+<line x1="720" y1="108" x2="1010" y2="108" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="140" width="290" height="32" fill="#DCE8FF"/>
+<text x="732" y="162" font-size="17" font-weight="700" fill="#1E40AF">🔗 idOpcionCorrecta</text>
+<text x="998" y="162" text-anchor="end" font-size="14" font-style="italic" fill="#1E40AF">INTEGER · FK</text>
+<line x1="720" y1="140" x2="1010" y2="140" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="172" width="290" height="32" fill="#DCE8FF"/>
+<text x="732" y="194" font-size="17" font-weight="700" fill="#1E40AF">🔗 idOpcionElegida</text>
+<text x="998" y="194" text-anchor="end" font-size="14" font-style="italic" fill="#1E40AF">INTEGER · FK</text>
+<line x1="720" y1="172" x2="1010" y2="172" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="204" width="290" height="32" fill="#FFFFFF"/>
+<text x="732" y="226" font-size="17" font-weight="400" fill="#1F2937">pregunta</text>
+<text x="998" y="226" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="720" y1="204" x2="1010" y2="204" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="236" width="290" height="32" fill="#F7F9FB"/>
+<text x="732" y="258" font-size="17" font-weight="400" fill="#1F2937">puntajeCorrecta</text>
+<text x="998" y="258" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">REAL</text>
+<line x1="720" y1="236" x2="1010" y2="236" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="268" width="290" height="32" fill="#FFFFFF"/>
+<text x="732" y="290" font-size="17" font-weight="400" fill="#1F2937">puntajeIncorrecta</text>
+<text x="998" y="290" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">REAL</text>
+<line x1="720" y1="268" x2="1010" y2="268" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="720" y="30" width="290" height="270" fill="none" stroke="#2F3E4E" stroke-width="2"/>
+<rect x="1150" y="158" width="230" height="46" fill="#2F3E4E"/>
+<text x="1265.0" y="189" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">opciones</text>
+<rect x="1150" y="204" width="230" height="32" fill="#FFF1C9"/>
+<text x="1162" y="226" font-size="17" font-weight="700" fill="#7A5800">🔑 idOpcion</text>
+<text x="1368" y="226" text-anchor="end" font-size="14" font-style="italic" fill="#7A5800">INTEGER · PK</text>
+<rect x="1150" y="236" width="230" height="32" fill="#DCE8FF"/>
+<text x="1162" y="258" font-size="17" font-weight="700" fill="#1E40AF">🔗 idPregunta</text>
+<text x="1368" y="258" text-anchor="end" font-size="14" font-style="italic" fill="#1E40AF">INTEGER · FK</text>
+<line x1="1150" y1="236" x2="1380" y2="236" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="1150" y="268" width="230" height="32" fill="#FFFFFF"/>
+<text x="1162" y="290" font-size="17" font-weight="400" fill="#1F2937">opcion</text>
+<text x="1368" y="290" text-anchor="end" font-size="14" font-style="italic" fill="#4B5563">TEXT</text>
+<line x1="1150" y1="268" x2="1380" y2="268" stroke="#D1D5DB" stroke-width="1"/>
+<rect x="1150" y="158" width="230" height="142" fill="none" stroke="#2F3E4E" stroke-width="2"/>
+<path d="M355,124.0 H318 V92.0 H283" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+<text x="292" y="85.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">1</text>
+<text x="345" y="117.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">N</text>
+<path d="M720,124.0 H683 V92.0 H648" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+<text x="657" y="85.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">1</text>
+<text x="710" y="117.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">N</text>
+<path d="M1380,252.0 H1400 V92.0 H1013" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+<text x="1022" y="85.0" text-anchor="start" font-size="16" font-weight="700" fill="#374151">1</text>
+<text x="1390" y="245.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">N</text>
+<path d="M1010,156.0 H1090 V220.0 H1147" fill="none" stroke="#374151" stroke-width="2.2" stroke-dasharray="8 5" marker-end="url(#f)"/>
+<path d="M1010,188.0 H1090" fill="none" stroke="#374151" stroke-width="2.2" stroke-dasharray="8 5"/>
+<text x="1022" y="149.0" text-anchor="start" font-size="16" font-weight="700" fill="#374151">N</text>
+<text x="1022" y="181.0" text-anchor="start" font-size="16" font-weight="700" fill="#374151">N</text>
+<text x="1136" y="213.0" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">1</text>
+<line x1="430" y1="400" x2="490" y2="400" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+<text x="500" y="406" font-size="16" fill="#1F2937">ON DELETE CASCADE</text>
+<line x1="720" y1="400" x2="780" y2="400" stroke="#374151" stroke-width="2.2" stroke-dasharray="8 5" marker-end="url(#f)"/>
+<text x="790" y="406" font-size="16" fill="#1F2937">ON DELETE SET NULL</text>
+<text x="430" y="434" font-size="14" fill="#4B5563">La flecha va de la clave foránea a la clave primaria que referencia. Las claves primarias son autoincrementales.</text>
+</svg>

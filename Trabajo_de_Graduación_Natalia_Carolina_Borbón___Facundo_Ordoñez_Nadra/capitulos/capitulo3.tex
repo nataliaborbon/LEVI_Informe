@@ -421,11 +421,22 @@ A diferencia de las redes tradicionales que calculan coordenadas geométricas co
 
 Bajo este esquema, se eligieron las variantes \emph{MobileNetV2 0.1} y \emph{MobileNetV2 0.35} como redes base para comparar su rendimiento. Si bien la confección del conjunto de datos y el etiquetado inicial se trabajaron mediante cuadros delimitadores (\emph{bounding boxes}), la red extrae de ellos la posición central para su entrenamiento. Finalmente, los modelos resultantes fueron cuantizados al formato \emph{int8}. Esta conversión fue fundamental para reducir el consumo de memoria y aprovechar al máximo la aceleración de hardware del \emph{ESP32-S3}.
 
-Antes de cargar cada modelo en la placa, \emph{Edge Impulse} estima su tiempo de inferencia. Para un \emph{ESP32} común, la estimación era de aproximadamente 1 segundo por inferencia. Al cargar el código en el \emph{ESP32-S3}, el monitor serial indicó alrededor de 200 milisegundos. Esta diferencia es coherente con la aceleración por hardware del \emph{ESP32-S3}.
+Antes de cargar cada modelo en la placa, \emph{Edge Impulse} calcula un valor aproximado de su tiempo de inferencia en el \emph{ESP32} clásico. Con \emph{MobileNetV2 0.35}, ese valor rondaba 1 segundo, mientras que con \emph{MobileNetV2 0.1} era cercano a 800 milisegundos (Fig. \ref{fig:edgetiempos}).
 
-Aun con esta mejora, una latencia de 200 milisegundos es demasiado alta para un seguimiento en tiempo real. Esta lentitud fue la razón principal por la que se descartó esta solución.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figuras/edgetiempos.png}
+    \caption{Tiempo de inferencia estimado por \emph{Edge Impulse} para el \emph{ESP32} clásico}
+    \label{fig:edgetiempos}
+\end{figure}
 
-\keyword{Imágenes del monitor serial con los tiempos de inferencia en cada placa? (Natty)}
+Solo se cargó en la placa el modelo basado en \emph{MobileNetV2 0.35}. En el \emph{ESP32-CAM}, que utiliza el \emph{ESP32} clásico, cada inferencia demoró aproximadamente 1 segundo, en línea con la estimación. Luego, el mismo modelo se ejecutó en el \emph{ESP32-S3}, donde el monitor serial registró alrededor de 200 milisegundos, es decir, un tiempo cinco veces menor. Esta diferencia es coherente con las instrucciones de cálculo vectorial que incorpora este microcontrolador.
+
+El modelo basado en \emph{MobileNetV2 0.1} no se llegó a probar en la placa. Si se mantuviera la misma proporción, su tiempo en el \emph{ESP32-S3} rondaría los 160 milisegundos, un valor cercano al anterior. En ambos casos, la frecuencia resultante, de entre cinco y seis imágenes por segundo, resulta insuficiente para seguir la mirada en tiempo real. Por este motivo, se descartó esta alternativa.
+
+%Antes de cargar cada modelo en la placa, \emph{Edge Impulse} estima su tiempo de inferencia. Para un \emph{ESP32} común, la estimación era de aproximadamente 1 segundo por inferencia. Al cargar el código en el \emph{ESP32-S3}, el monitor serial indicó alrededor de 200 milisegundos. Esta diferencia es coherente con la aceleración por hardware del \emph{ESP32-S3}.
+
+%Aun con esta mejora, una latencia de 200 milisegundos es demasiado alta para un seguimiento en tiempo real. Esta lentitud fue la razón principal por la que se descartó esta solución.
 
 \subsubsection{TensorFlow Lite}
 
@@ -881,35 +892,64 @@ La base de datos almacena de forma permanente la información del sistema, que i
 
 La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se lo eligió porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
 
-La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite}. Allí se definieron las tablas, sus campos, las relaciones y las restricciones. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear las tablas al iniciar, sino que abre directamente el archivo existente.
+La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite}. Allí se definieron las tablas, sus campos, las relaciones, las restricciones y los índices. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear esta estructura al iniciar, sino que abre directamente el archivo existente.
 
-Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento de \emph{SQLite} (\emph{PRAGMA}). Estas opciones responden a la memoria acotada del microcontrolador y a las características de la tarjeta microSD.
+Los índices se definieron sobre las columnas que el sistema consulta con mayor frecuencia, lo que además acelera los borrados en cascada:
+
+\begin{itemize}
+
+\item Opciones por pregunta (\emph{idx\_opciones\_idPregunta}): permite obtener las opciones de una pregunta, como por ejemplo al mostrarla al alumno.
+
+\item Preguntas por cuestionario (\emph{idx\_preguntas\_idCuestionario}): permite obtener las preguntas de un cuestionario, como por ejemplo al buscar la siguiente sin responder durante el examen.
+
+\item Opción correcta y opción elegida (\emph{idx\_preguntas\_idOpcionCorrecta} e \emph{idx\_preguntas\_idOpcionElegida}): permiten encontrar las preguntas que hacen referencia a una opción cuando esta se elimina.
+
+\item Cuestionario en progreso (\emph{idx\_cuestionarios\_en\_progreso}): es un índice parcial que contiene solo el cuestionario en curso, que el sistema busca en cada consulta periódica del dispositivo del alumno.
+
+\end{itemize}
+
+Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento de \emph{SQLite} (\emph{PRAGMAs}). Estas opciones responden a las características de la tarjeta microSD y a que el módulo central puede desconectarse en cualquier momento.
 
 \begin{itemize}
 
 \item Claves foráneas (\emph{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
 
-\item Tamaño de la caché (\emph{cache\_size}): se limita a 16 KB para reducir el consumo de RAM.
+\item Registro de transacciones (\emph{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, y al finalizar cada una solo borra su encabezado, en lugar de eliminar el archivo y crearlo de nuevo. En el sistema de archivos de la microSD, crear y borrar archivos es lento, por lo que esta opción reduce el tiempo de cada escritura.
 
-\item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas se guardan en la tarjeta y no en la RAM.
+\item Sincronización (\emph{synchronous}): se emplea el nivel máximo, en el que \emph{SQLite} espera a que la tarjeta confirme cada escritura. Como el dispositivo puede desconectarse en cualquier momento, esto reduce el riesgo de que la base se dañe ante un corte de energía. Dado que cada operación se guarda en una única transacción, el costo en velocidad es bajo.
 
-\item Registro de transacciones (\emph{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, en lugar de borrarlo y crearlo cada vez. Esto reduce las escrituras en la microSD.
+\item Tamaño de la caché (\emph{cache\_size}): se fija en 512 KB, ubicados en la PSRAM. Así queda margen para el crecimiento de la base sin ocupar la RAM interna.
 
-\item Sincronización (\emph{synchronous}): se emplea un nivel intermedio, que equilibra la protección ante cortes de energía con la velocidad de escritura.
-
-\item Tiempo de espera (\emph{busy\_timeout}): si la base está ocupada, la operación espera hasta tres segundos antes de fallar.
+\item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas, por ejemplo al ordenar un listado, se guardan en memoria y no en la tarjeta, lo que acelera esas operaciones.
 
 \end{itemize}
+
+%Versión anterior de los PRAGMA (ESP32-CYD):
+%Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento de \emph{SQLite} (\emph{PRAGMA}). Estas opciones responden a la memoria acotada del microcontrolador y a las características de la tarjeta microSD.
+%\begin{itemize}
+%\item Claves foráneas (\emph{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
+%\item Tamaño de la caché (\emph{cache\_size}): se limita a 16 KB para reducir el consumo de RAM.
+%\item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas se guardan en la tarjeta y no en la RAM.
+%\item Registro de transacciones (\emph{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, en lugar de borrarlo y crearlo cada vez. Esto reduce las escrituras en la microSD.
+%\item Sincronización (\emph{synchronous}): se emplea un nivel intermedio, que equilibra la protección ante cortes de energía con la velocidad de escritura.
+%\item Tiempo de espera (\emph{busy\_timeout}): si la base está ocupada, la operación espera hasta tres segundos antes de fallar.
+%\end{itemize}
 
 \keyword{(Captura de DB Browser for SQLite con la estructura de la base) (Natty)}
 
 \subsubsection{Estructura de las tablas}
 
-La base de datos se compone de cuatro tablas, que son: usuarios, cuestionarios, preguntas y opciones. En todas ellas, cada registro se identifica con un número entero (su clave primaria), que \emph{SQLite} asigna de forma automática al insertarlo. A continuación se describe el contenido de cada tabla.
+La base de datos se compone de cuatro tablas, que son: usuarios, cuestionarios, preguntas y opciones. En todas ellas, cada registro se identifica con un número entero (su clave primaria), que \emph{SQLite} asigna de forma automática al insertarlo.
 
-\keyword{Usuarios}
+Como cada dispositivo pertenece a un único alumno, este no se registra en la tabla de usuarios. Del mismo modo, sus resultados no se guardan en una tabla aparte, sino en los propios cuestionarios, y cada respuesta, en la pregunta a la que corresponde. A continuación se describe el contenido de cada tabla y, por último, las relaciones entre ellas.
 
-La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno no forma parte de ella, ya que cada dispositivo pertenece a un único alumno y no es necesaria una tabla para identificarlo. Por este motivo, su nombre se define en la configuración inicial y se guarda en la NVS del módulo central. Los invitados tampoco se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
+%A continuación se describe el contenido de cada tabla.
+
+\apartado{Usuarios}
+
+La tabla de usuarios guarda los datos de los profesores y los tutores. Los invitados no se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
+
+%La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno no forma parte de ella, ya que cada dispositivo pertenece a un único alumno y no es necesaria una tabla para identificarlo. Por este motivo, su nombre se define en la configuración inicial y se guarda en la NVS del módulo central. Los invitados tampoco se almacenan, porque acceden sin registrarse. Cada usuario cuenta con los siguientes campos.
 
 \begin{itemize}
 
@@ -923,23 +963,26 @@ La tabla de usuarios guarda los datos de los profesores y los tutores. El alumno
 
 \item Contacto: medio para comunicarse con el usuario, como un teléfono o un correo electrónico.
 
-\item \emph{Hash} de la contraseña: resultado de aplicar la función de \emph{hash} a la contraseña.
+\item \emph{Hash} de la contraseña: resultado de aplicar la función de \emph{hash} a la contraseña combinada con el \emph{salt}.
 
-\item \emph{Salt}: cadena aleatoria que se combina con la contraseña antes de calcular el \emph{hash}.
+\item \emph{Salt}: cadena aleatoria propia de cada usuario, que se combina con la contraseña antes de calcular el \emph{hash}.
 
 \end{itemize}
 
 Ninguno de los campos de texto puede quedar vacío.
 
-Las contraseñas no se almacenan en texto plano. En su lugar, se guarda el resultado de aplicarles la función de \emph{hash} SHA-256, descrita en el capítulo 2. Esta función es irreversible, por lo que a partir del valor guardado no es posible recuperar la contraseña original. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas de los usuarios. Esto resulta relevante porque los usuarios suelen repetir sus contraseñas en otros servicios.
+% Los tres párrafos siguientes pasan al Backend (servicio de autenticación):
+%Las contraseñas no se almacenan en texto plano. En su lugar, se guarda el resultado de aplicarles la función de \emph{hash} SHA-256, descrita en el capítulo 2. Esta función es irreversible, por lo que a partir del valor guardado no es posible recuperar la contraseña original. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas de los usuarios. Esto resulta relevante porque los usuarios suelen repetir sus contraseñas en otros servicios.
 
-Para su implementación se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo del \emph{ESP32}. Además, este microcontrolador cuenta con un acelerador por hardware para el algoritmo SHA. Así, el cálculo no requiere bibliotecas adicionales y se realiza con rapidez, sin comprometer los recursos del módulo central.
+%Para su implementación se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo del \emph{ESP32}. Además, este microcontrolador cuenta con un acelerador por hardware para el algoritmo SHA. Así, el cálculo no requiere bibliotecas adicionales y se realiza con rapidez, sin comprometer los recursos del módulo central.
 
-El \emph{salt} se genera de forma aleatoria al crear cada usuario. Sin este valor, dos usuarios con la misma contraseña tendrían el mismo \emph{hash}, y quien accediera a la base podría advertirlo. Con el \emph{salt}, en cambio, cada resultado es distinto. Al iniciar sesión, el sistema combina la contraseña ingresada con el \emph{salt} almacenado, repite el cálculo y compara el resultado con el valor guardado.
+%El \emph{salt} se genera de forma aleatoria al crear cada usuario. Sin este valor, dos usuarios con la misma contraseña tendrían el mismo \emph{hash}, y quien accediera a la base podría advertirlo. Con el \emph{salt}, en cambio, cada resultado es distinto. Al iniciar sesión, el sistema combina la contraseña ingresada con el \emph{salt} almacenado, repite el cálculo y compara el resultado con el valor guardado.
 
-\keyword{Cuestionarios}
+\apartado{Cuestionarios}
 
-La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Considerando que cada dispositivo pertenece a un único alumno, no hace falta una tabla aparte para los resultados, sino que se pueden almacenar directamente en el cuestionario. Cada uno cuenta con los siguientes campos.
+La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Cada uno cuenta con los siguientes campos.
+
+%La tabla de cuestionarios guarda tanto la configuración de cada evaluación como su resultado. Considerando que cada dispositivo pertenece a un único alumno, no hace falta una tabla aparte para los resultados, sino que se pueden almacenar directamente en el cuestionario. Cada uno cuenta con los siguientes campos.
 
 \begin{itemize}
 
@@ -959,7 +1002,7 @@ La tabla de cuestionarios guarda tanto la configuración de cada evaluación com
 
 \end{itemize}
 
-El estado de un cuestionario solo puede tomar uno de los siguientes valores.
+El estado de un cuestionario solo puede tomar uno de los siguientes valores (Fig. \ref{fig:estadoscuestionario}).
 
 \begin{itemize}
 
@@ -975,11 +1018,16 @@ El estado de un cuestionario solo puede tomar uno de los siguientes valores.
 
 Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda.
 
-Por último, el cuestionario pasa a \emph{finalizado} cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado (independiente de que esté en progreso o pausado). En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
+Por último, el cuestionario pasa a \emph{finalizado} cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado, ya sea que esté en progreso o pausado. En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
 
-\keyword{(Diagrama de transición de estados del cuestionario) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/estadoscuestionario.png}
+    \caption{Diagrama de transición de estados de un cuestionario}
+    \label{fig:estadoscuestionario}
+\end{figure}
 
-\keyword{Preguntas}
+\apartado{Preguntas}
 
 La tabla de preguntas guarda el contenido de cada pregunta y la respuesta del alumno. Cada una cuenta con los siguientes campos.
 
@@ -999,9 +1047,11 @@ La tabla de preguntas guarda el contenido de cada pregunta y la respuesta del al
 
 \end{itemize}
 
-Tanto la opción correcta como la elegida se registran en la pregunta, ya que el sistema requiere que sean unicas.
+Ambas opciones se registran en la pregunta y no en la tabla de opciones. De esta forma, cada pregunta puede tener una sola opción correcta y una sola opción elegida.
 
-\keyword{Opciones}
+%Tanto la opción correcta como la elegida se registran en la pregunta, ya que el sistema requiere que sean unicas.
+
+\apartado{Opciones}
 
 La tabla de opciones guarda las respuestas posibles de cada pregunta. Cada pregunta tiene entre dos y cuatro opciones, cuyos campos son los siguientes.
 \begin{itemize}
@@ -1012,13 +1062,18 @@ La tabla de opciones guarda las respuestas posibles de cada pregunta. Cada pregu
 
 \end{itemize}
 
-\keyword{Relaciones}
+\apartado{Relaciones}
 
-Las tablas se vinculan mediante claves foráneas. Un profesor puede crear varios cuestionarios, un cuestionario contiene varias preguntas y cada pregunta reúne varias opciones. Además, cada pregunta se relaciona con dos de sus opciones, la correcta y la elegida por el alumno.
+Las tablas se vinculan mediante claves foráneas (Fig. \ref{fig:esquemadb}). Un profesor puede crear varios cuestionarios, un cuestionario contiene varias preguntas y cada pregunta reúne varias opciones. Además, cada pregunta se relaciona con dos de sus opciones, la correcta y la elegida por el alumno.
 
-\keyword{(Diagrama entidad-relación de la base de datos) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/esquemadb.png}
+    \caption{Esquema relacional de la base de datos}
+    \label{fig:esquemadb}
+\end{figure}
 
-Estas relaciones definen el orden en que se crean los registros. Un cuestionario requiere que su profesor ya exista, y una pregunta requiere que exista su cuestionario. En el caso de las preguntas, primero se crea la pregunta, luego sus opciones y, por último, se indica cuál de ellas es la correcta.
+Estas relaciones definen el orden en que se crean los registros. Un cuestionario requiere que su profesor ya exista, y una pregunta requiere que exista su cuestionario. En el caso de las preguntas, primero se crea la pregunta, luego sus opciones y, por último, se indica cuál de ellas es la correcta. La opción elegida, en cambio, se registra recién cuando el alumno responde, por lo que para entonces la pregunta y sus opciones ya existen.
 
 Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
 
@@ -1042,13 +1097,33 @@ Los modelos son las estructuras con las que el \emph{backend} agrupa la informac
 
 \end{itemize}
 
-Por la memoria limitada del módulo central, los modelos que agrupan varios elementos deberán tener una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
+Por la memoria limitada del módulo central, los modelos que agrupan varios elementos tienen una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, y cada pregunta, hasta cuatro opciones. Los listados, por su parte, se entregan por páginas de diez elementos, por lo que la cantidad total de cuestionarios o usuarios no está limitada.
+
+%Por la memoria limitada del módulo central, los modelos que agrupan varios elementos deberán tener una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
 
 \subsubsection{Controladores}
 
 Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema y existen cuatro: controlador de autenticación, de usuarios, de cuestionarios y del alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
 
 Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. En resumen, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
+
+Los métodos HTTP, presentados en el capítulo 2, se asignan según la operación:
+
+\begin{itemize}
+
+\item GET: consultas, como los listados, el estado del examen o la revisión de un cuestionario.
+
+\item POST: creación de usuarios y cuestionarios. También se emplea para acciones que no generan un registro, como iniciar sesión, enviar una respuesta o los avisos periódicos.
+
+\item PUT: modificaciones completas, como la edición de un cuestionario o de un perfil.
+
+\item PATCH: cambios de estado de un cuestionario, es decir, iniciarlo, pausarlo, reanudarlo o finalizarlo.
+
+\item DELETE: eliminación de usuarios y cuestionarios.
+
+\end{itemize}
+
+Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
 
 %Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
 
@@ -1072,29 +1147,37 @@ Al crear o editar un cuestionario, el cuerpo de la petición puede superar el ta
 
 \subsubsection{Servicios}
 
-Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo.
+Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo. Cuando una acción requiere varias escrituras en la base de datos, el servicio las agrupa en una única transacción, cuyo funcionamiento se explicó en el capítulo 2. Si alguna escritura falla, se deshacen todas, por lo que la base nunca queda con una operación a medias. Los repositorios, en cambio, siguen siendo los únicos que leen y escriben los datos.
 
-\keyword{Autenticación}
+\apartado{Autenticación}
 
-El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos. Si el usuario no existe o la contraseña no coincide, responde con el mismo mensaje en ambos casos. De esta forma no revela qué nombres de usuario están registrados. Cuando la verificación es correcta, solicita al gestor de sesiones que abra una nueva sesión.
+El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} con \emph{salt} descrito en el capítulo 2, con el algoritmo SHA-256. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas, que los usuarios suelen repetir en otros servicios. Para el cálculo se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo de la familia \emph{ESP32}, junto con el acelerador por hardware para SHA del \emph{ESP32-S3}. Así, no se requieren bibliotecas adicionales y el cálculo se realiza con rapidez.
 
-\keyword{Usuarios}
+%El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos.
 
-Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
+Si el usuario no existe o la contraseña no coincide, responde con el mismo mensaje en ambos casos. De esta forma no revela qué nombres de usuario están registrados. Cuando la verificación es correcta, solicita al gestor de sesiones que abra una nueva sesión.
+
+\apartado{Usuarios}
+
+Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Además, genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
+
+%Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
 
 Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial los cuestionarios del profesor y luego el usuario. Así, cada operación afecta a pocos registros, lo que optimiza el uso de la memoria.
 
-\keyword{Cuestionarios}
+\apartado{Cuestionarios}
 
 El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado.
 
-Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta. Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y luego borra las anteriores. De esta forma, ante un error, el cuestionario conserva su contenido original.
+Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta.
+
+%Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y luego borra las anteriores. De esta forma, ante un error, el cuestionario conserva su contenido original.
 
 Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
 
 Por último, al finalizar un cuestionario el servicio calcula el puntaje: suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
 
-\keyword{Respuestas}
+\apartado{Respuestas}
 
 El servicio de respuestas determina qué se muestra en el dispositivo del alumno. En cada consulta, si hay un examen en progreso, entrega la primera pregunta sin responder. Si no lo hay y un invitado cargó una pregunta, entrega esa pregunta. En cualquier otro caso indica que no hay nada pendiente.
 
@@ -1102,43 +1185,49 @@ Al recibir una respuesta, comprueba que la pregunta pertenezca al examen en curs
 
 \subsubsection{Repositorios}
 
-La capa de respositorios es la única que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
+La capa de repositorios es la única que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
 
 Todos los repositorios comparten una única conexión con la base de datos. El módulo central la abre al encender, configura las opciones de \emph{SQLite} descritas en la sección de base de datos y la mantiene abierta mientras funciona. Así se evita abrir y cerrar el archivo en cada petición, lo que demandaría tiempo y memoria adicionales.
 
 Las consultas se ejecutan como sentencias preparadas. Primero se define la instrucción con marcadores en lugar de los valores y luego se asocian a ellos los datos recibidos. Como estos nunca forman parte del texto de la instrucción, se impide la inyección de SQL, es decir, que un dato ingresado por el usuario se interprete como una orden para la base.
 
-Los listados de cuestionarios, por su parte, se obtienen mediante sentencias simples. En lugar de combinar varias tablas en una sola operación, primero se leen los cuestionarios y luego se obtiene por separado, para cada uno, la cantidad de preguntas y la materia del profesor (esto último solo para el caso de los tutores). Este enfoque implica más accesos a la base, pero cada uno procesa menos datos a la vez, lo que reduce el consumo de RAM.
+Los listados, por su parte, se consultan por páginas. Cada consulta devuelve únicamente los elementos de la página solicitada, por lo que la cantidad de datos que se procesan a la vez se mantiene acotada, sin importar cuántos registros tenga la base.
+
+%Los listados de cuestionarios, por su parte, se obtienen mediante sentencias simples. En lugar de combinar varias tablas en una sola operación, primero se leen los cuestionarios y luego se obtiene por separado, para cada uno, la cantidad de preguntas y la materia del profesor (esto último solo para el caso de los tutores). Este enfoque implica más accesos a la base, pero cada uno procesa menos datos a la vez, lo que reduce el consumo de RAM.
 
 \subsubsection{Gestión de sesiones}
 
 La gestión de sesiones controla quién está conectado al sistema y con qué rol. Funciona como un componente independiente de las capas anteriores, ya que lo utilizan tanto los controladores, para verificar cada petición, como los servicios para abrir y cerrar sesiones o consultar su estado.
 
-\keyword{Tokens de sesión}
+\apartado{Tokens de sesión}
 
-Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador y éste lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
+Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y el momento de su última actividad. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
+
+%Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador y éste lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
 En aplicaciones web con muchos usuarios suele emplearse el \emph{JSON Web Token} (JWT), un \emph{token} firmado que el servidor valida sin almacenar las sesiones. En este caso no resulta conveniente, ya que el sistema necesita registrar las sesiones activas para aplicar las prioridades y la expiración que se describen a continuación.
 
-\keyword{Lugares de sesión}
+\apartado{Lugares de sesión}
 
 El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
 
 En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza.
 
-\keyword{Expiración}
+\apartado{Expiración}
 
-Cada sesión registra el momento de su última actividad, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. El módulo central revisa estos registros de forma continua. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Cada tipo de sesión cuenta con su propio tiempo límite. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
+El módulo central revisa de forma continua la última actividad de cada sesión, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
+
+%Cada sesión registra el momento de su última actividad, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. El módulo central revisa estos registros de forma continua. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Cada tipo de sesión cuenta con su propio tiempo límite. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
 
 Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. De esta forma, el cronómetro se detiene hasta que el profesor lo reanuda.
 
-\keyword{Invitado}
+\apartado{Invitado}
 
 El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
 
-\keyword{Verificación de peticiones}
+\apartado{Verificación de peticiones}
 
-Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} del encabezado y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
+Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
 
 \subsection{Frontend}
 

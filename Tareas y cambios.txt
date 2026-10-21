@@ -8,7 +8,7 @@
 
 - Explicado JSON en el capitulo 2 (dentro del ítem de HTTP, en 2.5.2)
 
-- Explicada la función de hash y SHA-256 en el capitulo 2 (último párrafo de 2.6.5 Base de datos)
+- Explicada la función de hash y SHA-256 en el capitulo 2 y el salt (en 2.6.4 Backend, antes del párrafo de tokens, con la figura saltedhash.png; la imagen es una adaptación al español de un diagrama de Mohamed Rimsan, falta citar la fuente)
 
 Últimos cambios 15/10:
 
@@ -47,6 +47,10 @@ Natty:
 - Agregar explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección del mapa de memoria.
 
 
+- Citar la fuente de las imágenes adaptadas del capítulo 2: saltedhash.png (diagrama de Mohamed Rimsan) y tcpip.png (curso de Cisco Networking Academy).
+
+- Código (S3_como_sustituta): sacar la creación de índices del firmware (_crearIndices en DatabaseManager.cpp) y definir los cinco índices en DB Browser for SQLite (idx_opciones_idPregunta, idx_preguntas_idCuestionario, idx_preguntas_idOpcionCorrecta, idx_preguntas_idOpcionElegida e idx_cuestionarios_en_progreso, este último parcial: WHERE estado = 'en_progreso'). Exportar el levi.db nuevo y cargarlo en cada microSD. El informe (3.6.1, Creación y configuración) ya dice que los índices vienen en el archivo.
+
 - Revisar todas las intros del capítulo 2.
 
 - Capítulo 2: agregar una introducción a cada sección. Por ahora solo la tiene "Arquitectura de una aplicación web" (su intro es el párrafo que antes abría la subsección del mismo nombre).
@@ -54,10 +58,6 @@ Natty:
 - Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
 
 - Ver donde colocar las reglas de negocio. Si quedan en el service, o si no quedan, ¿Qué va en los services?
-
-- 2.5.2 (Protocolos de comunicación y transmisión de video): Imagen de protocolos con circulitos
-
-- 2.6.5 (Base de datos): Imagen de tablas/base de datos
 
 - 3.3.1 (Umbral de oscuridad y brillantez): Imagen de centroide
 
@@ -84,7 +84,7 @@ Consultar:
 
 En general:
 
-- Revisar el formato de las subsubsecciones y los apartados. Antes las subsubsecciones (sin número) se veían igual que los apartados con \keyword. Se agregó \setcounter{secnumdepth}{3} en informe.tex para numerarlas (ej.: 3.6.2.2 Controladores), lo que afecta a todo el documento. No termina de convencer; se probó \paragraph para los apartados y tampoco gustó.
+- Revisar el formato de las subsubsecciones y los apartados. Las subsubsecciones (sin número, en negrita) se ven igual que los apartados con \keyword. Ya se probó: numerar las subsubsecciones (secnumdepth 3, se revirtió), \paragraph para los apartados (no gustó) y apartados en cursiva con el comando \apartado (definido en informe.tex). La cursiva quedó aplicada solo en 3.6.1 Base de datos (Usuarios, Cuestionarios, Preguntas, Opciones, Relaciones) y no termina de convencer. Decidir un formato y aplicarlo a todo el informe.
 
 Capitulo 1:
 

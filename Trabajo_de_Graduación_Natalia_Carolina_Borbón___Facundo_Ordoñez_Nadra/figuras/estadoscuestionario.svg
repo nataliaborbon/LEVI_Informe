@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="380" viewBox="0 0 1160 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="1160" height="380" fill="#FFFFFF"/>
+  <g transform="translate(0,-115)">
+
+  <!-- Estado inicial -->
+  <circle cx="30" cy="178" r="11" fill="#1F4E79"/>
+  <path d="M41,178 H107" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="74" y="166" text-anchor="middle" font-size="15" fill="#374151">creación</text>
+
+  <!-- Estados -->
+  <rect x="110" y="148" width="190" height="60" rx="14" fill="#1F4E79"/>
+  <text x="205" y="185" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">Pendiente</text>
+
+  <rect x="470" y="148" width="210" height="60" rx="14" fill="#1F4E79"/>
+  <text x="575" y="185" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">En progreso</text>
+
+  <rect x="470" y="400" width="210" height="60" rx="14" fill="#1F4E79"/>
+  <text x="575" y="437" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">Pausado</text>
+
+  <rect x="880" y="274" width="190" height="60" rx="14" fill="#1F4E79"/>
+  <text x="975" y="311" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">Finalizado</text>
+
+  <!-- Estado final -->
+  <path d="M1070,304 H1113" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <circle cx="1130" cy="304" r="14" fill="none" stroke="#1F4E79" stroke-width="2.5"/>
+  <circle cx="1130" cy="304" r="8" fill="#1F4E79"/>
+
+  <!-- Pendiente -> En progreso -->
+  <path d="M300,178 H467" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="384" y="152" text-anchor="middle" font-size="16" fill="#1F2937">El profesor lo inicia</text>
+
+  <!-- En progreso -> Pausado -->
+  <path d="M530,208 V397" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="516" y="270" text-anchor="end" font-size="16" fill="#1F2937">• El profesor lo pausa</text>
+  <text x="516" y="300" text-anchor="end" font-size="16" fill="#1F2937">• El alumno pierde la conexión</text>
+  <text x="516" y="330" text-anchor="end" font-size="16" fill="#1F2937">• Se inicia o reanuda otro cuestionario</text>
+
+  <!-- Pausado -> En progreso -->
+  <path d="M620,400 V211" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="634" y="308" font-size="16" fill="#1F2937">El profesor</text>
+  <text x="634" y="330" font-size="16" fill="#1F2937">lo reanuda</text>
+
+  <!-- En progreso -> Finalizado -->
+  <path d="M680,178 H1045 V271" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="700" y="215" font-size="16" fill="#1F2937">• El alumno responde la última pregunta</text>
+  <text x="700" y="245" font-size="16" fill="#1F2937">• El profesor lo finaliza</text>
+
+  <!-- Pausado -> Finalizado -->
+  <path d="M680,430 H1045 V337" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#f)"/>
+  <text x="862" y="456" text-anchor="middle" font-size="16" fill="#1F2937">El profesor lo finaliza</text>
+  </g>
+</svg>
