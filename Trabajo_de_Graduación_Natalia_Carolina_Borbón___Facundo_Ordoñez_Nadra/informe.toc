@@ -12,7 +12,7 @@
 \contentsline {subsection}{\numberline {2.2.2}Coincidencia de patrones (Template Matching)}{5}{subsection.16}%
 \contentsline {section}{\numberline {2.3}Redes Neuronales Artificiales}{6}{section.20}%
 \contentsline {subsection}{\numberline {2.3.1}Definición y funcionamiento}{6}{subsection.21}%
-\contentsline {subsection}{\numberline {2.3.2}Tipos y arquitecturas de redes neuronales}{8}{subsection.25}%
+\contentsline {subsection}{\numberline {2.3.2}Tipos y arquitecturas de redes neuronales}{7}{subsection.25}%
 \contentsline {section}{\numberline {2.4}Sistemas Embebidos y Control Gráfico}{8}{section.26}%
 \contentsline {subsection}{\numberline {2.4.1}Microcontroladores y familia ESP32}{8}{subsection.27}%
 \contentsline {subsection}{\numberline {2.4.2}Interfaces gráficas embebidas y biblioteca LVGL}{9}{subsection.29}%
@@ -21,9 +21,9 @@
 \contentsline {subsection}{\numberline {2.5.2}Protocolos de comunicación y transmisión de video}{11}{subsection.34}%
 \contentsline {section}{\numberline {2.6}Arquitectura de una aplicación web}{13}{section.36}%
 \contentsline {subsection}{\numberline {2.6.1}Modelo Cliente/Servidor}{13}{subsection.37}%
-\contentsline {subsection}{\numberline {2.6.2}Patrón de diseño Modelo-Vista-Controlador (MVC)}{13}{subsection.39}%
+\contentsline {subsection}{\numberline {2.6.2}Patrón de diseño Modelo-Vista-Controlador (MVC)}{14}{subsection.39}%
 \contentsline {subsection}{\numberline {2.6.3}Frontend}{14}{subsection.41}%
-\contentsline {subsection}{\numberline {2.6.4}Backend}{15}{subsection.43}%
+\contentsline {subsection}{\numberline {2.6.4}Backend}{16}{subsection.43}%
 \contentsline {subsection}{\numberline {2.6.5}Base de datos}{17}{subsection.46}%
 \contentsline {chapter}{\numberline {3}Diseño e implementación}{20}{chapter.48}%
 \contentsline {section}{\numberline {3.1}Requisitos y especificaciones del sistema}{20}{section.49}%
@@ -32,9 +32,9 @@
 \contentsline {subsection}{\numberline {3.1.3}Restricciones de diseño}{22}{subsection.52}%
 \contentsline {section}{\numberline {3.2}Detector ocular}{22}{section.53}%
 \contentsline {subsection}{\numberline {3.2.1}Procesamiento local como planteamiento inicial}{23}{subsection.55}%
-\contentsline {subsubsection}{Umbral de oscuridad y brillantez}{23}{section*.56}%
-\contentsline {subsubsection}{Edge Impulse}{25}{section*.60}%
-\contentsline {subsubsection}{TensorFlow Lite}{27}{section*.64}%
+\contentsline {subsubsection}{Umbral de oscuridad y brillantez}{24}{section*.56}%
+\contentsline {subsubsection}{Edge Impulse}{26}{section*.60}%
+\contentsline {subsubsection}{TensorFlow Lite}{28}{section*.64}%
 \contentsline {subsubsection}{Conclusión del procesamiento local}{31}{section*.76}%
 \contentsline {subsection}{\numberline {3.2.2}Procesamiento remoto por coordenadas}{31}{subsection.77}%
 \contentsline {subsubsection}{MediaPipe y WebGazer}{31}{section*.78}%
@@ -43,10 +43,10 @@
 \contentsline {subsection}{\numberline {3.2.3}Template Matching como solución adoptada}{34}{subsection.84}%
 \contentsline {subsubsection}{Calibración}{34}{section*.85}%
 \contentsline {subsubsection}{Preprocesamiento de fotogramas}{35}{section*.86}%
-\contentsline {subsubsection}{Comparación de plantillas}{35}{section*.87}%
+\contentsline {subsubsection}{Comparación de plantillas}{36}{section*.87}%
 \contentsline {section}{\numberline {3.3}Arquitectura del sistema}{36}{section.88}%
-\contentsline {subsection}{\numberline {3.3.1}Funciones de cada módulo}{36}{subsection.89}%
-\contentsline {subsection}{\numberline {3.3.2}Interacción entre módulos}{37}{subsection.90}%
+\contentsline {subsection}{\numberline {3.3.1}Funciones de cada módulo}{37}{subsection.89}%
+\contentsline {subsection}{\numberline {3.3.2}Interacción entre módulos}{38}{subsection.90}%
 \contentsline {subsection}{\numberline {3.3.3}Mapa de memoria}{38}{subsection.91}%
 \contentsline {section}{\numberline {3.4}Microcontroladores y periféricos}{39}{section.92}%
 \contentsline {subsection}{\numberline {3.4.1}Elección de la familia ESP32}{39}{subsection.93}%
@@ -56,7 +56,7 @@
 \contentsline {subsection}{\numberline {3.5.1}Red Wi-Fi local}{42}{subsection.100}%
 \contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{43}{subsection.101}%
 \contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{43}{subsection.102}%
-\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{43}{subsection.103}%
+\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{44}{subsection.103}%
 \contentsline {section}{\numberline {3.6}Aplicación web}{44}{section.104}%
 \contentsline {subsection}{\numberline {3.6.1}Base de datos}{44}{subsection.105}%
 \contentsline {subsubsection}{Creación y configuración}{44}{section*.106}%
