@@ -363,7 +363,15 @@ Para entender este método, se debe aclarar antes cómo el microcontrolador proc
 
 El algoritmo realiza un barrido inicial, en el que revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Como depender de un único píxel comprometería la estabilidad del sistema, se establece un umbral de oscuridad dinámico. De esta manera, el programa no aísla un solo punto, sino toda una región cuyos valores caen por debajo de dicho límite.
 
-Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la pupila, el programa ejecuta un segundo barrido. Éste calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se sumarían todas las coordenadas para luego dividirlas por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros).
+Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la pupila, el programa ejecuta un segundo barrido. Éste calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se sumarían todas las coordenadas para luego dividirlas por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros). En la figura \ref{fig:umbraloscuridad} se ilustra un ejemplo de este método en funcionamiento.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figuras/umbraloscuridad.png}
+    \caption{Detección por umbral de oscuridad}
+    \label{fig:umbraloscuridad}
+\end{figure}
+
 
 Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método se descubrió que la precisión era insuficiente. Las sombras proyectadas sobre el rostro por la iluminación ambiental, sumadas a la presencia de cejas, pestañas o armazones de anteojos, confundían fácilmente al detector. Si bien la pupila seguía siendo el punto de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable al seguimiento.
 
@@ -572,17 +580,32 @@ Las pruebas de este método se realizaron con un script de Python ejecutado en u
 
 Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complementarlo con la Transformada de Hough, un método clásico de extracción de características en el análisis de imágenes digitales. Su variante para círculos, conocida como \emph{HoughCircles} en \emph{OpenCV}, analiza los bordes detectados en un fotograma mediante un sistema matemático de votación. El algoritmo busca conjuntos de píxeles que compartan una curvatura y se encuentren a una distancia constante (el radio) de un posible punto central. Si suficientes píxeles votan por el mismo centro, el algoritmo confirma la existencia de un círculo en esa región. En este contexto, el círculo corresponde al iris del ojo, y las coordenadas de la pupila se obtienen al calcular la ubicación del centro de dicho círculo.
 
-Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación se aplica la función de círculos de Hough. Cuando se detecta el contorno del iris, los resultados se grafican sobre la imagen a modo de depuración visual. Un trazo verde delimita la circunferencia detectada y un punto rojo en su centro representa las coordenadas de la pupila.
+Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación se aplica la función de círculos de Hough. Cuando se detecta el contorno del iris, los resultados se grafican sobre la imagen a modo de depuración visual. Un trazo verde delimita la circunferencia detectada y un punto rojo en su centro representa las coordenadas de la pupila (Fig. \ref{fig:houghfuncionando}).
 
-\keyword{Imagen de Hough funcionando (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figuras/houghfuncionando.png}
+    \caption{El método de la transformada de Hough en funcionamiento}
+    \label{fig:houghfuncionando}
+\end{figure}
 
-Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular. Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica y sumamente indeseable.
+Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica y sumamente indeseable.
 
-\keyword{Imagen de Hough fallando por cerrar ojos (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figuras/houghcerrado.png}
+    \caption{Fallo del algoritmo por oclusión}
+    \label{fig:houghcerrado}
+\end{figure}
 
 Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
 
-\keyword{Imagen de falsos positivos (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figuras/houghfalso.png}
+    \caption{Falso positivo con el método de círculos de Hough}
+    \label{fig:houghcerrado}
+\end{figure}
 
 Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real, por lo que esta solución queda definitivamente descartada.
 
@@ -602,7 +625,7 @@ A continuación se describen las tres etapas del método, que son la calibració
 
 \subsubsection{Calibración}
 
-El método requiere, como paso inicial, un proceso de calibración que proporcione las plantillas. Durante esta etapa se captura una imagen del ojo del alumno para cada una de las acciones posibles dentro de la interfaz. Para garantizar la estabilidad del algoritmo y reducir las confusiones entre plantillas, estas acciones se limitaron a seis. A continuación se detalla la plantilla que se obtiene para cada una.
+El método requiere, como paso inicial, un proceso de calibración que proporcione las plantillas. Durante esta etapa se captura una imagen del ojo del alumno para cada una de las acciones posibles dentro de la interfaz. Para garantizar la estabilidad del algoritmo y reducir las confusiones entre plantillas, estas acciones se limitaron a seis (Fig. \ref{fig:plantillas}). A continuación se detalla la plantilla que se obtiene para cada una.
 
 \begin{itemize}
 
@@ -620,7 +643,13 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \end{itemize}
 
-\keyword{Imagen de las seis plantillas (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{figuras/plantillas.png}
+    \caption{Plantillas para comparación}
+    \label{fig:plantillas}
+\end{figure}
+
 
 Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, donde se conservan mientras no se cierre la pestaña de la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
 
@@ -632,9 +661,15 @@ En segundo lugar, se eligió la resolución \emph{QVGA} (320x240) por ser un est
 
 Una vez seleccionado el formato de transmisión, la imagen se envía al navegador del dispositivo cliente a través de la red local. Allí se realiza todo el procesamiento de las imágenes.
 
-\keyword{Imagen del stream? (Natty)}
-
 Antes de la comparación, cada fotograma se acondiciona. Primero se recorta internamente a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/streamconcuadro.png}
+    \caption{Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}
+    \label{fig:streamconcuadro}
+\end{figure}
+
 
 Durante las pruebas también se observó un problema relacionado con la iluminación. El método de comparación tolera los cambios uniformes de luz ambiental, como se detalla más adelante. Sin embargo, las sombras que proyecta una fuente de luz externa inclinada dificultan el procesamiento, puesto que el bajo contraste impide a la cámara distinguir si la pupila realmente se está moviendo dentro de dicha sombra. Por este motivo, se volvió a incorporar el LED infrarrojo al diseño. Este LED proporciona una iluminación frontal uniforme sobre el ojo y evita la aparición de esas sombras.
 
@@ -650,9 +685,14 @@ El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si
 
 De la matriz de resultados de cada plantilla se toma el coeficiente más alto, que corresponde a la posición de mayor coincidencia. Este proceso se repite con las seis plantillas. La plantilla con el mayor de los seis valores indica la acción que realiza el alumno.
 
-En las pruebas también se detectaron falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para reducir este efecto se incorporó un umbral de similitud, por debajo del cual toda coincidencia se descarta. A partir de los ensayos, el umbral se fijó por defecto en un 80\%, y el usuario puede ajustarlo desde la interfaz web. Con esta medida, el problema quedó resuelto.
+En las pruebas también se detectaron falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para reducir este efecto se incorporó un umbral de similitud, por debajo del cual toda coincidencia se descarta. A partir de los ensayos, el umbral se fijó por defecto en un 80\%, y el usuario puede ajustarlo desde la interfaz web (Fig. \ref{fig:slider}). Con esta medida, el problema quedó resuelto.
 
-\keyword{Imagen del slider y el log indicando el mayor parecido (El texto verde que aparece abajo, Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/slider.png}
+    \caption{Video en vivo con el umbral de similitud}
+    \label{fig:slider}
+\end{figure}
 
 Tras numerosas evaluaciones, este método basado en la similitud de patrones resultó el más efectivo, estable y eficiente de los evaluados. Por lo tanto, es la solución implementada en el dispositivo final.
 
@@ -851,13 +891,18 @@ Por otro lado, el módulo de captura se encuentra en este último caso cada vez 
 
 Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde su navegador.
 
-El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene. Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
+El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene (Fig \ref{fig:acceso}). Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
 
 En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única (\emph{Single Page Application}). Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con esa misma página, que luego muestra la pantalla adecuada.
 
 El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que el módulo central entrega desde la tarjeta microSD. Debido a su tamaño, es el archivo más pesado que transmite el sistema. Por este motivo, el navegador lo guarda en su almacenamiento, de modo que en los accesos siguientes no vuelve a solicitarlo.
 
-\keyword{(Imagen del acceso a la aplicación) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/acceso.png}
+    \caption{Acceso a la aplicación desde un navegador en un dispositivo móvil}
+    \label{fig:acceso}
+\end{figure}
 
 \subsection{Transmisión de video}
 
@@ -866,8 +911,6 @@ El módulo de captura transmite el video mediante la técnica MJPEG, detallada e
 La cámara toma cada fotograma con una resolución de 320x240 píxeles y lo comprime en formato JPEG antes de enviarlo. Esta compresión la realiza el codificador por hardware que incorpora el sensor \emph{OV2640}, por lo que no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía los fotogramas de manera continua. Fuera de esas etapas, la aplicación cierra la conexión y la cámara deja de transmitir, por lo que no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo, la transmisión también se detiene hasta recibir una nueva solicitud.
-
-\keyword{(Imagen de la transmisión de video) (Natty)}
 
 \subsection{Comunicación con el módulo central}
 
@@ -1252,8 +1295,8 @@ Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección 
 \hline
 Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 \hline
-\emph{React} & 286 KB \\
-\emph{Preact} & 113 KB \\
+\emph{React} & 287 KB \\
+\emph{Preact} & 114 KB \\
 \hline
 \end{tabular}
 \caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
@@ -1264,6 +1307,8 @@ Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 
 El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (en el caso del alumno, únicamente en posición horizontal).
 
+
+
 \keyword{Imagen de un diagrama con la estructura interna}
 
 Los componentes se organizan de forma jerárquica: en la raíz se encuentra el componente principal que contiene a todas las pantallas. A su vez, algunas de ellas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios contiene el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene y es ella la que realiza la petición al servidor y actualiza la lista.
@@ -1273,6 +1318,8 @@ El componente principal actúa además como gestor de rutas. Según la direcció
 El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario (que el navegador guarda al iniciar sesión), y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
 
 Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente, que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
+
+Por último, se cuenta con un módulo independiente de paginación, utilizado para aumentar la eficiencia del sistema al momento de transmitir y desplegar información en listas. Esto se logra limitando la cantidad de elementos individuales que se pueden mostrar al mismo tiempo en pantalla. Estos límites y la segmentación de las páginas son definidos y controlados por el \emph{backend}.
 
 \subsubsection{Recepción de datos y ejecución del detector}
 
@@ -1322,7 +1369,12 @@ Son las pantallas a las que cualquier usuario puede ingresar sin importar su rol
 
 \end{itemize}
 
-\keyword{(Imágenes de las pantallas de inicio, inicio de sesión, registro, recuperación de contraseña e invitado)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figuras/pantallasacceso.png}
+    \caption{Pantallas y sub-pantallas de acceso}
+    \label{fig:pantallasacceso}
+\end{figure}
 
 \keyword{Pantalla del alumno}
 
@@ -1332,7 +1384,7 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 
 \item Menú: presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
 
-\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en caché, se mantiene viva mientras el dispositivo esté conectado a la red.
+\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en la memoria de sesión del navegador, se mantiene disponible mientras la pestaña permanezca abierta.
 
 \item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado, su número dentro del cuestionario y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En este último caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
@@ -1352,17 +1404,27 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva. No se requiere clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
 
-\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, el tutor puede eliminar a un profesor.
+\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, se otorga a los tutores la capacidad  para eliminar profesores. Esta es una de las dos pantallas que utiliza el componente de paginación, limitando la cantidad de usuarios máxima que se muestran por página (definido por el backend).
 
-\item Cuestionarios: para el profesor, presenta el listado de sus cuestionarios con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan según su estado actual. El botón de estado cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, la fecha se toma del dispositivo del profesor, ya que el módulo central no dispone de un reloj de tiempo real ni de acceso a internet para conocerla. El tutor, en cambio, ve los cuestionarios de todos los profesores, con la materia de cada uno, y solo puede revisarlos una vez finalizados.
+\item Cuestionarios: Se subdivide en tres vistas.
 
-\item Editor: exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse.
+\begin{itemize}
 
-\item Revisión: muestra el resultado de un cuestionario finalizado. Detalla para cada pregunta la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
+\item \emph{Listado}: para el profesor, presenta el listado de sus cuestionarios con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan o deshabilitan según su estado actual. El botón de estado solo cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, el sistema captura la hora del dispositivo del profesor para sincronizar el reloj interno del módulo central, ya que este carece de conexión a internet para obtener la hora de forma autónoma. El tutor, en cambio, ve los cuestionarios de todos los profesores, con la materia de cada uno, y solo puede revisarlos una vez finalizados. Ambas listas aplican el componente paginador, mostrando un límite máximo de cuestionarios por página.
+
+\item \emph{Editor}: exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse. Se incluye además un botón para cargar un cuestionario mediante un archivo JSON externo, en caso de que se quiera editar por fuera del sistema. 
+
+\item \emph{Revisión}: muestra el resultado de un cuestionario finalizado. Detalla para cada pregunta la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
+
+\end{itemize}
 
 \end{itemize}
 
 \keyword{(Imágenes de las pantallas principal, perfil, contactos, cuestionarios, editor y revisión, para ambos roles cuando corresponda)}
+
+\keyword{Editor externo}
+
+Se desarrolló como una alternativa para crear y editar cuestionarios por fuera del sistema principal. Consiste en una página web independiente cuyo único propósito es generar un archivo estructurado en formato JSON. Este archivo puede ser importado posteriormente por el profesor desde su panel. Su interfaz y funcionalidad son exactamente las mismas que las del editor original, pero, en lugar de guardar el cuestionario en el sistema, lo descarga directamente en el dispositivo del usuario. También permite cargar un archivo JSON previamente generado para retomar su edición.
 
 % ===== Texto original del Frontend (Facundo), comentado =====
 %El \emph{frontend} es la parte del código que se muestra ante el usuario. Su función es ser el intermediario entre el \emph{backend} (quien gestiona los datos y los permisos), y el usuario.
