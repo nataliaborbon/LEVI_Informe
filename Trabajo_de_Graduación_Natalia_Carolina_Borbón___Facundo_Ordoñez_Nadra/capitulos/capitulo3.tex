@@ -602,7 +602,7 @@ Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para q
     \centering
     \includegraphics[width=0.25\textwidth]{figuras/houghfalso.png}
     \caption{Falso positivo con el método de círculos de Hough}
-    \label{fig:houghcerrado}
+    \label{fig:houghfalso}
 \end{figure}
 
 Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real, por lo que esta solución queda definitivamente descartada.
@@ -653,7 +653,7 @@ Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de gris
 
 \subsubsection{Preprocesamiento de fotogramas}
 
-Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color. Esta configuración se debe a motivos técnicos y de rendimiento. En primer lugar, se transmite a color porque el compresor JPEG integrado por hardware en el microcontrolador requiere este formato para funcionar. Una imagen comprimida de este tipo resulta significativamente más liviana que una transmisión de píxeles crudos en escala de grises, lo que evita saturar el ancho de banda y mantiene una tasa fluida de fotogramas. Además, incluso si se transmitiera en escala de grises, el navegador web del cliente fuerza internamente la decodificación de las imágenes a un formato RGBA de 4 canales, por lo que este formato es imprescindible para transmitir.
+Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color. Esta configuración se debe a motivos técnicos y de rendimiento. En primer lugar, se transmite a color porque el codificador JPEG de la cámara requiere este formato para funcionar. Una imagen comprimida de este tipo resulta significativamente más liviana que una transmisión de píxeles crudos en escala de grises, lo que evita saturar el ancho de banda y mantiene una tasa fluida de fotogramas. Además, incluso si se transmitiera en escala de grises, el navegador web del cliente fuerza internamente la decodificación de las imágenes a un formato RGBA de 4 canales, por lo que este formato es imprescindible para transmitir.
 
 En segundo lugar, se eligió la resolución \emph{QVGA} (320x240) por ser un estándar del hardware de la cámara que resulta ideal. Una resolución mayor generaría fotogramas muy pesados que saturarían la red y reducirían la fluidez del video. Una menor perdería la nitidez necesaria para que el sistema reconozca la pupila correctamente. Cabe destacar que utilizar una resolución personalizada requeriría que el microcontrolador recorte y recomprima las imágenes por software. Este proceso ralentizaría drásticamente el sistema y arruinaría su eficiencia.
 
@@ -810,6 +810,8 @@ Por su parte, las placas de la familia \emph{ESP32} son compatibles con las bibl
 
 \subsection{Módulo de captura}
 
+\subsubsection{Placa}
+
 El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
 
 \begin{figure}[H]
@@ -842,6 +844,8 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
     \end{tabular}
 \end{table}
 
+\subsubsection{Cámara}
+
 Para seleccionar la cámara se tuvieron en cuenta dos criterios principales. Por un lado, se requería una resolución que permitiera trabajar con imágenes de 320x240 píxeles. Por otro lado, debía tener un campo de visión dentro del rango de entre 60 y 120 grados establecido con anterioridad. Para ello se contaba con múltiples posibilidades, entre ellas, la cámara que se adquiría junto a la compra de la \emph{ESP32-CAM}, que contaba con una resolución de 2 megapíxeles y un ángulo de visión de 68°.
 
 Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Sin embargo, adquirir cualquiera de estos modelos implicaría un costo adicional que las pequeñas ventajas expuestas no logran compensar. Por lo tanto, se concluye que el uso del modelo incluido por defecto resulta suficiente, siendo únicamente necesario retirarle el filtro infrarrojo de fábrica para que logre registrar la luz del LED IR.
@@ -854,16 +858,167 @@ Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, q
     \label{fig:ov2640}
 \end{figure}
 
+\subsubsection{Conexión de la cámara}
+
+La cámara \emph{OV2640} se conecta a la placa \emph{ESP32-CAM} mediante un conector \emph{flex} de 24 pines (Fig. \ref{fig:conexion_camara}). Por este conector, el microcontrolador y la cámara se comunican por dos vías, una interfaz paralela de 8 bits para los datos de cada imagen y el bus SCCB para la configuración. Como la cámara incorpora un codificador JPEG por hardware, puede entregar las imágenes ya comprimidas.
+
+El \emph{ESP32} no cuenta con una interfaz de cámara dedicada. Por este motivo, la lectura de los datos la realiza su periférico I2S, que admite un modo de entrada paralela. Este periférico guarda cada fotograma en la PSRAM mediante acceso directo a memoria (DMA), es decir, sin intervención del procesador. La siguiente tabla describe las señales que intervienen.
+
+\begin{table}[H]
+    \centering
+    \caption{Señales de conexión entre el \emph{ESP32} y la cámara \emph{OV2640}}
+    \label{tab:senales_camara}
+    \begin{tabular}{|l|l|p{0.45\textwidth}|}
+        \hline
+        \textbf{Señal} & \textbf{Conexión} & \textbf{Función} \\
+        \hline
+        D0 a D7 & Periférico I2S & Transportan los datos de cada imagen. \\
+        \hline
+        PCLK & Periférico I2S & Reloj de píxel. Indica en qué momento leer cada dato. \\
+        \hline
+        VSYNC & Periférico I2S & Sincronismo vertical. Marca el comienzo de cada fotograma. \\
+        \hline
+        HREF & Periférico I2S & Sincronismo horizontal. Marca el comienzo de cada línea. \\
+        \hline
+        SIOD y SIOC & Controlador I2C & Forman el bus SCCB, de dos hilos y similar al I2C. Permiten configurar la cámara, por ejemplo su resolución y su formato de salida. \\
+        \hline
+        XCLK & Generador PWM & Lleva la señal de reloj que el \emph{ESP32} genera para que la cámara funcione. \\
+        \hline
+        PWDN & Pin directo & Permite apagar la cámara. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{figuras/conexion_camara.pdf}
+    \caption{Conexión entre el \emph{ESP32} y la cámara \emph{OV2640} en la placa \emph{ESP32-CAM}}
+    \label{fig:conexion_camara}
+\end{figure}
+
 
 \subsection{Módulo central}
 
-El módulo central se implementa con la placa \emph{ESP32-2432S028R}, conocida como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Esta placa se basa en el módulo \emph{ESP32-WROOM-32}, con el \emph{ESP32} clásico, e integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD. Su costo es de entre 13 y 18 USD a octubre de 2026. Este chip resulta suficiente para las tareas del módulo central, ya que el procesamiento de las imágenes ocurre en el dispositivo del alumno. Por este motivo, no fue necesario recurrir a un microcontrolador más potente, como el \emph{ESP32-S3}.
+\subsubsection{Placa inicial}
+
+El módulo central se implementó inicialmente con la placa \emph{ESP32-2432S028R}, conocida como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Esta placa se basa en el módulo \emph{ESP32-WROOM-32}, con el \emph{ESP32} clásico, e integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD. Su costo es de entre 13 y 18 USD a octubre de 2026. En un principio, se consideró que los recursos de este chip serían suficientes para las tareas del módulo central, ya que el procesamiento de las imágenes ocurre en el dispositivo del alumno.
 
 El principal criterio de elección fue la ranura para tarjeta microSD. El módulo central almacena una base de datos que crece con el uso y aloja la biblioteca \emph{OpenCV.js}, cuyo tamaño excede la capacidad de la memoria flash. La microSD ofrece el espacio necesario para ambos archivos sin agregar componentes externos. Otro aspecto favorable es la versatilidad de almacenamiento de la placa, descrita en el mapa de memoria.
 
 La pantalla táctil, en cambio, no era imprescindible. Algunas de sus funciones, como la consulta del estado del sistema, podrían haberse implementado en la aplicación web. Sin embargo, la placa la incluye y la diferencia de precio con otros modelos \emph{ESP32} no es significativa. Por este motivo, se decidió aprovecharla como una funcionalidad adicional. Permite configurar datos de inicio y supervisar el estado del sistema directamente desde el módulo central.
 
-\keyword{Imagen de la plaquita negra?}
+La \emph{ESP32-CYD} se utilizó durante la mayor parte del desarrollo, y con ella se logró un sistema funcional, aunque de rendimiento limitado. En las etapas finales se encontró un modelo con mejores prestaciones, que pasó a ser la placa final del módulo central. El análisis de este cambio se presenta en el capítulo \ref{Chapter4}.
+
+\subsubsection{Placa final}
+
+La nueva placa es la \emph{ONX3248G035} (Fig. \ref{fig:onx3248g035}), de la línea \emph{Open Nextion} de la empresa \emph{ITEAD}. Se basa en el microcontrolador \emph{ESP32-S3}, con una memoria flash de 16 MB y una memoria PSRAM de 8 MB. Integra una pantalla táctil capacitiva de 3,5 pulgadas y una ranura para tarjeta microSD. También incorpora un circuito de carga para batería de litio, que se describe en la sección \ref{sec:alimentacion}. Su costo es de 25 USD a octubre de 2026.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figuras/onx3248g035.png}
+    \caption{Placa \emph{ONX3248G035} (vista frontal y trasera)}
+    \label{fig:onx3248g035}
+\end{figure}
+
+Este modelo conserva la pantalla táctil integrada, que fue el motivo para elegir una placa con pantalla en lugar de una \emph{ESP32-S3} sin ella. Además, a diferencia de la \emph{ESP32-CYD}, no es un modelo genérico, por lo que el fabricante ofrece documentación completa y de libre acceso, con esquemáticos, hojas de datos, modelo 3D y códigos de ejemplo.
+
+Una diferencia clave con la \emph{ESP32-CYD} es la memoria PSRAM, que resultó fundamental para mejorar el rendimiento del módulo central. La siguiente tabla compara las características principales de ambas placas.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparación de placas para el módulo central}
+    \label{tab:placas_central}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Característica} & \textbf{\emph{ESP32-CYD}} & \textbf{\emph{ONX3248G035}} \\
+        \hline
+        Microcontrolador & \emph{ESP32} clásico & \emph{ESP32-S3} \\
+        \hline
+        Memoria flash & 4 MB & 16 MB \\
+        \hline
+        Memoria PSRAM & No posee & 8 MB \\
+        \hline
+        Pantalla & 2,8", 240x320 (\emph{ILI9341}) & 3,5", 320x480 (\emph{ST7796}) \\
+        \hline
+        Panel táctil & Resistivo (\emph{XPT2046}) & Capacitivo (\emph{CST826}) \\
+        \hline
+        Circuito de carga & No posee & Integrado \\
+        \hline
+        Costo (oct. 2026) & 13 a 18 USD & 25 USD \\
+        \hline
+    \end{tabular}
+\end{table}
+
+El costo de la \emph{ONX3248G035} es mayor que el de la \emph{ESP32-CYD}. Sin embargo, la diferencia se justifica por sus mejores prestaciones.
+
+\subsubsection{Almacenamiento en microSD}
+
+Las tarjetas microSD admiten dos modos de comunicación, el modo SPI y el modo SD nativo. El \emph{ESP32-S3} cuenta con un controlador dedicado al modo nativo, llamado SD/MMC, que es el que se utiliza en este proyecto, al igual que en los ejemplos del fabricante. En la \emph{ONX3248G035}, la ranura tiene conectada al microcontrolador una sola línea de datos, por lo que el controlador trabaja en el modo de un bit. La siguiente tabla describe las líneas de la tarjeta que intervienen.
+
+\begin{table}[H]
+    \centering
+    \caption{Conexiones de la tarjeta microSD}
+    \label{tab:lineas_microsd}
+    \begin{tabular}{|l|l|p{0.45\textwidth}|}
+        \hline
+        \textbf{Línea} & \textbf{Conexión} & \textbf{Función} \\
+        \hline
+        CLK & Controlador SD/MMC & Lleva la señal de reloj. \\
+        \hline
+        CMD & Controlador SD/MMC & Transmite los comandos y sus respuestas. \\
+        \hline
+        D0 & Controlador SD/MMC & Transfiere los datos. \\
+        \hline
+        D3 & Expansor \emph{PCF8574} & Se mantiene en nivel alto, condición necesaria para que la tarjeta opere en modo nativo. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+El \emph{PCF8574} es un expansor de pines que agrega salidas al microcontrolador y se controla por el bus I2C.
+
+Al iniciar, el microcontrolador monta la tarjeta con el sistema de archivos FAT32, que es el formato de fábrica de las tarjetas de hasta 32 GB.
+
+\subsubsection{Pantalla y panel táctil}
+
+La pantalla de la \emph{ONX3248G035} es un panel TFT de 3,5 pulgadas, con una resolución de 320x480 píxeles y el controlador \emph{ST7796}. Recibe los comandos y la imagen por un bus SPI de solo escritura, ya que el microcontrolador no necesita leer datos de ella. Además, cuenta con dos líneas de control. La retroiluminación se enciende y se apaga desde un pin del microcontrolador. El reinicio, en cambio, lo genera el expansor \emph{PCF8574}, que el microcontrolador maneja por el bus I2C.
+
+El panel táctil es capacitivo y utiliza el controlador \emph{CST826}, que se comunica por el bus I2C. Por este bus, el microcontrolador consulta periódicamente si hubo un toque y, en ese caso, obtiene sus coordenadas. La siguiente tabla resume las conexiones de ambos.
+
+\begin{table}[H]
+    \centering
+    \caption{Conexiones de la pantalla y del panel táctil}
+    \label{tab:conexiones_pantalla}
+    \begin{tabular}{|l|l|p{0.45\textwidth}|}
+        \hline
+        \textbf{Línea} & \textbf{Conexión} & \textbf{Función} \\
+        \hline
+        SCLK & Bus SPI & Lleva la señal de reloj. \\
+        \hline
+        MOSI & Bus SPI & Transfiere los comandos y la imagen hacia la pantalla. \\
+        \hline
+        CS & Bus SPI & Habilita la comunicación con la pantalla. \\
+        \hline
+        DC & Bus SPI & Indica si lo que se envía es un comando o un dato de imagen. \\
+        \hline
+        BL & Pin del microcontrolador & Enciende y apaga la retroiluminación. \\
+        \hline
+        RST & Expansor \emph{PCF8574} & Reinicia el controlador de la pantalla al encender el módulo. \\
+        \hline
+        SDA & Bus I2C & Transfiere los datos del panel táctil. \\
+        \hline
+        SCL & Bus I2C & Lleva la señal de reloj. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La Fig. \ref{fig:conexiones_onx} reúne las conexiones de la pantalla, del panel táctil y de la tarjeta microSD con el microcontrolador.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figuras/conexiones_onx.pdf}
+    \caption{Conexiones de la placa \emph{ONX3248G035}}
+    \label{fig:conexiones_onx}
+\end{figure}
 
 \section{Red y comunicación}
 
@@ -904,7 +1059,7 @@ El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que e
 
 El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno.
 
-La cámara toma cada fotograma con una resolución de 320x240 píxeles y lo comprime en formato JPEG antes de enviarlo. Esta compresión la realiza el codificador por hardware que incorpora el sensor \emph{OV2640}, por lo que no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+La cámara opera con una señal de reloj de 10 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía los fotogramas de manera continua. Fuera de esas etapas, la aplicación cierra la conexión y la cámara deja de transmitir, por lo que no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo, la transmisión también se detiene hasta recibir una nueva solicitud.
 
@@ -1651,7 +1806,8 @@ Esta vista aparece solo cuando la NVS no contiene los datos de configuración, c
 %(Vista pantalla de booteo)
 
 
-\section{Alimentación} 
+\section{Alimentación}
+\label{sec:alimentacion}
 
 En esta sección se explicará acerca del sistema de alimentación autónomo utilizado en este trabajo. Se comenzará por nombrar los requisitos, expuestos en el capítulo 1, luego se expondrán algunas soluciones propuestas. Finalmente, se explorará en detalle el sistema elegido junto a su diseño en físico.
 
@@ -1782,7 +1938,7 @@ A continuación se muestra un resumen comparativo de los costos de cada alternat
 \begin{table}[H]
     \centering
     \caption{Análisis de costos de todos los métodos de alimentación propuestos (octubre 2026)}
-    \label{tab:costo_camaras}
+    \label{tab:costo_alimentacion}
     \begin{tabular}{|l|l|}
         \hline
         \textbf{Método propuesto} & \textbf{Costo} \\
