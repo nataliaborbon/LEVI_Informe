@@ -76,18 +76,18 @@
 \contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{60}{subsection.132}%
 \contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{60}{subsection.133}%
 \contentsline {subsection}{\numberline {3.7.3}Vistas}{61}{subsection.134}%
-\contentsline {section}{\numberline {3.8}Alimentación}{61}{section.135}%
-\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{62}{subsection.136}%
-\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{62}{subsection.137}%
-\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{65}{subsection.139}%
-\contentsline {subsubsection}{Recarga y protección}{65}{section*.140}%
-\contentsline {subsubsection}{Estabilización de voltaje}{69}{section*.153}%
-\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{74}{section*.164}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{74}{section.165}%
-\contentsline {subsection}{\numberline {3.9.1}Montaje}{74}{subsection.166}%
-\contentsline {subsubsection}{Conexiones y PCB}{75}{section*.167}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{77}{section.173}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{78}{chapter.174}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{78}{section.175}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{78}{section.176}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{79}{section.177}%
+\contentsline {section}{\numberline {3.8}Alimentación}{62}{section.137}%
+\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{62}{subsection.138}%
+\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{63}{subsection.139}%
+\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{67}{subsection.145}%
+\contentsline {subsubsection}{Recarga y protección}{67}{section*.146}%
+\contentsline {subsubsection}{Estabilización de voltaje}{70}{section*.158}%
+\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{73}{section*.165}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{74}{section.166}%
+\contentsline {subsection}{\numberline {3.9.1}Montaje}{74}{subsection.167}%
+\contentsline {subsubsection}{Conexiones y PCB}{74}{section*.168}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{77}{section.174}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{78}{chapter.175}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{78}{section.176}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{78}{section.177}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{79}{section.178}%

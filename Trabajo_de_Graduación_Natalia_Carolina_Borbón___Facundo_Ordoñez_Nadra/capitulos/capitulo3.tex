@@ -1565,7 +1565,7 @@ Para no ocupar al microcontrolador de forma innecesaria, cada dato se vuelve a d
 
 Al encender el equipo, la pantalla se inicia antes que la tarjeta microSD, la base de datos, la red y el servidor web. De esta forma, el usuario observa la interfaz desde los primeros instantes, mientras el resto del sistema termina de arrancar.
 
-Por otra parte, para reducir el consumo de la batería, la retroiluminación de la pantalla se apaga tras un minuto sin que se la toque. El primer toque posterior solo vuelve a encenderla sin activar ningún elemento de la interfaz, de modo que el usuario no ejecute una acción por accidente.
+Con el fin de aumentar la eficiencia energética del dispositivo, se implementó un sistema de suspensión. Tras un período establecido de inactividad, la pantalla desactiva por completo sus funcionalidades. Durante este estado de reposo, únicamente el controlador táctil permanece encendido, lo que permite al usuario reactivar el sistema en cualquier momento. Para evitar acciones involuntarias, este primer toque sirve exclusivamente para encender la pantalla, sin activar ningún elemento de la interfaz.
 
 \subsection{Vistas}
 
@@ -1575,13 +1575,23 @@ La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un conte
 
 Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
 
-\keyword{(Imagen de la vista de bienvenida)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/vistabienvenida.png}
+    \caption{Vista de bienvenida de la interfaz táctil}
+    \label{vistabienvenida}
+\end{figure}
 
 \keyword{Estado del sistema}
 
 Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
 
-\keyword{(Imágenes de la vista de estado del sistema, en distintas situaciones)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/vistaestado.png}
+    \caption{Vista de estado de la interfaz táctil}
+    \label{vistaestado}
+\end{figure}
 
 \keyword{Examen}
 
@@ -1653,195 +1663,215 @@ Esta vista aparece solo cuando la NVS no contiene los datos de configuración, c
 
 \section{Alimentación} 
 
-En esta sección se explicará acerca del sistema de alimentación autónomo utilizado en este trabajo. Se comenzará por nombrar los requisitos, expuestos en el capítulo 1, luego se expondrán algunas soluciones propuestas. Finalmente, se explorará en detalle el sistema elegido junto a su diseño en físico.
+En esta sección se detalla el sistema de alimentación autónomo del proyecto. Primero se repasan los requisitos establecidos en el Capítulo 1 y luego se presentan algunas soluciones propuestas. Finalmente, se explora en profundidad la solución elegida y su diseño físico.
 
 \subsection{Requisitos previos}
 
-Entre las premisas de este trabajo se estipuló que el dispositivo final debe ser inalámbrico y autosuficiente en términos de consumo energético al momento de utilizarlo. Siguiendo estos lineamientos, se opta por no alimentarlo utilizando cables y entradas USB-C o MicroUSB que se incluyen en los modelos comerciales de los microcontroladores utilizados, sino que se diseñará su propio sistema de alimentación utilizando fuentes de energía independientes de cualquier dispositivo externo al momento de uso. La solución general planteada para este problema recae en el uso de baterías de litio, una de las fuentes de energía inalámbrica más comunes en los dispositivos electrónicos de bajo consumo. A pesar de su precio relativamente elevado a comparación de las pilas comunes, tienen la particularidad de que son recargables, evitando así que el usuario tenga que comprar repuestos en el momento en que se agote la energía. 
+Entre las premisas del proyecto se estableció que el dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la alimentación directa mediante cables a través de los puertos USB integrados en los microcontroladores. En su lugar, se diseña un sistema propio a partir de fuentes de energía independientes.
 
-La alimentación a través de estas baterías permitirá un uso prolongado del dispositivo antes de necesitar una recarga y al mismo tiempo evita la necesidad de comprar pilas comunes para cada período de uso. La energía suministrada será moldeada por otros componentes electrónicos para obtener la salida continua y estable que requieren estos microcontroladores para funcionar correctamente. Cada placa (emisora de la gorra y CYD receptora) tendrá su propio circuito de alimentación independiente de la otra, para así evitar enlazar ambas partes del proyecto mediante un cable y poder mover a la CYD con la interfaz libremente. En esencia ambos circuitos serán exactamente iguales, pues se trata con dos microcontroladores que, para su uso en este contexto, requieren de la misma señal de alimentación.
+La solución adoptada se basa en el uso de baterías de litio, un estándar muy común en equipos electrónicos de bajo consumo. Aunque presentan un costo inicial más elevado, su capacidad de recarga evita que el usuario deba adquirir repuestos a corto plazo.
 
-Teniendo seleccionada la fuente de energía, se presentan otros dos problemas. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último se debe a que los \emph{ESP32} requieren una alimentación de 3,3 V o, en su defecto, de 5 V lo más estables posible, ya que una mala alimentación puede provocar mal funcionamiento, reinicios inesperados o destrucción del hardware.
+La energía suministrada por estas celdas requiere un acondicionamiento mediante otros componentes electrónicos. Esto garantiza la tensión continua y estable que exigen los microcontroladores. Cada módulo del sistema tendrá su propio circuito de alimentación independiente, para evitar enlazarlos mediante un cable y otorgar mayor libertad de movimiento. En esencia, ambos circuitos se diseñarán exactamente igual, puesto que los dos módulos utilizan el mismo chip.
 
-A continuación se analizarán cuatro alternativas para solucionar estos problemas (suponiendo que se utilizarán baterías de litio 18650 de 3000 mAh)
+Una vez definida la fuente de energía, surgen dos desafíos adicionales. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último resulta crítico, dado que el microcontrolador \emph{ESP32} opera con voltajes de 3,3 V o 5 V sumamente precisos. Una variación en este suministro puede provocar fallos de ejecución, reinicios inesperados o daños permanentes en el \emph{hardware}.
+
+A continuación se analizan cuatro alternativas para resolver estos inconvenientes, tomando como base el uso de baterías de litio en formato 18650 con una capacidad de 3000 mAh.
 
 \subsection{Soluciones propuestas}
 
 \keyword{1- Regulador lineal de tensión + Cargador de pilas externo}
 
-Consiste en alimentar el microcontrolador directamente desde la batería de litio a través de un portapilas (15,5 USD). A esto se le suma un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1117} (1,8 USD), para ajustar la tensión a 3,3 V estables. Para la recarga se emplearía un cargador comercial externo (5 USD), lo que implica extraer físicamente la batería del dispositivo para colocarla en la ranura y conectarla a la red.
+Esta opción consiste en conectar el microcontrolador directamente a la batería de litio mediante un portapilas (15,5 USD). A este circuito se le añade un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1117} (1,8 USD), para ajustar y estabilizar el voltaje en 3,3 V (Fig. \ref{fig:ams1117}). Para la recarga se utiliza un cargador comercial externo (5 USD). Este método obliga al usuario a extraer físicamente la batería del dispositivo para colocarla en la estación de carga conectada a la red eléctrica.
 
-(Imagen del LDO)
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figuras/ams1117.png}
+    \caption{Módulo comercial de un LDO con el chip AMS1117}
+    \label{fig:ams1117}
+\end{figure}
 
-Ventajas de esta solución:
+\textbf{Ventajas:}
 
 \begin{itemize}
 
-\item Mantenimiento práctico: los cargadores comerciales son componentes estándar y fáciles de conseguir en el mercado.
-
-\item Optimización de espacio: al requerir únicamente un portapilas, el regulador lineal y un par de capacitores de filtrado, se reduce considerablemente el espacio ocupado en una PCB.
-
-
+    \item \textbf{Mantenimiento práctico:} los cargadores comerciales son componentes estándar y fáciles de conseguir en el mercado.
+    
+    \item \textbf{Optimización de espacio:} el circuito requiere únicamente el portapilas, el regulador lineal y un par de capacitores de filtrado. Esta simplicidad reduce considerablemente el área ocupada en la placa de circuito impreso (PCB).
+    
 \end{itemize}
 
 
-Desventajas de esta solución:
-
+\textbf{Desventajas:}
 \begin{itemize}
 
-\item Ergonomía y desgaste mecánico: resulta impráctico para el usuario el tener que retirar la batería del dispositivo cada vez que se quiera recargar, además de que esto puede provocar desgaste mecánico con el tiempo.
-
-\item Descarga de la batería: una batería de litio estándar (como la \emph{18650}) de 3,7 V no entrega este valor continuo de tensión a lo largo del tiempo, sino que disminuye progresivamente hasta llegar a un piso mínimo de unos 3,0 V. Este valor es menor a los 3,3 V que necesita el microcontrolador, lo que significa que el dispositivo dejaría de funcionar mucho antes de que la batería se quede sin energía para dar. Se requiere hardware adicional para aumentar el valor de tensión cuando sea necesario y agregarlo invalida la ventaja de la optimización de espacio.
-
-\item Dropout: la función del regulador es estabilizar la tensión en 3,3 V. Sin embargo, estos integrados operan con transistores MOSFET en zona activa (es decir, actuando como resistencias variables), lo que implica inevitablemente que habrá una caída de voltaje entre la entrada y la salida. Esta caída se llama \emph{voltaje de dropout}, lo que significa que para tener 3,3 V estables a la salida, necesitaremos una tensión continua mayor que ese valor en la entrada, lo que reduce aún más el tiempo en el que se puede usar el dispositivo antes de que la batería se quede sin energía.
-
-\item Picos de corriente: el consumo de corriente de un microcontrolador es dinámico. Hay ocasiones, como al encender el Wi-Fi, en las que se exigen grandes transitorios o picos de corriente de hasta 500 mA. Por ley de ohm, al exigir más corriente al regulador, la caída de tensión de dropout por la resistencia del silicio se maximizará. Esto agrava el problema anteriormente mencionado, provocando caídas bruscas en la tensión de alimentación que disparan el detector de bajo voltaje (\emph{brownout detector}) del microcontrolador.
-
+    \item \textbf{Ergonomía y desgaste mecánico:} resulta incómodo para el usuario extraer la batería del dispositivo en cada ciclo de carga. Además, la fricción constante provoca desgaste físico con el tiempo.
+    
+    \item \textbf{Curva de descarga:} una batería de litio estándar (como la 18650 de 3,7 V) no entrega una tensión constante. Su voltaje disminuye progresivamente hasta alcanzar un umbral mínimo cercano a los 3,0 V. Como este valor es inferior a los 3,3 V que exige el microcontrolador, el sistema se apaga mucho antes de agotar la capacidad real de la celda. Solucionar esto requiere \emph{hardware} adicional para elevar la tensión, lo cual anula la ventaja del ahorro de espacio.
+    
+    \item \textbf{Tensión de \emph{dropout}:} aunque la función del LDO es estabilizar la salida en 3,3 V, su diseño interno emplea transistores MOSFET en zona activa, que operan como resistencias variables. Esto genera una caída de voltaje inevitable entre la entrada y la salida. Para obtener 3,3 V estables, el regulador exige un voltaje mayor en la entrada. Esta restricción reduce aún más la autonomía útil del dispositivo.
+    
+    \item \textbf{Picos de corriente:} el consumo del microcontrolador es dinámico. Procesos como la activación del Wi-Fi exigen picos de hasta 500 mA. Por la ley de Ohm, un mayor consumo de corriente maximiza la caída de tensión en el regulador. Este fenómeno agrava el problema anteriormente mencionado, y puede llevar a reinicios indeseados provocados por el detector de bajo voltaje (\emph{brownout detector}) del \emph{ESP32}.
+    
 \end{itemize}
 
 
 \keyword{2- Placa de alimentación (Módulo TP4056 + Módulo MT3608)}
 
-El módulo \emph{TP4056} (1,5 USD), es un circuito integrado utilizado para recargar baterías como las implementadas en este proyecto, mientras que el \emph{MT3608} (1,8 USD), es un módulo elevador de voltaje (boost) que entrega a la salida una señal muy estable del valor elegido por el diseñador. Si se interconectan ambos módulos se formaría un conjunto que cumpliría los requisitos de recarga y regulación, y se podría alimentar al \emph{ESP32} desde el pin de 5 voltios.
+El módulo \emph{TP4056} (1,5 USD) es un circuito integrado diseñado para recargar baterías de litio. Por su parte, el \emph{MT3608} (1,8 USD) es un convertidor elevador de tensión (\emph{boost}). Este componente transforma la energía de entrada en una señal de salida estable, cuyo valor final define el diseñador. Al interconectar ambos módulos, se crea un conjunto capaz de cumplir con los requisitos de recarga y regulación. De este modo, es posible alimentar el \emph{ESP32} directamente a través de su pin de 5 V.
 
-(Imagen de los modulos en cuestión)
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/tpymt.png}
+    \caption{Módulos de recarga (TP4056) y elevación de voltaje (MT3608)}
+    \label{fig:tpymt}
+\end{figure}
 
-Ventajas:
+\textbf{Ventajas:}
 
 \begin{itemize}
 
-\item Facilidad de mantenimiento: al ser dos circuitos separados, las fallas puntuales pueden repararse fácilmente utilizando un repuesto del módulo necesario sin alterar el sistema completo.
-
-\item Carga térmica distribuida: esta separación de tareas implica que la temperatura que alcance cada uno será independiente del otro y se distribuirá uniformemente a lo largo de la PCB.
-
-\item Sin dropout ni picos de corriente: el módulo \emph{MT3608} contiene un regulador switching, que utiliza transistores MOSFET en zona de corte y saturación, por lo que no hay caídas apreciables de tensión entre la entrada y la salida. A su vez, los picos de corriente pueden ser abastecidos por el ajuste automático del ciclo de trabajo del switch.
-
-\item Doble regulación de tensión: Al alimentar el \emph{ESP32} a través del pin de 5 V, éste utiliza el regulador integrado en su placa para reducirlos a 3,3 V aún más estables.
-
+    \item \textbf{Facilidad de reparación:} al tratarse de circuitos separados, las fallas puntuales se solucionan con el reemplazo exclusivo del módulo afectado. Esto evita alterar el resto del sistema.
+    
+    \item \textbf{Carga térmica distribuida:} la temperatura generada por cada circuito es independiente del otro. Esto permite una disipación de calor más uniforme a lo largo de la placa.
+    
+    \item \textbf{Ausencia de \emph{dropout} y soporte para picos de corriente:} el \emph{MT3608} integra un regulador conmutado (\emph{switching}). Este circuito opera con transistores MOSFET en sus zonas de corte y saturación. En consecuencia, elimina las caídas apreciables de tensión entre la entrada y la salida. A su vez, el sistema compensa los picos dinámicos de corriente mediante el ajuste automático del ciclo de trabajo del interruptor interno.
+    
+    \item \textbf{Doble regulación de tensión:} al ingresar 5 V por el pin correspondiente, el \emph{ESP32} emplea su propio regulador interno para reducir la tensión a 3,3 V. Esto añade una capa extra de filtrado y estabilidad.
+    
 \end{itemize}
 
-Desventajas:
+\textbf{Desventajas:}
 
 \begin{itemize}
 
-\item Mantenimiento impráctico: A pesar de que las reparaciones son sencillas y baratas, los módulos mencionados sólo pueden conseguirse en casas especializadas en electrónica.
-
-\item Menor optimización del espacio: Al tener dos módulos distintos se requiere una PCB más espaciosa para contenerlos.
-
-\item Pérdida de eficiencia: La ventaja de la doble regulación implica inevitablemente una pérdida de eficiencia. La energía sufre dos conversiones (de la batería a los 5 V y de los 5 V a los 3,3 V en el regulador interno del \emph{ESP32}), lo que aumenta la disipación térmica.
-
+    \item \textbf{Disponibilidad de componentes:} aunque las reparaciones resultan económicas, estos módulos no son artículos de consumo masivo. Solo se consiguen en tiendas especializadas en electrónica.
+    
+    \item \textbf{Mayor requerimiento de espacio:} la integración de dos componentes independientes exige un circuito impreso más amplio para alojarlos.
+    
+    \item \textbf{Pérdida de eficiencia energética:} la doble regulación conlleva una desventaja inherente. La energía atraviesa dos etapas de conversión: primero se eleva desde la tensión de la batería hasta los 5 V, y luego se reduce a 3,3 V dentro del \emph{ESP32}. Este proceso incrementa el consumo total de energía y genera una mayor disipación térmica.
+    
 \end{itemize}
 
 \keyword{3- Regulador Buck-Boost}
 
-Se podría pensar que para evitar esa pérdida de eficiencia con el \emph{MT3608} y alimentar al microcontrolador con 3,3 V se pudiera utilizar un regulador Buck-Boost, como el \emph{XL6009} (3,0 USD), en lugar del elevador Boost para alimentarlo a 5 V. Pero la ventaja de la eficiencia contrasta con el ligero aumento del costo y la complejidad del circuito. Además, revisando la hoja de datos, se observa que este regulador funciona con una tensión nominal de entrada de 5 V, mayor a la que la batería puede suministrar. 
+Para evitar la pérdida de eficiencia que presenta la doble regulación del método anterior, una solución aparente consiste en emplear un regulador \emph{Buck-Boost}, como el módulo \emph{XL6009} (3,0 USD) ilustrado en la figura \ref{fig:xl6009}. Este dispositivo permite entregar 3,3 V directos, lo que omite la necesidad de alimentar el microcontrolador con 5 V. No obstante, la ganancia teórica en eficiencia trae consigo un aumento en el costo económico y en la complejidad del circuito. Además, el análisis de su hoja de datos revela que este componente exige una tensión de entrada nominal de al menos 5 V, un valor que supera la capacidad de suministro directo de una batería de litio.
 
-La frecuencia de llaveo es otra desventaja. A diferencia del módulo MT3608 que conmuta a 1.2 MHz, éste lo hace a 400 kHz, lo cual puede generar tensión de ripple o rizado a la salida mucho mayor. Esto es sumamente indeseable para alimentar un servidor Wi-Fi y una cámara que debe transmitir en vivo, y suprimirlo requeriría colocar capacitores de mayor valor. 
+La frecuencia de conmutación (o llaveo) representa otro inconveniente significativo. A diferencia del módulo \emph{MT3608}, que opera a 1,2 MHz, el \emph{XL6009} trabaja a tan solo 400 kHz. Esta menor velocidad de conmutación genera un rizado de tensión (\emph{ripple}) mucho más pronunciado a la salida. Una señal de alimentación con alto nivel de ruido eléctrico resulta sumamente perjudicial para la estabilidad de un servidor Wi-Fi y de una cámara con transmisión de video en tiempo real. Mitigar este defecto obliga a incorporar capacitores de filtrado de gran tamaño, lo cual compromete de nuevo la optimización del espacio físico.
 
-(Imagen del BuckBoost)
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.35\textwidth]{figuras/xl6009.png}
+    \caption{Módulo Buck-Boost basado en el chip XL6009}
+    \label{fig:xl6009}
+\end{figure}
 
-\keyword{4- Integrado \emph{Power Bank} todo en uno}
-El integrado \emph{IP5306} (4,5 USD) cumple la misma función que la placa de alimentación utilizando un solo chip integrado que realiza internamente el proceso de carga y de regulación de tensión.
+\keyword{Alternativa 4: Módulo integrado tipo \emph{Power Bank} (IP5306)}
 
-(Imagen del IP5306)
+El integrado \emph{IP5306} (4,5 USD), ilustrado en la figura \ref{fig:ip5306}, cumple la misma función que la placa de alimentación mixta analizada en la segunda alternativa. Emplea un único chip que gestiona de manera interna tanto la recarga de la celda de litio como la regulación de la tensión de salida a 5 V.
 
-Ventajas:
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figuras/ip5306.png}
+    \caption{Módulo de gestión de energía basado en el chip IP5306}
+    \label{fig:ip5306}
+\end{figure}
+
+\textbf{Ventajas:}
 
 \begin{itemize}
 
-\item Optimización del espacio en PCB al ser un solo módulo.
-
-\item Regulación conmutada: Al igual que los elevadores y reductores, funcionan con transistores en zona de corte y saturación, evitando el problema del dropout y los picos de corriente.
-
-\item Carga y uso simultáneo.
-
+    \item \textbf{Optimización del espacio:} al concentrar todo el sistema de energía en un solo componente, se reduce drásticamente la huella física en la placa de circuito impreso (PCB).
+    
+    \item \textbf{Regulación conmutada:} opera con transistores en las zonas de corte y saturación. Esta arquitectura elimina el problema de la caída de tensión (\emph{dropout}) y soporta los picos de corriente dinámica sin inconvenientes.
+    
+    \item \textbf{Uso simultáneo:} permite alimentar el dispositivo al mismo tiempo que la batería recibe carga eléctrica externa.
+    
 \end{itemize}
 
-Desventajas:
+\textbf{Desventajas:}
 
 \begin{itemize}
 
-\item Mantenimiento impráctico, por la dificultad agregada de conseguir los repuestos.
-
-\item Pérdida de eficiencia por usar doble regulación.
-
-\item Carga térmica: al ser un solo chip el que hace la tarea de carga de batería y regulación de voltaje, todo el calor disipado se acumulará en un único punto del dispositivo, lo que influirá negativamente en el funcionamiento del mismo.
-
-\item No es modular: si se produjera una falla en cualquier parte del sistema, inevitablemente habría que comprar el repuesto completo del chip, lo cual es más costoso y complicado que comprar los repuestos separados de los módulos anteriormente vistos.
-
-\item Ripple en la señal de salida: al estar diseñados para cargar celulares conectándose a un PMIC interno, los chips \emph{IP5306} conmutan a mucha menor frecuencia (entre 300 y 500 kHz) que el módulo \emph{MT3608}, por ejemplo. Al igual que con el XL6009, se requeriría mucha capacitancia para suprimirlo lo suficiente. 
-
+    \item \textbf{Disponibilidad local:} a diferencia de los módulos genéricos, conseguir componentes de reemplazo para este chip en particular resulta más complejo.
+    
+    \item \textbf{Pérdida de eficiencia:} como la salida es de 5 V, requiere que el regulador interno del microcontrolador ejecute una segunda etapa de conversión a 3,3 V.
+    
+    \item \textbf{Concentración térmica:} dado que un único encapsulado realiza los esfuerzos de carga y de elevación de voltaje, el calor disipado se acumula en un solo punto geométrico. Esta carga térmica puntual afecta negativamente el rendimiento y la vida útil de la placa.
+    
+    \item \textbf{Falta de modularidad:} ante una falla en cualquiera de sus subcircuitos (ya sea en la etapa de carga o en el elevador), resulta obligatorio reemplazar el componente completo.
+    
+    \item \textbf{Rizado en la salida (\emph{ripple}):} los chips como el \emph{IP5306} están diseñados para recargar teléfonos celulares, los cuales poseen gestores de energía internos (PMIC) que filtran impurezas. Por ello, conmutan a frecuencias relativamente bajas (entre 300 y 500 kHz). Esto inyecta ruido eléctrico en la línea de alimentación. Atenuar este rizado para no afectar al Wi-Fi exige instalar capacitores adicionales, lo cual contrarresta la ventaja del ahorro de espacio.
+    
 \end{itemize}
 
-Para solucionar el problema del ripple, se podría utilizar directamente un PMIC industrial, pero su elevado costo y la complejidad de soldadura de sus encapsulados lo vuelven inviable para este prototipo. 
+Para erradicar el problema del rizado desde su origen, existe la opción de instalar un PMIC de grado industrial directamente en el diseño. Sin embargo, su elevado costo y la complejidad de la soldadura de sus encapsulados vuelven inviable esta alternativa para la construcción del presente prototipo.
 
-\keyword{Análisis de mercado}
+\keyword{Análisis comparativo de costos}
 
-A continuación se muestra un resumen comparativo de los costos de cada alternativa, suponiendo que las baterías utilizadas son baterías de litio de 3000 mAh y sin tener en cuenta costos menores (como borneras, botones, LEDs, etc.).
+A continuación se presenta un resumen de los costos de cada alternativa. El cálculo se realiza suponiendo que se utilizan baterías de litio 18650 de 3000 mAh, y excluye componentes menores de ensamble (como borneras, pulsadores o diodos LED).
 
 \begin{table}[H]
     \centering
-    \caption{Análisis de costos de todos los métodos de alimentación propuestos (octubre 2026)}
-    \label{tab:costo_camaras}
+    \caption{Análisis de costos de los métodos de alimentación propuestos (octubre 2026)}
+    \label{tab:costo_alimentacion}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Método propuesto} & \textbf{Costo} \\
+        \textbf{Método propuesto} & \textbf{Costo total} \\
         \hline
- 	     Batería de Litio + LDO + Cargador externo & 22,3 USD \\
+        LDO + Cargador externo & 22,30 USD \\
         \hline
-        Regulador switching + Elevador & 18,8 USD  \\
+        Módulo de carga + Elevador (\emph{Boost}) & 18,80 USD  \\
         \hline
-        Regulador Buck-Boost & 20 USD  \\
+        Módulo de carga + Regulador \emph{Buck-Boost} & 20,00 USD  \\
         \hline
-        Power Bank & 20 USD \\
+        \emph{Power Bank} integrado & 20,00 USD \\
         \hline
     \end{tabular}
 \end{table}
 
-Como podemos observar, todas las alterativas evaluadas rondan los 20 USD, siendo la batería de litio el componente más costoso (un 75\% del precio final). Es por esto que el criterio económico no fue considerado como prioritario a la hora de elegir una solución definitiva.
+Como se observa en la tabla, todas las alternativas evaluadas promedian los 20 USD. La celda de litio representa el componente de mayor valor, abarcando aproximadamente el 75 \% del precio final. Por este motivo, el criterio económico se descarta como factor prioritario a la hora de elegir una solución definitiva. La decisión recae de forma exclusiva sobre la eficiencia técnica y la estabilidad del circuito.
 
 \keyword{Veredicto final}
 
-La primera alternativa se descartó por la baja eficiencia de los reguladores lineales, que podrían sencillamente ser reemplazados por reguladores switching sin mucha pérdida económica ni dificultad agregada.
+La primera alternativa se descarta debido a la baja eficiencia de los reguladores lineales, los cuales pueden reemplazarse por reguladores conmutados (\emph{switching}) sin representar una pérdida económica significativa ni añadir dificultad al diseño.
 
-Tanto la tercera como la cuarta alternativa se descartaron debido a la tensión de rizado que generan a la salida, la cual es mucho mayor que el resto y requiere mas costos adicionales para filtrarla.
+Tanto la tercera como la cuarta alternativa se desestiman por la excesiva tensión de rizado que generan en su salida. Atenuar este nivel de ruido exige instalar componentes adicionales, lo cual incrementa el costo y el tamaño físico del circuito.
 
-Por lo tanto, en una búsqueda del equilibro entre eficiencia, sencillez y estabilidad de tensión de salida es que se opta por la segunda alternativa: el regulador TP4056 y el elevador MT3608
+Por lo tanto, en la búsqueda de un equilibrio óptimo entre eficiencia, simplicidad y estabilidad de señal, se opta por la segunda alternativa: el sistema compuesto por el módulo de carga \emph{TP4056} y el elevador de tensión \emph{MT3608}.
 
 \subsection{Descripción detallada del sistema elegido}
 
-El primer circuito integrado que utilizaremos es el chip \emph{TP4056}, cuyo datasheet lo describe como un cargador lineal de corriente constante/tensión constante completo para baterías Li-ion de una sola celda. Este chip toma energía de una fuente externa y la adapta para recargar la batería. La energía que proveen estas baterías de larga duración suele ser de 3,7 voltios. Por lo tanto, para adecuar y estabilizar este nivel de tensión se utiliza otro circuito integrado fundamental: el \emph{MT3608}; el cual, en términos sencillos, se trata de un circuito elevador boost que en la salida entrega una señal continua y estable según el ajuste que realice el diseñador. Esa salida irá directamente conectada a la entrada de 5 voltios de la placa \emph{ESP32}.
+El módulo \emph{TP4056} actúa como un cargador lineal de corriente y tensión constantes, diseñado de manera específica para celdas de litio individuales. Este circuito integrado toma la energía de una fuente externa y la acondiciona para efectuar la recarga de la batería de forma segura.
 
-El funcionamiento en detalle de estos integrados y sus módulos comerciales serán descritos en las siguientes secciones.
+Por su parte, estas baterías suministran una tensión nominal de 3,7 V. Para elevar y estabilizar este nivel, el sistema incorpora el módulo \emph{MT3608}. Este convertidor elevador (\emph{boost}) entrega una señal de salida continua, cuyo valor final depende del ajuste que realice el diseñador. Esta salida se conecta de forma directa al pin de 5 V de la placa \emph{ESP32}.
 
+El funcionamiento detallado de estos circuitos integrados y de sus respectivos módulos comerciales se describe en los apartados siguientes.
 
 \subsubsection{Recarga y protección}
 
-Como se expuso con anterioridad, el chip \emph{TP4056} sirve para cargar una única celda de baterías de litio y lo hace en un ciclo de dos fases.
+El proceso de carga del módulo \emph{TP4056} se desarrolla en un ciclo de dos fases.
 
-En primera instancia carga la batería a corriente constante, es decir, le inyecta un valor fijo de corriente elegida por el diseñador para que la carga comience siendo rápida. Al mismo tiempo, el chip mide constantemente el voltaje de la batería, y cuando llega a los 4,2 V comienza la fase de carga con voltaje constante, y permite a la propia batería que absorba la corriente necesaria para no destruirse. Si toda la carga fuera a corriente constante, se le inyectaría más energía de la que puede soportar y acabaría destruyéndose. Por el contrario, si toda la carga fuese a voltaje constante, el proceso llevaría demasiado tiempo, lo cual es poco práctico para la experiencia de usuario. Es por eso que este integrado oscila automáticamente entre esos dos modos.
+En una primera etapa, el circuito carga la batería a corriente constante. Esto significa que inyecta un valor fijo, predefinido por el diseñador, para que la carga inicie rápida. De manera simultánea, el chip monitorea el voltaje de la celda. Al alcanzar los 4,2 V, inicia la fase de voltaje constante. En este punto, el sistema permite que la batería absorba solo la corriente necesaria para evitar daños físicos. Si el proceso operara siempre a corriente constante, la celda recibiría un exceso de energía que terminaría por destruirla. Por el contrario, un suministro exclusivo a voltaje constante prolonga la carga de forma excesiva, lo cual resulta poco práctico. Para resolver este problema, el integrado alterna de forma automática entre ambos modos.
 
-Por otra parte, el \emph{TP4056} está diseñado para detener la carga en la fase de voltaje constante, cuando la corriente absorbida por la batería sea inferior a una décima del valor programado por el usuario, lo cual evita sobrecargarla.
+Además, el \emph{TP4056} detiene el suministro durante la fase de voltaje constante cuando la corriente absorbida decae por debajo del 10 \% del valor programado. Esta medida evita la sobrecarga de la celda.
 
-Para resumir, sus características más relevantes son:
+En resumen, sus características más relevantes son:
 
 \begin{itemize}
-
-\item Corriente de carga programable hasta 1000 mA.
-\item Operación dinámica entre corriente constante y voltaje constante.
-\item Carga hasta un valor fijo de 4,2 V.
-\item Fin de carga automático.
-\item UVLO.
-\item Umbral de carga lenta.
-\item Arranque suave de corriente.
-
+    \item Corriente de carga programable hasta 1000 mA.
+    \item Operación dinámica entre corriente constante y voltaje constante.
+    \item Carga máxima hasta un valor fijo de 4,2 V.
+    \item Fin de carga automático.
+    \item UVLO (Bloqueo por bajo voltaje).
+    \item Umbral de carga lenta.
+    \item Arranque suave de corriente.
 \end{itemize}
 
-UVLO (\emph{Under Voltage Lockout} / Bloqueo por bajo voltaje): Es una funcionalidad del chip que permite que cuando se introduzca una alimentación mala o inestable, la carga se bloquee para evitar que el proceso dañe la pila o los circuitos.
+\textbf{UVLO (\emph{Under Voltage Lockout}):} Es una función de seguridad que bloquea la carga si se introduce una alimentación inestable o insuficiente. Así, previene daños tanto en la batería como en los circuitos internos.
 
-Umbral de carga lenta: Para evitar sobrecargar una batería en mal estado (con voltaje inferior a 3,0), el \emph{TP4056} entra en modo \emph{carga lenta}, enviando solo el 10\% de la corriente programada hasta que supere el umbral. Luego de eso la carga procede con normalidad.
+\textbf{Umbral de carga lenta:} Si la batería presenta un voltaje inferior a 3,0 V, el \emph{TP4056} activa el modo de carga lenta. En este estado, envía solo el 10 \% de la corriente programada hasta superar dicho umbral. Esto se hace para evitar sobrecargar una batería en mal estado. Tras alcanzar un nivel seguro, el proceso continúa de forma normal.
 
-Arranque suave de corriente: Es una medida de protección a la fuente externa. Garantiza que al enchufar el circuito a la misma, la absorción de corriente no sea tan brusca, sino que aumente gradualmente con el tiempo para evitar daños.
+\textbf{Arranque suave de corriente:} Constituye una medida de protección ante la fuente externa. Al conectar el circuito, la absorción de corriente no ocurre de forma brusca, sino que aumenta de manera gradual para evitar picos que dañen los componentes.
 
 Su diagrama de pines es el siguiente:
 
@@ -1855,9 +1885,9 @@ Su diagrama de pines es el siguiente:
 
 \begin{enumerate}
 
-\item TEMP: Entrada de sensor de temperatura. Sirve para monitorear la temperatura de la pila al momento de la carga mediante un termistor externo. Debido al uso que se le va a dar en este proyecto y a la presencia de otros circuitos de protección, se opta por prescindir de su uso.
+\item TEMP: Entrada de sensor de temperatura. No se utiliza en el desarrollo de este prototipo.
 
-\item PROG: Entrada de programación de corriente de carga. A este pin se le debe conectar una resistencia denotada como \emph{RPROG} para establecer el valor de la corriente de carga. El valor esta se calcula con la siguiente fórmula:
+\item PROG: Entrada de programación de corriente de carga. A este pin se le debe conectar una resistencia denotada como \emph{RPROG} para establecer el valor de la corriente de carga, calculado como:
 
 \begin{equation}
 Rprog = 1200*Ibat
@@ -1869,130 +1899,101 @@ Donde \emph{Ibat} es la corriente en miliamperios elegida por el diseñador, con
 
 \item VCC: Entrada de alimentación externa.
 
-\item BAT: Salida que se conecta al terminal positivo de la pila. Le brinda la corriente necesaria y regula el voltaje a 4,2 V.
+\item BAT: Salida que se conecta al terminal positivo de la pila.
 
 \item STDBY: Salida en alta impedancia que se vuelve nula cuando la carga está completa.
 
 \item CHRG: Salida en alta impedancia que se vuelve nula mientras la pila se está cargando.
 
-\item CE: Habilitación del chip. Conectándolo a un 0 lógico se bloquean todas las funcionalidades del chip (Modo \emph{shutdown}).
+\item CE: Habilitación del chip.
 
 \end{enumerate}
 
-En el siguiente gráfico se ilustran las fases de corriente constante y voltaje constante descritas anteriormente:
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/tp4056grafico.png}
-    \caption{Corriente vs voltaje de carga}
-    \label{fig:tp4056grafico}
-\end{figure}
-
-Con un voltaje menor a 4,2 V, se programó en ese caso una corriente de 800 mA. El ciclo comienza con un aumento gradual de la corriente hasta llegar a ese valor programado. El voltaje mientras tanto va aumentando, y al llegar a los 4,2 V la corriente disminuye hasta finalizar la carga.
-
-Se explica a continuación un circuito de uso típico con este chip, correspondiente al módulo que se encuentra comercialmente en las casas de electrónica y se utiliza en este proyecto:
+A continuación se detalla el circuito de aplicación típico de este chip. Este esquema corresponde al módulo comercial estándar empleado en el presente proyecto:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/tp4056placa.png}
-    \caption{Circuito típico de aplicación del \emph{TP4056}}
+    \includegraphics[width=0.8\textwidth]{figuras/tp4056placa.png}
+    \caption{Circuito típico de aplicación comercial del \emph{TP4056}}
     \label{fig:tp4056placa}
 \end{figure}
 
-Lo primero que se puede notar es un puente entre la entrada CE y VCC, esto es debido a que para este uso práctico no se requiere deshabilitar el chip manualmente. Se observa también un capacitor C4 utilizado para drenar el ruido de la entrada
+En primer lugar, se observa un puente directo entre los pines CE y VCC. Esta conexión se justifica porque el diseño no requiere deshabilitar el integrado en ningún momento. Además, la entrada incorpora un capacitor (C4) para drenar el ruido eléctrico proveniente de la fuente de alimentación.
 
-En las salidas CHRG y STDBY están conectados los cátodos de dos diodos LED. Uno verde para STDBY y uno rojo para el CHRG. Estos son LEDs indicadores que informan al usuario en qué estado se encuentra la carga.
+Por otro lado, los cátodos de dos diodos LED se enlazan a las salidas CHRG y STDBY. El esquema comercial emplea un indicador rojo para el primer pin y uno verde para el segundo. Estos componentes visuales le informan al usuario el estado exacto del proceso de recarga.
 
-En el pin PROG se conecta una resistencia RPROG (o R3 en el diagrama) de 1.2 kΩ, que es el valor por defecto comercialmente, lo que implica una corriente de carga programada de 1 A, y una corriente de corte de 100 mA.
+En el pin PROG se instala una resistencia $R_{prog}$ (identificada como R3 en el diagrama) de 1,2 k$\Omega$. Este es el valor configurado por defecto de fábrica y establece una corriente de carga programada de 1 A, junto con una corriente de corte de 100 mA.
 
-El pin de sensor de temperatura se conectará a GND ya que no se utiliza, al igual que el pin 9 (EP), que sirve para disipación.
+El pin TEMP (sensor de temperatura) se acopla directamente a tierra (GND) debido a que esta función permanece inactiva. Lo mismo ocurre con el pin 9 (EP), destinado a la disipación térmica del encapsulado.
 
-El pin 5 (BAT), no va conectado únicamente a la pila, sino que además pasa por un capacitor de desacople (C1) y por otros dos integrados que también se incluyen en el módulo: El \emph{DW01A} y el \emph{FS8205A}. 
+La salida de energía del pin BAT no se vincula de forma exclusiva a la batería. Se enlaza primero a un capacitor de desacople (C1) y se conecta con otros dos circuitos integrados de protección incluidos en la placa: el \emph{DW01A} y el \emph{FS8205A}.
 
-El \emph{DW01A} es un monitor del voltaje y corriente de la batería. Si nota que su tensión es inferior o superior a lo esperado, o detecta algún cortocircuito, le informa al \emph{FS8205A} mediante los pines CHRGGT y DSCHRGGT, para que este último actúe desconectando físicamente la pila del circuito mediante el pin B-.
+El chip \emph{DW01A} opera como un monitor constante de voltaje y corriente. Si registra una tensión fuera de los márgenes seguros o detecta un cortocircuito, envía una alerta al \emph{FS8205A} a través de los pines CHRGGT y DSCHRGGT. Al recibir esta señal, este segundo integrado desconecta físicamente la celda del resto del circuito.
 
-En condiciones normales, la batería se conecta, mediante los terminales B+ y B-, al pin BAT y a GND respectivamente. Si el integrado \emph{FS8205A} actúa, se abre un MOSFET aislando el terminal B- de GND y por lo tanto abriendo el circuito de carga.
+En condiciones normales de operación, la batería se acopla mediante los terminales B+ y B- al pin BAT y a GND respectivamente. Cuando el sistema de protección interviene, los transistores MOSFET internos del \emph{FS8205A} se abren. Esto aísla el terminal B- de la tierra (GND) y, por lo tanto, interrumpe por completo el flujo de energía. Finalmente, las terminales OUT+ y OUT- derivan la alimentación segura hacia la siguiente etapa del sistema.
+
 
 \subsubsection{Estabilización de voltaje}
 
-El chip \emph{MT3608} es un circuito \emph{Convertidor Step-up de alta eficiencia}. O más coloquialmente conocido como \emph{Elevador de tensión}. Su función es complementarse con un circuito externo típicamente conocido como \emph{Elevador boost} para tomar un determinado valor de voltaje a la entrada y obtener a su salida un valor más grande y más estable, acondicionado para alimentar el microcontrolador.
+El chip \emph{MT3608} es un convertidor \emph{step-up} de alta eficiencia, comúnmente denominado elevador de tensión. Su función consiste en acoplarse con componentes externos para conformar un circuito \emph{boost}. Este conjunto toma el voltaje de entrada y entrega en su salida un valor mayor y estrictamente regulado, ideal para alimentar el microcontrolador de forma segura.
 
-Para explicar sus características, se comienza por exponer la funcionalidad de un circuito boost mostrado a continuación:
+Para comprender sus características, resulta útil repasar la arquitectura básica de un circuito elevador:
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/boost.png}
-    \caption{Circuito elevador Boost}
+    \caption{Arquitectura básica de un circuito elevador \emph{Boost}}
     \label{fig:boost}
 \end{figure}
 
-Este circuito es el típico que se utiliza para las fuentes de tensión tipo \emph{switching}. En este caso particular, la tensión continua de la entrada es la salida de la batería de litio, que oscila entre 3,0 y 3,7 V. Esta señal pasa por un conjunto de una bobina, un diodo, un capacitor y un switch que se abre y cierra intermitentemente para brindar a la salida el valor deseado. Para ello se aprovechan los transitorios de la bobina en los primeros instantes en que esta llave se abre y cierra.
+Este esquema representa el circuito clásico de las fuentes conmutadas (\emph{switching}). En este caso particular, la entrada recibe la tensión continua de la celda de litio (conectada a los terminales OUT+ y OUT- del módulo \emph{TP4056} en condiciones normales), cuyo valor oscila entre 3,0 y 3,7 V. Esta señal atraviesa una red compuesta por un inductor (bobina), un diodo, un capacitor y un interruptor que se abre y cierra de forma intermitente. El sistema aprovecha los picos de tensión transitorios que genera la bobina en cada ciclo de conmutación para elevar el voltaje final.
 
-Cuando la llave se cierra, la bobina comienza a cargarse con la energía de la pila, y la tensión a la salida es igual a la tensión previamente almacenada en el capacitor, el cual no puede descargarse en el cortocircuito debido a la presencia del diodo D, que se polariza en inversa y causa que toda la corriente vaya desde el capacitor hacia la carga.
-
-Cuando la llave se abre, la bobina se descarga y cambia su polaridad, enviando corriente a través del diodo, cargando el capacitor y otorgando un valor de tensión a la salida igual a la suma de las tensiones de entrada y de la bobina. 
-
-La tensión de la bobina cuando la llave se abre, y por consecuencia la tensión del capacitor cuando la llave se cierra, dependen de los tiempos del llaveo, más específicamente del ciclo de trabajo o \emph{duty cycle}:
+El valor exacto de esta elevación depende estrictamente de los tiempos de apertura y cierre del interruptor, es decir, del ciclo de trabajo (\emph{duty cycle}):
 
 \begin{equation}
-Duty Cycle = ton/(ton + toff)
+    D = \frac{t_{on}}{t_{on} + t_{off}}
 \end{equation}
 
-Este ciclo de trabajo es regulado por el propio \emph{MT3608}, el cual es la llave física de este circuito (un MOSFET), sumado a un circuito interno que monitorea la tensión de salida, la compara con una tensión de setpoint elegida por el diseñador y controla los tiempos de llaveo según requiera el caso. Si la tensión de salida cae, el ciclo de trabajo será mayor, mientras que si tenemos un exceso de tensión, este ciclo de trabajo será menor.
+El propio \emph{MT3608} actúa como el interruptor físico de este circuito mediante un transistor MOSFET integrado y, a su vez, gestiona el ciclo de trabajo. Su controlador interno monitorea la tensión de salida de manera constante y la compara con un valor de referencia (\emph{setpoint}) definido por el diseñador. En función de esta lectura, el chip ajusta los tiempos de conmutación de forma automática: si la tensión de salida cae, el ciclo de trabajo aumenta para inyectar más energía; por el contrario, si registra un exceso de tensión, el ciclo se reduce.
 
-Las características más importantes de este integrado son:
+Las características más relevantes de este integrado son:
 
 \begin{itemize}
-
-\item Switch: MOSFET de potencia de 80 mΩ
-\item Tensión de entrada permitida: Entre 2 y 24 V
-\item Tensión de salida ajustable de hasta 28 V
-\item Frecuencia de llaveo: 1.2 MHz
-\item Límite de corriente a través de la llave de 4 A
-\item Funcionamiento con modulación de ancho de pulso (PWM)
-
+    \item \textbf{Interruptor interno:} MOSFET de potencia con resistencia de 80 m$\Omega$.
+    \item \textbf{Tensión de entrada admitida:} Entre 2 y 24 V.
+    \item \textbf{Tensión de salida:} Ajustable hasta un máximo de 28 V.
+    \item \textbf{Frecuencia de conmutación:} 1,2 MHz.
+    \item \textbf{Límite de corriente:} Soporta hasta 4 A a través del interruptor interno.
+    \item \textbf{Control:} Funcionamiento mediante modulación de ancho de pulso (PWM).
 \end{itemize}
 
 Su circuito interno es el siguiente:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/circuitomt3608.png}
+    \includegraphics[width=0.75\textwidth]{figuras/circuitomt3608.png}
     \caption{Circuito interno del chip \emph{MT3608}}
     \label{fig:circuitomt3608}
 \end{figure}
 
-El transistor M1 es el switch que se observa en el diagrama del circuito boost, que se manipula mediante un bloque lógico de control conectado a su entrada de compuerta.
+El transistor M1 representa el interruptor principal del circuito elevador. Su estado se controla mediante un bloque lógico conectado a su compuerta.
 
-El control comienza con el amplificador de error, que compara la entrada de feedback del chip (una muestra de la tensión de salida final), con una señal de 0,6 voltios muy estable. A la salida de este amplificador tenemos una señal proporcional al error de la tensión en la carga. Se debe procurar que cuando la tensión en la carga se encuentre en su valor óptimo, la entrada de feedback sea igual a esos 0,6 voltios, para que en esa situación la salida sea constante y no afecte a la modulación.
+La regulación inicia con el amplificador de error. Este componente compara la señal de retroalimentación ($V_{FB}$, una fracción de la tensión de salida) con una referencia interna estable de 0,6 V ($V_{REF}$). Si la salida excede el valor configurado ($V_{FB} > V_{REF}$), el amplificador reduce la magnitud de la señal de error. Si la salida decae ($V_{FB} < V_{REF}$), la señal de error aumenta. Cuando el sistema alcanza el equilibrio ($V_{FB} = V_{REF}$), el amplificador emite una señal constante. En el diseño se debe procurar que $V_{FB}$ tome el valor de 0,6 V cuando la salida se encuentre en su valor deseado. 
 
-Cuando la salida es mayor a su valor esperado ($V_{FB} > V_{REF}$), el comparador de error reacciona disminuyendo la señal de error, mientras que cuando la salida es menor ($V_{FB} < V_{REF}$), la señal de error aumenta. Finalmente, si ambas entradas son iguales ($V_{FB} = V_{REF}$), el error será una señal constante, como se mencionó anteriormente. Todo lo anterior se refleja en la siguiente imagen:
+Esta señal de error ingresa al comparador PWM junto con una onda diente de sierra proveniente de un oscilador interno. La intersección de ambas señales determina de forma directa el ancho del pulso de control (Fig. \ref{fig:pwm}). Una señal de error alta prolonga el tiempo de encendido del transistor, lo que incrementa la tensión de salida. Por el contrario, una señal de error baja recorta el pulso y hace caer el voltaje final. De esta manera, el sistema compensa de forma automática cualquier variación en la carga.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/tensionesamperror.png}
-    \caption{Gráfico explicativo del comportamiento del amplificador de error}
-    \label{fig:tensionesamperror}
-\end{figure}
-
-Este valor de error ingresa en el amplificador comparador PWM junto a una señal diente de sierra generada por un oscilador, para que a su salida se obtenga la señal de control que finalmente manipule los estados del transistor M1. El mismo oscilador diente de sierra es quien activa el pulso de la compuerta, cerrando así la llave y permitiendo que la bobina se cargue. Mientras la tensión de error supere a la señal del oscilador, el pulso se mantiene activo. Cuando la señal diente de sierra supera a la señal de error, el pulso se desactiva abriendo la llave y dejando que la bobina se descargue hasta el próximo ciclo. 
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/pwm.png}
+    \includegraphics[width=0.6\textwidth]{figuras/pwm.png}
     \caption{Modulación por ancho de pulso (PWM)}
     \label{fig:pwm}
 \end{figure}
 
-Si la bobina pasa más tiempo cargándose (ciclo de trabajo grande), la tensión que genera al momento de descargarse aumentará junto con la tensión de salida, y si pasa más tiempo descargándose (ciclo de trabajo pequeño), la tensión de descarga será menor disminuyendo la salida final.
+Por último, el circuito incluye un sensor de corriente que cumple dos propósitos fundamentales. Por un lado, funciona como un mecanismo de protección, que interrumpe la conmutación si la corriente a través del transistor supera los límites seguros. Por otro lado, aporta una lectura instantánea al comparador PWM, lo que otorga mayor estabilidad al sistema frente a variaciones bruscas de consumo en la carga.
 
-De todo este análisis se puede inferir la siguiente conclusión: si la tensión de salida decae, el ancho del pulso, y por consiguiente la tensión de salida, aumentan. Por el contrario, si ocurre un exceso de voltaje en la carga, tanto el ancho de pulso como la tensión de salida disminuyen.
+A partir del funcionamiento interno expuesto, se detalla a continuación el diagrama de pines:
 
-Por último, en el diagrama de bloques se observa un último amplificador (el sensor de corriente), que cumple dos funciones importantes: por un lado actúa como sistema de protección, detectando situaciones en las que la corriente a través del switch aumenta a valores peligrosos. Para ello, lee la tensión sobre una resistencia del orden de los miliohmios (para interferir lo menos posible con el circuito original) y, ante un pico indeseado, envía una señal a la lógica de control que abre la llave para evitar la destrucción del circuito. Por otro lado, durante el funcionamiento normal, esta misma lectura de corriente se suma a la señal del oscilador para alimentar al comparador PWM, esto permite que el chip ajuste el ancho de pulso instantáneamente en cada ciclo, garantizando estabilidad ante variaciones rápidas de carga. 
-
-Con todo el funcionamiento explicado, podemos pasar a mostrar el diagrama de pines:
-
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.3\textwidth]{figuras/mt3608pinout.png}
     \caption{Diagrama de pines del módulo \emph{MT3608}}
@@ -2000,88 +2001,56 @@ Con todo el funcionamiento explicado, podemos pasar a mostrar el diagrama de pin
 \end{figure}
 
 \begin{itemize}
-
-\item SW: Es el pin que conecta al MOSFET M1 con el circuito boost externo (El drenador del transistor).
-
-\item GND: Tensión de referencia.
-
-\item FB: Tensión de feedback. Es una muestra de la tensión de salida que luego se compara con los 0,6 V internos.
-
-\item EN: Habilitación del chip.
-
-\item IN: Tensión de entrada. 
-
-\item NC: No se utiliza.
-
+    \item \textbf{SW:} Conecta el drenador del MOSFET interno M1 con el circuito \emph{boost} externo.
+    
+    \item \textbf{GND:} Tensión de referencia (tierra).
+    
+    \item \textbf{FB:} Entrada de retroalimentación (\emph{feedback}). Recibe una muestra de la tensión de salida para compararla con la referencia interna de 0,6 V.
+    
+    \item \textbf{EN:} Pin de habilitación del integrado.
+    
+    \item \textbf{IN:} Entrada de alimentación. 
+    
+    \item \textbf{NC:} Sin conexión interna (\emph{Not Connected}).
+    
 \end{itemize}
 
-A continuación se muestran algunos gráficos de funcionamiento típico.
-
-Regulación de carga: Indica la corriente máxima que puede entregar a una carga de determinado valor de tensión (en este caso, con 500 mA es más que suficiente para suplir las exigencias del \emph{ESP32}).
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/regulacioncarga.png}
-    \caption{Regulación de carga del \emph{MT3608}}
-    \label{fig:regulacioncarga}
-\end{figure}
-
-Frecuencia de conmutación según tensión de entrada: Vemos que en nuestro caso llegamos a valores de entre 0,9 y 1 Mhz. No es el ideal de 1,2 que se describió anteriormente, pero a fines prácticos sirve para mitigar lo suficiente el ripple de salida.
+El siguiente esquema ilustra el circuito típico implementado en los módulos \emph{MT3608} comerciales, los cuales incorporan los componentes externos necesarios:
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/freqvsvin.png}
-    \caption{Frecuencia vs Tensión de entrada en el chip \emph{MT3608}}
-    \label{fig:freqvsvin}
-\end{figure}
-
-Eficiencia vs tensión de entrada: Mientras mayor la tensión de entrada, más eficiente el circuito. En este caso se a roza el 90\%
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/eficiencia.png}
-    \caption{Eficiencia vs Tensión de entrada en el chip \emph{MT3608}}
-    \label{fig:eficiencia}
-\end{figure}
-
-A continuación se muestra el circuito que viene en los módulos \emph{MT3608} comerciales, que incluyen el circuito boost externo:
-
-\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/mt3608placa.png}
     \caption{Circuito comercial de los módulos \emph{MT3608}}
     \label{fig:mt3608placa}
 \end{figure}
 
-El circuito comienza con los pines de entrada y habilitación cortocircuitados y conectados a la tensión de 3,7 voltios provenientes de la pila, ya que al igual que con el \emph{TP4056}, no se requiere deshabilitar manualmente el integrado. A su vez, el pin de entrada se conecta a uno de los terminales de la bobina de 22 uH, para cargarla en los momentos en que la llave se encuentra cerrada.
+En la etapa de entrada, los pines IN y EN se encuentran cortocircuitados y conectados a la tensión de la celda de litio (3,7 V). Al igual que en el módulo de carga, el diseño no requiere deshabilitar el integrado de forma manual. Este nodo de entrada se acopla además a uno de los terminales del inductor de 22 $\mu$H.
 
-El pin de switch (el drenador del MOSFET), se conecta al otro terminal de la bobina y al ánodo de un diodo de alta velocidad, como indica el modelo del circuito boost expuesto anteriormente.
+El pin SW se vincula al segundo terminal del inductor y al ánodo de un diodo de conmutación rápida.
 
-Finalmente, el pin de feedback se conecta a un potenciómetro de 100 kΩ en serie con una resistencia de 2,2 kΩ. La resistencia de este potenciómetro se ajusta con un tornillo externo para seleccionar el valor de tensión a la salida (dado por la señal obtenida en el amplificador de error). De este modo, la salida puede variar entre un mínimo de 0,6 V y un máximo absoluto de 28 V.
+Por último, el pin FB se conecta a un divisor resistivo formado por un potenciómetro de 100 k$\Omega$ en serie con una resistencia fija de 2,2 k$\Omega$. El potenciómetro cuenta con un tornillo de ajuste que permite calibrar la tensión de salida, logrando un rango operativo continuo desde un mínimo de 0,6 V hasta un máximo absoluto de 28 V.
 
-Se observa también el capacitor C6 del circuito boost, un capacitor C5 de desacople, y el pin de GND conectado a la masa del circuito.
+El esquema se completa con el capacitor de filtrado de salida (C6), un capacitor de desacople en la entrada (C5) y la conexión general a la masa del circuito.
 
 \subsubsection{Componentes a utilizar en el dispositivo final}
 
-Con todo el sistema explicado, se listan a continuación todos los materiales necesarios para construir los circuitos de alimentación:
+Debido a las modificaciones de diseño justificadas en secciones previas, el módulo central no requiere una placa de alimentación dedicada. En consecuencia, el siguiente listado detalla de forma exclusiva los materiales necesarios para ensamblar el circuito eléctrico del módulo de captura:
 
 \begin{itemize}
-
-\item 4 Borneras de 2 terminales
-\item 4 Capacitores  cerámicos de 100 nF (para reducir el ruido).
-\item 2 Baterías de Litio de 3,7 voltios con 3000 mAh de energía.
-\item 2 Capacitores electrolíticos de 10 uF (para reducir picos de corriente).
-\item 2 Módulos de carga \emph{TP4056} comerciales (con chips \emph{DW01A} y \emph{FS8205A} incluidos).
-\item 2 Módulos elevadores \emph{MT3608} comerciales.
-\item 2 PCBs de las dimensiones adecuadas.
-\item 2 Resistencias de 1/4 de vatio de 160 ohmios para los diodos LED.
-\item 2 Switches para encendido del dispositivo.
-\item 2 Zócalos o portapilas individuales.
-\item 1 Bornera de 3 terminales.
-\item 1 Diodo LED azul.
-\item 1 Diodo LED infrarrojo emisor.
-\item Zócalos hembra-macho para portar la \emph{ESP32-CAM} en la PCB
-
+    \item 1 Batería de litio tipo 18650 (3,7 V, 3000 mAh).
+    \item 1 Zócalo portapilas individual.
+    \item 1 Módulo de carga comercial \emph{TP4056} (con protecciones \emph{DW01A} y \emph{FS8205A} incluidas).
+    \item 1 Módulo elevador comercial \emph{MT3608}.
+    \item 1 Interruptor mecánico para encendido general.
+    \item 1 Diodo LED emisor infrarrojo (iluminación ocular).
+    \item 1 Diodo LED azul (indicador de estado).
+    \item 1 Resistencia de 470 $\Omega$ (1/4 W) para el LED infrarrojo.
+    \item 1 Resistencia de 220 $\Omega$ (1/4 W) para el LED azul.
+    \item 2 Capacitores cerámicos de 100 nF (filtrado de ruido de alta frecuencia).
+    \item 1 Capacitor electrolítico de 10 $\mu$F (estabilización de transitorios de corriente).
+    \item 1 Bornera de 2 terminales y 1 bornera de 3 terminales.
+    \item Tiras de pines (zócalos hembra) para el acople extraíble del \emph{ESP32-CAM}.
+    \item 1 Placa de circuito impreso (PCB) a medida.
 \end{itemize}
 
 \section{Diseño físico}
