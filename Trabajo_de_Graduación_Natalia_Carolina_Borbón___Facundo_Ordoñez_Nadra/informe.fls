@@ -467,14 +467,14 @@ OUTPUT capitulos\capitulo2.aux
 INPUT .\capitulos\capitulo2.tex
 INPUT .\capitulos\capitulo2.tex
 INPUT capitulos\capitulo2.tex
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
-INPUT .\figuras\eyetracking.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cmbright\ebbx10.tfm
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
+INPUT .\figuras\eyetracking.png
 INPUT .\figuras\templatematching2.png
 INPUT .\figuras\templatematching2.png
 INPUT .\figuras\templatematching2.png

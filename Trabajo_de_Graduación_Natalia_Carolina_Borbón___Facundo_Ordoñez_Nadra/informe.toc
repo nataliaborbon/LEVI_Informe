@@ -6,95 +6,92 @@
 \contentsline {section}{\numberline {1.3}Motivación}{2}{section.9}%
 \contentsline {section}{\numberline {1.4}Alcance y objetivos}{3}{section.10}%
 \contentsline {chapter}{\numberline {2}Introducción Específica}{4}{chapter.11}%
-\contentsline {section}{\numberline {2.1}Seguimiento Ocular (Eye-tracking)}{4}{section.12}%
-\contentsline {section}{\numberline {2.2}Procesamiento de Imágenes y Visión por Computadora}{4}{section.14}%
-\contentsline {subsection}{\numberline {2.2.1}Conceptos fundamentales y biblioteca OpenCV}{4}{subsection.15}%
-\contentsline {subsection}{\numberline {2.2.2}Coincidencia de patrones (Template Matching)}{5}{subsection.16}%
-\contentsline {section}{\numberline {2.3}Redes Neuronales Artificiales}{6}{section.20}%
-\contentsline {subsection}{\numberline {2.3.1}Definición y funcionamiento}{6}{subsection.21}%
-\contentsline {subsection}{\numberline {2.3.2}Tipos y arquitecturas de redes neuronales}{7}{subsection.25}%
-\contentsline {section}{\numberline {2.4}Sistemas Embebidos y Control Gráfico}{8}{section.26}%
-\contentsline {subsection}{\numberline {2.4.1}Microcontroladores y familia ESP32}{8}{subsection.27}%
-\contentsline {subsection}{\numberline {2.4.2}Interfaces gráficas embebidas y biblioteca LVGL}{9}{subsection.29}%
-\contentsline {section}{\numberline {2.5}Redes y Comunicaciones}{10}{section.31}%
-\contentsline {subsection}{\numberline {2.5.1}Redes locales Wi-Fi}{10}{subsection.32}%
-\contentsline {subsection}{\numberline {2.5.2}Protocolos de comunicación y transmisión de video}{11}{subsection.34}%
-\contentsline {section}{\numberline {2.6}Arquitectura de una aplicación web}{13}{section.36}%
-\contentsline {subsection}{\numberline {2.6.1}Modelo Cliente/Servidor}{13}{subsection.37}%
-\contentsline {subsection}{\numberline {2.6.2}Patrón de diseño Modelo-Vista-Controlador (MVC)}{14}{subsection.39}%
-\contentsline {subsection}{\numberline {2.6.3}Frontend}{14}{subsection.41}%
-\contentsline {subsection}{\numberline {2.6.4}Backend}{16}{subsection.43}%
-\contentsline {subsection}{\numberline {2.6.5}Base de datos}{17}{subsection.46}%
-\contentsline {chapter}{\numberline {3}Diseño e implementación}{20}{chapter.48}%
-\contentsline {section}{\numberline {3.1}Requisitos y especificaciones del sistema}{20}{section.49}%
-\contentsline {subsection}{\numberline {3.1.1}Requisitos funcionales}{20}{subsection.50}%
-\contentsline {subsection}{\numberline {3.1.2}Requisitos técnicos}{21}{subsection.51}%
-\contentsline {subsection}{\numberline {3.1.3}Restricciones de diseño}{22}{subsection.52}%
-\contentsline {section}{\numberline {3.2}Detector ocular}{22}{section.53}%
-\contentsline {subsection}{\numberline {3.2.1}Procesamiento local como planteamiento inicial}{23}{subsection.55}%
-\contentsline {subsubsection}{Umbral de oscuridad y brillantez}{24}{section*.56}%
-\contentsline {subsubsection}{Edge Impulse}{26}{section*.61}%
-\contentsline {subsubsection}{TensorFlow Lite}{28}{section*.65}%
-\contentsline {subsubsection}{Conclusión del procesamiento local}{32}{section*.78}%
-\contentsline {subsection}{\numberline {3.2.2}Procesamiento remoto por coordenadas}{32}{subsection.79}%
-\contentsline {subsubsection}{MediaPipe y WebGazer}{33}{section*.80}%
-\contentsline {subsubsection}{OpenCV y Transformada de Hough}{34}{section*.83}%
-\contentsline {subsubsection}{Conclusión de la detección por coordenadas}{35}{section*.87}%
-\contentsline {subsection}{\numberline {3.2.3}Template Matching como solución adoptada}{36}{subsection.88}%
-\contentsline {subsubsection}{Calibración}{36}{section*.89}%
-\contentsline {subsubsection}{Preprocesamiento de fotogramas}{37}{section*.91}%
-\contentsline {subsubsection}{Comparación de plantillas}{38}{section*.93}%
-\contentsline {section}{\numberline {3.3}Arquitectura del sistema}{39}{section.95}%
-\contentsline {subsection}{\numberline {3.3.1}Funciones de cada módulo}{39}{subsection.96}%
-\contentsline {subsection}{\numberline {3.3.2}Interacción entre módulos}{40}{subsection.97}%
-\contentsline {subsection}{\numberline {3.3.3}Mapa de memoria}{40}{subsection.98}%
-\contentsline {section}{\numberline {3.4}Microcontroladores y periféricos}{41}{section.99}%
-\contentsline {subsection}{\numberline {3.4.1}Elección de la familia ESP32}{41}{subsection.100}%
-\contentsline {subsection}{\numberline {3.4.2}Módulo de captura}{42}{subsection.101}%
-\contentsline {subsubsection}{Placa}{42}{section*.102}%
-\contentsline {subsubsection}{Cámara}{43}{section*.105}%
-\contentsline {subsubsection}{Conexión de la cámara}{43}{section*.107}%
-\contentsline {subsection}{\numberline {3.4.3}Módulo central}{45}{subsection.110}%
-\contentsline {subsubsection}{Placa inicial}{45}{section*.111}%
-\contentsline {subsubsection}{Placa final}{46}{section*.112}%
-\contentsline {subsubsection}{Almacenamiento en microSD}{47}{section*.115}%
-\contentsline {subsubsection}{Pantalla y panel táctil}{47}{section*.117}%
-\contentsline {section}{\numberline {3.5}Red y comunicación}{48}{section.120}%
-\contentsline {subsection}{\numberline {3.5.1}Red Wi-Fi local}{48}{subsection.121}%
-\contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{49}{subsection.122}%
-\contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{50}{subsection.124}%
-\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{50}{subsection.125}%
-\contentsline {section}{\numberline {3.6}Aplicación web}{51}{section.126}%
-\contentsline {subsection}{\numberline {3.6.1}Base de datos}{51}{subsection.127}%
-\contentsline {subsubsection}{Creación y configuración}{51}{section*.128}%
-\contentsline {subsubsection}{Estructura de las tablas}{52}{section*.129}%
-\contentsline {subsection}{\numberline {3.6.2}Backend}{55}{subsection.132}%
-\contentsline {subsubsection}{Modelos}{55}{section*.133}%
-\contentsline {subsubsection}{Controladores}{56}{section*.134}%
-\contentsline {subsubsection}{Servicios}{57}{section*.135}%
-\contentsline {subsubsection}{Repositorios}{58}{section*.136}%
-\contentsline {subsubsection}{Gestión de sesiones}{58}{section*.137}%
-\contentsline {subsection}{\numberline {3.6.3}Frontend}{59}{subsection.138}%
-\contentsline {subsubsection}{Entorno y herramientas}{59}{section*.139}%
-\contentsline {subsubsection}{Estructura interna}{60}{section*.141}%
-\contentsline {subsubsection}{Recepción de datos y ejecución del detector}{61}{section*.142}%
-\contentsline {subsubsection}{Pantallas}{62}{section*.143}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{64}{section.145}%
-\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{64}{subsection.146}%
-\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{65}{subsection.147}%
-\contentsline {subsection}{\numberline {3.7.3}Vistas}{65}{subsection.148}%
-\contentsline {section}{\numberline {3.8}Alimentación}{67}{section.151}%
-\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{67}{subsection.152}%
-\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{68}{subsection.153}%
-\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{72}{subsection.159}%
-\contentsline {subsubsection}{Recarga y protección}{72}{section*.160}%
-\contentsline {subsubsection}{Estabilización de voltaje}{75}{section*.172}%
-\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{78}{section*.179}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{79}{section.180}%
-\contentsline {subsection}{\numberline {3.9.1}Montaje}{79}{subsection.181}%
-\contentsline {subsubsection}{Conexiones y PCB}{79}{section*.182}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{82}{section.188}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{83}{chapter.189}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{83}{section.190}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{83}{section.191}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{84}{section.192}%
+\contentsline {section}{\numberline {2.1}Seguimiento Ocular y Visión por Computadora}{4}{section.12}%
+\contentsline {subsection}{\numberline {2.1.1}Conceptos generales}{4}{subsection.13}%
+\contentsline {subsection}{\numberline {2.1.2}OpenCV y coincidencia de patrones}{5}{subsection.15}%
+\contentsline {subsection}{\numberline {2.1.3}Redes neuronales artificiales}{7}{subsection.19}%
+\contentsline {section}{\numberline {2.2}Sistemas Embebidos y Control Gráfico}{8}{section.23}%
+\contentsline {subsection}{\numberline {2.2.1}Microcontroladores y familia ESP32}{8}{subsection.24}%
+\contentsline {subsection}{\numberline {2.2.2}Interfaces gráficas embebidas y biblioteca LVGL}{9}{subsection.26}%
+\contentsline {section}{\numberline {2.3}Redes y Comunicaciones}{10}{section.28}%
+\contentsline {subsection}{\numberline {2.3.1}Redes locales Wi-Fi}{10}{subsection.29}%
+\contentsline {subsection}{\numberline {2.3.2}Protocolos de comunicación y transmisión de video}{11}{subsection.31}%
+\contentsline {section}{\numberline {2.4}Arquitectura de una aplicación web}{13}{section.33}%
+\contentsline {subsection}{\numberline {2.4.1}Modelo Cliente/Servidor}{13}{subsection.34}%
+\contentsline {subsection}{\numberline {2.4.2}Patrón de diseño Modelo-Vista-Controlador (MVC)}{14}{subsection.36}%
+\contentsline {subsection}{\numberline {2.4.3}Frontend}{14}{subsection.38}%
+\contentsline {subsection}{\numberline {2.4.4}Backend}{16}{subsection.40}%
+\contentsline {subsection}{\numberline {2.4.5}Base de datos}{17}{subsection.43}%
+\contentsline {chapter}{\numberline {3}Diseño e implementación}{20}{chapter.45}%
+\contentsline {section}{\numberline {3.1}Requisitos y especificaciones del sistema}{20}{section.46}%
+\contentsline {subsection}{\numberline {3.1.1}Requisitos funcionales}{20}{subsection.47}%
+\contentsline {subsection}{\numberline {3.1.2}Requisitos técnicos}{21}{subsection.48}%
+\contentsline {subsection}{\numberline {3.1.3}Restricciones de diseño}{22}{subsection.49}%
+\contentsline {section}{\numberline {3.2}Detector ocular}{22}{section.50}%
+\contentsline {subsection}{\numberline {3.2.1}Procesamiento local como planteamiento inicial}{23}{subsection.52}%
+\contentsline {subsubsection}{Umbral de oscuridad y brillantez}{24}{section*.53}%
+\contentsline {subsubsection}{Edge Impulse}{26}{section*.58}%
+\contentsline {subsubsection}{TensorFlow Lite}{28}{section*.62}%
+\contentsline {subsubsection}{Conclusión del procesamiento local}{32}{section*.75}%
+\contentsline {subsection}{\numberline {3.2.2}Procesamiento remoto por coordenadas}{32}{subsection.76}%
+\contentsline {subsubsection}{MediaPipe y WebGazer}{33}{section*.77}%
+\contentsline {subsubsection}{OpenCV y Transformada de Hough}{34}{section*.80}%
+\contentsline {subsubsection}{Conclusión de la detección por coordenadas}{35}{section*.84}%
+\contentsline {subsection}{\numberline {3.2.3}Template Matching como solución adoptada}{36}{subsection.85}%
+\contentsline {subsubsection}{Calibración}{36}{section*.86}%
+\contentsline {subsubsection}{Preprocesamiento de fotogramas}{37}{section*.88}%
+\contentsline {subsubsection}{Comparación de plantillas}{38}{section*.90}%
+\contentsline {section}{\numberline {3.3}Arquitectura del sistema}{39}{section.92}%
+\contentsline {subsection}{\numberline {3.3.1}Funciones de cada módulo}{39}{subsection.93}%
+\contentsline {subsection}{\numberline {3.3.2}Interacción entre módulos}{40}{subsection.94}%
+\contentsline {subsection}{\numberline {3.3.3}Mapa de memoria}{40}{subsection.95}%
+\contentsline {section}{\numberline {3.4}Microcontroladores y periféricos}{41}{section.96}%
+\contentsline {subsection}{\numberline {3.4.1}Elección de la familia ESP32}{41}{subsection.97}%
+\contentsline {subsection}{\numberline {3.4.2}Módulo de captura}{42}{subsection.98}%
+\contentsline {subsubsection}{Placa}{42}{section*.99}%
+\contentsline {subsubsection}{Cámara}{43}{section*.102}%
+\contentsline {subsubsection}{Conexión de la cámara}{43}{section*.104}%
+\contentsline {subsection}{\numberline {3.4.3}Módulo central}{45}{subsection.107}%
+\contentsline {subsubsection}{Placa inicial}{45}{section*.108}%
+\contentsline {subsubsection}{Placa final}{46}{section*.109}%
+\contentsline {subsubsection}{Almacenamiento en microSD}{47}{section*.112}%
+\contentsline {subsubsection}{Pantalla y panel táctil}{47}{section*.114}%
+\contentsline {section}{\numberline {3.5}Red y comunicación}{48}{section.117}%
+\contentsline {subsection}{\numberline {3.5.1}Red Wi-Fi local}{48}{subsection.118}%
+\contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{49}{subsection.119}%
+\contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{50}{subsection.121}%
+\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{50}{subsection.122}%
+\contentsline {section}{\numberline {3.6}Aplicación web}{51}{section.123}%
+\contentsline {subsection}{\numberline {3.6.1}Base de datos}{51}{subsection.124}%
+\contentsline {subsubsection}{Creación y configuración}{51}{section*.125}%
+\contentsline {subsubsection}{Estructura de las tablas}{52}{section*.126}%
+\contentsline {subsection}{\numberline {3.6.2}Backend}{55}{subsection.129}%
+\contentsline {subsubsection}{Modelos}{55}{section*.130}%
+\contentsline {subsubsection}{Controladores}{56}{section*.131}%
+\contentsline {subsubsection}{Servicios}{57}{section*.132}%
+\contentsline {subsubsection}{Repositorios}{58}{section*.133}%
+\contentsline {subsubsection}{Gestión de sesiones}{58}{section*.134}%
+\contentsline {subsection}{\numberline {3.6.3}Frontend}{59}{subsection.135}%
+\contentsline {subsubsection}{Entorno y herramientas}{59}{section*.136}%
+\contentsline {subsubsection}{Estructura interna}{60}{section*.138}%
+\contentsline {subsubsection}{Recepción de datos y ejecución del detector}{61}{section*.139}%
+\contentsline {subsubsection}{Pantallas}{62}{section*.140}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{64}{section.142}%
+\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{64}{subsection.143}%
+\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{65}{subsection.144}%
+\contentsline {subsection}{\numberline {3.7.3}Vistas}{65}{subsection.145}%
+\contentsline {section}{\numberline {3.8}Alimentación}{67}{section.148}%
+\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{67}{subsection.149}%
+\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{68}{subsection.150}%
+\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{72}{subsection.156}%
+\contentsline {subsubsection}{Recarga y protección}{72}{section*.157}%
+\contentsline {subsubsection}{Estabilización de voltaje}{75}{section*.169}%
+\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{78}{section*.176}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{79}{section.177}%
+\contentsline {subsection}{\numberline {3.9.1}Montaje}{79}{subsection.178}%
+\contentsline {subsubsection}{Conexiones y PCB}{79}{section*.179}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{82}{section.185}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{83}{chapter.186}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{83}{section.187}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{83}{section.188}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{84}{section.189}%
