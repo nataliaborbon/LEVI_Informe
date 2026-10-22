@@ -30,37 +30,36 @@
 \contentsline {figure}{\numberline {3.10}{\ignorespaces Una muestra de las imágenes utilizadas para el dataset}}{30}{figure.caption.67}%
 \contentsline {figure}{\numberline {3.11}{\ignorespaces Planilla con etiquetado de imágenes}}{30}{figure.caption.68}%
 \contentsline {figure}{\numberline {3.12}{\ignorespaces Resultados del modelo desarrollado en \emph {Google Colab}. Con un punto verde se indica el valor etiquetado, mientras que la cruz roja muestra la posición que la red predice}}{31}{figure.caption.76}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Error de precisión con TFLite}}{32}{figure.caption.77}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Error de precisión con TFLite (15.9 píxeles)}}{32}{figure.caption.77}%
 \contentsline {figure}{\numberline {3.14}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{33}{figure.caption.81}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Facciones del rostro en \emph {MediaPipe}}}{33}{figure.caption.82}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{34}{figure.caption.83}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces El método de la transformada de Hough en funcionamiento}}{35}{figure.caption.85}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Fallo del algoritmo por oclusión}}{35}{figure.caption.86}%
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Falso positivo con el método de círculos de Hough}}{36}{figure.caption.87}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Plantillas para comparación}}{37}{figure.caption.91}%
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}}{38}{figure.caption.93}%
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Video en vivo con el umbral de similitud}}{39}{figure.caption.95}%
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Placa \emph {ESP32-CAM} con su cámara.}}{43}{figure.caption.103}%
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Cámaras OV2640 con distintos ángulos de visión y longitud de conector}}{44}{figure.caption.105}%
-\contentsline {figure}{\numberline {3.25}{\ignorespaces Acceso a la aplicación desde un navegador en un dispositivo móvil}}{46}{figure.caption.110}%
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Diagrama de transición de estados de un cuestionario}}{50}{figure.caption.117}%
-\contentsline {figure}{\numberline {3.27}{\ignorespaces Esquema relacional de la base de datos}}{51}{figure.caption.118}%
-\contentsline {figure}{\numberline {3.28}{\ignorespaces Pantallas y sub-pantallas de acceso}}{58}{figure.caption.131}%
-\contentsline {figure}{\numberline {3.29}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{67}{figure.caption.142}%
-\contentsline {figure}{\numberline {3.30}{\ignorespaces Corriente vs voltaje de carga}}{68}{figure.caption.152}%
-\contentsline {figure}{\numberline {3.31}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{69}{figure.caption.153}%
-\contentsline {figure}{\numberline {3.32}{\ignorespaces Circuito elevador Boost}}{70}{figure.caption.155}%
-\contentsline {figure}{\numberline {3.33}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{71}{figure.caption.157}%
-\contentsline {figure}{\numberline {3.34}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{71}{figure.caption.158}%
-\contentsline {figure}{\numberline {3.35}{\ignorespaces Modulación por ancho de pulso (PWM)}}{72}{figure.caption.159}%
-\contentsline {figure}{\numberline {3.36}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{72}{figure.caption.160}%
-\contentsline {figure}{\numberline {3.37}{\ignorespaces Regulación de carga del \emph {MT3608}}}{73}{figure.caption.161}%
-\contentsline {figure}{\numberline {3.38}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{73}{figure.caption.162}%
-\contentsline {figure}{\numberline {3.39}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{74}{figure.caption.163}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{74}{figure.caption.164}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{76}{figure.caption.169}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{76}{figure.caption.170}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{76}{figure.caption.171}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Layout de la PCB del circuito capturador}}{77}{figure.caption.172}%
-\contentsline {figure}{\numberline {3.45}{\ignorespaces Layout de la PCB del circuito servidor}}{78}{figure.caption.173}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{33}{figure.caption.82}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces El método de la transformada de Hough en funcionamiento}}{34}{figure.caption.84}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Fallo del algoritmo por oclusión}}{35}{figure.caption.85}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Falso positivo con el método de círculos de Hough}}{35}{figure.caption.86}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Plantillas para comparación}}{36}{figure.caption.90}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}}{37}{figure.caption.92}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Video en vivo con el umbral de similitud}}{38}{figure.caption.94}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Placa \emph {ESP32-CAM} con su cámara.}}{42}{figure.caption.102}%
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Cámaras OV2640 con distintos ángulos de visión y longitud de conector}}{43}{figure.caption.104}%
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Acceso a la aplicación desde un navegador en un dispositivo móvil}}{45}{figure.caption.109}%
+\contentsline {figure}{\numberline {3.25}{\ignorespaces Diagrama de transición de estados de un cuestionario}}{49}{figure.caption.116}%
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Esquema relacional de la base de datos}}{50}{figure.caption.117}%
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Pantallas y sub-pantallas de acceso}}{58}{figure.caption.130}%
+\contentsline {figure}{\numberline {3.28}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{66}{figure.caption.141}%
+\contentsline {figure}{\numberline {3.29}{\ignorespaces Corriente vs voltaje de carga}}{67}{figure.caption.151}%
+\contentsline {figure}{\numberline {3.30}{\ignorespaces Circuito típico de aplicación del \emph {TP4056}}}{68}{figure.caption.152}%
+\contentsline {figure}{\numberline {3.31}{\ignorespaces Circuito elevador Boost}}{69}{figure.caption.154}%
+\contentsline {figure}{\numberline {3.32}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{70}{figure.caption.156}%
+\contentsline {figure}{\numberline {3.33}{\ignorespaces Gráfico explicativo del comportamiento del amplificador de error}}{71}{figure.caption.157}%
+\contentsline {figure}{\numberline {3.34}{\ignorespaces Modulación por ancho de pulso (PWM)}}{71}{figure.caption.158}%
+\contentsline {figure}{\numberline {3.35}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{72}{figure.caption.159}%
+\contentsline {figure}{\numberline {3.36}{\ignorespaces Regulación de carga del \emph {MT3608}}}{72}{figure.caption.160}%
+\contentsline {figure}{\numberline {3.37}{\ignorespaces Frecuencia vs Tensión de entrada en el chip \emph {MT3608}}}{73}{figure.caption.161}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Eficiencia vs Tensión de entrada en el chip \emph {MT3608}}}{73}{figure.caption.162}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{73}{figure.caption.163}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{75}{figure.caption.168}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Esquema simplificado de la PCB del circuito capturador}}{75}{figure.caption.169}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema simplificado de la PCB del circuito servidor}}{76}{figure.caption.170}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Layout de la PCB del circuito capturador}}{76}{figure.caption.171}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Layout de la PCB del circuito servidor}}{77}{figure.caption.172}%
 \addvspace {10\p@ }
