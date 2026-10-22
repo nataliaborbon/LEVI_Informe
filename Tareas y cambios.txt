@@ -76,24 +76,23 @@ Capítulo 2
 Capítulo 3
 
 	3.3
+	Diagrama de bloques -> AMBOS
 		3.3.3 Mapa de memoria -> NATTY
-	3.4
-		3.4.3 Plaquita negra -> AMBOS
 	3.5
 		3.5.1 Red local -> NATTY
 		3.5.4 Comunicación con módulo central (HTTP) -> NATTY
 	3.6
 	Arquitectura de aplicación web -> AMBOS
 		3.6.1 DB Browser for SQLite con estructura de base -> NATTY
+		Acceso con icono nuevo -> JOKIN
 		3.6.3 Estructura del front -> JOKIN
 		3.6.3 Recepción de datos -> JOKIN
 		3.6.3 Pantallas del alumno -> AMBOS
 		3.6.3 Pantallas de profesor/tutor -> AMBOS
 	3.7 
-	Vistas de interfaz táctil -> AMBOS
+	Vistas de examen en espera y config inicial -> AMBOS
 	3.8
-		3.8.2 LDO -> JOKIN
-		3.8.2 TP4056 y MT3608 -> JOKIN
+
 		3.8.3 Buck-Boost -> JOKIN
 		3.8.3 IP5306 -> JOKIN
 	3.9
