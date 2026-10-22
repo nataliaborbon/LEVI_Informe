@@ -1,38 +1,8 @@
-Últimos cambios 19/10:
+Últimos cambios 21/10
 
-- Numeración e índice hasta 3 niveles (las subsubsecciones no llevan número ni aparecen en el índice)
+- Se agregaron imágenes
 
-- 2.5.2 renombrada "Protocolos de comunicación y transmisión de video" (MJPEG no es un protocolo)
-
-- Capítulo 2: "Arquitectura y Patrones de Software" pasó a "Arquitectura de una aplicación web", con intro, Cliente/Servidor, MVC, Frontend, Backend y Base de datos como subsecciones. La sección "Bases de Datos y Persistencia" quedó dentro, como 2.6.5 (texto corrido). La versión vieja quedó comentada debajo
-
-- Explicado JSON en el capitulo 2 (dentro del ítem de HTTP, en 2.5.2)
-
-- Explicada la función de hash y SHA-256 en el capitulo 2 y el salt (en 2.6.4 Backend, antes del párrafo de tokens, con la figura saltedhash.png; la imagen es una adaptación al español de un diagrama de Mohamed Rimsan, falta citar la fuente)
-
-Últimos cambios 15/10:
-
-- Se cambio la imagen del front en el capitulo 2 y se cambiaron un par de lineas
-
-- Lo de cejas y pestañas si estaba explicado
-
-- Se añadió lo de la cámara con flex mas largo y una imagen de las camaras
-
-- Se cambión "Preact y despliege" por "herramientas y entorno"
-
-- "Estructura interna" parece buen título
-
-- Se aclaro que se usa visual para el front
-
-- Alimentación: Añadida presentación y reestructuradas subsecciones
-
-- Se trasladó todo lo de montaje y PCB a una subsección del cap 3
-
-- Capitulo 4: Se transfirió todo lo del capítulo 5
-
-- Se eliminó el capítulo 5
-
-- Se añadió la tabla comparativa de costos
+- Se corrigio la tabla React/Preact
 
 Tareas:
 
@@ -95,8 +65,45 @@ Capitulo 3:
 - Especificamos mas los costos?
 
 
+//////////////////////////////////////////////////////////
+
+RELEVAMIENTO DE IMÁGENES 21/10
+
+Capítulo 1
+
+Capítulo 2
+
+Capítulo 3
+
+	3.3
+		3.3.3 Mapa de memoria -> NATTY
+	3.4
+		3.4.3 Plaquita negra -> AMBOS
+	3.5
+		3.5.1 Red local -> NATTY
+		3.5.4 Comunicación con módulo central (HTTP) -> NATTY
+	3.6
+	Arquitectura de aplicación web -> AMBOS
+		3.6.1 DB Browser for SQLite con estructura de base -> NATTY
+		3.6.3 Estructura del front -> JOKIN
+		3.6.3 Recepción de datos -> JOKIN
+		3.6.3 Pantallas del alumno -> AMBOS
+		3.6.3 Pantallas de profesor/tutor -> AMBOS
+	3.7 
+	Vistas de interfaz táctil -> AMBOS
+	3.8
+		3.8.2 LDO -> JOKIN
+		3.8.2 TP4056 y MT3608 -> JOKIN
+		3.8.3 Buck-Boost -> JOKIN
+		3.8.3 IP5306 -> JOKIN
+	3.9
+	Modelos 3D de carcasa -> AMBOS
+	Conexiones a pines de LED, switch, resistencia, etc? -> AMBOS
+	3.10
+	Tabla de costo total -> AMBOS
 
 
+Capítulo 4
 
 
 

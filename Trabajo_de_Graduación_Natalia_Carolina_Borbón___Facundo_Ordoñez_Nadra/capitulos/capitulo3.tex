@@ -513,9 +513,14 @@ Se iteró sobre la arquitectura de la red y se ajustaron sus hiperparámetros (l
     \label{fig:resultadoscolab}
 \end{figure}
 
-Este modelo resultó significativamente más rápido, eficiente y controlable que el generado con \emph{Edge Impulse}. Sin embargo, las pruebas empíricas en tiempo real mostraron que no cumplía los requisitos de precisión para el dispositivo final. Durante la operación, las coordenadas predichas eran muy inestables. Oscilaban de forma pequeña y constante (\emph{jittering}) y no lograban mantenerse en un valor firme.
+Este modelo resultó significativamente más rápido, eficiente y controlable que el generado con \emph{Edge Impulse}. Sin embargo, las pruebas empíricas en tiempo real mostraron que no cumplía los requisitos de precisión para el dispositivo final. Durante la operación, las coordenadas predichas eran muy inestables. Oscilaban de forma pequeña y constante (\emph{jittering}) y no lograban mantenerse en un valor firme. En la figura \ref{fig:maximoerror} se muestra un ejemplo de estos errores de precisión. A pesar de que son pocos píxeles, resulta significativo cuando se busca un objeto tan pequeño como la pupila.
 
-\keyword{Imagen/es de TFLite fallando? (Top 10 errores)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figuras/maximoerror.png}
+    \caption{Error de precisión con TFLite (15.9 píxeles)}
+    \label{fig:maximoerror}
+\end{figure}
 
 Para reducir esa inestabilidad, se intentó aumentar la complejidad y la profundidad de la red neuronal. Sin embargo, esto elevó la latencia de procesamiento a niveles inaceptables. Por el contrario, simplificar la arquitectura para recuperar velocidad degradaba la exactitud de las coordenadas. Se encontró así un límite de hardware insalvable.
 
@@ -550,16 +555,9 @@ La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una
     \label{fig:deteccion_rostro_mediapipe}
 \end{figure}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/seguimiento_rostro_mediapipe.png}
-    \caption{Facciones del rostro en \emph{MediaPipe}}
-    \label{fig:seguimiento_rostro_mediapipe}
-\end{figure}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/deteccion_rostro_webgazer.png}
+    \includegraphics[width=0.4\textwidth]{figuras/deteccion_rostro_webgazer.png}
     \caption{Facciones del rostro en \emph{WebGazer}}
     \label{fig:deteccion_rostro_webgazer}
 \end{figure}
