@@ -741,11 +741,9 @@ Las preguntas de los compañeros también pasan por el módulo central, pero no 
 
 \subsection{Mapa de memoria}
 
-El módulo central, basado en un microcontrolador \emph{ESP32}, dispone de tres memorias con características distintas. La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
+El módulo central, basado en un microcontrolador \emph{ESP32-S3}, dispone de cuatro memorias con características distintas (Fig. \ref{fig:mapa_memoria}). La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La PSRAM es una memoria externa al chip, más lenta que la SRAM interna pero de mayor capacidad, y también se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
 
 La memoria flash guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
-
-\keyword{Imagen del mapa de memoria (natty)}
 
 \begin{itemize}
 
@@ -763,11 +761,19 @@ La SRAM interna funciona como memoria de trabajo. Guarda información que cambia
 
 \item IRAM: contiene el código de las interrupciones y de las funciones críticas, que deben ejecutarse con rapidez.
 
-\item DRAM: almacena las variables de control, las sesiones activas con sus \emph{tokens} y las preguntas de los invitados. También aloja la memoria dinámica que el sistema solicita durante su funcionamiento.
+\item DRAM: almacena las variables de control, las sesiones activas con sus \emph{tokens} y las preguntas de los invitados. También aloja los bloques pequeños de memoria dinámica que el sistema solicita durante su funcionamiento.
 
 \end{itemize}
 
 Las sesiones y sus \emph{tokens} cambian cada vez que un usuario inicia o cierra sesión, y el módulo central los consulta en cada pedido que recibe. Guardarlos en una memoria permanente no tendría sentido, ya que dejan de ser necesarios al apagar el equipo. Al reiniciarse el sistema, los usuarios vuelven a iniciar sesión. Del mismo modo, las preguntas de los invitados no deben persistir, por lo que la DRAM resulta la ubicación adecuada.
+
+La PSRAM amplía la memoria de trabajo. Con la configuración por defecto del entorno de desarrollo, el sistema ubica en ella de forma automática los bloques de memoria dinámica de más de 4 KB, lo que libera la SRAM interna para los datos que requieren mayor velocidad.
+
+\begin{itemize}
+
+\item Caché de la base de datos: guarda las partes de la base de datos que se consultan con mayor frecuencia, para no leerlas de la microSD en cada pedido. Ocupa 512 KB, un tamaño que no podría reservarse en la SRAM interna.
+
+\end{itemize}
 
 La tarjeta microSD guarda la información que debe conservarse a largo plazo y que ocupa demasiado espacio para la flash.
 
@@ -778,6 +784,13 @@ La tarjeta microSD guarda la información que debe conservarse a largo plazo y q
 \item \emph{OpenCV.js}: contiene la biblioteca de procesamiento de imágenes que se entrega al dispositivo del alumno. Su tamaño excede la capacidad del \emph{Filesystem} de la flash, a diferencia de las páginas de la aplicación web, que son más livianas.
 
 \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/mapa_memoria.pdf}
+    \caption{Mapa de memoria del módulo central}
+    \label{fig:mapa_memoria}
+\end{figure}
 
 \section{Microcontroladores y periféricos}
 
