@@ -10,34 +10,34 @@
 En este capítulo se explorarán en términos muy generales los distintos conceptos,  tecnologías, arquitecturas, paradigmas y técnicas que resultaron útiles para el desarrollo del trabajo.
 
 
-\section{Seguimiento Ocular (Eye-tracking)}
+\section{Seguimiento Ocular y Visión por Computadora}
 
-El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocular}, es el proceso tecnológico que permite medir y registrar el punto de la mirada de una persona o el movimiento de sus ojos en relación con la cabeza. Para ello, comúnmente se utiliza como punto de referencia el centro de la pupila. A diferencia del seguimiento facial (que analiza músculos, cejas o expresiones), el \emph{eye-tracking} se concentra estrictamente en la forma y movimientos del globo ocular (Fig. \ref{fig:eyetracking}).
+El seguimiento ocular puede realizarse de distintas formas, entre ellas mediante la visión por computadora. Esta disciplina se complementa con el procesamiento de imágenes, y una de las bibliotecas más utilizadas para trabajar con ambos es \emph{OpenCV}. Entre las técnicas que ofrece esta biblioteca se encuentra la coincidencia de patrones. Las redes neuronales artificiales, por su parte, constituyen otro enfoque posible dentro de la misma disciplina. Primero se presentan los conceptos generales. Luego se describen \emph{OpenCV} junto con la coincidencia de patrones y, por último, las redes neuronales artificiales.
+
+\subsection{Conceptos generales}
+
+El seguimiento ocular, conocido en inglés como \emph{eye-tracking}, es el proceso tecnológico que permite medir y registrar el punto de la mirada de una persona o el movimiento de sus ojos en relación con la cabeza. Para ello, comúnmente se utiliza como punto de referencia el centro de la pupila. A diferencia del seguimiento facial (que analiza músculos, cejas o expresiones), el seguimiento ocular se concentra estrictamente en la forma y movimientos del globo ocular (Fig. \ref{fig:eyetracking}).
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/eyetracking.png}
-    \caption{Representación gráfica del Eye-Tracking}
+    \includegraphics[width=0.45\textwidth]{figuras/eyetracking.png}
+    \caption{Representación gráfica del seguimiento ocular}
     \label{fig:eyetracking}
 \end{figure}
 
-Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Uno de estos usos directos es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
+Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Uno de estos usos directos es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital.
+
+El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+
+Usualmente, la imagen procesada es el punto de partida de la visión por computadora. Esta disciplina consiste en el análisis que realiza una máquina sobre una imagen para extraer características, interpretarlas y aprender de ellas. De este modo se simula la percepción visual humana. El seguimiento ocular, descrito anteriormente, es un claro ejemplo de un proceso de visión por computadora.
 
 En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, el seguimiento ocular se emplea para detectar hacia cuál de las opciones de respuesta a una pregunta dirige la mirada el alumno. Estas opciones se disponen de manera clara en una pantalla. Luego esa información se procesa para registrar la selección correspondiente. De este modo, el estudiante puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor ni de contar con destreza física.
 
-\section{Procesamiento de Imágenes y Visión por Computadora}
+\subsection{OpenCV y coincidencia de patrones}
 
-%Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
+Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Entre ellas se destaca \emph{OpenCV (Open Source Computer Vision Library)}, una de las bibliotecas de código abierto más utilizadas en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión por computadora. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la detección de objetos y el análisis de movimiento.
 
-\subsection{Conceptos fundamentales y biblioteca OpenCV}
-El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
-
-Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
-
-Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
-
-\subsection{Coincidencia de patrones (Template Matching)}
-La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para encontrar la ubicación de una imagen pequeña, denominada molde o plantilla (\emph{template}), dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
+Esta biblioteca también implementa la coincidencia de patrones, conocida en inglés como \emph{Template Matching}. Esta técnica permite encontrar la ubicación de una imagen pequeña, denominada molde o plantilla (\emph{template}), dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
 
 El recorrido comienza con las coordenadas \emph{X}=0 e \emph{Y}=0 de ambas imágenes alineadas, es decir, con sus esquinas superiores izquierdas superpuestas. En esa posición se realiza un cálculo matemático. Luego, la plantilla se desplaza un píxel hacia la derecha, hasta las coordenadas \emph{X}=1 e \emph{Y}=0 y el cálculo se vuelve a realizar. Este desplazamiento continúa hasta completar la primera fila. A continuación, la plantilla se alinea con la imagen de entrada una fila más abajo (\emph{X}=0, \emph{Y}=1) y el recorrido vuelve a comenzar. Esta secuencia se repite en cada fila hasta cubrir por completo la imagen de entrada (Fig. \ref{fig:templatematching2}).
 
@@ -62,18 +62,77 @@ El resultado tras todo el recorrido de la plantilla es una matriz bidimensional 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figuras/resultadotemplate.png}
+    \includegraphics[width=0.65\textwidth]{figuras/resultadotemplate.png}
     \caption{Imagen ilustrativa de una matriz de resultados de \emph{Template Matching}}
     \label{fig:resultadotemplate}
 \end{figure}
 
 Esta matriz permite obtener no solo la ubicación de la coincidencia con la plantilla, sino también su nivel de semejanza.
 
-\section{Redes Neuronales Artificiales}
+% --- Versión anterior de las secciones Seguimiento Ocular y Procesamiento de Imágenes (reemplazada por la sección unificada) ---
+%\section{Seguimiento Ocular (Eye-tracking)}
+%
+%El \emph{eye-tracking}, que se traduce literalmente como \emph{seguimiento ocular}, es el proceso tecnológico que permite medir y registrar el punto de la mirada de una persona o el movimiento de sus ojos en relación con la cabeza. Para ello, comúnmente se utiliza como punto de referencia el centro de la pupila. A diferencia del seguimiento facial (que analiza músculos, cejas o expresiones), el \emph{eye-tracking} se concentra estrictamente en la forma y movimientos del globo ocular (Fig. \ref{fig:eyetracking}).
+%
+%\begin{figure}[htbp]
+%    \centering
+%    \includegraphics[width=0.3\textwidth]{figuras/eyetracking.png}
+%    \caption{Representación gráfica del Eye-Tracking}
+%    \label{fig:eyetracking}
+%\end{figure}
+%
+%Si bien esta tecnología cuenta con décadas de investigación y ha sido ampliamente utilizada en laboratorios de psicología, neuromarketing y análisis de usabilidad, el desarrollo de hardware más accesible ha permitido expandir sus aplicaciones. Uno de estos usos directos es la \emph{interacción basada en la mirada} (\emph{gaze interaction}), donde los datos del movimiento ocular se utilizan para manipular un entorno digital. 
+%
+%En el caso del presente trabajo, orientado a la inclusión en el ámbito educativo, el seguimiento ocular se emplea para detectar hacia cuál de las opciones de respuesta a una pregunta dirige la mirada el alumno. Estas opciones se disponen de manera clara en una pantalla. Luego esa información se procesa para registrar la selección correspondiente. De este modo, el estudiante puede responder cuestionarios de opción múltiple sin necesidad de manipular un cursor ni de contar con destreza física.
+%
+%\section{Procesamiento de Imágenes y Visión por Computadora}
+%
+%%Para poner en práctica la disciplina del \emph{Eye-Tracking} existen muchas maneras. En esta sección se describirá una técnica de visión computacional llamada \emph{Coincidencia de patrones} o \emph{Template Matching}, y \emph{OpenCV}, una librería fundamental para su implementación.
+%
+%\subsection{Conceptos fundamentales y biblioteca OpenCV}
+%El procesamiento de imágenes puede definirse como una técnica que modifica una imagen de entrada, mediante algoritmos matemáticos, para obtener otra distinta a la salida. Por ejemplo, permite cambiar su resolución, recortarla, modificar su paleta de colores y varias otras operaciones. En este contexto, dichas modificaciones se realizan con el fin de acondicionar la imagen para posteriores análisis computacionales.
+%
+%Por otro lado, la visión computacional es el análisis que realiza una máquina sobre una imagen (usualmente procesada con anterioridad), para extraer características, interpretarlas y aprender de ellas. De este modo se simula la percepción visual humana. El \emph{Eye-Tracking}, descrito en secciones anteriores, es un claro ejemplo de un proceso de visión computacional.
+%
+%Lograr que una máquina interprete de manera autónoma el comportamiento de las imágenes es una tarea compleja, motivo por el cual se emplean herramientas especializadas que facilitan el proceso. Una de las más destacadas es \emph{OpenCV (Open Source Computer Vision Library)}, la biblioteca de código abierto más popular e importante en el campo del análisis visual. Fue creada por la empresa \emph{Intel} y cuenta con más de 2500 algoritmos matemáticos optimizados que sirven tanto para el procesamiento de imágenes como para la visión computacional. Entre sus principales capacidades destacan la manipulación estructural, la detección de características geométricas (como bordes, esquinas o líneas), la coincidencia de patrones, la detección de objetos y el análisis de movimiento.
+%
+%\subsection{Coincidencia de patrones (Template Matching)}
+%La coincidencia de patrones, conocida en inglés como \emph{Template Matching}, es una técnica de visión computacional diseñada para encontrar la ubicación de una imagen pequeña, denominada molde o plantilla (\emph{template}), dentro de una imagen de mayor tamaño, denominada imagen de entrada (\emph{input}). El proceso consiste en deslizar la plantilla píxel por píxel sobre la imagen de entrada, de izquierda a derecha y de arriba hacia abajo.
+%
+%El recorrido comienza con las coordenadas \emph{X}=0 e \emph{Y}=0 de ambas imágenes alineadas, es decir, con sus esquinas superiores izquierdas superpuestas. En esa posición se realiza un cálculo matemático. Luego, la plantilla se desplaza un píxel hacia la derecha, hasta las coordenadas \emph{X}=1 e \emph{Y}=0 y el cálculo se vuelve a realizar. Este desplazamiento continúa hasta completar la primera fila. A continuación, la plantilla se alinea con la imagen de entrada una fila más abajo (\emph{X}=0, \emph{Y}=1) y el recorrido vuelve a comenzar. Esta secuencia se repite en cada fila hasta cubrir por completo la imagen de entrada (Fig. \ref{fig:templatematching2}).
+%
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=1\textwidth]{figuras/templatematching2.png}
+%    \caption{Imagen ilustrativa del proceso de \emph{Template Matching}}
+%    \label{fig:templatematching2}
+%\end{figure}
+%
+%En cada posición de la plantilla, el algoritmo aplica una fórmula estadística denominada \emph{coeficiente de correlación normalizado con media cero}, presentada a continuación:
+%
+%\begin{equation}
+%    R(x,y) = \frac{\sum_{x',y'} (T(x',y') - \bar{T}) \cdot (I(x+x',y+y') - \bar{I})}{\sqrt{\sum_{x',y'} (T(x',y') - \bar{T})^2 \cdot \sum_{x',y'} (I(x+x',y+y') - \bar{I})^2}}
+%\end{equation}
+%
+%En esta fórmula, \emph{T} corresponde a la imagen de la plantilla e \emph{I} a la imagen de entrada. Ambas son matrices cuyos elementos representan sus píxeles, y su valor depende del formato de las imágenes. Los valores (x, y) son las coordenadas de referencia, en las que se alinean la plantilla y la imagen de entrada. Los valores (x', y'), en cambio, son las coordenadas de los píxeles dentro de la plantilla.
+%
+%Esta expresión se basa en el \emph{coeficiente de correlación de Pearson}. Evalúa qué tan similar es la plantilla respecto de la sección de la imagen de entrada sobre la que está superpuesta y, en función de eso, otorga un valor flotante entre $-1.0$ y $+1.0$. Un valor de $+1.0$ indica que la plantilla es idéntica a la porción de imagen analizada. Un valor de $-1.0$ significa que la plantilla tiene los colores opuestos a los de la imagen, mientras que un valor de 0 refleja que no existe correlación alguna.
+%
+%El resultado tras todo el recorrido de la plantilla es una matriz bidimensional de valores. El punto con el valor más alto indica la coordenada en la que el algoritmo encontró la mayor coincidencia (Fig. \ref{fig:resultadotemplate}).
+%
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.75\textwidth]{figuras/resultadotemplate.png}
+%    \caption{Imagen ilustrativa de una matriz de resultados de \emph{Template Matching}}
+%    \label{fig:resultadotemplate}
+%\end{figure}
+%
+%Esta matriz permite obtener no solo la ubicación de la coincidencia con la plantilla, sino también su nivel de semejanza.
 
-\subsection{Definición y funcionamiento}
 
-Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
+\subsection{Redes neuronales artificiales}
+
+Las redes neuronales artificiales son un tipo de modelo de aprendizaje automático, conocido en inglés como \emph{Machine Learning}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
 
 \begin{figure}[htbp]
 \centering
@@ -82,7 +141,7 @@ Para comprender este concepto es necesario definir previamente el \emph{Machine 
 \label{fig:machinelearning}
 \end{figure}
 
-Dentro de los modelos de ML, algunos de los más eficaces son las Redes Neuronales Artificiales. Reciben este nombre debido a que su estructura (basada en celdas o nodos interconectados para el procesamiento de información) se inspira directamente en el comportamiento biológico del sistema nervioso.
+Reciben este nombre debido a que su estructura, basada en celdas o nodos interconectados para el procesamiento de información, se inspira en el comportamiento biológico del sistema nervioso. Dentro del aprendizaje automático, se encuentran entre los modelos más utilizados para el análisis de imágenes.
 
 Estas redes organizan sus neuronas en tres niveles jerárquicos principales. La capa de entrada recibe los datos en crudo, como los píxeles de una imagen. Las capas ocultas constituyen el núcleo de procesamiento y detectan desde características básicas hasta patrones complejos. La capa de salida entrega el resultado final, como las coordenadas de una pupila (Fig. \ref{fig:redneuronal}).
 
@@ -93,31 +152,80 @@ Estas redes organizan sus neuronas en tres niveles jerárquicos principales. La 
 \label{fig:redneuronal}
 \end{figure}
 
-El aprendizaje del modelo se logra mediante el entrenamiento, un proceso iterativo donde la red evalúa datos conocidos y ajusta su matemática interna para minimizar el margen de error. Durante estos ciclos, cada neurona ejecuta una ecuación fundamental:
+El aprendizaje del modelo se logra mediante el entrenamiento, un proceso iterativo donde la red evalúa datos conocidos y ajusta sus parámetros internos para minimizar el margen de error. En cada neurona se calcula la siguiente expresión.
 
 \begin{equation}
 z = \sum w_i x_i + b
 \end{equation}
 
-Donde $x_i$ representa el dato de entrada individual, $w_i$ es el peso (la importancia relativa asignada a esa entrada específica) y \emph{b} es el sesgo o bias (una constante de adaptación algorítmica). El resultado \emph{z} es evaluado finalmente por una función de activación, la cual determina con qué intensidad la neurona transmite la señal hacia la siguiente capa.
+Donde $x_i$ representa el dato de entrada individual, $w_i$ es el peso (la importancia relativa asignada a esa entrada específica) y \emph{b} es el sesgo o \emph{bias}, un valor que también se ajusta durante el entrenamiento y que desplaza el resultado con independencia de las entradas. El resultado \emph{z} es evaluado finalmente por una función de activación, la cual determina con qué intensidad la neurona transmite la señal hacia la siguiente capa.
 
-\subsection{Tipos y arquitecturas de redes neuronales}
-
-La arquitectura del modelo varía estrictamente según la naturaleza del problema a resolver. Se distinguen tres categorías fundamentales:
+La forma en que se organizan y conectan estas capas define la arquitectura de la red, que varía según la naturaleza del problema a resolver. Se distinguen tres categorías principales.
 
 \begin{itemize}
 
-\item Prealimentadas (\emph{Feedforward}): La información viaja de forma unidireccional (de entrada a salida). Son ideales para problemas sencillos con datos livianos que no requieren memoria temporal.
+\item Prealimentadas (\emph{Feedforward}): la información viaja de forma unidireccional, de la entrada a la salida. Se utilizan en problemas sencillos con datos livianos que no requieren memoria temporal.
 
-\item Convolucionales (\emph{CNN}): Utilizan filtros matemáticos para analizar datos espaciales por secciones. Son la arquitectura por excelencia para procesar imágenes y video en tiempo real.
+\item Convolucionales (\emph{CNN}): utilizan filtros matemáticos para analizar datos espaciales por secciones. Son la arquitectura más utilizada para procesar imágenes y video.
 
-\item Recurrentes (\emph{RNN}): Poseen bucles internos que les otorgan memoria secuencial, perfectas para contextos de análisis temporal (como procesamiento de lenguaje natural o secuencias largas de video).
+\item Recurrentes (\emph{RNN}): poseen bucles internos que les otorgan memoria secuencial. Se aplican en análisis temporales, como el procesamiento de lenguaje natural o las secuencias largas de video.
 
 \end{itemize}
 
-En función de los requerimientos de este proyecto, se planteó como hipótesis inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
+En función de los requerimientos de este proyecto, se planteó como hipótesis inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el capítulo~\ref{Chapter3}.
+
+
+% --- Versión anterior de Redes Neuronales Artificiales (reemplazada) ---
+%\subsubsection{Definición y funcionamiento}
+%
+%Para comprender este concepto es necesario definir previamente el \emph{Machine Learning (ML)} o \emph{Aprendizaje automático}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=0.7\textwidth]{figuras/machinelearning.png}
+%\caption{El proceso del \emph{Machine Learning}}
+%\label{fig:machinelearning}
+%\end{figure}
+%
+%Dentro de los modelos de ML, algunos de los más eficaces son las Redes Neuronales Artificiales. Reciben este nombre debido a que su estructura (basada en celdas o nodos interconectados para el procesamiento de información) se inspira directamente en el comportamiento biológico del sistema nervioso.
+%
+%Estas redes organizan sus neuronas en tres niveles jerárquicos principales. La capa de entrada recibe los datos en crudo, como los píxeles de una imagen. Las capas ocultas constituyen el núcleo de procesamiento y detectan desde características básicas hasta patrones complejos. La capa de salida entrega el resultado final, como las coordenadas de una pupila (Fig. \ref{fig:redneuronal}).
+%
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=0.5\textwidth]{figuras/redneuronal.png}
+%\caption{Diagrama simplificado de una red neuronal}
+%\label{fig:redneuronal}
+%\end{figure}
+%
+%El aprendizaje del modelo se logra mediante el entrenamiento, un proceso iterativo donde la red evalúa datos conocidos y ajusta su matemática interna para minimizar el margen de error. Durante estos ciclos, cada neurona ejecuta una ecuación fundamental:
+%
+%\begin{equation}
+%z = \sum w_i x_i + b
+%\end{equation}
+%
+%Donde $x_i$ representa el dato de entrada individual, $w_i$ es el peso (la importancia relativa asignada a esa entrada específica) y \emph{b} es el sesgo o bias (una constante de adaptación algorítmica). El resultado \emph{z} es evaluado finalmente por una función de activación, la cual determina con qué intensidad la neurona transmite la señal hacia la siguiente capa.
+%
+%\subsubsection{Tipos y arquitecturas de redes neuronales}
+%
+%La arquitectura del modelo varía estrictamente según la naturaleza del problema a resolver. Se distinguen tres categorías fundamentales:
+%
+%\begin{itemize}
+%
+%\item Prealimentadas (\emph{Feedforward}): La información viaja de forma unidireccional (de entrada a salida). Son ideales para problemas sencillos con datos livianos que no requieren memoria temporal.
+%
+%\item Convolucionales (\emph{CNN}): Utilizan filtros matemáticos para analizar datos espaciales por secciones. Son la arquitectura por excelencia para procesar imágenes y video en tiempo real.
+%
+%\item Recurrentes (\emph{RNN}): Poseen bucles internos que les otorgan memoria secuencial, perfectas para contextos de análisis temporal (como procesamiento de lenguaje natural o secuencias largas de video).
+%
+%\end{itemize}
+%
+%En función de los requerimientos de este proyecto, se planteó como hipótesis inicial el entrenamiento e implementación de un modelo convolucional liviano, cuyo desempeño y viabilidad sobre hardware de bajos recursos se analizan en el Capítulo~\ref{Chapter3}.
+
 
 \section{Sistemas Embebidos y Control Gráfico}
+
+Los sistemas embebidos suelen construirse en torno a un microcontrolador, como los de la familia ESP32. Para mostrar interfaces gráficas con sus recursos limitados existen bibliotecas como LVGL. Primero se presentan los microcontroladores y luego las interfaces gráficas embebidas. 
 
 \subsection{Microcontroladores y familia ESP32}
 
@@ -128,7 +236,7 @@ Una familia de placas de desarrollo que ha ganado enorme popularidad en el ámbi
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.3\textwidth]{figuras/familiaesp.png}
-    \caption{Algunas placas de desarrollo de la familia \emph{ESP32}}
+    \caption{Ejemplos de placas de desarrollo de la familia \emph{ESP32}}
     \label{fig:familiaesp}
 \end{figure}
 
@@ -159,12 +267,14 @@ En el ámbito del hardware comercial de bajo costo, esta combinación de pantall
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/esp32cyd.png}
+    \includegraphics[width=0.4\textwidth]{figuras/esp32cyd.png}
     \caption{Placa de desarrollo \emph{ESP32-CYD} (vista frontal y trasera)}
     \label{fig:esp32cyd}
 \end{figure}
 
 \section{Redes y Comunicaciones}
+
+Las redes locales Wi-Fi son uno de los medios por los que pueden comunicarse los dispositivos. Esta comunicación se rige por protocolos organizados en capas, y algunos de ellos permiten transmitir video de forma continua. Primero se presentan las redes locales Wi-Fi. Luego se describen los protocolos de comunicación junto con la transmisión de video. 
 
 \subsection{Redes locales Wi-Fi}
 
@@ -172,7 +282,7 @@ El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos
 
 \begin{itemize}
     \item Modo Estación (\emph{Station} - STA): en esta configuración, el nodo inalámbrico actúa como cliente. Su función consiste en explorar el espectro de radiofrecuencia y detectar una red existente a través de su identificador (SSID). Luego se autentica mediante los protocolos de seguridad correspondientes (como WPA2/WPA3) y se asocia a un punto de acceso central para integrarse al tráfico de dicha red.
-    \item Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP): en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Emite periódicamente tramas de sincronización (\emph{beacon frames}) para anunciar la presencia de la red, autentica a los nodos que solicitan conexión y gestiona la tabla de clientes asociados. Así, crea una infraestructura de red local independiente.
+    \item Modo Punto de Acceso (\emph{Access Point} - AP o SoftAP): en este modo, el dispositivo asume el rol de concentrador e iniciador de la red. Emite periódicamente tramas de sincronización para anunciar la presencia de la red, autentica a los nodos que solicitan conexión y gestiona la tabla de clientes asociados. Así, crea una infraestructura de red local independiente.
 \end{itemize}
 
 En el marco de este trabajo, uno de los módulos del sistema se configura en modo Access Point para generar una red local cerrada e independiente, mientras que los dispositivos de los usuarios se conectan a dicha red en modo Station (Fig. \ref{fig:esp32wifi}). Esto permite la comunicación directa entre todos los componentes sin depender de un router externo ni de acceso a internet.
@@ -195,11 +305,11 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
         \item Asignación dinámica: la dirección se asigna de forma automática mediante el protocolo DHCP.
     \end{itemize}
 
-    \item Protocolo ICMP (\textit{Internet Control Message Protocol}): pertenece a la capa de Internet y permite que los dispositivos intercambien mensajes de control y de error. Su uso más conocido es el \emph{ping}, una herramienta que envía una solicitud a un dispositivo y espera su respuesta. Si la respuesta llega, el dispositivo se encuentra conectado y accesible. Además, el tiempo que demora indica la latencia de la comunicación.
+    \item Protocolo ICMP (\textit{Internet Control Message Protocol}): permite que los dispositivos intercambien mensajes de control y de error. Su uso más conocido es el \emph{ping}, una herramienta que envía una solicitud a un dispositivo y espera su respuesta. Si la respuesta llega, el dispositivo se encuentra conectado y accesible.
 
-    \item Protocolo TCP (\textit{Transmission Control Protocol}): pertenece a la capa de transporte. Antes del intercambio de datos, establece una conexión entre ambos equipos. Luego garantiza que la información llegue completa, sin alteraciones y en el mismo orden en que se envió. Si un paquete se pierde, lo vuelve a transmitir.
+    \item Protocolo TCP (\textit{Transmission Control Protocol}): antes del intercambio de datos, establece una conexión entre ambos equipos. Luego garantiza que la información llegue completa, sin alteraciones y en el mismo orden en que se envió. Si un paquete se pierde, lo vuelve a transmitir.
 
-    \item Protocolo UDP (\textit{User Datagram Protocol}): pertenece a la misma capa que TCP, pero envía los datos sin establecer una conexión previa ni confirmar su recepción. Por este motivo resulta más rápido y liviano, aunque no garantiza que los datos lleguen ni el orden en que lo hacen.
+    \item Protocolo UDP (\textit{User Datagram Protocol}): envía los datos sin establecer una conexión previa ni confirmar su recepción. Por este motivo resulta más rápido y liviano, pero es menos confiable que TCP.
 
     \item Protocolo DHCP (\textit{Dynamic Host Configuration Protocol}): asigna de forma automática una dirección IP disponible a cada equipo que se asocia a la red, lo que agiliza la incorporación de nuevos dispositivos sin requerir configuraciones individuales. Se apoya en UDP.
 
@@ -258,7 +368,7 @@ Esta modalidad es muy utilizada en los sistemas modernos para centralizar la car
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/clienteservidor.png}
-    \caption{El sistema \emph{Cliente/Servidor}}
+    \caption{Modelo \emph{Cliente/Servidor}}
     \label{fig:clienteservidor}
 \end{figure}
 
@@ -269,7 +379,7 @@ El patrón Modelo-Vista-Controlador (\emph{Model-View-Controller} - MVC) es una 
 \begin{itemize}
     \item Modelo (\emph{Model}): representa la estructura de los datos del sistema y gestiona las reglas de negocio. Se encarga de interactuar con los mecanismos de almacenamiento y persistencia para consultar, insertar, modificar o eliminar registros. Así, asegura la integridad de la información sin vincularse con la interfaz gráfica.
     \item Vista (\emph{View}): constituye la capa de presentación con la que interactúa el usuario. Su función es recibir los datos procesados y mostrarlos en un formato comprensible. Además, captura los eventos y acciones del usuario para transferirlos al Controlador.
-    \item Controlador (\emph{Controller}): actúa como intermediario entre el Modelo y la Vista. Procesa las solicitudes y eventos originados en la Vista, ejecuta la lógica correspondiente, solicita las operaciones necesarias al Modelo y actualiza la Vista con el resultado.
+    \item Controlador (\emph{Controller}): actúa como intermediario entre el Modelo y la Vista. Procesa las solicitudes y eventos que esta genera, ejecuta la lógica correspondiente, solicita las operaciones necesarias al Modelo y actualiza la Vista con el resultado.
 \end{itemize}
 
 Esta separación de responsabilidades favorece la modularidad, simplifica el mantenimiento del sistema y permite modificar la interfaz visual o el almacenamiento de datos de forma independiente sin alterar la lógica central de la aplicación. Por estas características, es un patrón muy utilizado en el desarrollo de aplicaciones web.
@@ -296,7 +406,7 @@ Al solicitar la aplicación, el navegador descarga un conjunto de archivos que p
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.65\textwidth]{figuras/arquitecturaweb2.png}
-    \caption{Arquitectura del frontend: HTML (su estructura), CSS (cómo se ve) y JavaScript (cómo funciona)}
+    \caption{Tecnologías del frontend: HTML (estructura), CSS (apariencia) y JavaScript (comportamiento)}
     \label{fig:arquitecturaweb2}
 \end{figure}
 
@@ -304,7 +414,7 @@ A medida que una aplicación suma pantallas y funciones, mantener el código fue
 
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, únicamente el componente padre puede alterar el estado del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 
-Existen diversas herramientas disponibles para implementar este esquema, entre las cuales destaca \emph{React}, una biblioteca de JavaScript creada y mantenida por \emph{Meta}. Está enfocada en la construcción de interfaces de usuario mediante componentes reutilizables. Por otra parte, \emph{Preact} se presenta como una alternativa más ligera y eficiente para entornos con recursos limitados. Creada por una comunidad independiente, esta herramienta ofrece las mismas capacidades de desarrollo que \emph{React}, pero omite características accesorias, lo que optimiza drásticamente el peso del empaquetado final (\emph{bundle}). En consecuencia, se reduce en gran medida el tamaño de los archivos estáticos que el microcontrolador debe alojar en su memoria y transferir posteriormente al navegador al momento de utilizar la interfaz.
+Existen diversas herramientas disponibles para implementar este esquema, entre las cuales destaca \emph{React}, una biblioteca de JavaScript creada y mantenida por \emph{Meta}. Está enfocada en la construcción de interfaces de usuario mediante componentes reutilizables. Por otra parte, \emph{Preact} se presenta como una alternativa más ligera y eficiente para entornos con recursos limitados. Creada por una comunidad independiente, esta herramienta ofrece las mismas capacidades de desarrollo que \emph{React}, pero omite características accesorias, lo que optimiza drásticamente el peso del empaquetado final. En consecuencia, se reduce en gran medida el tamaño de los archivos estáticos que el microcontrolador debe alojar en su memoria y transferir posteriormente al navegador al momento de utilizar la interfaz.
 
 
 %Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
@@ -400,7 +510,7 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
 \emph{SQLite} es un motor de base de datos relacional embebido de código abierto ampliamente utilizado que implementa el estándar SQL. Sus características teóricas esenciales son:
 
 \begin{itemize}
-    \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, lo que elimina la necesidad de configurar, administrar o mantener un servicio en segundo plano.
+    \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, lo que elimina la necesidad de instalar, configurar y mantener un servidor de base de datos aparte.
     \item Almacenamiento en archivo único: la base de datos completa (esquema, tablas, índices y datos) se guarda dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
     \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
     \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
