@@ -1090,7 +1090,22 @@ El dispositivo del alumno realiza una consulta cada dos segundos. En ella inform
 
 La aplicación web reúne todo el software que permite a los usuarios interactuar con el sistema. Se organiza en tres capas, que son la base de datos, el \emph{backend} y el \emph{frontend}. Las dos primeras se ejecutan en el módulo central. El \emph{backend} forma parte del \emph{firmware}, escrito en C++, y la base de datos es un archivo \emph{SQLite} ubicado en la tarjeta microSD, que el propio \emph{firmware} lee y escribe. El \emph{frontend}, en cambio, funciona en el navegador de cada dispositivo cliente.
 
-\keyword{(Diagrama de la arquitectura de la aplicación web) (Natty)}
+\begin{table}[H]
+    \centering
+    \caption{Capas de una aplicación web}
+    \label{tab:capas_app_web}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{0.12\textwidth}|>{\raggedright\arraybackslash}p{0.14\textwidth}|>{\raggedright\arraybackslash}p{0.18\textwidth}|>{\raggedright\arraybackslash}p{0.14\textwidth}|>{\raggedright\arraybackslash}p{0.10\textwidth}|>{\raggedright\arraybackslash}p{0.16\textwidth}|}
+        \hline
+        \textbf{Capa} & \textbf{Ejecución} & \textbf{Ubicación} & \textbf{Formato} & \textbf{Lenguaje} & \textbf{Función} \\
+        \hline
+        \emph{Base de datos} & En Módulo Central & Tarjeta SD & Archivo .db & SQL & Almacenamiento de datos persistente \\
+        \hline
+        \emph{Backend} & En Módulo Central & Firmware del Módulo Central & Programa en C++ & C++ & Interconecta \emph{Frontend} con \emph{Base de datos} aplicando la lógica de negocio \\
+        \hline
+        \emph{Frontend} & En el dispositivo cliente & En el Módulo Central, pero se transmite al navegador & Programa empaquetado & HTML, CSS y JavaScript & Ejecuta la interfaz de usuario \\
+        \hline
+    \end{tabular}
+\end{table}
 
 A continuación se describe cada capa, en el orden en que se apoyan unas sobre otras. Primero se presenta la base de datos, luego el \emph{backend} y, por último, el \emph{frontend}.
 
@@ -1469,11 +1484,15 @@ Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 
 \subsubsection{Estructura interna}
 
-El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones. Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (en el caso del alumno, únicamente en posición horizontal).
+El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones (Fig. \ref{fig:estructurafront2}). Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (en el caso del alumno, únicamente en posición horizontal).
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/estructurafront2.png}
+    \caption{Estructura interna del \emph{Frontend}}
+    \label{fig:estructurafront2}
+\end{figure}
 
-
-\keyword{Imagen de un diagrama con la estructura interna}
 
 Los componentes se organizan de forma jerárquica: en la raíz se encuentra el componente principal que contiene a todas las pantallas. A su vez, algunas de ellas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios contiene el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene y es ella la que realiza la petición al servidor y actualiza la lista.
 
@@ -1487,9 +1506,15 @@ Por último, se cuenta con un módulo independiente de paginación, utilizado pa
 
 \subsubsection{Recepción de datos y ejecución del detector}
 
-En la sección 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos.
+En la sección 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos (Fig. \ref{fig:recepciondedatos}).
 
-\keyword{Alguna imagen que ilustre todo esto}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/recepciondedatos.png}
+    \caption{Sistema de ejecución de la aplicación web}
+    \label{fig:recepciondedatos}
+\end{figure}
+
 
 \keyword{Carga de la aplicación}
 
@@ -1743,7 +1768,7 @@ La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un conte
 
 Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/vistabienvenida.png}
     \caption{Vista de bienvenida de la interfaz táctil}
@@ -1754,7 +1779,7 @@ Es la primera vista que se muestra al encender el equipo ya configurado. Present
 
 Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/vistaestado.png}
     \caption{Vista de estado de la interfaz táctil}
