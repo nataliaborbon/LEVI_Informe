@@ -75,8 +75,6 @@ Capítulo 2
 
 Capítulo 3
 
-	3.3
-	Diagrama de bloques -> AMBOS
 	3.5
 		3.5.1 Red local -> NATTY (Quizas se puede omitir al poner imágenes anteriores)
 		3.5.2 Acceso con icono nuevo -> JOKIN
@@ -86,7 +84,7 @@ Capítulo 3
 		3.6.3 Pantallas del alumno -> AMBOS
 		3.6.3 Pantallas de profesor/tutor -> AMBOS
 	3.7 
-	Vistas de examen en espera y config inicial -> AMBOS
+	Vistas de interfaz tactil -> AMBOS
 
 	3.9
 	Modelos 3D de carcasa -> AMBOS
