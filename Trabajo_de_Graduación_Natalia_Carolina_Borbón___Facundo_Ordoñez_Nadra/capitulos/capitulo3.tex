@@ -1041,9 +1041,14 @@ En esta sección se describe la infraestructura de comunicación del sistema. Pr
 
 El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen hasta tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
 
-Dentro de esta red, el módulo central ocupa la dirección 192.168.4.1, que funciona además como puerta de enlace. El módulo de captura, en cambio, utiliza una dirección IP estática, la 192.168.4.50. Así, el dispositivo del alumno siempre encuentra el video en la misma ubicación. Los dispositivos cliente, por su parte, reciben una dirección de forma dinámica al conectarse. El módulo central asigna estas direcciones en orden creciente, a partir de la 192.168.4.2. En consecuencia, para la cámara se eligió un valor alejado del inicio. Como la red tolera como máximo cuatro conexiones, resulta prácticamente imposible que la asignación dinámica alcance esa dirección y que dos equipos compartan la misma.
+Dentro de esta red, el módulo central ocupa la dirección 192.168.4.1, que funciona además como puerta de enlace (Fig. \ref{fig:red_wifi}). El módulo de captura, en cambio, utiliza una dirección IP estática, la 192.168.4.50. Así, el dispositivo del alumno siempre encuentra el video en la misma ubicación. Los dispositivos cliente, por su parte, reciben una dirección de forma dinámica al conectarse. El módulo central asigna estas direcciones en orden creciente, a partir de la 192.168.4.2. En consecuencia, para la cámara se eligió un valor alejado del inicio. Como la red tolera como máximo cuatro conexiones, resulta prácticamente imposible que la asignación dinámica alcance esa dirección y que dos equipos compartan la misma.
 
-\keyword{(Imagen de la red Wi-Fi local) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/red_wifi.pdf}
+    \caption{Red Wi-Fi local del sistema}
+    \label{fig:red_wifi}
+\end{figure}
 
 Ambas placas utilizan un archivo de configuración con los mismos parámetros de red. Este archivo define el nombre y la contraseña de la red, junto con las direcciones IP de cada módulo. De esta forma, el módulo de captura dispone de las credenciales necesarias para conectarse, y cada placa conoce de antemano la dirección de la otra. Al encenderse, el módulo de captura se une a la red en modo estación. Si la conexión falla, vuelve a intentarlo hasta lograrla.
 
@@ -1055,36 +1060,49 @@ Por otro lado, el módulo de captura se encuentra en este último caso cada vez 
 
 Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde su navegador.
 
-El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene (Fig \ref{fig:acceso}). Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
+El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene (Fig. \ref{fig:red_wifi}). Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
 
 En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única (\emph{Single Page Application}). Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con esa misma página, que luego muestra la pantalla adecuada.
 
 El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que el módulo central entrega desde la tarjeta microSD. Debido a su tamaño, es el archivo más pesado que transmite el sistema. Por este motivo, el navegador lo guarda en su almacenamiento, de modo que en los accesos siguientes no vuelve a solicitarlo.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figuras/acceso.png}
-    \caption{Acceso a la aplicación desde un navegador en un dispositivo móvil}
-    \label{fig:acceso}
-\end{figure}
+% Figura comentada: redundante con el esquema de la red Wi-Fi (fig:red_wifi), que ya muestra el acceso mediante levi.local.
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.5\textwidth]{figuras/acceso.png}
+%    \caption{Acceso a la aplicación desde un navegador en un dispositivo móvil}
+%    \label{fig:acceso}
+%\end{figure}
 
 \subsection{Transmisión de video}
 
-El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno.
+El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno (Fig. \ref{fig:transmision_video}).
 
-La cámara opera con una señal de reloj de 10 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua, y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
 
-La aplicación web solicita el video únicamente durante la calibración y el examen. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía los fotogramas de manera continua. Fuera de esas etapas, la aplicación cierra la conexión y la cámara deja de transmitir, por lo que no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo, la transmisión también se detiene hasta recibir una nueva solicitud.
+La aplicación web solicita el video únicamente durante la calibración y el examen. Al recibir la solicitud, el servidor enciende el LED infrarrojo y descarta los tres primeros fotogramas, que pueden estar desactualizados o tener la exposición sin ajustar. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía el fotograma más reciente de manera continua, con un máximo de 20 por segundo. Como la aplicación procesa 15 por segundo, siempre dispone de uno nuevo. Fuera de esas etapas, la aplicación cierra la conexión, la cámara deja de transmitir y el LED se apaga. Así, no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo o fallan diez capturas seguidas, la transmisión también se detiene hasta recibir una nueva solicitud.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/transmision_video.pdf}
+    \caption{Transmisión de video desde el módulo de captura}
+    \label{fig:transmision_video}
+\end{figure}
 
 \subsection{Comunicación con el módulo central}
 
-Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación. La información viaja en formato JSON, descrito en el capítulo 2. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
+Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación (Fig. \ref{fig:comunicacion_central}). La información viaja en formato JSON, descrito en el capítulo 2. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
 
 La comunicación siempre se inicia desde los dispositivos cliente. Esto se debe a que HTTP opera bajo el modelo cliente-servidor presentado en el capítulo 2, en el que el cliente es quien inicia cada intercambio. El módulo central solo puede enviar información como respuesta a una solicitud, y no por iniciativa propia. Por este motivo, los dispositivos consultan al servidor de manera periódica para mantenerse actualizados.
 
-El dispositivo del alumno realiza una consulta cada dos segundos. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los demás usuarios, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
+El dispositivo del alumno realiza una consulta cada dos segundos mientras espera o realiza un cuestionario. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los profesores y los tutores, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
 
-\keyword{(Imagen de la comunicación con el módulo central) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/comunicacion_central.pdf}
+    \caption{Comunicación entre los dispositivos cliente y el módulo central}
+    \label{fig:comunicacion_central}
+\end{figure}
 
 \section{Aplicación web}
 
@@ -1102,7 +1120,7 @@ La base de datos almacena de forma permanente la información del sistema, que i
 
 La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se lo eligió porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
 
-La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite}. Allí se definieron las tablas, sus campos, las relaciones, las restricciones y los índices. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear esta estructura al iniciar, sino que abre directamente el archivo existente.
+La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite} (Fig. \ref{fig:dbbrowser}). Allí se definieron las tablas, sus campos, las relaciones, las restricciones y los índices. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear esta estructura al iniciar, sino que abre directamente el archivo existente.
 
 Los índices se definieron sobre las columnas que el sistema consulta con mayor frecuencia, lo que además acelera los borrados en cascada:
 
@@ -1145,7 +1163,12 @@ Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento d
 %\item Tiempo de espera (\emph{busy\_timeout}): si la base está ocupada, la operación espera hasta tres segundos antes de fallar.
 %\end{itemize}
 
-\keyword{(Captura de DB Browser for SQLite con la estructura de la base) (Natty)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figuras/dbbrowser.png}
+    \caption{Estructura de la base de datos en \emph{DB Browser for SQLite}}
+    \label{fig:dbbrowser}
+\end{figure}
 
 \subsubsection{Estructura de las tablas}
 

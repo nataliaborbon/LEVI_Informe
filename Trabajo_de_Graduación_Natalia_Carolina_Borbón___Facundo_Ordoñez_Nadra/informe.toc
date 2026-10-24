@@ -58,40 +58,40 @@
 \contentsline {subsubsection}{Pantalla y panel táctil}{47}{section*.115}%
 \contentsline {section}{\numberline {3.5}Red y comunicación}{49}{section.118}%
 \contentsline {subsection}{\numberline {3.5.1}Red Wi-Fi local}{49}{subsection.119}%
-\contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{50}{subsection.120}%
+\contentsline {subsection}{\numberline {3.5.2}Acceso a la aplicación}{50}{subsection.121}%
 \contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{51}{subsection.122}%
-\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{51}{subsection.123}%
-\contentsline {section}{\numberline {3.6}Aplicación web}{52}{section.124}%
-\contentsline {subsection}{\numberline {3.6.1}Base de datos}{52}{subsection.125}%
-\contentsline {subsubsection}{Creación y configuración}{52}{section*.126}%
-\contentsline {subsubsection}{Estructura de las tablas}{53}{section*.127}%
-\contentsline {subsection}{\numberline {3.6.2}Backend}{56}{subsection.130}%
-\contentsline {subsubsection}{Modelos}{56}{section*.131}%
-\contentsline {subsubsection}{Controladores}{57}{section*.132}%
-\contentsline {subsubsection}{Servicios}{58}{section*.133}%
-\contentsline {subsubsection}{Repositorios}{59}{section*.134}%
-\contentsline {subsubsection}{Gestión de sesiones}{59}{section*.135}%
-\contentsline {subsection}{\numberline {3.6.3}Frontend}{60}{subsection.136}%
-\contentsline {subsubsection}{Entorno y herramientas}{60}{section*.137}%
-\contentsline {subsubsection}{Estructura interna}{61}{section*.139}%
-\contentsline {subsubsection}{Recepción de datos y ejecución del detector}{62}{section*.140}%
-\contentsline {subsubsection}{Pantallas}{63}{section*.141}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{65}{section.143}%
-\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{65}{subsection.144}%
-\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{66}{subsection.145}%
-\contentsline {subsection}{\numberline {3.7.3}Vistas}{66}{subsection.146}%
-\contentsline {section}{\numberline {3.8}Alimentación}{68}{section.149}%
-\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{68}{subsection.150}%
-\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{69}{subsection.151}%
-\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{73}{subsection.157}%
-\contentsline {subsubsection}{Recarga y protección}{73}{section*.158}%
-\contentsline {subsubsection}{Estabilización de voltaje}{76}{section*.170}%
-\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{79}{section*.177}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{80}{section.178}%
-\contentsline {subsection}{\numberline {3.9.1}Montaje}{80}{subsection.179}%
-\contentsline {subsubsection}{Conexiones y PCB}{80}{section*.180}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{83}{section.186}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{84}{chapter.187}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{84}{section.188}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{84}{section.189}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{85}{section.190}%
+\contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{52}{subsection.124}%
+\contentsline {section}{\numberline {3.6}Aplicación web}{53}{section.126}%
+\contentsline {subsection}{\numberline {3.6.1}Base de datos}{53}{subsection.127}%
+\contentsline {subsubsection}{Creación y configuración}{53}{section*.128}%
+\contentsline {subsubsection}{Estructura de las tablas}{54}{section*.130}%
+\contentsline {subsection}{\numberline {3.6.2}Backend}{57}{subsection.133}%
+\contentsline {subsubsection}{Modelos}{57}{section*.134}%
+\contentsline {subsubsection}{Controladores}{58}{section*.135}%
+\contentsline {subsubsection}{Servicios}{59}{section*.136}%
+\contentsline {subsubsection}{Repositorios}{60}{section*.137}%
+\contentsline {subsubsection}{Gestión de sesiones}{60}{section*.138}%
+\contentsline {subsection}{\numberline {3.6.3}Frontend}{61}{subsection.139}%
+\contentsline {subsubsection}{Entorno y herramientas}{61}{section*.140}%
+\contentsline {subsubsection}{Estructura interna}{62}{section*.142}%
+\contentsline {subsubsection}{Recepción de datos y ejecución del detector}{63}{section*.143}%
+\contentsline {subsubsection}{Pantallas}{64}{section*.144}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{66}{section.146}%
+\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{66}{subsection.147}%
+\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{67}{subsection.148}%
+\contentsline {subsection}{\numberline {3.7.3}Vistas}{67}{subsection.149}%
+\contentsline {section}{\numberline {3.8}Alimentación}{69}{section.152}%
+\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{69}{subsection.153}%
+\contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{70}{subsection.154}%
+\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{74}{subsection.160}%
+\contentsline {subsubsection}{Recarga y protección}{74}{section*.161}%
+\contentsline {subsubsection}{Estabilización de voltaje}{77}{section*.173}%
+\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{80}{section*.180}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{81}{section.181}%
+\contentsline {subsection}{\numberline {3.9.1}Montaje}{81}{subsection.182}%
+\contentsline {subsubsection}{Conexiones y PCB}{81}{section*.183}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{84}{section.189}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{85}{chapter.190}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{85}{section.191}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{85}{section.192}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{86}{section.193}%

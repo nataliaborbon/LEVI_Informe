@@ -8,28 +8,18 @@ Tareas:
 
 Natty:
 
-- Explicar la limitación a 4 conexiones disponibles
-
-- En la sección 3.4 (Módulo central), agregar el hardware de la pantalla después de "integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD": pantalla LCD TFT de 320x240 píxeles, comunicada por SPI mediante el controlador ILI9341, y panel táctil resistivo con el controlador XPT2046. Al hacerlo, cambiar "Este chip resulta suficiente" por "El ESP32 clásico resulta suficiente", porque "este chip" queda lejos del ESP32.
-
-- Agregar conexión SD
+- Revisar si el motivo del límite de 4 conexiones en 3.5.1 ("cada dispositivo conectado ocupa parte de su memoria, que es acotada") sigue valiendo con la PSRAM de la ONX3248G035.
 
 - Agregar explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección del mapa de memoria.
 
 
-- Citar la fuente de las imágenes adaptadas del capítulo 2: saltedhash.png (diagrama de Mohamed Rimsan) y tcpip.png (curso de Cisco Networking Academy).
+- Citar la fuente de las imágenes adaptadas del capítulo 2: saltedhash.png (diagrama de Mohamed Rimsan) y tcpip.png (curso de Cisco Networking Academy). Citar también la foto de la ONX3248G035 (onx3248g035.png, del fabricante).
 
-- Código (S3_como_sustituta): sacar la creación de índices del firmware (_crearIndices en DatabaseManager.cpp) y definir los cinco índices en DB Browser for SQLite (idx_opciones_idPregunta, idx_preguntas_idCuestionario, idx_preguntas_idOpcionCorrecta, idx_preguntas_idOpcionElegida e idx_cuestionarios_en_progreso, este último parcial: WHERE estado = 'en_progreso'). Exportar el levi.db nuevo y cargarlo en cada microSD. El informe (3.6.1, Creación y configuración) ya dice que los índices vienen en el archivo.
-
-- Revisar todas las intros del capítulo 2.
-
-- Capítulo 2: agregar una introducción a cada sección. Por ahora solo la tiene "Arquitectura de una aplicación web" (su intro es el párrafo que antes abría la subsección del mismo nombre).
+- 3.7 (vista de bienvenida): justifica el QR estático porque generarlo "habría ocupado RAM". Con la PSRAM ese motivo ya no vale. Revisar cuando se decida si el QR queda estático o lo genera la placa (esperar a que Jokin termine con 3.7).
 
 - Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
 
 - Ver donde colocar las reglas de negocio. Si quedan en el service, o si no quedan, ¿Qué va en los services?
-
-- 3.3.1 (Umbral de oscuridad y brillantez): Imagen de centroide
 
 
 
@@ -77,13 +67,10 @@ Capítulo 3
 
 	3.3
 	Diagrama de bloques -> AMBOS
-		3.3.3 Mapa de memoria -> NATTY
 	3.5
-		3.5.1 Red local -> NATTY
 		3.5.4 Comunicación con módulo central (HTTP) -> NATTY
 	3.6
 	Arquitectura de aplicación web -> AMBOS
-		3.6.1 DB Browser for SQLite con estructura de base -> NATTY
 		Acceso con icono nuevo -> JOKIN
 		3.6.3 Estructura del front -> JOKIN
 		3.6.3 Recepción de datos -> JOKIN
