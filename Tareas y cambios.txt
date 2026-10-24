@@ -65,23 +65,12 @@ Capítulo 2
 
 Capítulo 3
 
-	3.3
-	Diagrama de bloques -> AMBOS
-	3.5
-		3.5.4 Comunicación con módulo central (HTTP) -> NATTY
 	3.6
-	Arquitectura de aplicación web -> AMBOS
-		Acceso con icono nuevo -> JOKIN
-		3.6.3 Estructura del front -> JOKIN
-		3.6.3 Recepción de datos -> JOKIN
 		3.6.3 Pantallas del alumno -> AMBOS
 		3.6.3 Pantallas de profesor/tutor -> AMBOS
 	3.7 
-	Vistas de examen en espera y config inicial -> AMBOS
-	3.8
+	Vistas de interfaz tactil -> AMBOS
 
-		3.8.3 Buck-Boost -> JOKIN
-		3.8.3 IP5306 -> JOKIN
 	3.9
 	Modelos 3D de carcasa -> AMBOS
 	Conexiones a pines de LED, switch, resistencia, etc? -> AMBOS
