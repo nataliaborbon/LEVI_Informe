@@ -8,8 +8,6 @@ Tareas:
 
 Natty:
 
-- Revisar si el motivo del límite de 4 conexiones en 3.5.1 ("cada dispositivo conectado ocupa parte de su memoria, que es acotada") sigue valiendo con la PSRAM de la ONX3248G035.
-
 - Agregar explicación de las claves maestras guardadas en la NVS, es decir, los criterios de por qué se usan (el sistema no tiene internet para recuperar contraseñas por correo, y evitan que cualquiera conectado a la red cree una cuenta). En la sección del mapa de memoria.
 
 
@@ -19,23 +17,15 @@ Natty:
 
 - Backend no tiene ninguna imagen y son dos paginas medio densas. Fijarse si en alguna se la puede cortar con un diagrama.
 
-- Ver donde colocar las reglas de negocio. Si quedan en el service, o si no quedan, ¿Qué va en los services?
-
-
+- Cambiar en el código la configuración compartida de la red para que no diga IP_CYD
 
 Jokin:
 
-- Añadir imágenes etiquetadas hasta 3.5
-
 - Sacar imágenes del sistema funcionando
 
-- 3.3.1 (TensorFlow Lite): TFlite fallando ==> Top 10 errores
+- Cambiar imágenes de layouts.
 
-- OBLIGATORIO: sacar del frontend el ping a la cámara. En PantallaAlumno.jsx (efecto cameraHeartbeat) se llama cada 2 segundos a pingCamara() de services/api.js, que pide /api/camara/ping al módulo central, pero esa ruta no existe en el backend (siempre responde 404). Eliminar la función pingCamara de api.js y el efecto que la usa, y volver a compilar y cargar el front en el módulo central.
-
-- "Estructura interna" en front: Me parece bien
-
-- Cambiar imágenes de layouts
+- Sacar imágenes de las vistas.
 
 
 
