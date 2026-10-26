@@ -1564,11 +1564,12 @@ La conexión se abre al ingresar a la calibración o al examen y se cierra al sa
 
 \emph{Ejecución del seguimiento}
 
-Una vez compilada, la biblioteca pone sus funciones a disposición del código \emph{JavaScript} de la aplicación, que las invoca como si fueran propias. Los cálculos pesados, como la conversión a escala de grises o la comparación de plantillas, se ejecutan en el código compilado de la biblioteca. \emph{JavaScript}, en cambio, solo coordina el proceso y actualiza la interfaz con los resultados.
 
-Para trabajar con las imágenes, \emph{OpenCV.js} las representa como matrices ubicadas en una zona de memoria propia, separada de la que administra el navegador. Por este motivo, la aplicación reserva una única vez las matrices del fotograma, del recorte y de su versión en escala de grises y las reutiliza en cada ciclo. Las matrices temporales, en cambio, se liberan de forma explícita después de cada uso, ya que el navegador no las elimina por sí solo. Sin esta precaución, la memoria ocupada crecería con cada fotograma.
+Una vez compilada, la biblioteca pone sus funciones a disposición de la aplicación, cuyo código \emph{JavaScript} las invoca de forma nativa. Las operaciones de alta carga computacional, como la conversión a escala de grises o la comparación de plantillas, ocurren dentro del entorno optimizado de la biblioteca. El código \emph{JavaScript}, por su parte, se limita a coordinar el flujo de ejecución y a reflejar los resultados en la interfaz visual.
 
-Las plantillas obtenidas en la calibración también se conservan como matrices de \emph{OpenCV.js}. Para guardarlas en el navegador se convierten en imágenes y, al volver a la pantalla del alumno, se transforman nuevamente en matrices.
+Para procesar las imágenes, \emph{OpenCV.js} las representa como matrices y las aloja en una partición de memoria exclusiva, fuera del alcance del navegador. Como este espacio reservado resulta demasiado reducido para retener múltiples fotogramas a la vez, la aplicación genera las matrices principales (el fotograma completo, el recorte ocular y la versión monocromática) una única vez y las reescribe en cada ciclo continuo. Sin embargo, los cálculos internos de la biblioteca exigen la creación de matrices temporales. Al finalizar cada cálculo se convierten en memoria residual, inalcanzable para la limpieza automática del navegador. Por lo tanto, el código las libera de manera explícita tras cada uso.
+
+Respecto a las plantillas obtenidas en la calibración, el almacenamiento del navegador no admite el formato matricial de \emph{OpenCV.js}. Para guardarlas, el sistema las convierte a un formato de imagen estándar. Luego, al cargar la pantalla de examen del alumno, el proceso se invierte. El programa recupera las imágenes guardadas y las reconstruye como matrices para que el algoritmo de detección funcione de forma correcta.
 
 \subsubsection{Pantallas}
 
