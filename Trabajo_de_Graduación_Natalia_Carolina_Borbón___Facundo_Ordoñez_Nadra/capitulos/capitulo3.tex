@@ -1888,20 +1888,21 @@ Esta vista aparece solo cuando la NVS no contiene los datos de configuración, c
 \section{Alimentación}
 \label{sec:alimentacion}
 
-En esta sección se detalla el sistema de alimentación autónomo del proyecto. Primero se repasan los requisitos establecidos en el Capítulo 1 y luego se presentan algunas soluciones propuestas. Finalmente, se explora en profundidad la solución elegida y su diseño físico.
+Esta sección detalla el sistema de energía autónomo del proyecto. Primero se repasan los requisitos establecidos en el Capítulo 1 y las soluciones propuestas para el diseño inicial. Luego se profundiza en la opción elegida y su arquitectura física. Finalmente, se expone el circuito de alimentación definitivo del módulo central, debido a su cambio de \emph{hardware} explicado en la sección 3.4.
 
 \subsection{Requisitos previos}
 
 Entre las premisas del proyecto se estableció que el dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la alimentación directa mediante cables a través de los puertos USB integrados en los microcontroladores. En su lugar, se diseñó un sistema propio a partir de fuentes de energía independientes.
 
-La solución adoptada se basa en el uso de baterías de litio, un estándar muy común en equipos electrónicos de bajo consumo. Aunque presentan un costo inicial más elevado, su capacidad de recarga evita que el usuario deba adquirir repuestos a corto plazo.
+Al principio, esta solución abarcaba tanto el módulo de captura como el central. Sin embargo, el cambio de \emph{hardware} en el módulo central (explicado en la sección 3.4) alteró este planteamiento. La nueva placa de desarrollo incluye un circuito de alimentación propio. Como consecuencia, uno de los circuitos proyectados en un inicio quedó en desuso. A continuación se describe el diseño original de ambos sistemas y luego se detalla el circuito integrado de la nueva placa.
 
-La energía suministrada por estas celdas requiere un acondicionamiento mediante otros componentes electrónicos. Esto garantiza la tensión continua y estable que exigen los microcontroladores. Cada módulo del sistema tendrá su propio circuito de alimentación independiente, para evitar enlazarlos mediante un cable y otorgar mayor libertad de movimiento. 
-En esencia, ambos circuitos se diseñaron exactamente igual, puesto que los dos módulos utilizan el mismo chip.
+La solución adoptada se basa en el uso de baterías de litio, un estándar habitual en equipos electrónicos de bajo consumo. Aunque presentan un costo inicial más elevado, su capacidad de recarga evita que el usuario deba adquirir repuestos a corto plazo.
+
+La energía suministrada por estas celdas requiere un acondicionamiento a través de componentes electrónicos adicionales. Esto garantiza la tensión continua y estable que exigen los microcontroladores. Cada módulo del sistema posee su propio circuito de alimentación independiente. Esta separación evita el uso de cables cruzados y otorga mayor libertad de movimiento. En el diseño inicial, ambos circuitos se idearon de forma idéntica, puesto que los dos módulos utilizan el mismo chip.
 
 Una vez definida la fuente de energía, surgen dos desafíos adicionales. Se requiere una forma para recargar las baterías de manera sencilla y además un método para estabilizar la señal de alimentación. Esto último resulta crítico, dado que el microcontrolador \emph{ESP32} opera con voltajes de 3,3 V o 5 V sumamente precisos. Una variación en este suministro puede provocar fallos de ejecución, reinicios inesperados o daños permanentes en el \emph{hardware}.
 
-A continuación se analizan cuatro alternativas para resolver estos inconvenientes, tomando como base el uso de baterías de litio en formato 18650 con una capacidad de 3000 mAh.
+Para resolver estos inconvenientes, se analizan a continuación cuatro alternativas. Todas parten de la base de utilizar baterías de litio en formato 18650 con una capacidad de 3000 mAh.
 
 \subsection{Soluciones propuestas}
 

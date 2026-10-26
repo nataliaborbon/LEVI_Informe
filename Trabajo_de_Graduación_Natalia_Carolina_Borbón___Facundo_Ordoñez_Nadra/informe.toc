@@ -89,12 +89,13 @@
 \contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{74}{subsection.167}%
 \contentsline {subsubsection}{Recarga y protección}{74}{section*.168}%
 \contentsline {subsubsection}{Estabilización de voltaje}{77}{section*.180}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{80}{section.187}%
-\contentsline {subsection}{\numberline {3.9.1}Montaje}{80}{subsection.188}%
-\contentsline {subsubsection}{Conexiones y PCB}{80}{section*.189}%
-\contentsline {subsubsection}{Componentes a utilizar en el dispositivo final}{83}{section*.195}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{84}{section.196}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{85}{chapter.197}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{85}{section.198}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{85}{section.199}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{86}{section.200}%
+\contentsline {subsection}{\numberline {3.8.4}Circuito de carga del ONX}{81}{subsection.187}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{81}{section.188}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{81}{subsection.189}%
+\contentsline {subsection}{\numberline {3.9.2}PCB}{81}{subsection.190}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{81}{subsection.191}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{84}{section.197}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{85}{chapter.198}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{85}{section.199}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{85}{section.200}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{86}{section.201}%
