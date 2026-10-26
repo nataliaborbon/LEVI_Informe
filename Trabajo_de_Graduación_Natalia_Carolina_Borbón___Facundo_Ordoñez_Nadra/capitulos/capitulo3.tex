@@ -350,9 +350,13 @@ A continuación se desarrollan los tres métodos evaluados.
 
 Este método de visión computacional clásica consiste en capturar una imagen en escala de grises de forma continua para analizar sus patrones de oscuridad (intensidad lumínica) en tiempo real.
 
-Cuando se toma una imagen del ojo, el punto más oscuro suele ser la pupila (Figura \ref{fig:oscuridadpupila}). El resto del cuadro presenta porciones irregulares con tonos grises más claros. El algoritmo aprovecha este contraste extremo para localizar las coordenadas pupilares y, a partir de ellas, inferir la dirección de la mirada.
+Al tomar una imagen del ojo, el punto más oscuro suele ser la pupila (Figura \ref{fig:oscuridadpupila}). El resto del cuadro presenta porciones irregulares con tonos grises más claros. El algoritmo aprovecha este contraste extremo para localizar las coordenadas pupilares y, a partir de ellas, inferir la dirección de la mirada.
 
-Para entender este método, se debe aclarar antes cómo el microcontrolador procesa una imagen. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado y estructurado como una matriz bidimensional. En formato de escala de grises, cada elemento de esta matriz contiene un número entero entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial (un 0 equivale a oscuridad absoluta y 255 a saturación blanca).
+Para entender este método, conviene aclarar antes cómo el microcontrolador procesa una imagen. Al capturar un fotograma, el \emph{ESP32} lo almacena en un \emph{framebuffer}, es decir, un bloque de memoria reservado y estructurado como una matriz bidimensional. En formato de escala de grises, cada elemento de esta matriz contiene un número entero entre 0 y 255. Este valor representa la intensidad lumínica del píxel en esa posición espacial (un 0 equivale a oscuridad absoluta y 255 a saturación blanca).
+
+Con el fin de intensificar el contraste y eliminar posibles sombras indeseadas, el sistema incorpora un diodo emisor de luz infrarroja (LED IR) como fuente de iluminación complementaria. Debido a que su longitud de onda supera a la del espectro visible, esta radiación resulta imperceptible para el ojo humano, aunque los sensores fotográficos digitales sí logran captarla. Esta característica proporciona una iluminación constante que no encandila ni genera fatiga visual al usuario durante su funcionamiento.
+
+Cabe destacar que el sensor del \emph{ESP32-CAM} incluye de fábrica un filtro físico bloqueador de infrarrojos, por lo que fue necesario retirarlo manualmente. Tras este procedimiento, el LED IR se posicionó de forma adyacente a la lente de la cámara para asegurar una incidencia directa sobre la región ocular.
 
 \begin{figure}[H]
     \centering
@@ -361,9 +365,9 @@ Para entender este método, se debe aclarar antes cómo el microcontrolador proc
     \label{fig:oscuridadpupila}
 \end{figure}
 
-El algoritmo realiza un barrido inicial, en el que revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Como depender de un único píxel comprometería la estabilidad del sistema, se establece un umbral de oscuridad dinámico. De esta manera, el programa no aísla un solo punto, sino toda una región cuyos valores caen por debajo de dicho límite.
+El algoritmo realiza un barrido inicial donde revisa cada píxel para identificar el valor de intensidad mínimo (el punto más oscuro del fotograma). Como depender de un único píxel comprometería la estabilidad del sistema, se establece un umbral de oscuridad dinámico. De esta manera, el programa no aísla un solo punto, sino toda una región cuyos valores caen por debajo de dicho límite.
 
-Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la pupila, el programa ejecuta un segundo barrido. Éste calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se sumarían todas las coordenadas para luego dividirlas por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor es su peso en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema. Otorga una influencia dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por sombras periféricas o pestañas que ingresaron dentro del umbral de detección (grises más claros). En la figura \ref{fig:umbraloscuridad} se ilustra un ejemplo de este método en funcionamiento.
+Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la pupila, el programa ejecuta un segundo barrido. Este calcula las coordenadas centrales de la región mediante un centroide ponderado. En un promedio simple, se sumarían todas las coordenadas para luego dividirlas por la cantidad de píxeles detectados. En cambio, el centroide ponderado asigna a cada coordenada un peso en función de su nivel de oscuridad. Mientras más oscuro es un píxel, mayor resulta su influencia en la ecuación final. Esta ponderación es fundamental para la estabilidad del sistema: otorga un peso dominante al núcleo de la pupila (altamente oscuro) y reduce las desviaciones causadas por otros elementos captados dentro del umbral de detección (grises más claros). En la figura \ref{fig:umbraloscuridad} se ilustra un ejemplo de este método en funcionamiento.
 
 \begin{figure}[H]
     \centering
@@ -372,14 +376,11 @@ Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la 
     \label{fig:umbraloscuridad}
 \end{figure}
 
+Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método en la práctica, se descubrió que la precisión era insuficiente. La presencia de cejas, pestañas o armazones de anteojos confundían fácilmente al detector. Si bien la pupila se mantenía como uno de los puntos de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable al seguimiento.
 
-Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método se descubrió que la precisión era insuficiente. Las sombras proyectadas sobre el rostro por la iluminación ambiental, sumadas a la presencia de cejas, pestañas o armazones de anteojos, confundían fácilmente al detector. Si bien la pupila seguía siendo el punto de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable al seguimiento.
+Ante este obstáculo, se decidió cambiar de enfoque. En lugar de aislar objetos por su nivel de oscuridad, se optó por aprovechar un fenómeno físico conocido como \emph{efecto de brillo corneal}. Al apuntar una fuente de luz hacia el globo ocular (en este caso el LED IR), la superficie húmeda y curva de la córnea actúa como un espejo esférico. Esto hace que la luz rebote y forme un punto blanco concentrado e intenso en la imagen, denominado \emph{glint} (Figura \ref{fig:glint}).
 
-Ante este obstáculo, se decidió cambiar de enfoque. En lugar de buscar objetos por su nivel de oscuridad, se buscó aprovechar un fenómeno físico conocido como \emph{efecto de brilo corneal}. Al apuntar una fuente de luz hacia el globo ocular, la superficie húmeda y curva de la córnea actúa como un espejo esférico. Esto hace que la luz rebote y forme un punto blanco concentrado e intenso en la imagen, denominado \emph{glint} (Figura \ref{fig:glint}).
-
-Como la ubicación de este destello suele coincidir con la de la pupila, parecía una alternativa viable para reemplazar el algoritmo anterior por un detector de brillantez. Sin embargo, iluminar de forma constante el ojo del usuario con luz visible resultaría molesto y perjudicial para su visión.  Para solucionarlo, se planteó utilizar luz infrarroja (IR).
-
-Este tipo de iluminación tiene una longitud mayor a la del espectro visible. Por lo tanto, el ojo no las percibe, pero los sensores fotográficos sí logran captarlas. Dado que la cámara del \emph{ESP32-CAM} venía de fábrica con un filtro bloqueador de luz infrarroja, fue necesario removerlo de forma manual. Luego se colocó un diodo LED IR junto a la cámara.
+Como la ubicación de este destello suele coincidir con la de la pupila, parecía una alternativa viable para reemplazar el algoritmo anterior por un detector de brillantez.
 
 \begin{figure}[H]
     \centering
@@ -388,7 +389,7 @@ Este tipo de iluminación tiene una longitud mayor a la del espectro visible. Po
     \label{fig:glint}
 \end{figure}
 
-Esta solución tampoco resultó viable. Durante las pruebas de seguimiento, se comprobó que el glint no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
+Esta solución tampoco resultó satisfactoria. Durante las pruebas de seguimiento, se comprobó que el \emph{glint} no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
 
 \begin{figure}[H]
     \centering
@@ -616,7 +617,9 @@ Las dos alternativas compartían un mismo enfoque, que consistía en detectar co
 
 \subsection{Template Matching como solución adoptada}
 
-Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo 2. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo.
+Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo 2. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo. Se implementará nuevamente el LED IR, para resaltar el contraste y eliminar sombras indeseadas.
+
+%Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas y mejora notablemente el contraste de la imagen.
 
 El algoritmo se ejecuta en el navegador del dispositivo cliente mediante \emph{OpenCV.js}. De esta forma, el detector no requiere instalar ninguna aplicación adicional en el equipo del usuario.
 
@@ -649,7 +652,6 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
     \label{fig:plantillas}
 \end{figure}
 
-
 Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, donde se conservan mientras no se cierre la pestaña de la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
 
 \subsubsection{Preprocesamiento de fotogramas}
@@ -670,9 +672,6 @@ Antes de la comparación, cada fotograma se acondiciona. Primero se recorta inte
     \caption{Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}
     \label{fig:streamconcuadro}
 \end{figure}
-
-
-Durante las pruebas también se observó un problema relacionado con la iluminación. El método de comparación tolera los cambios uniformes de luz ambiental, como se detalla más adelante. Sin embargo, las sombras que proyecta una fuente de luz externa inclinada dificultan el procesamiento, puesto que el bajo contraste impide a la cámara distinguir si la pupila realmente se está moviendo dentro de dicha sombra. Por este motivo, se volvió a incorporar el LED infrarrojo al diseño. Este LED proporciona una iluminación frontal uniforme sobre el ojo y evita la aparición de esas sombras.
 
 \subsubsection{Comparación de plantillas}
 
