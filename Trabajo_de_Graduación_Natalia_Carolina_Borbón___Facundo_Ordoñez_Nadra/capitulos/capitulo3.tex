@@ -1982,9 +1982,38 @@ Desventajas:
 
 \keyword{3- Regulador de carga y Buck-Boost}
 
-Para evitar la pérdida de eficiencia que presenta la doble regulación del método anterior, una solución aparente consiste en emplear un regulador \emph{Buck-Boost}, como el módulo \emph{XL6009} ilustrado en la figura \ref{fig:xl6009}. Este dispositivo permite entregar 3,3 V directos, lo que omite la necesidad de alimentar el microcontrolador con 5 V. No obstante, la ganancia teórica en eficiencia trae consigo un aumento en el costo económico y en la complejidad del circuito. Además, el análisis de su hoja de datos revela que este componente exige una tensión de entrada nominal de al menos 5 V, un valor que supera la capacidad de suministro directo de una batería de litio.
+Para evitar la pérdida de eficiencia de la doble regulación del método anterior, una alternativa consiste en reemplazar el módulo elevador por un regulador \emph{Buck-Boost}, como el \emph{XL6009} ilustrado en la figura \ref{fig:xl6009}.
 
-La frecuencia de conmutación (o llaveo) representa otro inconveniente significativo. A diferencia del módulo \emph{MT3608}, que opera a 1,2 MHz, el \emph{XL6009} trabaja a tan solo 400 kHz. Esta menor velocidad de conmutación genera un rizado de tensión (\emph{ripple}) mucho más pronunciado a la salida. Una señal de alimentación con alto nivel de ruido eléctrico resulta sumamente perjudicial para la estabilidad de un servidor Wi-Fi y de una cámara con transmisión de video en tiempo real. Mitigar este defecto obliga a incorporar capacitores de filtrado de gran tamaño, lo cual compromete de nuevo la optimización del espacio físico.
+Ventajas:
+
+Conserva los beneficios de la solución 2 y suma una mayor eficiencia energética. Este dispositivo entrega 3,3 V directos, lo que elimina la necesidad de alimentar el microcontrolador con 5 V y, por lo tanto, se omite la segunda etapa de conversión.
+
+%\begin{itemize}
+
+ %   \item Facilidad de reparación: al tratarse de circuitos separados, las fallas puntuales se solucionan con el reemplazo exclusivo del módulo afectado. Esto evita alterar el resto del sistema.
+    
+   % \item Carga térmica distribuida: la temperatura generada por cada circuito es independiente del otro. Esto permite una disipación de calor más uniforme a lo largo de la placa.
+    
+   % \item Ausencia de \emph{dropout} y soporte para picos de corriente: el \emph{MT3608} integra un regulador conmutado (\emph{switching}). Este circuito opera con transistores MOSFET en sus zonas de corte y saturación. En consecuencia, elimina las caídas apreciables de tensión entre la entrada y la salida. A su vez, el sistema compensa los picos dinámicos de corriente mediante el ajuste automático del ciclo de trabajo del interruptor interno.
+    
+    %\item Doble regulación de tensión: al ingresar 5 V por el pin correspondiente, el \emph{ESP32} emplea su propio regulador interno para reducir la tensión a 3,3 V. Esto añade una capa extra de filtrado y estabilidad.
+    
+    %\item Aumento de eficiencia: este dispositivo permite entregar 3,3 V directos, lo que omite la necesidad de alimentar el microcontrolador con 5 V. Esto elimina la necesidad de realizar la conversión de energía interna del \emph{ESP-32}.
+
+Desventajas: 
+
+Además de las limitaciones presentes en la solución 2, incorpora los siguientes inconvenientes:
+
+\begin{itemize}
+
+\item Mayor costo y complejidad: incrementa el valor económico y dificulta la adquisición de repuestos.
+
+\item Baja frecuencia de conmutación: a diferencia del módulo \emph{MT3608}, que opera a 1,2 MHz, el \emph{XL6009} trabaja a tan solo 400 kHz. Esta menor velocidad genera un rizado de tensión (\emph{ripple}) muy pronunciado a la salida, un factor sumamente perjudicial para la estabilidad del servidor Wi-Fi y de la transmisión de video.
+
+\item Restricción de voltaje de entrada: representa el punto más débil de esta propuesta. Según su hoja de datos, el componente exige una tensión de entrada de al menos 5 V, un valor que supera la capacidad de suministro directo de una celda de litio.
+
+\end{itemize}
+
 
 \begin{figure}[htbp]
     \centering
@@ -2079,7 +2108,7 @@ El funcionamiento detallado de estos circuitos integrados y de sus respectivos m
 
 El proceso de carga del módulo \emph{TP4056} se desarrolla en un ciclo de dos fases.
 
-En una primera etapa, el circuito carga la batería a corriente constante. Esto significa que inyecta un valor fijo, predefinido por el diseñador, para que la carga inicie rápida. De manera simultánea, el chip monitorea el voltaje de la celda. Al alcanzar los 4,2 V, inicia la fase de voltaje constante. En este punto, el sistema permite que la batería absorba solo la corriente necesaria para evitar daños físicos. Si el proceso operara siempre a corriente constante, la celda recibiría un exceso de energía que terminaría por destruirla. Por el contrario, un suministro exclusivo a voltaje constante prolonga la carga de forma excesiva, lo cual resulta poco práctico. Para resolver este problema, el integrado alterna de forma automática entre ambos modos.
+En una primera etapa, el circuito carga la batería a corriente constante. Esto significa que inyecta un valor fijo, predefinido por el diseñador, para acelerar el inicio de la carga. De manera simultánea, el chip monitorea el voltaje de la celda. Al alcanzar los 4,2 V, inicia la fase de voltaje constante. En este punto, el sistema permite que la batería absorba solo la corriente necesaria para evitar daños físicos. Si el proceso operara siempre a corriente constante, la celda recibiría un exceso de energía que terminaría por destruirla. Por el contrario, un suministro exclusivo a voltaje constante prolonga la carga de forma excesiva, lo cual resulta poco práctico. Para resolver este problema, el integrado alterna de forma automática entre ambos modos.
 
 Además, el \emph{TP4056} detiene el suministro durante la fase de voltaje constante cuando la corriente absorbida decae por debajo del 10 \% del valor programado. Esta medida evita la sobrecarga de la celda.
 
@@ -2090,16 +2119,10 @@ En resumen, sus características más relevantes son:
     \item Operación dinámica entre corriente constante y voltaje constante.
     \item Carga máxima hasta un valor fijo de 4,2 V.
     \item Fin de carga automático.
-    \item UVLO (Bloqueo por bajo voltaje).
-    \item Umbral de carga lenta.
-    \item Arranque suave de corriente.
+    \item UVLO (Bloqueo por bajo voltaje): bloquea la carga ante una alimentación inestable o insuficiente.
+    \item Umbral de carga lenta: ante baterías de muy bajo voltaje, activa inicialmente un modo de carga lenta.
+    \item Arranque suave: la absorción de corriente ocurre de forma gradual.
 \end{itemize}
-
-UVLO (\emph{Under Voltage Lockout}): Es una función de seguridad que bloquea la carga si se introduce una alimentación inestable o insuficiente. Así, previene daños tanto en la batería como en los circuitos internos.
-
-Umbral de carga lenta: Si la batería presenta un voltaje inferior a 3,0 V, el \emph{TP4056} activa el modo de carga lenta. En este estado, envía solo el 10 \% de la corriente programada hasta superar dicho umbral. Esto se hace para evitar sobrecargar una batería en mal estado. Tras alcanzar un nivel seguro, el proceso continúa de forma normal.
-
-Arranque suave de corriente: Constituye una medida de protección ante la fuente externa. Al conectar el circuito, la absorción de corriente no ocurre de forma brusca, sino que aumenta de manera gradual para evitar picos que dañen los componentes.
 
 Su diagrama de pines es el siguiente:
 
@@ -2110,33 +2133,32 @@ Su diagrama de pines es el siguiente:
     \label{fig:tp4056pinout}
 \end{figure}
 
+%\begin{enumerate}
 
-\begin{enumerate}
+%\item TEMP: Entrada de sensor de temperatura. No se utiliza en el desarrollo de este dispositivo.
 
-\item TEMP: Entrada de sensor de temperatura. No se utiliza en el desarrollo de este dispositivo.
+%\item PROG: Entrada de programación de corriente de carga. A este pin se le conecta una resistencia denotada como $R_{prog}$ para establecer el valor de la corriente, calculado como:
+    
+  %  \begin{equation}
+   % R_{prog} = \frac{1200}{I_{bat}}
+   % \end{equation}
+    
+%Donde $I_{bat}$ es la corriente en amperios elegida por el diseñador, con un valor máximo de 1 A.
 
-\item PROG: Entrada de programación de corriente de carga. A este pin se le debe conectar una resistencia denotada como \emph{RPROG} para establecer el valor de la corriente de carga, calculado como:
+%\item GND: Tensión de referencia.
 
-\begin{equation}
-Rprog = 1200*Ibat
-\end{equation}
+%\item VCC: Entrada de alimentación externa.
 
-Donde \emph{Ibat} es la corriente en miliamperios elegida por el diseñador, con un valor máximo de 1000 mA.
+%\item BAT: Salida que se conecta al terminal positivo de la batería.
 
-\item GND: Tensión de referencia.
+%\item STDBY: Salida en alta impedancia que se vuelve nula cuando la carga está completa.
 
-\item VCC: Entrada de alimentación externa.
+%\item CHRG: Salida en alta impedancia que se vuelve nula mientras la celda se está cargando.
 
-\item BAT: Salida que se conecta al terminal positivo de la pila.
+%\item CE: Habilitación del chip.
 
-\item STDBY: Salida en alta impedancia que se vuelve nula cuando la carga está completa.
-
-\item CHRG: Salida en alta impedancia que se vuelve nula mientras la pila se está cargando.
-
-\item CE: Habilitación del chip.
-
-\end{enumerate}
-
+%\end{enumerate}
+    
 A continuación se detalla el circuito de aplicación típico de este chip. Este esquema corresponde al módulo comercial estándar empleado en el presente proyecto:
 
 \begin{figure}[H]
@@ -2146,19 +2168,27 @@ A continuación se detalla el circuito de aplicación típico de este chip. Este
     \label{fig:tp4056placa}
 \end{figure}
 
-En primer lugar, se observa un puente directo entre los pines CE y VCC. Esta conexión se justifica porque el diseño no requiere deshabilitar el integrado en ningún momento. Además, la entrada incorpora un capacitor (C4) para drenar el ruido eléctrico proveniente de la fuente de alimentación.
+En primer lugar, se observa un puente directo entre los pines CE (habilitación) y VCC (alimentación), por lo que el chip permanece habilitado durante el uso.
 
-Por otro lado, los cátodos de dos diodos LED se enlazan a las salidas CHRG y STDBY. El esquema comercial emplea un indicador rojo para el primer pin y uno verde para el segundo. Estos componentes visuales le informan al usuario el estado exacto del proceso de recarga.
+Por otro lado, los cátodos de dos diodos LED se enlazan a las salidas CHRG y STDBY. Estos pines operan a nivel bajo, por lo que drenan corriente para encender los indicadores visuales que informan el estado del proceso (rojo para carga en curso y verde para carga completa).
 
-En el pin PROG se instala una resistencia $R_{prog}$ (identificada como R3 en el diagrama) de 1,2 k$\Omega$. Este es el valor configurado por defecto de fábrica y establece una corriente de carga programada de 1 A, junto con una corriente de corte de 100 mA.
+En el pin PROG se instala una resistencia $R_{prog}$ (identificada como R3 en el diagrama) de 1,2 k$\Omega$. Según el fabricante, la corriente de carga máxima ($I_{bat}$) se determina mediante la siguiente relación:
 
-El pin TEMP (sensor de temperatura) se acopla directamente a tierra (GND) debido a que esta función permanece inactiva. Lo mismo ocurre con el pin 9 (EP), destinado a la disipación térmica del encapsulado.
+\begin{equation}
+I_{bat} = \frac{1200}{R_{prog}}
+\end{equation}
 
-La salida de energía del pin BAT no se vincula de forma exclusiva a la batería. Se enlaza primero a un capacitor de desacople (C1) y se conecta con otros dos circuitos integrados de protección incluidos en la placa: el \emph{DW01A} y el \emph{FS8205A}.
+Al aplicar el valor de esta resistencia, el circuito establece una corriente de carga de 1 A y, en consecuencia, una corriente de corte de 100 mA (el 10 \% del valor programado).
+
+El pin TEMP (sensor de temperatura) y el EP (utilizado para disipación térmica) se acoplan directamente a tierra (GND), ya que no se utilizan.
+
+La salida de energía del pin BAT no se vincula de forma exclusiva a la batería. Se enlaza primero a otros dos circuitos integrados de protección incluidos en la placa: el \emph{DW01A} y el \emph{FS8205A}.
 
 El chip \emph{DW01A} opera como un monitor constante de voltaje y corriente. Si registra una tensión fuera de los márgenes seguros o detecta un cortocircuito, envía una alerta al \emph{FS8205A} a través de los pines CHRGGT y DSCHRGGT. Al recibir esta señal, este segundo integrado desconecta físicamente la celda del resto del circuito.
 
-En condiciones normales de operación, la batería se acopla mediante los terminales B+ y B- al pin BAT y a GND respectivamente. Cuando el sistema de protección interviene, los transistores MOSFET internos del \emph{FS8205A} se abren. Esto aísla el terminal B- de la tierra (GND) y, por lo tanto, interrumpe por completo el flujo de energía. Finalmente, las terminales OUT+ y OUT- derivan la alimentación segura hacia la siguiente etapa del sistema.
+En condiciones normales de operación, la batería se acopla mediante los terminales B+ y B- al pin BAT y a GND respectivamente. Cuando el sistema de protección interviene, los transistores MOSFET internos del \emph{FS8205A} se abren. Esto aísla el terminal B- de la tierra (GND) y, por lo tanto, interrumpe por completo el flujo de energía. Finalmente, las terminales OUT+ y OUT- derivan la alimentación segura hacia la siguiente etapa del sistema. 
+
+Los capacitores C1, C2 y C4 actúan como filtros de ruido.
 
 
 \subsubsection{Estabilización de voltaje}
@@ -2206,9 +2236,11 @@ Su circuito interno es el siguiente:
 
 El transistor M1 representa el interruptor principal del circuito elevador. Su estado se controla mediante un bloque lógico conectado a su compuerta.
 
-La regulación inicia con el amplificador de error. Este componente compara la señal de retroalimentación ($V_{FB}$, una fracción de la tensión de salida) con una referencia interna estable de 0,6 V ($V_{REF}$). Si la salida excede el valor configurado ($V_{FB} > V_{REF}$), el amplificador reduce la magnitud de la señal de error. Si la salida decae ($V_{FB} < V_{REF}$), la señal de error aumenta. Cuando el sistema alcanza el equilibrio ($V_{FB} = V_{REF}$), el amplificador emite una señal constante. En el diseño se debe procurar que $V_{FB}$ tome el valor de 0,6 V cuando la salida se encuentre en su valor deseado. 
+La regulación inicia con el amplificador de error. Este componente compara la señal de retroalimentación ($V_{FB}$, una fracción de la tensión de salida) con una referencia interna estable de 0,6 V ($V_{REF}$). Si la salida excede el valor configurado ($V_{FB} > V_{REF}$), el amplificador reduce la magnitud del error. Si la salida decae ($V_{FB} < V_{REF}$), el error aumenta. Cuando el sistema alcanza el equilibrio ($V_{FB} = V_{REF}$), el amplificador emite un valor constante. En el diseño se debe procurar que $V_{FB}$ alcance los 0,6 V cuando la salida adquiera el nivel deseado. 
 
-Esta señal de error ingresa al comparador PWM junto con una onda diente de sierra proveniente de un oscilador interno. La intersección de ambas señales determina de forma directa el ancho del pulso de control (Fig. \ref{fig:pwm}). Una señal de error alta prolonga el tiempo de encendido del transistor, lo que incrementa la tensión de salida. Por el contrario, una señal de error baja recorta el pulso y hace caer el voltaje final. De esta manera, el sistema compensa de forma automática cualquier variación en la carga.
+Este nivel de error determina el ciclo de trabajo del transistor mediante una modulación de ancho de pulso, cruzada con una onda diente de sierra proveniente de un oscilador interno. Como ilustra la figura \ref{fig:pwm}, el valor del \emph{duty cycle} resulta ser proporcional a la magnitud de este error.
+
+%Esta señal de error ingresa al comparador PWM junto con una onda diente de sierra proveniente de un oscilador interno. La intersección de ambas señales determina de forma directa el ancho del pulso de control (Fig. \ref{fig:pwm}). Una señal de error alta prolonga el tiempo de encendido del transistor, lo que incrementa la tensión de salida. Por el contrario, una señal de error baja recorta el pulso y hace caer el voltaje final. De esta manera, el sistema compensa de forma automática cualquier variación en la carga.
 
 \begin{figure}[H]
     \centering
@@ -2219,7 +2251,7 @@ Esta señal de error ingresa al comparador PWM junto con una onda diente de sier
 
 Por último, el circuito incluye un sensor de corriente que cumple dos propósitos fundamentales. Por un lado, funciona como un mecanismo de protección, que interrumpe la conmutación si la corriente a través del transistor supera los límites seguros. Por otro lado, aporta una lectura instantánea al comparador PWM, lo que otorga mayor estabilidad al sistema frente a variaciones bruscas de consumo en la carga.
 
-A partir del funcionamiento interno expuesto, se detalla a continuación el diagrama de pines:
+A partir del funcionamiento interno expuesto, se ilustra a continuación el diagrama de pines:
 
 \begin{figure}[H]
     \centering
@@ -2228,22 +2260,22 @@ A partir del funcionamiento interno expuesto, se detalla a continuación el diag
     \label{fig:mt3608pinout}
 \end{figure}
 
-\begin{itemize}
-    \item SW: Conecta el drenador del MOSFET interno M1 con el circuito \emph{boost} externo.
+%\begin{itemize}
+   % \item SW: Conecta el drenador del MOSFET interno M1 con el circuito \emph{boost} externo.
     
-    \item GND: Tensión de referencia (tierra).
+    %\item GND: Tensión de referencia (tierra).
     
-    \item FB: Entrada de retroalimentación (\emph{feedback}). Recibe una muestra de la tensión de salida para compararla con la referencia interna de 0,6 V.
+    %\item FB: Entrada de retroalimentación (\emph{feedback}). Recibe una muestra de la tensión de salida para compararla con la referencia interna de 0,6 V.
     
-    \item EN: Pin de habilitación del integrado.
+   % \item EN: Pin de habilitación del integrado.
     
-    \item IN: Entrada de alimentación. 
+    %\item IN: Entrada de alimentación. 
     
-    \item \textbf{NC:} Sin conexión interna (\emph{Not Connected}).
+    %\item \textbf{NC:} Sin conexión interna (\emph{Not Connected}).
     
-\end{itemize}
+%\end{itemize}
 
-El siguiente esquema ilustra el circuito típico implementado en los módulos \emph{MT3608} comerciales, los cuales incorporan los componentes externos necesarios:
+El siguiente esquema muestra el circuito típico implementado en los módulos \emph{MT3608} comerciales, los cuales incorporan los componentes externos necesarios:
 
 \begin{figure}[H]
     \centering
@@ -2252,13 +2284,13 @@ El siguiente esquema ilustra el circuito típico implementado en los módulos \e
     \label{fig:mt3608placa}
 \end{figure}
 
-En la etapa de entrada, los pines IN y EN se encuentran cortocircuitados y conectados a la tensión de la celda de litio (3,7 V). Al igual que en el módulo de carga, el diseño no requiere deshabilitar el integrado de forma manual. Este nodo de entrada se acopla además a uno de los terminales del inductor de 22 uH.
+En la etapa de entrada, los pines IN (entrada) y EN (habilitación) se encuentran cortocircuitados y conectados a la tensión de la celda de litio (3,7 V). Esto permite que el chip permanezca activo durante el uso. A su vez, este nodo de entrada se acopla a uno de los terminales del inductor de 22 uH.
 
-El pin SW se vincula al segundo terminal del inductor y al ánodo de un diodo de conmutación rápida.
+El pin SW (drenador del MOSFET) se vincula al segundo terminal del inductor y al ánodo de un diodo de conmutación rápida.
 
-Por último, el pin FB se conecta a un divisor resistivo formado por un potenciómetro de 100 k$\Omega$ en serie con una resistencia fija de 2,2 k$\Omega$. El potenciómetro cuenta con un tornillo de ajuste que permite calibrar la tensión de salida, logrando un rango operativo continuo desde un mínimo de 0,6 V hasta un máximo absoluto de 28 V.
+Por último, el pin FB se conecta a un divisor resistivo formado por un potenciómetro de 100 k$\Omega$ en serie con una resistencia fija de 2,2 k$\Omega$. El potenciómetro cuenta con un tornillo de ajuste para calibrar la tensión de salida, logrando un rango operativo continuo desde un mínimo de 0,6 V hasta un máximo absoluto de 28 V.
 
-El esquema se completa con el capacitor de filtrado de salida (C6), un capacitor de desacople en la entrada (C5) y la conexión general a la masa del circuito.
+El esquema se completa con los capacitores C5 y C6, utilizados para el filtrado de armónicos y reducción del ruido eléctrico.
 
 \subsection{Circuito de carga del ONX}
 
