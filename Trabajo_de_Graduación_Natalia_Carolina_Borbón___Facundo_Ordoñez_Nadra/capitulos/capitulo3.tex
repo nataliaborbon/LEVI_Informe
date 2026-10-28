@@ -768,11 +768,9 @@ La SRAM interna funciona como memoria de trabajo. Guarda información que cambia
 
 \item IRAM: contiene el código de las interrupciones y de las funciones críticas, que deben ejecutarse con rapidez.
 
-\item DRAM: almacena las variables de control, las sesiones activas con sus \emph{tokens} y las preguntas de los invitados. También aloja los bloques pequeños de memoria dinámica que el sistema solicita durante su funcionamiento.
+\item DRAM: almacena los datos que el sistema solo necesita mientras está encendido. Entre ellos se encuentran las sesiones activas con sus \emph{tokens}, que cambian cada vez que un usuario ingresa o sale del sistema y que el módulo central consulta en cada pedido. Al reiniciarse el equipo, los usuarios vuelven a ingresar. También guarda las preguntas de los invitados, que son informales y no se registran en la base de datos. Además, contiene las variables de control y los bloques pequeños de memoria dinámica que el sistema solicita durante su funcionamiento.
 
 \end{itemize}
-
-Las sesiones y sus \emph{tokens} cambian cada vez que un usuario inicia o cierra sesión, y el módulo central los consulta en cada pedido que recibe. Guardarlos en una memoria permanente no tendría sentido, ya que dejan de ser necesarios al apagar el equipo. Al reiniciarse el sistema, los usuarios vuelven a iniciar sesión. Del mismo modo, las preguntas de los invitados no deben persistir, por lo que la DRAM resulta la ubicación adecuada.
 
 La PSRAM amplía la memoria de trabajo. Con la configuración por defecto del entorno de desarrollo, el sistema ubica en ella de forma automática los bloques de memoria dinámica de más de 4 KB, lo que libera la SRAM interna para los datos que requieren mayor velocidad.
 
@@ -809,7 +807,7 @@ En esta sección se justifica la elección de la familia \emph{ESP32} frente a o
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
 
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
@@ -826,9 +824,11 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \end{itemize}
 
-Por su parte, las placas de la familia \emph{ESP32} son compatibles con las bibliotecas de \emph{Arduino}. Esto agilizó el desarrollo y las pruebas durante las etapas iniciales del proyecto.
+%Por su parte, las placas de la familia \emph{ESP32} son compatibles con las bibliotecas de \emph{Arduino}. Esto agilizó el desarrollo y las pruebas durante las etapas iniciales del proyecto.
 
 \subsection{Módulo de captura}
+
+La placa y la cámara del módulo de captura se analizan por separado, cada una frente a las alternativas consideradas. Luego se describe la conexión entre ambas.
 
 \subsubsection{Placa}
 
@@ -918,6 +918,8 @@ El \emph{ESP32} no cuenta con una interfaz de cámara dedicada. Por este motivo,
 
 
 \subsection{Módulo central}
+
+El módulo central se implementó con dos placas distintas a lo largo del proyecto. Ambas se presentan junto con una comparación entre ellas. Las conexiones con la tarjeta microSD y con la pantalla táctil se describen sobre la placa definitiva.
 
 \subsubsection{Placa inicial}
 
@@ -1086,6 +1088,10 @@ El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que e
 El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno (Fig. \ref{fig:transmision_video}).
 
 La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua, y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+
+La resolución de 320x240 píxeles (\emph{QVGA}) es uno de los tamaños predefinidos de la cámara. Una resolución mayor generaría fotogramas más pesados, que ocuparían más la red y reducirían la cantidad de imágenes por segundo. Una menor, en cambio, perdería la nitidez necesaria para reconocer la pupila. Además, un tamaño que no fuera predefinido obligaría al microcontrolador a recortar y volver a comprimir cada imagen por software, lo que haría más lenta la transmisión.
+
+Las imágenes se transmiten en color porque el codificador JPEG de la cámara siempre genera este formato. Obtener un JPEG en escala de grises obligaría a comprimir cada fotograma por software, lo que consumiría los recursos del microcontrolador. Además, el ahorro en la red sería reducido, ya que en una imagen JPEG la información de color ocupa poco espacio en comparación con la de brillo.
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Al recibir la solicitud, el servidor enciende el LED infrarrojo y descarta los tres primeros fotogramas, que pueden estar desactualizados o tener la exposición sin ajustar. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía el fotograma más reciente de manera continua, con un máximo de 20 por segundo. Como la aplicación procesa 15 por segundo, siempre dispone de uno nuevo. Fuera de esas etapas, la aplicación cierra la conexión, la cámara deja de transmitir y el LED se apaga. Así, no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo o fallan diez capturas seguidas, la transmisión también se detiene hasta recibir una nueva solicitud.
 
@@ -1773,11 +1779,13 @@ Con el fin de facilitar el uso del dispositivo, se incorporó una interfaz gráf
 
 \subsection{Bibliotecas y controladores}
 
-La interfaz se apoya en dos bibliotecas. \emph{TFT\_eSPI} provee los controladores de bajo nivel que comunican el microcontrolador con la pantalla mediante SPI. Por sí sola, sin embargo, solo permite dibujar elementos básicos como píxeles, líneas y texto. \emph{LVGL}, en cambio, aporta los elementos que requiere la interfaz, como las vistas deslizables, los campos de texto, el teclado virtual y los botones, y gestiona los toques del usuario. Sin ella, todos estos elementos habrían tenido que programarse desde cero.
+La interfaz se apoya principalmente en dos bibliotecas. \emph{TFT\_eSPI} provee los controladores de bajo nivel que comunican el microcontrolador con la pantalla mediante SPI. Por sí sola, sin embargo, solo permite dibujar elementos básicos como píxeles, líneas y texto. \emph{LVGL}, en cambio, aporta los elementos que requiere la interfaz, como las vistas deslizables, los campos de texto, el teclado virtual y los botones, y gestiona los toques del usuario. Sin ella, todos estos elementos habrían tenido que programarse desde cero.
 
-Además, \emph{LVGL} puede dibujar la pantalla por partes. En lugar de reservar memoria para la imagen completa, que ocuparía unos 150 KB, utiliza un búfer de alrededor de 4 KB, equivalente a una franja angosta de la pantalla. La biblioteca dibuja cada franja en ese búfer y la envía a la pantalla antes de pasar a la siguiente. Así, la interfaz ocupa una fracción mínima de la RAM del módulo central.
+Además, \emph{LVGL} puede dibujar la pantalla por partes. En lugar de reservar memoria para la imagen completa, que ocuparía unos 300 KB, utiliza un búfer de alrededor de 20 KB, equivalente a una franja de 32 líneas de la pantalla. La biblioteca dibuja cada franja en ese búfer y la envía a la pantalla antes de pasar a la siguiente. Así, la interfaz ocupa una fracción mínima de la RAM interna del módulo central.
 
-El panel táctil, por su parte, también se comunica mediante SPI. Sin embargo, el \emph{ESP32} dispone de dos controladores SPI de uso general, y ambos ya están ocupados por la pantalla y por la tarjeta microSD. Además, en la placa el panel táctil está conectado a otros pines. Por este motivo, su lectura se implementó por software, generando desde el código la señal de reloj y leyendo los datos bit a bit.
+\emph{LVGL}, sin embargo, no lee el panel táctil de forma directa. Recibe las coordenadas de cada toque desde el controlador del panel y, a partir de ellas, determina qué elemento de la interfaz se presionó.
+
+%El panel táctil, por su parte, también se comunica mediante SPI. Sin embargo, el \emph{ESP32} dispone de dos controladores SPI de uso general, y ambos ya están ocupados por la pantalla y por la tarjeta microSD. Además, en la placa el panel táctil está conectado a otros pines. Por este motivo, su lectura se implementó por software, generando desde el código la señal de reloj y leyendo los datos bit a bit.
 
 \subsection{Funcionamiento}
 

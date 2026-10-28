@@ -512,9 +512,12 @@ Un motor de base de datos embebido es una biblioteca de software que se integra 
 \begin{itemize}
     \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, lo que elimina la necesidad de instalar, configurar y mantener un servidor de base de datos aparte.
     \item Almacenamiento en archivo único: la base de datos completa (esquema, tablas, índices y datos) se guarda dentro de un único archivo en el sistema de archivos del dispositivo, lo que simplifica su copia, transporte y respaldo.
-    \item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
+    %\item Autonomía y portabilidad (\emph{Self-contained}): no depende de bibliotecas externas complejas ni de configuraciones previas en el sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
+    \item Autonomía (\emph{Self-contained}): no depende de bibliotecas externas complejas ni requiere un sistema operativo, lo que permite su funcionamiento en entornos con recursos de memoria y procesamiento acotados.
     \item Cumplimiento transaccional: a pesar de su tamaño compacto, implementa transacciones atómicas que aseguran que los datos no se corrompan ante reinicios o pérdidas de alimentación eléctrica imprevistas.
 \end{itemize}
+
+Como otros motores, \emph{SQLite} permite ajustar su funcionamiento. Para ello emplea sentencias especiales denominadas \emph{PRAGMA}, como por ejemplo las que definen el tamaño de la caché.
 
 % ---------------------------------------------------------------------------
 % Versión anterior de "Arquitectura y Patrones de Software" y de "Bases de
