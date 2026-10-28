@@ -341,7 +341,7 @@ Antes de implementar una red neuronal se optó por intentar un método más senc
  
 Esta última placa se eligió porque su procesador incorpora instrucciones vectoriales diseñadas para acelerar el cómputo de redes neuronales. Dichas instrucciones permiten procesar varios datos en una sola operación. \emph{Espressif} las pone a disposición mediante la biblioteca \emph{ESP-NN}, cuyas funciones optimizadas están orientadas a modelos cuantizados a números enteros de 8 bits (\emph{int8}). La cuantización reduce el tamaño del modelo y el costo de cada operación. Por estos motivos, el \emph{ESP32-S3} resulta una opción adecuada para ejecutar redes neuronales con recursos limitados.
  
-Aun con esta aceleración, lograr que un microcontrolador ejecute una red neuronal de este calibre no es sencillo. La mayoría de estos modelos exige una capacidad de memoria y una velocidad que suelen exceder lo que ofrece el \emph{ESP32-S3}. Por este motivo, se exploraron formas de diseñar y entrenar redes lo más livianas y sencillas posibles. Este paradigma busca implementar inteligencia artificial con recursos de software y hardware limitados. Se lo conoce como \emph{Tiny Machine Learning} (o \emph{TinyML}) y es la filosofía que se aplicó en el desarrollo de este dispositivo.
+Aun con esta aceleración, lograr que un microcontrolador ejecute una red neuronal de este calibre no es sencillo. La mayoría de estos modelos exige una capacidad de memoria y una velocidad que suelen exceder lo que ofrece el \emph{ESP32-S3}. Por este motivo, se exploraron formas de diseñar y entrenar redes lo más livianas y sencillas posibles. Este paradigma busca implementar inteligencia artificial con recursos de software y hardware limitados. Se lo conoce como \emph{Tiny Machine Learning} (o \emph{TinyML}) y es la filosofía que se aplicó en las etapas iniciales del desarrollo de este dispositivo.
  
 A continuación se desarrollan los tres métodos evaluados.
 
@@ -617,9 +617,9 @@ Las dos alternativas compartían un mismo enfoque, que consistía en detectar co
 
 \subsection{Template Matching como solución adoptada}
 
-Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo 2. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo. Se implementará nuevamente el LED IR, para resaltar el contraste y eliminar sombras indeseadas.
+Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo 2. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo. Se implementa nuevamente el LED IR, para resaltar el contraste y eliminar sombras indeseadas.
 
-%Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas y mejora notablemente el contraste de la imagen.
+Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas, garantiza una iluminación uniforme y mejora notablemente el contraste de la imagen.
 
 El algoritmo se ejecuta en el navegador del dispositivo cliente mediante \emph{OpenCV.js}. De esta forma, el detector no requiere instalar ninguna aplicación adicional en el equipo del usuario.
 
@@ -652,7 +652,7 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
     \label{fig:plantillas}
 \end{figure}
 
-Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, donde se conservan mientras no se cierre la pestaña de la aplicación. De esta forma, quedan disponibles como referencia para comparar cada fotograma durante la detección.
+Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, para ser utilizadas como referencia al comparar cada fotograma durante la detección. Allí se conservan hasta que se borren los datos de navegación, por lo que permanecen disponibles aunque se cierre la pestaña o se reinicie el dispositivo. 
 
 \subsubsection{Preprocesamiento de fotogramas}
 
@@ -748,9 +748,13 @@ Las preguntas de los compañeros también pasan por el módulo central, pero no 
 
 \subsection{Mapa de memoria}
 
-El módulo central, basado en un microcontrolador de la familia \emph{ESP32}, dispone de cuatro memorias con características distintas (Fig. \ref{fig:mapa_memoria}). La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La PSRAM es una memoria externa al chip, más lenta que la SRAM interna pero de mayor capacidad, y también se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
+%El módulo central, basado en un microcontrolador de la familia \emph{ESP32}, dispone de cuatro memorias con características distintas (Fig. \ref{fig:mapa_memoria}). La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La PSRAM es una memoria externa al chip, más lenta que la SRAM interna pero de mayor capacidad, y también se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
 
-La memoria flash guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
+El módulo central, basado en un microcontrolador de la familia \emph{ESP32}, dispone de cuatro memorias con características distintas (Fig. \ref{fig:mapa_memoria}). La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
+
+%La memoria flash guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
+
+La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. Por eso guarda información persistente, que rara vez cambia y que ocupa poco espacio. Se divide en tres partes, cada una destinada a un tipo de dato distinto.
 
 \begin{itemize}
 
@@ -762,7 +766,9 @@ La memoria flash guarda información persistente, que rara vez cambia y que ocup
 
 \end{itemize}
 
-La SRAM interna funciona como memoria de trabajo. Guarda información que cambia de forma constante, que debe leerse con rapidez y que solo tiene sentido mientras el sistema está encendido.
+%La SRAM interna funciona como memoria de trabajo. Guarda información que cambia de forma constante, que debe leerse con rapidez y que solo tiene sentido mientras el sistema está encendido.
+
+La SRAM interna es rápida, aunque tiene un tamaño limitado y se borra al apagar el equipo. Funciona como memoria de trabajo, ya que guarda información que cambia de forma constante, que debe leerse con rapidez y que solo tiene sentido mientras el sistema está encendido.
 
 \begin{itemize}
 
@@ -772,7 +778,9 @@ La SRAM interna funciona como memoria de trabajo. Guarda información que cambia
 
 \end{itemize}
 
-La PSRAM amplía la memoria de trabajo. Con la configuración por defecto del entorno de desarrollo, el sistema ubica en ella de forma automática los bloques de memoria dinámica de más de 4 KB, lo que libera la SRAM interna para los datos que requieren mayor velocidad.
+%La PSRAM amplía la memoria de trabajo. Con la configuración por defecto del entorno de desarrollo, el sistema ubica en ella de forma automática los bloques de memoria dinámica de más de 4 KB, lo que libera la SRAM interna para los datos que requieren mayor velocidad.
+
+La PSRAM es una memoria externa al chip, más lenta que la SRAM interna pero de mayor capacidad, y también se borra al apagar el equipo. Se utiliza para ampliar la memoria de trabajo. Con la configuración por defecto del entorno de desarrollo, el sistema ubica en ella de forma automática los bloques de memoria dinámica de más de 4 KB, lo que libera la SRAM interna para los datos que requieren mayor velocidad.
 
 \begin{itemize}
 
@@ -780,7 +788,9 @@ La PSRAM amplía la memoria de trabajo. Con la configuración por defecto del en
 
 \end{itemize}
 
-La tarjeta microSD guarda la información que debe conservarse a largo plazo y que ocupa demasiado espacio para la flash.
+%La tarjeta microSD guarda la información que debe conservarse a largo plazo y que ocupa demasiado espacio para la flash.
+
+La tarjeta microSD no pierde los datos ante la ausencia de alimentación y ofrece un espacio mucho mayor que la flash. Por eso guarda la información que debe mantenerse a largo plazo y que no cabe en esta.
 
 \begin{itemize}
 
@@ -807,7 +817,7 @@ En esta sección se justifica la elección de la familia \emph{ESP32} frente a o
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos módulos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
 
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
@@ -828,7 +838,7 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \subsection{Módulo de captura}
 
-La placa y la cámara del módulo de captura se analizan por separado, cada una frente a las alternativas consideradas. Luego se describe la conexión entre ambas.
+En la presente subsección, la placa y la cámara del módulo de captura se analizan por separado, cada una frente a las alternativas consideradas. Luego se describe la conexión entre ambas.
 
 \subsubsection{Placa}
 
@@ -919,7 +929,7 @@ El \emph{ESP32} no cuenta con una interfaz de cámara dedicada. Por este motivo,
 
 \subsection{Módulo central}
 
-El módulo central se implementó con dos placas distintas a lo largo del proyecto. Ambas se presentan junto con una comparación entre ellas. Las conexiones con la tarjeta microSD y con la pantalla táctil se describen sobre la placa definitiva.
+El módulo central se implementó con dos placas distintas a lo largo del proyecto. Ambas se presentan a continuación junto con una comparación entre ellas. Las conexiones con la tarjeta microSD y con la pantalla táctil se describen sobre la placa definitiva.
 
 \subsubsection{Placa inicial}
 
@@ -1087,11 +1097,9 @@ El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que e
 
 El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno (Fig. \ref{fig:transmision_video}).
 
-La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró en un nivel intermedio, que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua, y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró la calidad en un nivel intermedio, lo que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
 
-La resolución de 320x240 píxeles (\emph{QVGA}) es uno de los tamaños predefinidos de la cámara. Una resolución mayor generaría fotogramas más pesados, que ocuparían más la red y reducirían la cantidad de imágenes por segundo. Una menor, en cambio, perdería la nitidez necesaria para reconocer la pupila. Además, un tamaño que no fuera predefinido obligaría al microcontrolador a recortar y volver a comprimir cada imagen por software, lo que haría más lenta la transmisión.
-
-Las imágenes se transmiten en color porque el codificador JPEG de la cámara siempre genera este formato. Obtener un JPEG en escala de grises obligaría a comprimir cada fotograma por software, lo que consumiría los recursos del microcontrolador. Además, el ahorro en la red sería reducido, ya que en una imagen JPEG la información de color ocupa poco espacio en comparación con la de brillo.
+La resolución de 320x240 píxeles (QVGA) es uno de los tamaños predefinidos de la cámara. Una resolución mayor generaría fotogramas más pesados, que ocuparían más la red y reducirían la cantidad de imágenes por segundo. Una menor, en cambio, perdería la nitidez necesaria para reconocer la pupila. Por otro lado, las imágenes se transmiten en color porque el codificador JPEG de la cámara siempre genera este formato. Además, en una imagen JPEG la información de color ocupa poco espacio en comparación con la de brillo, por lo que la escala de grises reduciría apenas el uso de la red. Utilizar un tamaño de imagen no predefinido o un JPEG en escala de grises obligaría a procesar y volver a comprimir cada fotograma por software, lo que consumiría los recursos del microcontrolador y haría más lenta la transmisión. 
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Al recibir la solicitud, el servidor enciende el LED infrarrojo y descarta los tres primeros fotogramas, que pueden estar desactualizados o tener la exposición sin ajustar. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía el fotograma más reciente de manera continua, con un máximo de 20 por segundo. Como la aplicación procesa 15 por segundo, siempre dispone de uno nuevo. Fuera de esas etapas, la aplicación cierra la conexión, la cámara deja de transmitir y el LED se apaga. Así, no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo o fallan diez capturas seguidas, la transmisión también se detiene hasta recibir una nueva solicitud.
 
@@ -1573,7 +1581,7 @@ La conexión se abre al ingresar a la calibración o al examen y se cierra al sa
 
 Una vez compilada, la biblioteca pone sus funciones a disposición de la aplicación, cuyo código \emph{JavaScript} las invoca de forma nativa. Las operaciones de alta carga computacional, como la conversión a escala de grises o la comparación de plantillas, ocurren dentro del entorno optimizado de la biblioteca. El código \emph{JavaScript}, por su parte, se limita a coordinar el flujo de ejecución y a reflejar los resultados en la interfaz visual.
 
-Para procesar las imágenes, \emph{OpenCV.js} las representa como matrices y las aloja en una partición de memoria exclusiva, fuera del alcance del navegador. Como este espacio reservado resulta demasiado reducido para retener múltiples fotogramas a la vez, la aplicación genera las matrices principales (el fotograma completo, el recorte ocular y la versión monocromática) una única vez y las reescribe en cada ciclo continuo. Sin embargo, los cálculos internos de la biblioteca exigen la creación de matrices temporales. Al finalizar cada cálculo se convierten en memoria residual, inalcanzable para la limpieza automática del navegador. Por lo tanto, el código las libera de manera explícita tras cada uso.
+Para procesar las imágenes, \emph{OpenCV.js} las representa como matrices y las aloja en una partición de memoria exclusiva. Este espacio reservado resulta demasiado reducido para retener múltiples fotogramas en simultáneo. Por eso, la aplicación genera una única vez las matrices principales, que son el fotograma completo, el recorte ocular y la versión monocromática. Luego, las reescribe en cada ciclo continuo. Sin embargo, los cálculos internos de la biblioteca exigen la creación de matrices temporales. Al finalizar cada cálculo se convierten en memoria residual, inalcanzable para la limpieza automática del navegador. Por lo tanto, el código las libera de manera explícita tras cada uso.
 
 Respecto a las plantillas obtenidas en la calibración, el almacenamiento del navegador no admite el formato matricial de \emph{OpenCV.js}. Para guardarlas, el sistema las convierte a un formato de imagen estándar. Luego, al cargar la pantalla de examen del alumno, el proceso se invierte. El programa recupera las imágenes guardadas y las reconstruye como matrices para que el algoritmo de detección funcione de forma correcta.
 
