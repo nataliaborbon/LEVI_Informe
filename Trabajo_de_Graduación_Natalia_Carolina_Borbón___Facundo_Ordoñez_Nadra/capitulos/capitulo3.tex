@@ -2002,7 +2002,7 @@ Conserva los beneficios de la solución 2 y suma una mayor eficiencia energétic
 
 Desventajas: 
 
-Además de las limitaciones presentes en la solución 2, incorpora los siguientes inconvenientes:
+Además de las limitaciones presentes en la solución 2 (con excepción de la pérdida de eficiencia por doble conversión), incorpora los siguientes inconvenientes:
 
 \begin{itemize}
 
@@ -2343,19 +2343,11 @@ Al circuito se le adicionan las resistencias R39 y R40, que sirven para tomar la
 
 \section{Diseño físico}
 
+Esta sección detalla el aspecto físico final del dispositivo. Primero se presenta el circuito de alimentación del módulo capturador y la primera versión pensada para el módulo central, que utilizaba la placa \emph{ESP32-CYD}. Luego se muestran los planos de las placas impresas y, finalmente, el ensamblaje definitivo del sistema.
+
 \subsection{Circuitos}
 
-\subsection{PCB}
-
-\subsection{Montaje}
-
-%\subsection{Montaje}
-
-En esta sección se describe y expone el diseño físico final del dispositivo, comenzando exclusivamente por los circuitos de alimentación y posteriormente con el armado final.
-
-%\subsubsection{Conexiones y PCB}
-
-El esquema de conexiones final para el circuito de alimentación del capturador de imágenes es el siguiente:
+La sección anterior explicó en detalle los componentes utilizados en la etapa de alimentación. A continuación se ilustra la totalidad de las conexiones para el bloque capturador.
 
 \begin{figure}[htbp]
     \centering
@@ -2364,70 +2356,82 @@ El esquema de conexiones final para el circuito de alimentación del capturador 
     \label{esquemacapturador}
 \end{figure}
 
-Incluye los módulos \emph{TP4056}, \emph{MT3608}, un switch intermedio entre ellos para desconectar manualmente el dispositivo y finalmente el zócalo donde se inserta la \emph{ESP32}, al cual se le conecta el LED IR para normalizar la iluminación en el ojo.
+El diagrama cuenta con los módulos \emph{TP4056} y \emph{MT3608}, separados por un interruptor para apagar el sistema de forma manual. Además, incorpora un indicador luminoso de encendido, el zócalo para el \emph{ESP32-CAM}, el circuito de accionamiento del LED infrarrojo y tres capacitores. Estos últimos filtran el ruido eléctrico y suavizan los picos de corriente.
 
-Al tener los módulos comerciales, el esquemático final de la PCB se reduce a este simple esquema:
+Al utilizar componentes comerciales preensamblados, el esquemático final se reduce al siguiente dibujo:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
-    \caption{Esquema simplificado de la PCB del circuito capturador}
+    \caption{Esquema simplificado de la PCB del módulo capturador}
     \label{esquemacapturadorsimple}
 \end{figure}
 
-La entrada del \emph{TP4056} se conecta mediante USB-C, por lo que no se incluye en el esquemático de la PCB.
+El \emph{TP4056} recibe energía por su puerto USB-C, por lo que los pines de entrada se omiten en el diagrama.
 
-A su vez, el esquema de conexiones de la placa que actuará como servidor web es el siguiente:
+Por su parte, el diseño del primer módulo central es idéntico al del capturador, pero sin el indicador de encendido, sin la etapa infrarroja y sin el acople para la cámara.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemareceptor.png}
-    \caption{Esquema simplificado de la PCB del circuito servidor}
+    \caption{Esquema simplificado de la PCB del módulo central inicial (en desuso)}
     \label{esquemareceptor}
 \end{figure}
 
-Prácticamente igual al anterior, sin los diodos LED ni la \emph{ESP32-CAM}. En su lugar se coloca una bornera doble de la que saldrán cables para alimentar a la CYD.
+Como se aclaró antes, este segundo circuito quedó en desuso porque la placa \emph{ONX3248G035} trae su propio circuito de recarga y regulación integrado. En consecuencia, el listado de materiales para construir únicamente la etapa de captura es el siguiente:
 
-\keyword{Diseño de PCB}
+\begin{itemize}
+    \item 1 módulo de carga comercial \emph{TP4056} (con protecciones \emph{DW01A} y \emph{FS8205A} incluidas).
+    \item 1 módulo elevador comercial \emph{MT3608}.
+    \item 1 interruptor mecánico para encendido general.
+    \item 1 diodo LED emisor infrarrojo (iluminación ocular).
+    \item 1 diodo LED azul (indicador de estado).
+    \item 1 resistencia de 470 $\Omega$ (1/4 W) para el LED infrarrojo.
+    \item 1 resistencia de 220 $\Omega$ (1/4 W) para el LED azul.
+    \item 2 capacitores cerámicos de 100 nF (filtrado de ruido de alta frecuencia).
+    \item 1 capacitor electrolítico de 10 $\mu$F (estabilización de transitorios de corriente).
+    \item 1 bornera de 2 terminales y 1 bornera de 3 terminales.
+    \item Tiras de pines (zócalos hembra) para el acople extraíble del \emph{ESP32-CAM}.
+    \item 1 placa de circuito impreso (PCB) a medida.
+\end{itemize}
 
-A continuación se muestran imágenes del diseño de las PCBs para ambos dispositivos, diseñados en el software web \emph{EasyEDA}.
+\subsection{PCB}
+
+A continuación se muestran los planos (\emph{layouts}) de las placas impresas trazados mediante el \emph{software} web \emph{EasyEDA}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{figuras/layoutcapturador.png}
-    \caption{Layout de la PCB del circuito capturador}
+    \caption{Layout de la PCB del módulo capturador}
     \label{layoutcapturador}
 \end{figure}
-
-En lugar de colocar directamente el LED de encendido en la PCB, se opta por utilizar una bornera de 3 terminales para conectarlo externamente. Esto para poder decidir con más libertad su posición exacta en el dispositivo final.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{figuras/layoutservidor.png}
-    \caption{Layout de la PCB del circuito servidor}
+    \caption{Layout de la PCB del módulo central inicial (en desuso)}
     \label{layoutservidor}
 \end{figure}
 
-%\subsubsection{Componentes a utilizar en el dispositivo final}
+En lugar de soldar el LED de estado directamente sobre la PCB capturadora, se opta por una bornera de tres terminales. De esta forma, su posición final en el equipo se elige con mayor libertad.
 
-Debido a las modificaciones de diseño justificadas en secciones previas, el módulo central no requiere una placa de alimentación dedicada. En consecuencia, el siguiente listado detalla de forma exclusiva los materiales necesarios para ensamblar el circuito eléctrico del módulo de captura:
+\subsection{Montaje}
 
-\begin{itemize}
-    \item 1 Batería de litio tipo 18650 (3,7 V, 3000 mAh).
-    \item 1 Zócalo portapilas individual.
-    \item 1 Módulo de carga comercial \emph{TP4056} (con protecciones \emph{DW01A} y \emph{FS8205A} incluidas).
-    \item 1 Módulo elevador comercial \emph{MT3608}.
-    \item 1 Interruptor mecánico para encendido general.
-    \item 1 Diodo LED emisor infrarrojo (iluminación ocular).
-    \item 1 Diodo LED azul (indicador de estado).
-    \item 1 Resistencia de 470 $\Omega$ (1/4 W) para el LED infrarrojo.
-    \item 1 Resistencia de 220 $\Omega$ (1/4 W) para el LED azul.
-    \item 2 Capacitores cerámicos de 100 nF (filtrado de ruido de alta frecuencia).
-    \item 1 Capacitor electrolítico de 10 $\mu$F (estabilización de transitorios de corriente).
-    \item 1 Bornera de 2 terminales y 1 bornera de 3 terminales.
-    \item Tiras de pines (zócalos hembra) para el acople extraíble del \emph{ESP32-CAM}.
-    \item 1 Placa de circuito impreso (PCB) a medida.
-\end{itemize}
+Con todos los elementos a disposición (placas \emph{ESP32}, etapa de alimentación, baterías y gorra base), se avanzó hacia el ensamblaje definitivo.
+
+Operar componentes electrónicos desnudos resulta incómodo y compromete la integridad física del equipo. Por lo tanto, se diseñó una carcasa impresa en 3D para cada bloque. Estas piezas protegen el \emph{hardware} y facilitan su manipulación.
+
+\keyword{Imágen de las carcasas}
+
+Como se observa, el estuche del bloque capturador posee una abertura cuadrada por donde asoma la cámara. Este hueco cuenta con un mecanismo deslizante para ajustar el ángulo de visión e integra el emisor infrarrojo en la misma pieza móvil. Además, la estructura incorpora un compartimento para la batería de litio y una pequeña ranura destinada al interruptor general.
+
+Por su parte, la cubierta del módulo central presenta una ventana del tamaño exacto del panel táctil. Al principio, esta abertura medía 2,8 pulgadas para calzar con el \emph{ESP32-CYD}. Luego, el modelo 3D se rediseñó a medida para el \emph{ONX3248G035}.
+
+\keyword{Imagen carcasa ONX}
+
+Tras la impresión de las piezas, los circuitos se fijaron en su interior. A continuación, se empleó adhesivo y tiras de velcro (abrojos) para adherir el bloque capturador a la visera de la gorra. El servidor central, en cambio, se mantiene como un elemento portátil e independiente, ideal para la comodidad del examinador, tutor o compañero.
+
+\keyword{Imagen del montaje final?}
 
 \section{Costo total de desarrollo}
 
