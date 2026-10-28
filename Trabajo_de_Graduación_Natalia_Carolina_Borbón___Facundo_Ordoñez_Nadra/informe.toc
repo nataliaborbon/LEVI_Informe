@@ -86,16 +86,16 @@
 \contentsline {section}{\numberline {3.8}Alimentación}{69}{section.159}%
 \contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{69}{subsection.160}%
 \contentsline {subsection}{\numberline {3.8.2}Soluciones propuestas}{70}{subsection.161}%
-\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{74}{subsection.167}%
-\contentsline {subsubsection}{Recarga y protección}{74}{section*.168}%
-\contentsline {subsubsection}{Estabilización de voltaje}{77}{section*.180}%
-\contentsline {subsection}{\numberline {3.8.4}Circuito de carga del ONX}{81}{subsection.187}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{81}{section.188}%
-\contentsline {subsection}{\numberline {3.9.1}Circuitos}{81}{subsection.189}%
-\contentsline {subsection}{\numberline {3.9.2}PCB}{81}{subsection.190}%
-\contentsline {subsection}{\numberline {3.9.3}Montaje}{81}{subsection.191}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{84}{section.197}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{85}{chapter.198}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{85}{section.199}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{85}{section.200}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{86}{section.201}%
+\contentsline {subsection}{\numberline {3.8.3}Descripción detallada del sistema elegido}{75}{subsection.167}%
+\contentsline {subsubsection}{Recarga y protección}{75}{section*.168}%
+\contentsline {subsubsection}{Estabilización de voltaje}{77}{section*.172}%
+\contentsline {subsection}{\numberline {3.8.4}Circuito de carga del \emph {ONX3248G035}}{80}{subsection.179}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{82}{section.183}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{82}{subsection.184}%
+\contentsline {subsection}{\numberline {3.9.2}PCB}{82}{subsection.185}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{82}{subsection.186}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{86}{section.192}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{87}{chapter.193}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{87}{section.194}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{87}{section.195}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{88}{section.196}%

@@ -1910,7 +1910,7 @@ Para resolver estos inconvenientes, se analizan a continuación cuatro alternati
 
 Consta de un regulador de tensión lineal de baja caída (LDO), como el \emph{AMS1117}, ubicado entre la batería de litio y el microcontrolador. Se lo coloca con el fin de ajustar y estabilizar el voltaje en 3,3 V (Fig. \ref{fig:ams1117}). Para la recarga se utiliza un cargador comercial externo. Este método obliga al usuario a extraer físicamente la batería del dispositivo para luego introducirla en la estación de carga conectada a la red eléctrica.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.3\textwidth]{figuras/ams1117.png}
     \caption{Módulo comercial de un LDO con el chip AMS1117}
@@ -1947,7 +1947,7 @@ Desventajas:
 
 El módulo \emph{TP4056} es un circuito integrado diseñado para recargar baterías de litio. Por su parte, el \emph{MT3608} es un convertidor elevador de tensión (\emph{boost}). Este componente transforma la energía de entrada en una señal de salida estable, cuyo valor final define el diseñador. Al interconectar ambos módulos, se crea un conjunto capaz de cumplir con los requisitos de recarga y regulación. De este modo, es posible alimentar el \emph{ESP32} directamente a través de su pin de 5 V.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/tpymt.png}
     \caption{Módulos de recarga (TP4056) y elevación de voltaje (MT3608)}
@@ -2015,7 +2015,7 @@ Además de las limitaciones presentes en la solución 2, incorpora los siguiente
 \end{itemize}
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{figuras/xl6009.png}
     \caption{Módulo Buck-Boost basado en el chip XL6009}
@@ -2126,9 +2126,9 @@ En resumen, sus características más relevantes son:
 
 Su diagrama de pines es el siguiente:
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/tp4056pinout.png}
+    \includegraphics[width=0.4\textwidth]{figuras/tp4056pinout.png}
     \caption{Diagrama de pines del módulo \emph{TP4056}}
     \label{fig:tp4056pinout}
 \end{figure}
@@ -2163,7 +2163,7 @@ A continuación se detalla el circuito de aplicación típico de este chip. Este
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{figuras/tp4056placa.png}
+    \includegraphics[width=0.7\textwidth]{figuras/tp4056placa.png}
     \caption{Circuito típico de aplicación comercial del \emph{TP4056}}
     \label{fig:tp4056placa}
 \end{figure}
@@ -2227,7 +2227,7 @@ Las características más relevantes de este integrado son:
 
 Su circuito interno es el siguiente:
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figuras/circuitomt3608.png}
     \caption{Circuito interno del chip \emph{MT3608}}
@@ -2279,7 +2279,7 @@ El siguiente esquema muestra el circuito típico implementado en los módulos \e
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/mt3608placa.png}
+    \includegraphics[width=0.4\textwidth]{figuras/mt3608placa.png}
     \caption{Circuito comercial de los módulos \emph{MT3608}}
     \label{fig:mt3608placa}
 \end{figure}
@@ -2292,7 +2292,54 @@ Por último, el pin FB se conecta a un divisor resistivo formado por un potenci�
 
 El esquema se completa con los capacitores C5 y C6, utilizados para el filtrado de armónicos y reducción del ruido eléctrico.
 
-\subsection{Circuito de carga del ONX}
+\subsection{Circuito de carga del \emph{ONX3248G035}}
+
+Como se mencionó en secciones anteriores, el \emph{hardware} del módulo central sufrió un cambio. Durante el desarrollo, se migró al modelo \emph{ONX3248G035}. Esta placa incluye su propio sistema de alimentación, que además permite recargar baterías de litio. Por este motivo, el diseño del circuito impreso original quedó en desuso.
+
+La figura \ref{fig:hardwareonx} muestra los componentes de este nuevo dispositivo. En particular, la entrada remarcada (tipo \emph{MX1.25-2P}) corresponde a los pines de la batería. Esta conexión sirve tanto para el consumo normal como para su recarga. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/hardwareonx.png}
+    \caption{Partes del hardware de la placa \emph{ONX3248G035}}
+    \label{fig:hardwareonx}
+\end{figure}
+
+El sistema integrado se basa en el uso del chip \emph{IP4054V}. Su hoja de datos lo describe como un gestor de carga lineal de baterías de litio. Opera de forma similar al módulo \emph{TP4056} previo, aunque presenta ciertas diferencias técnicas. 
+
+La figura \ref{fig:circuitoip4054} expone este bloque, el cual emplea la variante \emph{IP4054V\_CFH}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/circuitoip4054.png}
+    \caption{Circuito de carga de la placa \emph{ONX3248G035}}
+    \label{fig:circuitoip4054}
+\end{figure}
+
+El pin 1 (CHRG) se une al cátodo de un LED indicador a través de la red \emph{CHRG\_N}. El pin 2 representa la masa global (GND).
+
+El pin 3 (BAT) enlaza con el terminal positivo de la batería. Esta misma línea alimenta a un sensor adicional para medir el nivel de voltaje. En el diagrama, se identifica con la etiqueta \emph{VBAT}.
+
+El pin 4 (VCC) recibe la tensión de la fuente externa USB. Finalmente, el pin 6 (PROG) se conecta a la resistencia de configuración. Se emplea un valor de 3,3 k$\Omega$, que establece una corriente constante de 0,3 A según la hoja de datos.
+
+Los capacitores C26 y C53 actúan como filtros de ruido en la entrada y en la salida.
+
+Frente al \emph{TP4056}, esta nueva etapa resulta más robusta e incorpora mejores protecciones (incluso ante polaridad inversa de batería). Sin embargo, la corriente de carga es casi tres veces menor. Como consecuencia, el ciclo completo demora más tiempo.
+
+Para estabilizar la señal eléctrica, se emplea un convertidor reductor o \emph{Buck}. La figura \ref{fig:reductoronx} detalla esta sección.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figuras/reductoronx.png}
+    \caption{Circuito reductor de tensión de la placa \emph{ONX3248G035}}
+    \label{fig:reductoronx}
+\end{figure}
+
+A diferencia del elevador \emph{MT3608}, este bloque disminuye el voltaje de entrada ($V_{SYS}$) hasta unos 3,3 V estables. Esta tensión inicial puede provenir tanto de la alimentación externa como de la batería, determinada por otro circuito que conmuta automáticamente entre ambas.
+
+El plano muestra al integrado \emph{LC2201CCB5TR}, el cual reemplaza la función del \emph{MT3608}. Sus principales ventajas incluyen una mayor eficiencia térmica y una frecuencia de conmutación superior (2,4 MHz). A pesar de esto, ambos chips resultan aptos para el prototipo.
+
+Al circuito se le adicionan las resistencias R39 y R40, que sirven para tomar la muestra de la salida. Los capacitores C54, C34, C36, C38 y C39 se utilizan para filtrar el ruido. Finalmente, la resistencia R25 protege el pin de habilitación del chip, el cual se encuentra permanentemente activo en el uso.
 
 \section{Diseño físico}
 
