@@ -1693,27 +1693,67 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \begin{itemize}
 
-\item Principal: muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último al perfil. El botón central lleva a los datos de contacto de profesor o tutor según corresponda.
+\item Principal (figura \ref{fig:panelprincipal}): muestra un saludo con el nombre del usuario, un botón para cerrar la sesión y tres botones de navegación. El primero dirige a los cuestionarios y el último al perfil. El botón central lleva a los datos de contacto de profesor o tutor según corresponda.
 
 \item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva. No se requiere clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
 
-\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, se otorga a los tutores la capacidad  para eliminar profesores. Esta es una de las dos pantallas que utiliza el componente de paginación, limitando la cantidad de usuarios máxima que se muestran por página (definido por el backend).
+\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, se otorga a los tutores la capacidad  para eliminar profesores (figura \ref{fig:panelcontactos}). Esta es una de las dos pantallas que utiliza el componente de paginación, limitando la cantidad de usuarios máxima que se muestran por página (definido por el backend).
 
 \item Cuestionarios: Se subdivide en tres vistas.
 
 \begin{itemize}
 
-\item \emph{Listado}: para el profesor, presenta el listado de sus cuestionarios con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan o deshabilitan según su estado actual. El botón de estado solo cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, el sistema captura la fecha y hora del dispositivo del profesor para almacenarlas en la base de datos. Esto se debe a que el sistema carece de conexión a internet, lo que le impide obtener la hora de forma autónoma. El tutor, en cambio, ve los cuestionarios de todos los profesores con la materia de cada uno, y solo puede acceder a su revisión. Ambas listas aplican el componente paginador, mostrando un límite máximo de cuestionarios por página.
+\item \emph{Listado}: para el profesor, presenta el listado de sus cuestionarios (figura \ref{fig:panelcuestionarios}) con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan o deshabilitan según su estado actual. El botón de estado solo cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, el sistema captura la fecha y hora del dispositivo del profesor para almacenarlas en la base de datos. Esto se debe a que el sistema carece de conexión a internet, lo que le impide obtener la hora de forma autónoma. El tutor, en cambio, ve los cuestionarios de todos los profesores con la materia de cada uno, y solo puede acceder a su revisión. Ambas listas aplican el componente paginador, mostrando un límite máximo de cuestionarios por página.
 
-\item \emph{Editor}: exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse. Se incluye además un botón para cargar un cuestionario mediante un archivo JSON externo, en caso de que se quiera editar por fuera del sistema. 
+\item \emph{Editor} (figura \ref{fig:paneleditor}): exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse. Se incluye además un botón para cargar un cuestionario mediante un archivo JSON externo, en caso de que se quiera editar por fuera del sistema. 
 
-\item \emph{Revisión}: muestra el resultado de un cuestionario finalizado. Se indica la fecha de inicio, el tiempo de resolución, el puntaje obtenido y el resultado final (Aprobado o Desaprobado). Detalla para cada pregunta la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
-
-\end{itemize}
+\item \emph{Revisión} (figura \ref{fig:panelrevision}): muestra el resultado de un cuestionario finalizado. Se indica la fecha de inicio, el tiempo de resolución, el puntaje obtenido y el resultado final (Aprobado o Desaprobado). Detalla para cada pregunta la opción elegida, la correcta en caso de error y los puntos que sumó o restó.
 
 \end{itemize}
 
-\keyword{(Imágenes de las pantallas principal, perfil, contactos, cuestionarios, editor y revisión, para ambos roles cuando corresponda)}
+\end{itemize}
+
+%\keyword{(Imágenes de las pantallas principal, perfil, contactos, cuestionarios, editor y revisión, para ambos roles cuando corresponda)}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{2.88cm}
+        \centering
+        \includegraphics[height=5.5cm, trim=0 0 0 114, clip]{figuras/panel_principal.jpg}
+        \caption{Principal}
+        \label{fig:panelprincipal}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{3.12cm}
+        \centering
+        \includegraphics[height=5.5cm, trim=0 0 0 122, clip]{figuras/panel_cuestionarios.jpg}
+        \caption{Cuestionarios}
+        \label{fig:panelcuestionarios}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{3.12cm}
+        \centering
+        \includegraphics[height=5.5cm, trim=0 0 0 122, clip]{figuras/panel_editor.jpg}
+        \caption{Editor}
+        \label{fig:paneleditor}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{2.32cm}
+        \centering
+        \includegraphics[height=5.5cm, trim=0 0 0 80, clip]{figuras/panel_revision.jpg}
+        \caption{Revisión}
+        \label{fig:panelrevision}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{3.14cm}
+        \centering
+        \includegraphics[height=5.5cm, trim=0 0 0 124, clip]{figuras/panel_contactos_tutor.jpg}
+        \caption{Contactos}
+        \label{fig:panelcontactos}
+    \end{subfigure}
+    \caption{Pantallas del panel}
+    \label{fig:panel}
+\end{figure}
 
 \emph{Editor externo}
 
@@ -2079,7 +2119,7 @@ La solución adoptada es la segunda alternativa. El \emph{TP4056} gestiona la re
 
 Esta sección detalla los parámetros de los módulos comerciales empleados para la placa capturadora. 
 
-El módulo \emph{TP4056} ejecuta un ciclo de carga de corriente constante y tensión constante (CC/CV). La tabla \ref{tab:parametros_tp4056} resume sus especificaciones.
+El módulo \emph{TP4056} (figura \ref{fig:modulotp4056}) ejecuta un ciclo de carga de corriente constante y tensión constante (CC/CV). La tabla \ref{tab:parametros_tp4056} resume sus especificaciones.
 
 \begin{table}[H]
     \centering
@@ -2098,7 +2138,7 @@ El módulo \emph{TP4056} ejecuta un ciclo de carga de corriente constante y tens
     \end{tabular}
 \end{table}
 
-Por su parte, el \emph{MT3608} eleva la señal nominal de la celda a través de un circuito \emph{Boost}. Mediante un potenciómetro en la placa, se fija su salida en 5 V. La tabla \ref{tab:parametros_mt3608} expone sus límites operativos.
+Por su parte, el \emph{MT3608} (figura \ref{fig:modulomt3608}) eleva la señal nominal de la celda a través de un circuito \emph{Boost}. Mediante un potenciómetro en la placa, se fija su salida en 5 V. La tabla \ref{tab:parametros_mt3608} expone sus límites operativos.
 
 \begin{table}[H]
     \centering
@@ -2119,9 +2159,28 @@ Por su parte, el \emph{MT3608} eleva la señal nominal de la celda a través de 
     \end{tabular}
 \end{table}
 
-La figura \ref{fig:placascomerciales} ilustra los circuitos típicos implementados en estos módulos comerciales.
+%La figura \ref{fig:placascomerciales} ilustra los circuitos típicos implementados en estos módulos comerciales.
 
-\keyword{Imagen de circuitos de aplicación de los módulos TP4056 y MT3608}
+%\keyword{Imagen de circuitos de aplicación de los módulos TP4056 y MT3608}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.42\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=15 110 338 329, clip]{figuras/tpymt.png}
+        \caption{Módulo de carga \emph{TP4056}}
+        \label{fig:modulotp4056}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=409 110 803 329, clip]{figuras/tpymt.png}
+        \caption{Módulo elevador \emph{MT3608}}
+        \label{fig:modulomt3608}
+    \end{subfigure}
+    \caption{Módulos comerciales de alimentación del módulo de captura}
+    \label{fig:placascomerciales}
+\end{figure}
 
 \subsection{Circuito de alimentación del \emph{ONX3248G035}}
 
@@ -2205,16 +2264,21 @@ A continuación se muestran los planos (\emph{layouts}) de las placas impresas t
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{figuras/layoutcapturador.png}
-    \caption{Layout de la PCB del módulo capturador}
-    \label{layoutcapturador}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\textwidth]{figuras/layoutservidor.png}
-    \caption{Layout de la PCB del módulo central inicial (en desuso)}
-    \label{layoutservidor}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/layoutcapturador.png}
+        \caption{Módulo capturador}
+        \label{layoutcapturador}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/layoutservidor.png}
+        \caption{Módulo central inicial (en desuso)}
+        \label{layoutservidor}
+    \end{subfigure}
+    \caption{Layouts de las PCB}
+    \label{fig:layouts}
 \end{figure}
 
 Estos diseños se imprimieron en placas de cobre de capa simple, se perforaron y luego se soldaron los componentes.
