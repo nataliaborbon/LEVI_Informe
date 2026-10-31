@@ -57,23 +57,9 @@
 \contentsline {figure}{\numberline {3.37}{\ignorespaces Pantallas y sub-pantallas de acceso}}{66}{figure.caption.152}%
 \contentsline {figure}{\numberline {3.38}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{69}{figure.caption.157}%
 \contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de estado de la interfaz táctil}}{70}{figure.caption.158}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Módulo comercial de un LDO con el chip AMS1117}}{71}{figure.caption.162}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Módulos de recarga (TP4056) y elevación de voltaje (MT3608)}}{72}{figure.caption.163}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces Módulo Buck-Boost basado en el chip XL6009}}{74}{figure.caption.164}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Módulo de gestión de energía basado en el chip IP5306}}{74}{figure.caption.165}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Diagrama de pines del módulo \emph {TP4056}}}{77}{figure.caption.169}%
-\contentsline {figure}{\numberline {3.45}{\ignorespaces Circuito típico de aplicación comercial del \emph {TP4056}}}{77}{figure.caption.170}%
-\contentsline {figure}{\numberline {3.46}{\ignorespaces Arquitectura básica de un circuito elevador \emph {Boost}}}{78}{figure.caption.173}%
-\contentsline {figure}{\numberline {3.47}{\ignorespaces Circuito interno del chip \emph {MT3608}}}{79}{figure.caption.175}%
-\contentsline {figure}{\numberline {3.48}{\ignorespaces Modulación por ancho de pulso (PWM)}}{80}{figure.caption.176}%
-\contentsline {figure}{\numberline {3.49}{\ignorespaces Diagrama de pines del módulo \emph {MT3608}}}{80}{figure.caption.177}%
-\contentsline {figure}{\numberline {3.50}{\ignorespaces Circuito comercial de los módulos \emph {MT3608}}}{81}{figure.caption.178}%
-\contentsline {figure}{\numberline {3.51}{\ignorespaces Partes del hardware de la placa \emph {ONX3248G035}}}{81}{figure.caption.180}%
-\contentsline {figure}{\numberline {3.52}{\ignorespaces Circuito de carga de la placa \emph {ONX3248G035}}}{82}{figure.caption.181}%
-\contentsline {figure}{\numberline {3.53}{\ignorespaces Circuito reductor de tensión de la placa \emph {ONX3248G035}}}{82}{figure.caption.182}%
-\contentsline {figure}{\numberline {3.54}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{83}{figure.caption.185}%
-\contentsline {figure}{\numberline {3.55}{\ignorespaces Esquema simplificado de la PCB del módulo capturador}}{84}{figure.caption.186}%
-\contentsline {figure}{\numberline {3.56}{\ignorespaces Esquema simplificado de la PCB del módulo central inicial (en desuso)}}{84}{figure.caption.187}%
-\contentsline {figure}{\numberline {3.57}{\ignorespaces Layout de la PCB del módulo capturador}}{85}{figure.caption.189}%
-\contentsline {figure}{\numberline {3.58}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{86}{figure.caption.190}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{74}{figure.caption.172}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Esquema simplificado de la PCB del módulo capturador}}{74}{figure.caption.173}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema simplificado de la PCB del módulo central inicial (en desuso)}}{75}{figure.caption.174}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Layout de la PCB del módulo capturador}}{76}{figure.caption.176}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{77}{figure.caption.177}%
 \addvspace {10\p@ }
