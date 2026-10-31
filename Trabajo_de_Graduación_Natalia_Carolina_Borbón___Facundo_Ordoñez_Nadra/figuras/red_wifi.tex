@@ -1,8 +1,7 @@
 % Esquema de la red Wi-Fi local del sistema.
 % Se compila por separado: pdflatex red_wifi.tex -> red_wifi.pdf
-% La pantalla del módulo central se muestra apagada (red_onx_apagada.png).
-% Para mostrar el código QR más adelante, reemplazar esa imagen por una
-% con la pantalla de bienvenida.
+% La pantalla del módulo central muestra la vista de bienvenida con el
+% código QR (onx_bienvenida.pdf, generada a partir de red_onx_apagada.png).
 \documentclass[tikz,border=6pt]{standalone}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -35,7 +34,8 @@
   \end{scope}}
 
 % ---------------- Módulo central ----------------
-\node (onx) at (0,0) {\includegraphics[height=5.6cm]{red_onx_apagada.png}};
+%\node (onx) at (0,0) {\includegraphics[height=5.6cm]{red_onx_apagada.png}};
+\node (onx) at (0,0) {\includegraphics[height=5.6cm]{onx_bienvenida.pdf}};
 \node[ip, above] at (onx.north) {192.168.4.1};
 \wifi{0,3.55}{0.6}
 \node[rotulo, above] at (0,4.15) {Punto de acceso Wi-Fi\\(red local)};
@@ -73,7 +73,7 @@
 
 % ---------------- Módulo de captura ----------------
 \node (cam) at (0.9,-4.6) {\includegraphics[height=2.6cm]{red_esp32cam.png}};
-\draw[->, flecha, line width=1.3pt] ($(cam.west)+(0,0.1)$) -- ++(-0.9,0) |- ($(onx.south)+(-0.35,0.05)$);
+\draw[->, flecha, line width=1.3pt] ($(cam.west)+(0,0.1)$) -| ($(onx.south)+(-0.5,0)$);
 \node[ip, below] at (cam.south) {192.168.4.50};
 
 \node[tarjeta, anchor=west] at ($(cam.east)+(0.4,0)$) {%

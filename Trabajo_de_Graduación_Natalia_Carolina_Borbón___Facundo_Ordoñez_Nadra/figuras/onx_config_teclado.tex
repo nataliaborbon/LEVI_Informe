@@ -1,0 +1,138 @@
+% Módulo central mostrando la vista de configuración inicial (con el teclado).
+% Se compila por separado: lualatex onx_config_teclado.tex -> onx_config_teclado.pdf
+% Se dibuja sobre red_onx_apagada.png. La disposición replica screen_setup.cpp:
+% título en Montserrat 18, etiquetas en Montserrat 14, campos de 280 px de ancho
+% en y = 60, 145 y 230 px, y botón de 200x40 px en y = 310 px. El teclado es el
+% de LVGL en modo minúsculas y ocupa la mitad inferior. Al enfocar la clave de
+% tutor, el formulario sube 52 px para que el campo quede visible.
+% Colores del firmware con la inversión del panel desactivada: fondo 0x2C3E50,
+% etiquetas blancas, campos y teclado del tema claro de LVGL y botón 0x2196F3.
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\newfontfamily\montserrat{Montserrat-Medium.otf}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{pantalla}{RGB}{44,62,80}
+\definecolor{oscuro}{RGB}{255,255,255}
+\definecolor{campo}{RGB}{255,255,255}
+\definecolor{placeholder}{RGB}{176,176,176}
+\definecolor{icono}{RGB}{85,85,85}
+\definecolor{claro}{RGB}{33,33,33}
+\definecolor{naranja}{RGB}{33,150,243}
+\definecolor{textoboton}{RGB}{255,255,255}
+\definecolor{fondoteclado}{RGB}{230,232,235}
+\definecolor{tecla}{RGB}{255,255,255}
+\definecolor{teclaespecial}{RGB}{200,203,208}
+
+\newcommand\fuentedieciocho{\montserrat\fontsize{8.2}{9.6}\selectfont}
+\newcommand\fuentedieciseis{\montserrat\fontsize{7.3}{8.6}\selectfont}
+\newcommand\fuentecatorce{\montserrat\fontsize{6.4}{7.6}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}[x=0.01cm,y=0.01cm]
+\node[anchor=south west, inner sep=0] at (0,0) {\includegraphics[width=6.39cm]{red_onx_apagada.png}};
+% Área visible del panel en la imagen: (64,101)-(575,867), equivale a 320x480 px
+\begin{scope}[shift={(64,867)}, x=0.015969cm, y=-0.015958cm]
+  \fill[pantalla] (0,0) rectangle (320,480);
+  \clip (0,0) rectangle (320,480);
+  \begin{scope}[every node/.style={inner sep=0}]
+    \node[anchor=north, font=\fuentedieciocho, text=oscuro] at (160,-47) {L.E.V.I. - Configurar Sistema};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,-12) {Nombre del Alumno:};
+    \fill[campo, rounded corners=0.06cm] (20,8) rectangle (300,60);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,38.5) {Ej: Juan Perez};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,73) {Clave Profesor:};
+    \fill[campo, rounded corners=0.06cm] (20,93) rectangle (300,145);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,123.5) {Clave Profesor};
+    \node[font=\fontsize{7.3}{8}\selectfont, text=icono] at (279,119) {\faEyeSlash};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,158) {Clave Tutor:};
+    \fill[campo, rounded corners=0.06cm] (20,178) rectangle (300,230);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,208.5) {Clave Tutor};
+    \node[font=\fontsize{7.3}{8}\selectfont, text=icono] at (279,204) {\faEyeSlash};
+    \draw[claro, line width=0.25pt] (33,194) -- (33,214);
+    \fill[naranja, rounded corners=0.06cm] (60,258) rectangle (260,298);
+    \node[font=\fuentecatorce, text=textoboton] at (160,278) {Guardar};
+    \fill[fondoteclado] (0,240) rectangle (320,480);
+    \fill[teclaespecial, rounded corners=0.05cm] (4.00,244.00) rectangle (29.77,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (16.88,274.80) {1\#};
+    \fill[tecla, rounded corners=0.05cm] (33.77,244.00) rectangle (54.38,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (44.08,274.80) {q};
+    \fill[tecla, rounded corners=0.05cm] (58.38,244.00) rectangle (79.00,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (68.69,274.80) {w};
+    \fill[tecla, rounded corners=0.05cm] (83.00,244.00) rectangle (103.62,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (93.31,274.80) {e};
+    \fill[tecla, rounded corners=0.05cm] (107.62,244.00) rectangle (128.23,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (117.92,274.80) {r};
+    \fill[tecla, rounded corners=0.05cm] (132.23,244.00) rectangle (152.85,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (142.54,274.80) {t};
+    \fill[tecla, rounded corners=0.05cm] (156.85,244.00) rectangle (177.46,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (167.15,274.80) {y};
+    \fill[tecla, rounded corners=0.05cm] (181.46,244.00) rectangle (202.08,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (191.77,274.80) {u};
+    \fill[tecla, rounded corners=0.05cm] (206.08,244.00) rectangle (226.69,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (216.38,274.80) {i};
+    \fill[tecla, rounded corners=0.05cm] (230.69,244.00) rectangle (251.31,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (241.00,274.80) {o};
+    \fill[tecla, rounded corners=0.05cm] (255.31,244.00) rectangle (275.92,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (265.62,274.80) {p};
+    \fill[teclaespecial, rounded corners=0.05cm] (279.92,244.00) rectangle (316.00,299.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (297.96,274.80) {\faBackspace};
+    \fill[teclaespecial, rounded corners=0.05cm] (4.00,303.00) rectangle (44.80,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (24.40,333.80) {ABC};
+    \fill[tecla, rounded corners=0.05cm] (48.80,303.00) rectangle (69.20,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (59.00,333.80) {a};
+    \fill[tecla, rounded corners=0.05cm] (73.20,303.00) rectangle (93.60,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (83.40,333.80) {s};
+    \fill[tecla, rounded corners=0.05cm] (97.60,303.00) rectangle (118.00,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (107.80,333.80) {d};
+    \fill[tecla, rounded corners=0.05cm] (122.00,303.00) rectangle (142.40,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (132.20,333.80) {f};
+    \fill[tecla, rounded corners=0.05cm] (146.40,303.00) rectangle (166.80,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (156.60,333.80) {g};
+    \fill[tecla, rounded corners=0.05cm] (170.80,303.00) rectangle (191.20,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (181.00,333.80) {h};
+    \fill[tecla, rounded corners=0.05cm] (195.20,303.00) rectangle (215.60,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (205.40,333.80) {j};
+    \fill[tecla, rounded corners=0.05cm] (219.60,303.00) rectangle (240.00,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (229.80,333.80) {k};
+    \fill[tecla, rounded corners=0.05cm] (244.00,303.00) rectangle (264.40,358.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (254.20,333.80) {l};
+    \fill[teclaespecial, rounded corners=0.05cm] (268.40,303.00) rectangle (316.00,358.00);
+    \draw[claro, line width=0.6pt, -{Stealth[length=2.2pt]}] (298.20,326.50) -- (298.20,332.50) -- (285.20,332.50);
+    \fill[teclaespecial, rounded corners=0.05cm] (4.00,362.00) rectangle (26.33,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (15.17,392.80) {\_};
+    \fill[teclaespecial, rounded corners=0.05cm] (30.33,362.00) rectangle (52.67,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (41.50,392.80) {-};
+    \fill[tecla, rounded corners=0.05cm] (56.67,362.00) rectangle (79.00,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (67.83,392.80) {z};
+    \fill[tecla, rounded corners=0.05cm] (83.00,362.00) rectangle (105.33,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (94.17,392.80) {x};
+    \fill[tecla, rounded corners=0.05cm] (109.33,362.00) rectangle (131.67,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (120.50,392.80) {c};
+    \fill[tecla, rounded corners=0.05cm] (135.67,362.00) rectangle (158.00,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (146.83,392.80) {v};
+    \fill[tecla, rounded corners=0.05cm] (162.00,362.00) rectangle (184.33,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (173.17,392.80) {b};
+    \fill[tecla, rounded corners=0.05cm] (188.33,362.00) rectangle (210.67,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (199.50,392.80) {n};
+    \fill[tecla, rounded corners=0.05cm] (214.67,362.00) rectangle (237.00,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (225.83,392.80) {m};
+    \fill[teclaespecial, rounded corners=0.05cm] (241.00,362.00) rectangle (263.33,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (252.17,392.80) {.};
+    \fill[teclaespecial, rounded corners=0.05cm] (267.33,362.00) rectangle (289.67,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (278.50,392.80) {,};
+    \fill[teclaespecial, rounded corners=0.05cm] (293.67,362.00) rectangle (316.00,417.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (304.83,392.80) {:};
+    \fill[teclaespecial, rounded corners=0.05cm] (4.00,421.00) rectangle (46.29,476.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (25.14,451.80) {\faKeyboard};
+    \fill[teclaespecial, rounded corners=0.05cm] (50.29,421.00) rectangle (92.57,476.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (71.43,451.80) {\faChevronLeft};
+    \fill[tecla, rounded corners=0.05cm] (96.57,421.00) rectangle (223.43,476.00);
+    \fill[teclaespecial, rounded corners=0.05cm] (227.43,421.00) rectangle (269.71,476.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (248.57,451.80) {\faChevronRight};
+    \fill[teclaespecial, rounded corners=0.05cm] (273.71,421.00) rectangle (316.00,476.00);
+    \node[anchor=base, font=\fuentedieciseis, text=claro] at (294.86,451.80) {\faCheck};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{document}

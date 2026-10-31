@@ -1,0 +1,57 @@
+% Módulo central mostrando la vista de configuración inicial (formulario).
+% Se compila por separado: lualatex onx_config_formulario.tex -> onx_config_formulario.pdf
+% Se dibuja sobre red_onx_apagada.png. La disposición replica screen_setup.cpp:
+% título en Montserrat 18, etiquetas en Montserrat 14, campos de 280 px de ancho
+% en y = 60, 145 y 230 px, y botón de 200x40 px en y = 310 px. El teclado es el
+% de LVGL en modo minúsculas y ocupa la mitad inferior. Al enfocar la clave de
+% tutor, el formulario sube 52 px para que el campo quede visible.
+% Colores del firmware con la inversión del panel desactivada: fondo 0x2C3E50,
+% etiquetas blancas, campos y teclado del tema claro de LVGL y botón 0x2196F3.
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\newfontfamily\montserrat{Montserrat-Medium.otf}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{pantalla}{RGB}{44,62,80}
+\definecolor{oscuro}{RGB}{255,255,255}
+\definecolor{campo}{RGB}{255,255,255}
+\definecolor{placeholder}{RGB}{176,176,176}
+\definecolor{icono}{RGB}{85,85,85}
+\definecolor{claro}{RGB}{33,33,33}
+\definecolor{naranja}{RGB}{33,150,243}
+\definecolor{textoboton}{RGB}{255,255,255}
+\definecolor{fondoteclado}{RGB}{230,232,235}
+\definecolor{tecla}{RGB}{255,255,255}
+\definecolor{teclaespecial}{RGB}{200,203,208}
+
+\newcommand\fuentedieciocho{\montserrat\fontsize{8.2}{9.6}\selectfont}
+\newcommand\fuentedieciseis{\montserrat\fontsize{7.3}{8.6}\selectfont}
+\newcommand\fuentecatorce{\montserrat\fontsize{6.4}{7.6}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}[x=0.01cm,y=0.01cm]
+\node[anchor=south west, inner sep=0] at (0,0) {\includegraphics[width=6.39cm]{red_onx_apagada.png}};
+% Área visible del panel en la imagen: (64,101)-(575,867), equivale a 320x480 px
+\begin{scope}[shift={(64,867)}, x=0.015969cm, y=-0.015958cm]
+  \fill[pantalla] (0,0) rectangle (320,480);
+  \clip (0,0) rectangle (320,480);
+  \begin{scope}[every node/.style={inner sep=0}]
+    \node[anchor=north, font=\fuentedieciocho, text=oscuro] at (160,5) {L.E.V.I. - Configurar Sistema};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,40) {Nombre del Alumno:};
+    \fill[campo, rounded corners=0.06cm] (20,60) rectangle (300,112);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,90.5) {Ej: Juan Perez};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,125) {Clave Profesor:};
+    \fill[campo, rounded corners=0.06cm] (20,145) rectangle (300,197);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,175.5) {Clave Profesor};
+    \node[font=\fontsize{7.3}{8}\selectfont, text=icono] at (279,171) {\faEyeSlash};
+    \node[anchor=north, font=\fuentecatorce, text=oscuro] at (160,210) {Clave Tutor:};
+    \fill[campo, rounded corners=0.06cm] (20,230) rectangle (300,282);
+    \node[anchor=base west, font=\fuentedieciocho, text=placeholder] at (34,260.5) {Clave Tutor};
+    \node[font=\fontsize{7.3}{8}\selectfont, text=icono] at (279,256) {\faEyeSlash};
+    \fill[naranja, rounded corners=0.06cm] (60,310) rectangle (260,350);
+    \node[font=\fuentecatorce, text=textoboton] at (160,330) {Guardar};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{document}

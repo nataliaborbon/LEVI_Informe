@@ -1,0 +1,31 @@
+% Módulo central mostrando la vista de estado del sistema.
+% Se compila por separado: lualatex onx_estado.tex -> onx_estado.pdf
+% Se dibuja sobre red_onx_apagada.png. La disposición replica screen_main.cpp:
+% título en Montserrat 20 a 15 px del borde superior y datos en Montserrat 16
+% a 20 px del borde izquierdo, en y = 60, 100, 140 y 180 px.
+% El panel muestra los colores invertidos, por eso el verde 0x2ecc71 de
+% "Transmitiendo" se ve magenta.
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\newfontfamily\montserrat{Montserrat-Medium.otf}
+
+\definecolor{fondo}{RGB}{42,43,46}
+\definecolor{claro}{RGB}{232,240,252}
+\definecolor{transmitiendo}{RGB}{209,51,142}
+
+\begin{document}
+\begin{tikzpicture}[x=0.01cm,y=0.01cm]
+\node[anchor=south west, inner sep=0] at (0,0) {\includegraphics[width=6.39cm]{red_onx_apagada.png}};
+% Área visible del panel en la imagen: (64,101)-(575,867), equivale a 320x480 px
+\begin{scope}[shift={(64,867)}, x=0.015969cm, y=-0.015958cm]
+  \fill[fondo] (0,0) rectangle (320,480);
+  \begin{scope}[every node/.style={inner sep=0, text=claro}]
+    \node[anchor=north, font=\montserrat\fontsize{9.1}{11}\selectfont] at (160,15) {Estado};
+    \node[anchor=north west, font=\montserrat\fontsize{7.3}{9}\selectfont] at (20,60) {Alumno: juan};
+    \node[anchor=north west, font=\montserrat\fontsize{7.3}{9}\selectfont] at (20,100) {Usuario: Natalia Carolina Borbon};
+    \node[anchor=north west, font=\montserrat\fontsize{7.3}{9}\selectfont] at (20,140) {Camara: \textcolor{transmitiendo}{Transmitiendo}};
+    \node[anchor=north west, font=\montserrat\fontsize{7.3}{9}\selectfont] at (20,180) {Dispositivos conectados: 3};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{document}

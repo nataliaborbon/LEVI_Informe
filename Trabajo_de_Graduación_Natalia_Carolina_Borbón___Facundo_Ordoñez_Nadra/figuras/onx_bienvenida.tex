@@ -1,0 +1,145 @@
+% Módulo central mostrando la pantalla de bienvenida con el código QR.
+% Se compila por separado: lualatex onx_bienvenida.tex -> onx_bienvenida.pdf
+% Se dibuja sobre red_onx_apagada.png. El QR se tomó del firmware
+% (include/images/qr_levi_local.c, 21x21 módulos, contiene levi.local) y la
+% disposición replica screen_main.cpp: texto en Montserrat 18 a 15 px del borde
+% superior y QR ampliado al doble (250x246 px) 12 px debajo del texto.
+% El panel muestra los colores invertidos, por eso el fondo se ve azul oscuro
+% y el QR y el texto en blanco.
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\newfontfamily\montserrat{Montserrat-Medium.otf}
+
+\definecolor{fondo}{RGB}{42,43,46}
+\definecolor{claro}{RGB}{232,240,252}
+
+\begin{document}
+\begin{tikzpicture}[x=0.01cm,y=0.01cm]
+\node[anchor=south west, inner sep=0] at (0,0) {\includegraphics[width=6.39cm]{red_onx_apagada.png}};
+% Área visible del panel en la imagen: (64,101)-(575,867), equivale a 320x480 px
+\begin{scope}[shift={(64,867)}, x=0.015969cm, y=-0.015958cm]
+  \fill[fondo] (0,0) rectangle (320,480);
+  \node[anchor=north, inner sep=0, align=center, text=claro,
+        font=\montserrat\fontsize{8.2}{10.2}\selectfont] at (160,15)
+       {Bienvenido\\Ingresa a "LEVI"};
+  \begin{scope}[shift={(45,75)}]
+    \fill[claro]
+      (0.000,0.000) rectangle (76.667,10.952)
+      (98.571,0.000) rectangle (109.524,10.952)
+      (131.429,0.000) rectangle (142.381,10.952)
+      (153.333,0.000) rectangle (230.000,10.952)
+      (0.000,10.952) rectangle (10.952,21.905)
+      (65.714,10.952) rectangle (76.667,21.905)
+      (87.619,10.952) rectangle (98.571,21.905)
+      (120.476,10.952) rectangle (131.429,21.905)
+      (153.333,10.952) rectangle (164.286,21.905)
+      (219.048,10.952) rectangle (230.000,21.905)
+      (0.000,21.905) rectangle (10.952,32.857)
+      (21.905,21.905) rectangle (54.762,32.857)
+      (65.714,21.905) rectangle (76.667,32.857)
+      (98.571,21.905) rectangle (109.524,32.857)
+      (153.333,21.905) rectangle (164.286,32.857)
+      (175.238,21.905) rectangle (208.095,32.857)
+      (219.048,21.905) rectangle (230.000,32.857)
+      (0.000,32.857) rectangle (10.952,43.810)
+      (21.905,32.857) rectangle (54.762,43.810)
+      (65.714,32.857) rectangle (76.667,43.810)
+      (87.619,32.857) rectangle (98.571,43.810)
+      (120.476,32.857) rectangle (131.429,43.810)
+      (153.333,32.857) rectangle (164.286,43.810)
+      (175.238,32.857) rectangle (208.095,43.810)
+      (219.048,32.857) rectangle (230.000,43.810)
+      (0.000,43.810) rectangle (10.952,54.762)
+      (21.905,43.810) rectangle (54.762,54.762)
+      (65.714,43.810) rectangle (76.667,54.762)
+      (109.524,43.810) rectangle (142.381,54.762)
+      (153.333,43.810) rectangle (164.286,54.762)
+      (175.238,43.810) rectangle (208.095,54.762)
+      (219.048,43.810) rectangle (230.000,54.762)
+      (0.000,54.762) rectangle (10.952,65.714)
+      (65.714,54.762) rectangle (76.667,65.714)
+      (87.619,54.762) rectangle (120.476,65.714)
+      (131.429,54.762) rectangle (142.381,65.714)
+      (153.333,54.762) rectangle (164.286,65.714)
+      (219.048,54.762) rectangle (230.000,65.714)
+      (0.000,65.714) rectangle (76.667,76.667)
+      (87.619,65.714) rectangle (98.571,76.667)
+      (109.524,65.714) rectangle (120.476,76.667)
+      (131.429,65.714) rectangle (142.381,76.667)
+      (153.333,65.714) rectangle (230.000,76.667)
+      (109.524,76.667) rectangle (142.381,87.619)
+      (0.000,87.619) rectangle (54.762,98.571)
+      (65.714,87.619) rectangle (109.524,98.571)
+      (131.429,87.619) rectangle (153.333,98.571)
+      (164.286,87.619) rectangle (175.238,98.571)
+      (186.190,87.619) rectangle (197.143,98.571)
+      (208.095,87.619) rectangle (219.048,98.571)
+      (10.952,98.571) rectangle (21.905,109.524)
+      (32.857,98.571) rectangle (43.810,109.524)
+      (54.762,98.571) rectangle (65.714,109.524)
+      (131.429,98.571) rectangle (142.381,109.524)
+      (164.286,98.571) rectangle (208.095,109.524)
+      (219.048,98.571) rectangle (230.000,109.524)
+      (10.952,109.524) rectangle (32.857,120.476)
+      (43.810,109.524) rectangle (87.619,120.476)
+      (120.476,109.524) rectangle (131.429,120.476)
+      (142.381,109.524) rectangle (164.286,120.476)
+      (186.190,109.524) rectangle (219.048,120.476)
+      (10.952,120.476) rectangle (54.762,131.429)
+      (76.667,120.476) rectangle (120.476,131.429)
+      (142.381,120.476) rectangle (153.333,131.429)
+      (175.238,120.476) rectangle (208.095,131.429)
+      (0.000,131.429) rectangle (10.952,142.381)
+      (21.905,131.429) rectangle (32.857,142.381)
+      (54.762,131.429) rectangle (76.667,142.381)
+      (87.619,131.429) rectangle (109.524,142.381)
+      (120.476,131.429) rectangle (131.429,142.381)
+      (153.333,131.429) rectangle (164.286,142.381)
+      (175.238,131.429) rectangle (197.143,142.381)
+      (208.095,131.429) rectangle (230.000,142.381)
+      (87.619,142.381) rectangle (142.381,153.333)
+      (164.286,142.381) rectangle (208.095,153.333)
+      (219.048,142.381) rectangle (230.000,153.333)
+      (0.000,153.333) rectangle (76.667,164.286)
+      (87.619,153.333) rectangle (98.571,164.286)
+      (109.524,153.333) rectangle (120.476,164.286)
+      (131.429,153.333) rectangle (153.333,164.286)
+      (208.095,153.333) rectangle (219.048,164.286)
+      (0.000,164.286) rectangle (10.952,175.238)
+      (65.714,164.286) rectangle (76.667,175.238)
+      (109.524,164.286) rectangle (153.333,175.238)
+      (164.286,164.286) rectangle (175.238,175.238)
+      (186.190,164.286) rectangle (208.095,175.238)
+      (219.048,164.286) rectangle (230.000,175.238)
+      (0.000,175.238) rectangle (10.952,186.190)
+      (21.905,175.238) rectangle (54.762,186.190)
+      (65.714,175.238) rectangle (76.667,186.190)
+      (87.619,175.238) rectangle (109.524,186.190)
+      (131.429,175.238) rectangle (142.381,186.190)
+      (153.333,175.238) rectangle (164.286,186.190)
+      (175.238,175.238) rectangle (186.190,186.190)
+      (219.048,175.238) rectangle (230.000,186.190)
+      (0.000,186.190) rectangle (10.952,197.143)
+      (21.905,186.190) rectangle (54.762,197.143)
+      (65.714,186.190) rectangle (76.667,197.143)
+      (87.619,186.190) rectangle (98.571,197.143)
+      (131.429,186.190) rectangle (186.190,197.143)
+      (0.000,197.143) rectangle (10.952,208.095)
+      (21.905,197.143) rectangle (54.762,208.095)
+      (65.714,197.143) rectangle (76.667,208.095)
+      (87.619,197.143) rectangle (131.429,208.095)
+      (186.190,197.143) rectangle (208.095,208.095)
+      (0.000,208.095) rectangle (10.952,219.048)
+      (65.714,208.095) rectangle (76.667,219.048)
+      (87.619,208.095) rectangle (109.524,219.048)
+      (164.286,208.095) rectangle (186.190,219.048)
+      (197.143,208.095) rectangle (208.095,219.048)
+      (0.000,219.048) rectangle (76.667,230.000)
+      (87.619,219.048) rectangle (131.429,230.000)
+      (175.238,219.048) rectangle (186.190,230.000)
+      (208.095,219.048) rectangle (219.048,230.000)
+    ;
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{document}

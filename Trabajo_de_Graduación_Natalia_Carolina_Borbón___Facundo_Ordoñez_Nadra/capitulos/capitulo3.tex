@@ -1116,7 +1116,9 @@ Los dispositivos cliente se comunican con el módulo central mediante peticiones
 
 La comunicación siempre se inicia desde los dispositivos cliente. Esto se debe a que HTTP opera bajo el modelo cliente-servidor presentado en el capítulo 2, en el que el cliente es quien inicia cada intercambio. El módulo central solo puede enviar información como respuesta a una solicitud, y no por iniciativa propia. Por este motivo, los dispositivos consultan al servidor de manera periódica para mantenerse actualizados.
 
-El dispositivo del alumno realiza una consulta cada dos segundos mientras espera o realiza un cuestionario. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los profesores y los tutores, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
+%El dispositivo del alumno realiza una consulta cada dos segundos mientras espera o realiza un cuestionario. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los profesores y los tutores, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
+
+El dispositivo del alumno realiza una consulta cada dos segundos mientras se encuentra en la pantalla de examen y esta permanece visible. En ella obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Además, todos los dispositivos con una sesión abierta envían un aviso periódico, denominado \emph{heartbeat}, que indica que la sesión continúa activa. El del alumno se envía cada cinco segundos, y el de profesores, tutores e invitados, cada diez. Este último informa también si el usuario utilizó la pantalla desde el aviso anterior. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
 
 \begin{figure}[H]
     \centering
@@ -1285,7 +1287,9 @@ El estado de un cuestionario solo puede tomar uno de los siguientes valores (Fig
 
 \end{itemize}
 
-Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda.
+%Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda.
+
+Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda, o de forma automática si el alumno que se había desconectado vuelve a ingresar desde el mismo dispositivo.
 
 Por último, el cuestionario pasa a \emph{finalizado} cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado, ya sea que esté en progreso o pausado. En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
 
@@ -1392,7 +1396,9 @@ Los métodos HTTP, presentados en el capítulo 2, se asignan según la operació
 
 \end{itemize}
 
-Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
+%Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
+
+Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. En ese caso también incluyen un código que identifica la situación, de modo que la aplicación reacciona según ese código y no según el texto. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
 
 %Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
 
@@ -1406,7 +1412,9 @@ Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si
 
 \item 404: el recurso solicitado no existe.
 
-\item 409: la acción entra en conflicto con la situación actual del sistema, como cuando un invitado intenta ingresar durante un examen.
+%\item 409: la acción entra en conflicto con la situación actual del sistema, como cuando un invitado intenta ingresar durante un examen.
+
+\item 409: la acción entra en conflicto con la situación actual del sistema, como cuando un invitado intenta ingresar durante un examen o cuando la petición proviene de una pestaña que no es la activa.
 
 \end{itemize}
 
@@ -1428,7 +1436,9 @@ Si el usuario no existe o la contraseña no coincide, responde con el mismo mens
 
 \apartado{Usuarios}
 
-Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Además, genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
+%Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Además, genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
+
+Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Como el sistema funciona sin conexión a internet, no puede verificar las cuentas por correo electrónico. La clave maestra reemplaza esa verificación y evita que cualquier persona conectada a la red cree una cuenta de profesor o de tutor. Además, el servicio genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
 
 %Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
 
@@ -1442,7 +1452,9 @@ Al crear o editar un cuestionario, el servicio verifica que tenga título y al m
 
 %Si alguna operación falla durante el guardado, elimina lo que se había creado. En la edición, primero guarda las preguntas nuevas y luego borra las anteriores. De esta forma, ante un error, el cuestionario conserva su contenido original.
 
-Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
+%Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
+
+Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido. Como el dispositivo solo consulta mientras la pantalla de examen está visible, ni un corte de conexión ni el tiempo que el alumno pasa fuera de esa pantalla se suman como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
 
 Por último, al finalizar un cuestionario el servicio calcula el puntaje: suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
 
@@ -1470,7 +1482,9 @@ La gestión de sesiones controla quién está conectado al sistema y con qué ro
 
 \apartado{Tokens de sesión}
 
-Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y el momento de su última actividad. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
+%Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y el momento de su última actividad. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
+
+Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y los datos que controlan su vencimiento. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
 %Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador y éste lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
@@ -1478,25 +1492,60 @@ En aplicaciones web con muchos usuarios suele emplearse el \emph{JSON Web Token}
 
 \apartado{Lugares de sesión}
 
-El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
+%El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra al panel, que puede ocupar un profesor, un tutor o un invitado. Si el lugar del alumno ya está ocupado, se rechaza cualquier nuevo ingreso.
 
-En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza.
+El sistema admite dos sesiones simultáneas. Una corresponde al dispositivo del alumno, y la otra al panel, que puede ocupar un profesor, un tutor o un invitado. El alumno no ingresa con usuario y contraseña, por lo que el sistema lo identifica por su dispositivo. Para ello, la aplicación genera un identificador y lo conserva en el navegador. Si el lugar del alumno está ocupado por otro dispositivo, se rechaza el nuevo ingreso. En cambio, cuando vuelve el mismo, recupera su sesión en lugar de quedar bloqueado por ella.
+
+%En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza.
+
+En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, seguido por el profesor y, por último, el invitado. Si alguien intenta ingresar mientras el panel está ocupado, el sistema compara ambos roles. Cuando el nuevo usuario tiene mayor prioridad, la sesión anterior se cierra y el lugar pasa a él. En cambio, si su prioridad es igual o menor, el ingreso se rechaza, salvo que se trate del mismo usuario. En ese caso, la nueva sesión reemplaza a la anterior.
 
 \apartado{Expiración}
 
-El módulo central revisa de forma continua la última actividad de cada sesión, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
+%El módulo central revisa de forma continua la última actividad de cada sesión, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
+
+El módulo central revisa de forma continua dos tiempos en cada sesión del panel. El de vida se renueva con cualquier petición válida, incluidos los avisos periódicos descritos en la sección de red, y vence cuando el usuario cierra el navegador o pierde la conexión. El de inactividad, en cambio, se renueva solo cuando el usuario utiliza la pantalla, y vence cuando la sesión queda abierta sin uso. La sesión del alumno controla únicamente la vida, ya que durante el examen el alumno no utiliza el mouse ni el teclado. Cuando alguno de estos tiempos supera su límite, el sistema cierra la sesión y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida.
+
+\begin{table}[H]
+    \centering
+    \caption{Tiempos de las sesiones según el rol}
+    \label{tab:tiempos_sesion}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Rol} & \textbf{Aviso periódico} & \textbf{Límite de vida} & \textbf{Límite de inactividad} \\
+        \hline
+        Profesor y tutor & 10 s & 2 min & 10 min \\
+        \hline
+        Invitado & 10 s & 2 min & 5 min \\
+        \hline
+        Alumno & 5 s & 15 s & -- \\
+        \hline
+    \end{tabular}
+\end{table}
 
 %Cada sesión registra el momento de su última actividad, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. El módulo central revisa estos registros de forma continua. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Cada tipo de sesión cuenta con su propio tiempo límite. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
 
-Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. De esta forma, el cronómetro se detiene hasta que el profesor lo reanuda.
+%Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. De esta forma, el cronómetro se detiene hasta que el profesor lo reanuda.
+
+Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. Si luego vuelve a ingresar el mismo dispositivo, el examen se reanuda sin intervención del profesor, salvo que este haya cambiado su estado mientras tanto.
+
+Cada vez que una sesión se cierra, el servidor registra el motivo, ya sea la salida voluntaria, la inactividad, la pérdida de conexión o el ingreso de otro usuario. Si después llega una petición con ese \emph{token}, la respuesta lo indica y la aplicación muestra el aviso correspondiente.
 
 \apartado{Invitado}
 
-El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+%El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+
+El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse, lo que ocurre también cuando sale de su pantalla. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+
+\apartado{Pestaña activa}
+
+Cada sesión se utiliza desde una sola pestaña a la vez. Para ello, cada pestaña genera su propio identificador y lo envía junto con el \emph{token}. El servidor solo acepta las peticiones de la última pestaña que ingresó, y las demás muestran un aviso con la opción de retomar el control. Así se evita, por ejemplo, que el alumno responda el mismo examen desde dos pestañas.
 
 \apartado{Verificación de peticiones}
 
-Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
+%Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
+
+Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401 y, si la sesión fue cerrada, indica el motivo. Si el \emph{token} es válido, pero proviene de una pestaña que no es la activa, responde con el código 409. Si el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también renueva el tiempo de vida de la sesión.
 
 \subsection{Frontend}
 
@@ -1540,11 +1589,15 @@ El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunt
 
 Los componentes se organizan de forma jerárquica: en la raíz se encuentra el componente principal que contiene a todas las pantallas. A su vez, algunas de ellas incluyen sus propios componentes. Por ejemplo, la pantalla de cuestionarios contiene el listado, el editor y la vista de revisión. Cuando el profesor elimina un cuestionario desde el listado, este avisa a la pantalla que lo contiene y es ella la que realiza la petición al servidor y actualiza la lista.
 
-El componente principal (\emph{App.jsx}), actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Utilizando la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
+%El componente principal (\emph{App.jsx}), actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Utilizando la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
+
+El componente principal (\emph{App.jsx}), actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Desde la ruta común, envía el aviso periódico de las pantallas del panel y del invitado, junto con la indicación de si el usuario utilizó la pantalla. Si el servidor informa que la sesión se cerró, muestra el motivo y lo devuelve a la pantalla de inicio de sesión.
 
 El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario (que el navegador guarda al iniciar sesión), y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
 
-Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\emph{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
+%Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\emph{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
+
+Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\emph{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión y el identificador de la pestaña e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
 
 Por último, se cuenta con un módulo independiente de paginación, utilizado para aumentar la eficiencia del sistema al momento de transmitir y desplegar información en listas. Esto se logra limitando la cantidad de elementos individuales que se pueden mostrar al mismo tiempo en pantalla. Estos límites y la segmentación de las páginas son definidos y controlados por el \emph{backend}.
 
@@ -1817,7 +1870,8 @@ Es la primera vista que se muestra al encender el equipo ya configurado. Present
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/vistabienvenida.png}
+    %\includegraphics[width=0.5\textwidth]{figuras/vistabienvenida.png}
+    \includegraphics[height=8cm]{figuras/onx_bienvenida.pdf}
     \caption{Vista de bienvenida de la interfaz táctil}
     \label{vistabienvenida}
 \end{figure}
@@ -1828,7 +1882,8 @@ Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el no
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/vistaestado.png}
+    %\includegraphics[width=0.5\textwidth]{figuras/vistaestado.png}
+    \includegraphics[height=8cm]{figuras/onx_estado.pdf}
     \caption{Vista de estado de la interfaz táctil}
     \label{vistaestado}
 \end{figure}
@@ -1837,13 +1892,53 @@ Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el no
 
 La tercera vista permite seguir el examen desde el propio módulo central. Mientras no haya un cuestionario en curso muestra un mensaje de espera. Durante el examen presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
 
-\keyword{(Imágenes de la vista de examen en espera, en curso y finalizado)}
+%\keyword{(Imágenes de la vista de examen en espera, en curso y finalizado)}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/onx_examen_espera.pdf}
+        \caption{En espera}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/onx_examen_curso.pdf}
+        \caption{En curso}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/onx_examen_finalizado.pdf}
+        \caption{Finalizado}
+    \end{subfigure}
+    \caption{Vista de examen de la interfaz táctil}
+    \label{vistaexamen}
+\end{figure}
 
 \keyword{Configuración inicial}
 
 Esta vista aparece solo cuando la NVS no contiene los datos de configuración, como ocurre en el primer encendido del equipo. En ella se ingresan el nombre del alumno y las claves maestras de profesores y tutores. Para escribirlos, la interfaz despliega un teclado virtual. Las claves se muestran ocultas, aunque un botón permite verlas, y no es posible continuar con campos vacíos. Al guardar, los datos se almacenan en la NVS y el equipo se reinicia para cargar las vistas habituales.
 
-\keyword{(Imagen de la vista de configuración inicial)}
+%\keyword{(Imagen de la vista de configuración inicial)}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/onx_config_formulario.pdf}
+        \caption{Formulario}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/onx_config_teclado.pdf}
+        \caption{Teclado virtual}
+    \end{subfigure}
+    \caption{Vista de configuración inicial de la interfaz táctil}
+    \label{vistaconfiguracion}
+\end{figure}
 
 % ===== Texto original de la Interfaz táctil (Facundo), comentado =====
 
@@ -2451,4 +2546,45 @@ Tras la impresión de las piezas, los circuitos se fijaron en su interior. A con
 
 \section{Costo total de desarrollo}
 
-(Tabla hecha por natty)
+%(Tabla hecha por natty)
+
+La siguiente tabla detalla los componentes de ambos módulos junto con su costo a octubre de 2026. Los precios corresponden al mercado local, salvo el de la placa \emph{ONX3248G035}, que se expresa en dólares. El total se presenta en pesos junto con su equivalente aproximado en dólares.
+
+\begin{table}[H]
+    \centering
+    \caption{Costo de los componentes del sistema (octubre 2026)}
+    \label{tab:costo_total}
+    \begin{tabular}{|p{5.5cm}|c|c|c|c|}
+        \hline
+        \textbf{Componente} & \textbf{Cantidad} & \textbf{Precio unitario} & \textbf{Subtotal} & \textbf{\% del total} \\
+        \hline
+        Placa \emph{ONX3248G035} & 1 & USD 25 & USD 25 & x \% \\
+        \hline
+        \emph{ESP32-CAM} & 1 & \$x & \$x & x \% \\
+        \hline
+        Tarjeta microSD & 1 & \$x & \$x & x \% \\
+        \hline
+        Módulo de carga \emph{TP4056} & 1 & \$x & \$x & x \% \\
+        \hline
+        Módulo elevador \emph{MT3608} & 1 & \$x & \$x & x \% \\
+        \hline
+        Batería de litio 18650 de 3000 mAh & 2 & \$x & \$x & x \% \\
+        \hline
+        Portapilas & 2 & \$x & \$x & x \% \\
+        \hline
+        Interruptor & 2 & \$x & \$x & x \% \\
+        \hline
+        PCB del módulo de captura & 1 & \$8.500 & \$8.500 & x \% \\
+        \hline
+        Componentes menores (resistencias, capacitores, borneras, LEDs y zócalos) & -- & \$x & \$x & x \% \\
+        \hline
+        Impresión 3D & -- & \$x & \$x & x \% \\
+        \hline
+        \textbf{Total aproximado} & & & \textbf{\$x (USD x)} & \textbf{100 \%} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+El costo total del sistema ronda los \$x, unos USD x. De ese monto, \$x corresponden al módulo central y \$x al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
+
+El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas.

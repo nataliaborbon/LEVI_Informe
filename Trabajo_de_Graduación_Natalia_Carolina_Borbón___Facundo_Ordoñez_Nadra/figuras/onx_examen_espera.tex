@@ -1,0 +1,30 @@
+% Módulo central mostrando la vista de examen (en espera).
+% Se compila por separado: lualatex onx_examen_espera.tex -> onx_examen_espera.pdf
+% Se dibuja sobre red_onx_apagada.png. La disposición replica screen_main.cpp.
+% El panel muestra los colores invertidos: el rojo 0xe74c3c se ve celeste,
+% el gris 0x888888 se ve gris medio y el texto negro se ve claro.
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\newfontfamily\montserrat{Montserrat-Medium.otf}
+
+\definecolor{fondo}{RGB}{42,43,46}
+\definecolor{claro}{RGB}{232,240,252}
+\definecolor{celeste}{RGB}{24,179,195}
+\definecolor{gris}{RGB}{119,119,119}
+
+\newcommand\fuenteveinte{\montserrat\fontsize{9.1}{10.5}\selectfont}
+\newcommand\fuentedieciocho{\montserrat\fontsize{8.2}{9.6}\selectfont}
+\newcommand\fuentedieciseis{\montserrat\fontsize{7.3}{8.6}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}[x=0.01cm,y=0.01cm]
+\node[anchor=south west, inner sep=0] at (0,0) {\includegraphics[width=6.39cm]{red_onx_apagada.png}};
+% Área visible del panel en la imagen: (64,101)-(575,867), equivale a 320x480 px
+\begin{scope}[shift={(64,867)}, x=0.015969cm, y=-0.015958cm]
+  \fill[fondo] (0,0) rectangle (320,480);
+  \begin{scope}[every node/.style={inner sep=0, text=claro, align=center}]
+    \node[font=\fuenteveinte, text=celeste] at (160,240) {Esperando\\cuestionario};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{document}
