@@ -88,14 +88,14 @@
 \contentsline {subsection}{\numberline {3.8.2}Presupuesto de consumo por módulo}{71}{subsection.161}%
 \contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{71}{subsection.163}%
 \contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{72}{subsection.165}%
-\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{72}{subsection.168}%
+\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{73}{subsection.168}%
 \contentsline {subsection}{\numberline {3.8.6}Verificaciones finales}{73}{subsection.169}%
 \contentsline {section}{\numberline {3.9}Diseño físico}{73}{section.170}%
-\contentsline {subsection}{\numberline {3.9.1}Circuitos}{73}{subsection.171}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{74}{subsection.171}%
 \contentsline {subsection}{\numberline {3.9.2}PCB}{75}{subsection.175}%
-\contentsline {subsection}{\numberline {3.9.3}Montaje}{76}{subsection.178}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{77}{section.179}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{78}{chapter.180}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{78}{section.181}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{79}{section.182}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{79}{section.183}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{77}{subsection.178}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{78}{section.179}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{79}{chapter.180}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{79}{section.181}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{80}{section.182}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{80}{section.183}%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.4)  30 OCT 2026 20:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.4)  30 OCT 2026 21:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2056,131 +2056,99 @@ LaTeX Info: Redefining \% on input line 1835.
 LaTeX Info: Redefining \. on input line 1916.
 LaTeX Info: Redefining \% on input line 1916.
  [70 <./figuras/vistaestado.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1956--1956
-[]|\T1/cmbr/bx/n/10.95 Tensión
+Underfull \hbox (badness 1152) in paragraph at lines 1960--1960
+[]|\T1/cmbr/bx/n/10.95 Carga y
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1956--1956
-\T1/cmbr/bx/n/10.95 de caí-da
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1956--1956
-[]|\T1/cmbr/bx/n/10.95 Carga
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1956--1956
-\T1/cmbr/bx/n/10.95 si-mul-tá-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1958--1958
-[]|\T1/cmbr/m/sc/10.95 1. Re-gu-la-dor LDO
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1958--1958
-\T1/cmbr/m/sc/10.95 (AMS1117) + Car-ga-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1960--1960
-[]|\T1/cmbr/m/sc/10.95 2. Mó-du-lo de car-ga
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1960--1960
-\T1/cmbr/m/sc/10.95 (TP4056) + Ele-va-dor
- []
-
-
-Underfull \hbox (badness 2875) in paragraph at lines 1960--1960
+Underfull \hbox (badness 2875) in paragraph at lines 1964--1964
 []|\T1/cmbr/m/sc/10.95 Nula (To-po-lo-
  []
 
 
-Underfull \hbox (badness 3907) in paragraph at lines 1960--1960
+Underfull \hbox (badness 3907) in paragraph at lines 1964--1964
 \T1/cmbr/m/sc/10.95 el equi-po apa-ga-do.
  []
 
 
-Underfull \hbox (badness 2875) in paragraph at lines 1962--1962
+Underfull \hbox (badness 2875) in paragraph at lines 1966--1966
 []|\T1/cmbr/m/sc/10.95 Nula (To-po-lo-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1962--1962
+Underfull \hbox (badness 10000) in paragraph at lines 1966--1966
 \T1/cmbr/m/sc/10.95 mu-ta-ción. Re-quie-re
  []
 
 
-Overfull \hbox (19.72076pt too wide) in paragraph at lines 1954--1965
+Overfull \hbox (33.94714pt too wide) in paragraph at lines 1958--1969
  [][] 
  []
 
-LaTeX Info: Redefining \. on input line 1968.
-LaTeX Info: Redefining \% on input line 1968.
+LaTeX Info: Redefining \. on input line 1970.
+LaTeX Info: Redefining \% on input line 1970.
 [71]
+LaTeX Info: Redefining \. on input line 2018.
+LaTeX Info: Redefining \% on input line 2018.
+ [72]
 
-LaTeX Warning: Reference `fig:placascomerciales' on page 72 undefined on input 
-line 2015.
+LaTeX Warning: Reference `fig:placascomerciales' on page 73 undefined on input 
+line 2019.
 
 LaTeX Font Info:    Font shape `T1/cmbr/b/it' in size <12> not available
-(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 2019.
+(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 2023.
 
-LaTeX Info: Redefining \. on input line 2026.
-LaTeX Info: Redefining \% on input line 2026.
-[72]
 <figuras/esquemacapturador.png, id=1431, 453.94594pt x 236.38312pt>
 File: figuras/esquemacapturador.png Graphic file (type png)
 <use figuras/esquemacapturador.png>
-Package pdftex.def Info: figuras/esquemacapturador.png  used on input line 2047
+Package pdftex.def Info: figuras/esquemacapturador.png  used on input line 2051
 .
 (pdftex.def)             Requested size: 396.91327pt x 206.68683pt.
-LaTeX Info: Redefining \. on input line 2053.
-LaTeX Info: Redefining \% on input line 2053.
- [73 <./figuras/esquemacapturador.png>]
-<figuras/esquemacapturadorsimple.png, id=1437, 433.62pt x 158.84344pt>
+LaTeX Info: Redefining \. on input line 2054.
+LaTeX Info: Redefining \% on input line 2054.
+[73]
+<figuras/esquemacapturadorsimple.png, id=1436, 433.62pt x 158.84344pt>
 File: figuras/esquemacapturadorsimple.png Graphic file (type png)
 <use figuras/esquemacapturadorsimple.png>
 Package pdftex.def Info: figuras/esquemacapturadorsimple.png  used on input lin
-e 2058.
+e 2062.
 (pdftex.def)             Requested size: 396.91327pt x 145.40334pt.
-<figuras/esquemareceptor.png, id=1438, 447.92343pt x 102.3825pt>
+<figuras/esquemareceptor.png, id=1437, 447.92343pt x 102.3825pt>
 File: figuras/esquemareceptor.png Graphic file (type png)
 <use figuras/esquemareceptor.png>
-Package pdftex.def Info: figuras/esquemareceptor.png  used on input line 2069.
+Package pdftex.def Info: figuras/esquemareceptor.png  used on input line 2073.
 (pdftex.def)             Requested size: 396.91327pt x 90.72488pt.
-LaTeX Info: Redefining \. on input line 2085.
-LaTeX Info: Redefining \% on input line 2085.
- [74 <./figuras/esquemacapturadorsimple.png> <./figuras/esquemareceptor.png>]
-<figuras/layoutcapturador.png, id=1445, 278.54062pt x 500.62032pt>
+LaTeX Info: Redefining \. on input line 2077.
+LaTeX Info: Redefining \% on input line 2077.
+ [74 <./figuras/esquemacapturador.png> <./figuras/esquemacapturadorsimple.png>]
+<figuras/layoutcapturador.png, id=1444, 278.54062pt x 500.62032pt>
 File: figuras/layoutcapturador.png Graphic file (type png)
 <use figuras/layoutcapturador.png>
-Package pdftex.def Info: figuras/layoutcapturador.png  used on input line 2097.
+Package pdftex.def Info: figuras/layoutcapturador.png  used on input line 2101.
 
 (pdftex.def)             Requested size: 176.4044pt x 317.05774pt.
-<figuras/layoutservidor.png, id=1446, 304.88907pt x 549.55313pt>
+LaTeX Info: Redefining \. on input line 2105.
+LaTeX Info: Redefining \% on input line 2105.
+ [75 <./figuras/esquemareceptor.png>]
+<figuras/layoutservidor.png, id=1450, 304.88907pt x 549.55313pt>
 File: figuras/layoutservidor.png Graphic file (type png)
 <use figuras/layoutservidor.png>
-Package pdftex.def Info: figuras/layoutservidor.png  used on input line 2104.
+Package pdftex.def Info: figuras/layoutservidor.png  used on input line 2108.
 (pdftex.def)             Requested size: 176.4044pt x 317.96957pt.
-LaTeX Info: Redefining \. on input line 2108.
-LaTeX Info: Redefining \% on input line 2108.
- [75 <./figuras/layoutcapturador.png>]
-LaTeX Info: Redefining \. on input line 2126.
-LaTeX Info: Redefining \% on input line 2126.
-[76 <./figuras/layoutservidor.png>])
+LaTeX Info: Redefining \. on input line 2112.
+LaTeX Info: Redefining \% on input line 2112.
+ [76 <./figuras/layoutcapturador.png>]
+LaTeX Info: Redefining \. on input line 2130.
+LaTeX Info: Redefining \% on input line 2130.
+[77 <./figuras/layoutservidor.png>])
 LaTeX Info: Redefining \. on input line 278.
 LaTeX Info: Redefining \% on input line 278.
- [77]
+ [78]
 \openout2 = `capitulos/capitulo4.aux'.
 
  (capitulos/capitulo4.tex
 Cap\'{\i }tulo 4.
-[78
+[79
 
 
 
@@ -2188,7 +2156,7 @@ Cap\'{\i }tulo 4.
 ])
 LaTeX Info: Redefining \. on input line 279.
 LaTeX Info: Redefining \% on input line 279.
- [79]
+ [80]
 \openout2 = `capitulos/capitulo5.aux'.
 
 
@@ -2220,8 +2188,8 @@ Package logreq Info: Writing requests to 'informe.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 43164 strings out of 467871
- 947919 string characters out of 5418377
+ 43165 strings out of 467871
+ 947926 string characters out of 5418377
  1763610 words of memory out of 5000000
  71188 multiletter control sequences out of 15000+600000
  645004 words of font info for 70 fonts, out of 8000000 for 9000
@@ -2254,9 +2222,9 @@ ht/dpi1493\ebbx10.pk> <C:\Users\facur\AppData\Local\MiKTeX\fonts/pk/ljfour/publ
 ic/cmbright/dpi864\ebmr10.pk> <C:\Users\facur\AppData\Local\MiKTeX\fonts/pk/ljf
 our/public/cmbright/dpi720\ebmr17.pk><C:/Users/facur/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-Output written on informe.pdf (86 pages, 13868124 bytes).
+Output written on informe.pdf (87 pages, 13870007 bytes).
 PDF statistics:
- 2270 PDF objects out of 2487 (max. 8388607)
- 270 named destinations out of 1000 (max. 500000)
+ 2276 PDF objects out of 2487 (max. 8388607)
+ 271 named destinations out of 1000 (max. 500000)
  875 words of extra memory for PDF output out of 10000 (max. 10000000)
 

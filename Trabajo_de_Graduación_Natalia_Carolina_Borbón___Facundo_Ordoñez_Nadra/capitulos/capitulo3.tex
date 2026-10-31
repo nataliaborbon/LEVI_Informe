@@ -1945,21 +1945,25 @@ Suspender la pantalla inactiva ahorra entre un 31 \% y un 36 \% del consumo tota
 
 \subsection{Alternativas propuestas}
 
-Para cumplir los requisitos, se evaluaron tres métodos de alimentación. Todos utilizan celdas de litio 18650 de 3000 mAh (tensión nominal de 3,7 V). La tabla \ref{tab:comparativa_alimentacion} resume los parámetros de cada alternativa.
+Para cumplir los requisitos, se evaluaron tres métodos de alimentación. Todos utilizan celdas de litio 18650 de 3000 mAh (tensión nominal de 3,7 V). 
+
+La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados. Un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regularía el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
+
+Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones y su costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
 
 \begin{table}[H]
     \centering
     \caption{Comparativa de alternativas de alimentación}
     \label{tab:comparativa_alimentacion}
-    \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1.5cm}|p{3.5cm}|p{2cm}|}
+    \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1.5cm}|p{3.5cm}|p{2.5cm}|}
         \hline
-        \textbf{Alternativa} & \textbf{Tensión de caída (\emph{Dropout})} & \textbf{Carga simultánea} & \textbf{Limitaciones} & \textbf{Costo estimado} \\
+        \textbf{Alternativa} & \textbf{\emph{Dropout}} & \textbf{Carga y uso} & \textbf{Limitaciones} & \textbf{Costo estimado} \\
         \hline
-        1. Regulador LDO (AMS1117) + Cargador externo & Alta ($\sim$1,1 V) & No & Dropout: apaga el sistema cuando la celda baja a 3,8 V. & 22,30 USD \\
+        LDO + Cargador externo & Alta ($\sim$1,1 V) & No & Dropout: apaga el sistema cuando la celda baja a 3,8 V. & 22,30 USD \\
         \hline
-        2. Módulo de carga (TP4056) + Elevador (MT3608) a 5 V & Nula (Topología \emph{Boost}) & No & Requiere cargar con el equipo apagado. Doble conversión de tensión. & 18,80 USD \\
+        TP4056 + MT3608 & Nula (Topología \emph{Boost}) & No & Requiere cargar con el equipo apagado. Doble conversión de tensión. & 18,80 USD \\
         \hline
-        3. Integrado \emph{Power Bank} (IP5306) & Nula (Topología \emph{Boost}) & Sí & Inyecta ruido de conmutación. Requiere filtrado extra. & 20,00 USD \\
+        IP5306 & Nula (Topología \emph{Boost}) & Sí & Inyecta ruido de conmutación. Requiere filtrado extra. & 20,00 USD \\
         \hline
     \end{tabular}
 \end{table}
