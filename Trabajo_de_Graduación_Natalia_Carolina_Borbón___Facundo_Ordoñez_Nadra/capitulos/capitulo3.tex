@@ -384,19 +384,24 @@ Como la ubicación de este destello suele coincidir con la de la pupila, parecí
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.2\textwidth]{figuras/glint.png}
-    \caption{El \emph{glint} en el centro de la pupila}
-    \label{fig:glint}
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figuras/glint.png}
+        \caption{En el centro de la pupila}
+        \label{fig:glint}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figuras/glintdesplazado.png}
+        \caption{Desplazado respecto de la pupila}
+        \label{fig:glintdesplazado}
+    \end{subfigure}
+    \caption{Posición del \emph{glint} respecto de la pupila}
+    \label{fig:glintpupila}
 \end{figure}
 
 Esta solución tampoco resultó satisfactoria. Durante las pruebas de seguimiento, se comprobó que el \emph{glint} no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.2\textwidth]{figuras/glintdesplazado.png}
-    \caption{El \emph{glint} no sigue a la pupila}
-    \label{fig:glintdesplazado}
-\end{figure}
 
 
 Tras estos resultados, se descartó la visión computacional clásica y se dio paso a las redes neuronales.
@@ -583,30 +588,35 @@ Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (prepr
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth]{figuras/houghfuncionando.png}
-    \caption{El método de la transformada de Hough en funcionamiento}
-    \label{fig:houghfuncionando}
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/houghfuncionando.png}
+        \caption{Detección correcta}
+        \label{fig:houghfuncionando}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/houghcerrado.png}
+        \caption{Fallo por oclusión}
+        \label{fig:houghcerrado}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/houghfalso.png}
+        \caption{Falso positivo}
+        \label{fig:houghfalso}
+    \end{subfigure}
+    \caption{Detección del iris con el método de círculos de Hough}
+    \label{fig:hough}
 \end{figure}
 
 Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica y sumamente indeseable.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.25\textwidth]{figuras/houghcerrado.png}
-    \caption{Fallo del algoritmo por oclusión}
-    \label{fig:houghcerrado}
-\end{figure}
-
 Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
 
 Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real (Fig. \ref{fig:houghfalso}), por lo que esta solución queda definitivamente descartada.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.25\textwidth]{figuras/houghfalso.png}
-    \caption{Falso positivo con el método de círculos de Hough}
-    \label{fig:houghfalso}
-\end{figure}
 
 
 \subsubsection{Conclusión de la detección por coordenadas}
@@ -991,7 +1001,7 @@ Las tarjetas microSD admiten dos modos de comunicación, el modo SPI y el modo S
     \centering
     \caption{Conexiones de la tarjeta microSD}
     \label{tab:lineas_microsd}
-    \begin{tabular}{|l|l|p{0.45\textwidth}|}
+    \begin{tabularx}{\textwidth}{|l|l|>{\raggedright\arraybackslash}X|}
         \hline
         \textbf{Línea} & \textbf{Conexión} & \textbf{Función} \\
         \hline
@@ -1003,7 +1013,7 @@ Las tarjetas microSD admiten dos modos de comunicación, el modo SPI y el modo S
         \hline
         D3 & Expansor \emph{PCF8574} & Se mantiene en nivel alto, condición necesaria para que la tarjeta opere en modo nativo. \\
         \hline
-    \end{tabular}
+    \end{tabularx}
 \end{table}
 
 El \emph{PCF8574} es un expansor de pines que agrega salidas al microcontrolador y se controla por el bus I2C.
@@ -1020,7 +1030,7 @@ El panel táctil es capacitivo y utiliza el controlador \emph{CST826}, que se co
     \centering
     \caption{Conexiones de la pantalla y del panel táctil}
     \label{tab:conexiones_pantalla}
-    \begin{tabular}{|l|l|p{0.45\textwidth}|}
+    \begin{tabularx}{\textwidth}{|l|l|>{\raggedright\arraybackslash}X|}
         \hline
         \textbf{Línea} & \textbf{Conexión} & \textbf{Función} \\
         \hline
@@ -1040,7 +1050,7 @@ El panel táctil es capacitivo y utiliza el controlador \emph{CST826}, que se co
         \hline
         SCL & Bus I2C & Lleva la señal de reloj. \\
         \hline
-    \end{tabular}
+    \end{tabularx}
 \end{table}
 
 La Fig. \ref{fig:conexiones_onx} reúne las conexiones de la pantalla, del panel táctil y de la tarjeta microSD con el microcontrolador.
@@ -1568,17 +1578,18 @@ Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del
 Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 61,6\% menos, mientras que la hoja de estilos no varió.
 
 \begin{table}[H]
-\centering
-\begin{tabular}{lc}
-\hline
-Biblioteca & Tamaño del archivo \emph{JavaScript} \\
-\hline
-\emph{React} & 321 KB \\
-\emph{Preact} & 123 KB \\
-\hline
-\end{tabular}
-\caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
-\label{tab:preactreact}
+    \centering
+    \caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
+    \label{tab:preactreact}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Biblioteca} & \textbf{Tamaño del archivo \emph{JavaScript}} \\
+        \hline
+        \emph{React} & 321 KB \\
+        \hline
+        \emph{Preact} & 123 KB \\
+        \hline
+    \end{tabular}
 \end{table}
 
 \subsubsection{Estructura interna}
@@ -1654,17 +1665,50 @@ Son las pantallas a las que cualquier usuario puede ingresar sin importar su rol
 
 \begin{itemize}
 
-\item Inicio (o \emph{Home}): es la primera pantalla que se muestra al acceder a \emph{levi.local}. Presenta un mensaje de bienvenida y dos botones: uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
+\item Inicio (o \emph{Home}) (figura \ref{fig:accesoinicio}): es la primera pantalla que se muestra al acceder a \emph{levi.local}. Presenta un mensaje de bienvenida y dos botones: uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
 
-\item Inicio de sesión (o \emph{Logueo}): los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse, completando un formulario con sus datos, o recuperar una contraseña olvidada. En ambos casos se solicita la clave maestra del rol.
+\item Inicio de sesión (o \emph{Logueo}) (figura \ref{fig:accesologin}): los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse, completando un formulario con sus datos (figura \ref{fig:accesoregistro}), o recuperar una contraseña olvidada (figura \ref{fig:accesorecuperar}). En ambos casos se solicita la clave maestra del rol.
 
-\item Invitado: se accede desde la pantalla de inicio de sesión. Presenta un campo para la pregunta y entre dos y cuatro campos para las opciones, que pueden agregarse o quitarse. Al enviarla, la pregunta aparece en la pantalla del alumno.
+\item Invitado (figura \ref{fig:accesoinvitado}): se accede desde la pantalla de inicio de sesión. Presenta un campo para la pregunta y entre dos y cuatro campos para las opciones, que pueden agregarse o quitarse. Al enviarla, la pregunta aparece en la pantalla del alumno.
 
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{figuras/pantallasacceso.png}
+    \begin{subfigure}[t]{2.94cm}
+        \centering
+        \includegraphics[height=5.5cm, viewport=2 144 464 1008, clip]{figuras/pantallasacceso.png}
+        \caption{Inicio}
+        \label{fig:accesoinicio}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{2.87cm}
+        \centering
+        \includegraphics[height=5.5cm, viewport=505 144 956 1008, clip]{figuras/pantallasacceso.png}
+        \caption{Inicio de sesión}
+        \label{fig:accesologin}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{3.30cm}
+        \centering
+        \includegraphics[height=5.5cm, viewport=997 144 1515 1008, clip]{figuras/pantallasacceso.png}
+        \caption{Registro}
+        \label{fig:accesoregistro}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{2.74cm}
+        \centering
+        \includegraphics[height=5.5cm, viewport=1560 144 1990 1008, clip]{figuras/pantallasacceso.png}
+        \caption{Invitado}
+        \label{fig:accesoinvitado}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{2.60cm}
+        \centering
+        \includegraphics[height=5.5cm, viewport=2036 144 2445 1008, clip]{figuras/pantallasacceso.png}
+        \caption{Recuperación de contraseña}
+        \label{fig:accesorecuperar}
+    \end{subfigure}
     \caption{Pantallas y sub-pantallas de acceso}
     \label{fig:pantallasacceso}
 \end{figure}
@@ -1675,19 +1719,47 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 
 \begin{itemize}
 
-\item Menú: presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
+\item Menú (figura \ref{fig:alumnomenu}): presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
 
-\item Calibración: muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Presenta un botón de inicio y uno de retorno. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. El proceso puede abortarse voluntariamente con un botón. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en la memoria de sesión del navegador, se mantiene disponible mientras la pestaña permanezca abierta.
+\item Calibración (figura \ref{fig:alumnocalibracion}): muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Presenta un botón de inicio y uno de retorno. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. El proceso puede abortarse voluntariamente con un botón. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en la memoria de sesión del navegador, se mantiene disponible mientras la pestaña permanezca abierta.
 
-\item Examen: muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Si se trata de una pregunta de examen, se incluye en el encabezado el número de pregunta. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En este último caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
+\item Examen (figura \ref{fig:alumnoexamen}): muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Si se trata de una pregunta de examen, se incluye en el encabezado el número de pregunta. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En este último caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
-\item Resultado: en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
+\item Resultado (figura \ref{fig:alumnoresultado}): en el caso de una pregunta de invitado, presenta la pregunta y la opción elegida. En el caso de un examen informa el puntaje obtenido, el máximo posible, el necesario para aprobar, el tiempo empleado y si el alumno aprobó. Después de unos segundos la pantalla vuelve sola a la espera, sin necesidad de pulsar ningún botón.
 
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figuras/pantallasalumno.png}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=110 834 867 1365, clip]{figuras/pantallasalumno.png}
+        \caption{Menú}
+        \label{fig:alumnomenu}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=1127 830 1891 1367, clip]{figuras/pantallasalumno.png}
+        \caption{Calibración}
+        \label{fig:alumnocalibracion}
+    \end{subfigure}
+
+    \vspace{0.4cm}
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=1 102 966 642, clip]{figuras/pantallasalumno.png}
+        \caption{Examen}
+        \label{fig:alumnoexamen}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, viewport=1041 101 1996 638, clip]{figuras/pantallasalumno.png}
+        \caption{Resultado}
+        \label{fig:alumnoresultado}
+    \end{subfigure}
     \caption{Vistas de la pantalla del alumno}
     \label{fig:pantallasalumno}
 \end{figure}
