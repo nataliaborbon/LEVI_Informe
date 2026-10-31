@@ -79,23 +79,23 @@
 \contentsline {subsubsection}{Estructura interna}{63}{section*.148}%
 \contentsline {subsubsection}{Recepción de datos y ejecución del detector}{65}{section*.150}%
 \contentsline {subsubsection}{Pantallas}{66}{section*.152}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{69}{section.154}%
-\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{69}{subsection.155}%
-\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{69}{subsection.156}%
-\contentsline {subsection}{\numberline {3.7.3}Vistas}{70}{subsection.157}%
-\contentsline {section}{\numberline {3.8}Alimentación}{72}{section.162}%
-\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{72}{subsection.163}%
-\contentsline {subsection}{\numberline {3.8.2}Presupuesto de consumo por módulo}{73}{subsection.164}%
-\contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{73}{subsection.166}%
-\contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{74}{subsection.168}%
-\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{75}{subsection.171}%
-\contentsline {subsection}{\numberline {3.8.6}Verificaciones finales}{75}{subsection.172}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{75}{section.173}%
-\contentsline {subsection}{\numberline {3.9.1}Circuitos}{76}{subsection.174}%
-\contentsline {subsection}{\numberline {3.9.2}PCB}{77}{subsection.178}%
-\contentsline {subsection}{\numberline {3.9.3}Montaje}{79}{subsection.181}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{80}{section.182}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{81}{chapter.184}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{81}{section.185}%
-\contentsline {section}{\numberline {4.2}Comparación con productos similares}{82}{section.186}%
-\contentsline {section}{\numberline {4.3}Trabajo futuro}{82}{section.187}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{69}{section.155}%
+\contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{69}{subsection.156}%
+\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{70}{subsection.157}%
+\contentsline {subsection}{\numberline {3.7.3}Vistas}{70}{subsection.158}%
+\contentsline {section}{\numberline {3.8}Alimentación}{73}{section.163}%
+\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{73}{subsection.164}%
+\contentsline {subsection}{\numberline {3.8.2}Presupuesto de consumo por módulo}{73}{subsection.165}%
+\contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{74}{subsection.167}%
+\contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{75}{subsection.169}%
+\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{75}{subsection.172}%
+\contentsline {subsection}{\numberline {3.8.6}Verificaciones finales}{76}{subsection.173}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{76}{section.174}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{76}{subsection.175}%
+\contentsline {subsection}{\numberline {3.9.2}PCB}{77}{subsection.179}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{79}{subsection.182}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{80}{section.183}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{82}{chapter.185}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{82}{section.186}%
+\contentsline {section}{\numberline {4.2}Comparación con productos similares}{83}{section.187}%
+\contentsline {section}{\numberline {4.3}Trabajo futuro}{83}{section.188}%

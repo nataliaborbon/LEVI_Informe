@@ -37,7 +37,7 @@
 \contentsline {figure}{\numberline {3.17}{\ignorespaces Fallo del algoritmo por oclusión}}{35}{figure.caption.82}%
 \contentsline {figure}{\numberline {3.18}{\ignorespaces Falso positivo con el método de círculos de Hough}}{35}{figure.caption.83}%
 \contentsline {figure}{\numberline {3.19}{\ignorespaces Plantillas para comparación}}{36}{figure.caption.87}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}}{37}{figure.caption.89}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96. Normal y con LED infrarrojo}}{37}{figure.caption.89}%
 \contentsline {figure}{\numberline {3.21}{\ignorespaces Video en vivo con el umbral de similitud}}{38}{figure.caption.91}%
 \contentsline {figure}{\numberline {3.22}{\ignorespaces Diagrama de bloques del sistema definitivo}}{39}{figure.caption.93}%
 \contentsline {figure}{\numberline {3.23}{\ignorespaces Mapa de memoria del módulo central}}{42}{figure.caption.100}%
@@ -55,13 +55,14 @@
 \contentsline {figure}{\numberline {3.35}{\ignorespaces Estructura interna del \emph {Frontend}}}{64}{figure.caption.149}%
 \contentsline {figure}{\numberline {3.36}{\ignorespaces Sistema de ejecución de la aplicación web}}{65}{figure.caption.151}%
 \contentsline {figure}{\numberline {3.37}{\ignorespaces Pantallas y sub-pantallas de acceso}}{67}{figure.caption.153}%
-\contentsline {figure}{\numberline {3.38}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{70}{figure.caption.158}%
-\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de estado de la interfaz táctil}}{71}{figure.caption.159}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Vista de examen de la interfaz táctil}}{71}{figure.caption.160}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Vista de configuración inicial de la interfaz táctil}}{72}{figure.caption.161}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema de conexiones del circuito capturador}}{76}{figure.caption.175}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema simplificado del circuito del módulo capturador}}{76}{figure.caption.176}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Esquema simplificado del circuito del módulo central inicial (en desuso)}}{77}{figure.caption.177}%
-\contentsline {figure}{\numberline {3.45}{\ignorespaces Layout de la PCB del módulo capturador}}{78}{figure.caption.179}%
-\contentsline {figure}{\numberline {3.46}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{79}{figure.caption.180}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Vistas de la pantalla del alumno}}{68}{figure.caption.154}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{71}{figure.caption.159}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Vista de estado de la interfaz táctil}}{71}{figure.caption.160}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Vista de examen de la interfaz táctil}}{72}{figure.caption.161}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces Vista de configuración inicial de la interfaz táctil}}{72}{figure.caption.162}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema de conexiones del circuito capturador}}{76}{figure.caption.176}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Esquema simplificado del circuito del módulo capturador}}{77}{figure.caption.177}%
+\contentsline {figure}{\numberline {3.45}{\ignorespaces Esquema simplificado del circuito del módulo central inicial (en desuso)}}{77}{figure.caption.178}%
+\contentsline {figure}{\numberline {3.46}{\ignorespaces Layout de la PCB del módulo capturador}}{78}{figure.caption.180}%
+\contentsline {figure}{\numberline {3.47}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{79}{figure.caption.181}%
 \addvspace {10\p@ }

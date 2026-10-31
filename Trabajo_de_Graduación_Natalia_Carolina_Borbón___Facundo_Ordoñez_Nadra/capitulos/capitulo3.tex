@@ -627,7 +627,7 @@ A continuación se describen las tres etapas del método, que son la calibració
 
 \subsubsection{Calibración}
 
-El método requiere, como paso inicial, un proceso de calibración que proporcione las plantillas. Durante esta etapa se captura una imagen del ojo del alumno para cada una de las acciones posibles dentro de la interfaz. Para garantizar la estabilidad del algoritmo y reducir las confusiones entre plantillas, estas acciones se limitaron a seis (Fig. \ref{fig:plantillas}). A continuación se detalla la plantilla que se obtiene para cada una.
+El método requiere, como paso inicial, un proceso de calibración que proporcione las plantillas. Durante esta etapa se captura una imagen del ojo del alumno para cada una de las acciones posibles dentro de la interfaz. Para garantizar la estabilidad del algoritmo y reducir las confusiones entre plantillas, estas acciones se limitaron a seis (Fig. \ref{fig:plantillasconir}). A continuación se detalla la plantilla que se obtiene para cada una.
 
 \begin{itemize}
 
@@ -647,9 +647,9 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{figuras/plantillas.png}
+    \includegraphics[width=0.65\textwidth]{figuras/plantillasconir.png}
     \caption{Plantillas para comparación}
-    \label{fig:plantillas}
+    \label{fig:plantillasconir}
 \end{figure}
 
 Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de grises. Luego se almacenan en el navegador, para ser utilizadas como referencia al comparar cada fotograma durante la detección. Allí se conservan hasta que se borren los datos de navegación, por lo que permanecen disponibles aunque se cierre la pestaña o se reinicie el dispositivo. 
@@ -668,9 +668,9 @@ Antes de la comparación, cada fotograma se acondiciona. Primero se recorta inte
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/streamconcuadro.png}
-    \caption{Imagen de 128x128 píxeles con un recuadro de 96x96 (el tamaño de las plantillas)}
-    \label{fig:streamconcuadro}
+    \includegraphics[width=0.5\textwidth]{figuras/streamconysinir.png}
+    \caption{Imagen de 128x128 píxeles con un recuadro de 96x96. Normal y con LED infrarrojo}
+    \label{fig:streamconysinir}
 \end{figure}
 
 \subsubsection{Comparación de plantillas}
@@ -689,9 +689,9 @@ En las pruebas también se detectaron falsos positivos. En ocasiones, el algorit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figuras/slider.png}
+    \includegraphics[width=0.3\textwidth]{figuras/sliderconir.png}
     \caption{Video en vivo con el umbral de similitud}
-    \label{fig:slider}
+    \label{fig:sliderconir}
 \end{figure}
 
 Tras numerosas evaluaciones, este método basado en la similitud de patrones resultó el más efectivo, estable y eficiente de los evaluados. Por lo tanto, es la solución implementada en el dispositivo final.
@@ -1565,7 +1565,7 @@ El código fuente se escribió en computador, utilizando el software \emph{Visua
 
 Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontrolador y viceversa.
 
-Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 60\% menos, mientras que la hoja de estilos no varió.
+Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 61,6\% menos, mientras que la hoja de estilos no varió.
 
 \begin{table}[H]
 \centering
@@ -1573,8 +1573,8 @@ Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección 
 \hline
 Biblioteca & Tamaño del archivo \emph{JavaScript} \\
 \hline
-\emph{React} & 287 KB \\
-\emph{Preact} & 114 KB \\
+\emph{React} & 321 KB \\
+\emph{Preact} & 123 KB \\
 \hline
 \end{tabular}
 \caption{Tamaño del código compilado con \emph{React} y con \emph{Preact}}
@@ -1685,7 +1685,13 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 
 \end{itemize}
 
-\keyword{(Imágenes del menú, la calibración, el examen y el resultado)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figuras/pantallasalumno.png}
+    \caption{Vistas de la pantalla del alumno}
+    \label{fig:pantallasalumno}
+\end{figure}
+
 
 \emph{Pantallas del panel}
 
@@ -2184,11 +2190,13 @@ Por su parte, el \emph{MT3608} (figura \ref{fig:modulomt3608}) eleva la señal n
 
 \subsection{Circuito de alimentación del \emph{ONX3248G035}}
 
-El \emph{hardware} del módulo central migró al modelo \emph{ONX3248G035}. Esta placa incluye su propio sistema de energía, diseñado para soportar celdas de litio directas sin elevar previamente la tensión a 5 V.
+El microcontrolador del módulo central migró al modelo \emph{ONX3248G035}. Esta placa incluye su propio sistema de energía, diseñado para soportar celdas de litio directas sin elevar previamente la tensión a 5 V.
 
 El gestor de carga es el chip \emph{IP4054V}. Opera de forma similar al \emph{TP4056}, pero es más robusto y presenta mejores protecciones. Emplea una resistencia de programación de 3,3 k$\Omega$. Según su hoja de datos, esto establece un flujo de carga constante de 0,3 A.
 
-Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor reductor (\emph{Buck}) síncrono, basado en el integrado \emph{LC2201CCB5TR}. Este convertidor también presenta una tensión de \emph{dropout}, pero a diferencia de los reguladores LDO, esta caída es mínima debido a que posee transistores internos de muy baja resistencia. Permite exprimir la energía de la celda casi hasta los 3,3 V sin perder la regulación. Además, conmuta a 2,4 MHz, lo que maximiza la eficiencia térmica del sistema.
+Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor reductor (\emph{Buck}) síncrono, basado en el integrado \emph{LC2201CCB5TR}. Este componente conmuta a 2 MHz, lo que maximiza la eficiencia térmica del sistema. 
+
+Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Considerando el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Dado que el microcontrolador \emph{ESP32} tolera descensos en su alimentación hasta los 3,0 V, este acoplamiento permite exprimir la energía remanente de la celda sin interrumpir el funcionamiento del dispositivo. Esto evita el apagado súbito que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
 
 \subsection{Verificaciones finales}
 
