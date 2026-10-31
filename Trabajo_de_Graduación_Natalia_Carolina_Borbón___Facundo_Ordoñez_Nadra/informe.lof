@@ -52,14 +52,16 @@
 \contentsline {figure}{\numberline {3.32}{\ignorespaces Estructura de la base de datos en \emph {DB Browser for SQLite}}}{55}{figure.caption.134}%
 \contentsline {figure}{\numberline {3.33}{\ignorespaces Diagrama de transición de estados de un cuestionario}}{56}{figure.caption.136}%
 \contentsline {figure}{\numberline {3.34}{\ignorespaces Esquema relacional de la base de datos}}{57}{figure.caption.137}%
-\contentsline {figure}{\numberline {3.35}{\ignorespaces Estructura interna del \emph {Frontend}}}{63}{figure.caption.148}%
-\contentsline {figure}{\numberline {3.36}{\ignorespaces Sistema de ejecución de la aplicación web}}{64}{figure.caption.150}%
-\contentsline {figure}{\numberline {3.37}{\ignorespaces Pantallas y sub-pantallas de acceso}}{66}{figure.caption.152}%
-\contentsline {figure}{\numberline {3.38}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{69}{figure.caption.157}%
-\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de estado de la interfaz táctil}}{70}{figure.caption.158}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Esquema de conexiones para la PCB del circuito capturador}}{74}{figure.caption.172}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Esquema simplificado de la PCB del módulo capturador}}{74}{figure.caption.173}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema simplificado de la PCB del módulo central inicial (en desuso)}}{75}{figure.caption.174}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Layout de la PCB del módulo capturador}}{76}{figure.caption.176}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{77}{figure.caption.177}%
+\contentsline {figure}{\numberline {3.35}{\ignorespaces Estructura interna del \emph {Frontend}}}{64}{figure.caption.149}%
+\contentsline {figure}{\numberline {3.36}{\ignorespaces Sistema de ejecución de la aplicación web}}{65}{figure.caption.151}%
+\contentsline {figure}{\numberline {3.37}{\ignorespaces Pantallas y sub-pantallas de acceso}}{67}{figure.caption.153}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{70}{figure.caption.158}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de estado de la interfaz táctil}}{71}{figure.caption.159}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Vista de examen de la interfaz táctil}}{71}{figure.caption.160}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Vista de configuración inicial de la interfaz táctil}}{72}{figure.caption.161}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema de conexiones del circuito capturador}}{76}{figure.caption.175}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema simplificado del circuito del módulo capturador}}{76}{figure.caption.176}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Esquema simplificado del circuito del módulo central inicial (en desuso)}}{77}{figure.caption.177}%
+\contentsline {figure}{\numberline {3.45}{\ignorespaces Layout de la PCB del módulo capturador}}{78}{figure.caption.179}%
+\contentsline {figure}{\numberline {3.46}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{79}{figure.caption.180}%
 \addvspace {10\p@ }
