@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.4)  31 OCT 2026 05:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.4)  31 OCT 2026 05:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2160,8 +2160,8 @@ Package pdftex.def Info: figuras/layoutservidor.png  used on input line 2215.
 LaTeX Info: Redefining \. on input line 2219.
 LaTeX Info: Redefining \% on input line 2219.
  [78 <./figuras/layoutcapturador.png>]
-LaTeX Info: Redefining \. on input line 2238.
-LaTeX Info: Redefining \% on input line 2238.
+LaTeX Info: Redefining \. on input line 2237.
+LaTeX Info: Redefining \% on input line 2237.
 [79 <./figuras/layoutservidor.png>]
 Overfull \hbox (12.30925pt too wide) in paragraph at lines 2254--2283
  [][] 
@@ -2250,7 +2250,7 @@ ebmr10.pk> <C:\Users\facur\AppData\Local\MiKTeX\fonts/pk/ljfour/public/cmbright
 ur/public/cmbright/dpi864\ebmr10.pk> <C:\Users\facur\AppData\Local\MiKTeX\fonts
 /pk/ljfour/public/cmbright/dpi720\ebmr17.pk><C:/Users/facur/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-Output written on informe.pdf (89 pages, 14743296 bytes).
+Output written on informe.pdf (89 pages, 14743445 bytes).
 PDF statistics:
  2406 PDF objects out of 2487 (max. 8388607)
  277 named destinations out of 1000 (max. 500000)
