@@ -842,7 +842,7 @@ En la presente subsección, la placa y la cámara del módulo de captura se anal
 
 \subsubsection{Placa}
 
-El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos.
+El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos. Sin embargo, no dispone de un puerto USB, por lo que la carga del \emph{firmware} requiere una placa programadora externa.
 
 \begin{figure}[H]
     \centering
@@ -2235,43 +2235,46 @@ Tras la impresión de las piezas, los circuitos se fijaron en su interior. A con
 
 %(Tabla hecha por natty)
 
-La siguiente tabla detalla los componentes de ambos módulos junto con su costo a octubre de 2026. Los precios corresponden al mercado local, salvo el de la placa \emph{ONX3248G035}, que se expresa en dólares. El total se presenta en pesos junto con su equivalente aproximado en dólares.
+La siguiente tabla detalla los componentes de ambos módulos junto con su costo a octubre de 2026. Los precios corresponden al mercado local, salvo los de las placas \emph{ONX3248G035} y \emph{ESP32-CAM}, que provienen de tiendas internacionales y se expresan en dólares. En el mercado local, el \emph{ESP32-CAM} resulta considerablemente más caro. El total se presenta en pesos junto con su equivalente aproximado en dólares.
 
 \begin{table}[H]
     \centering
+    \small
     \caption{Costo de los componentes del sistema (octubre 2026)}
     \label{tab:costo_total}
-    \begin{tabular}{|p{5.5cm}|c|c|c|c|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{4.4cm}|c|c|c|c|}
         \hline
         \textbf{Componente} & \textbf{Cantidad} & \textbf{Precio unitario} & \textbf{Subtotal} & \textbf{\% del total} \\
         \hline
-        Placa \emph{ONX3248G035} & 1 & USD 25 & USD 25 & x \% \\
+        Placa \emph{ONX3248G035} & 1 & USD 25 & USD 25 & 27,6 \% \\
         \hline
-        \emph{ESP32-CAM} & 1 & \$x & \$x & x \% \\
+        \emph{ESP32-CAM} & 1 & USD 10 & USD 10 & 11,1 \% \\
         \hline
-        Tarjeta microSD & 1 & \$x & \$x & x \% \\
+        Tarjeta microSD de 16 GB & 1 & \$12.000 & \$12.000 & 8,7 \% \\
         \hline
-        Módulo de carga \emph{TP4056} & 1 & \$x & \$x & x \% \\
+        Módulo de carga \emph{TP4056} & 1 & \$2.000 & \$2.000 & 1,4 \% \\
         \hline
-        Módulo elevador \emph{MT3608} & 1 & \$x & \$x & x \% \\
+        Módulo elevador \emph{MT3608} & 1 & \$3.000 & \$3.000 & 2,2 \% \\
         \hline
-        Batería de litio 18650 de 3000 mAh & 2 & \$x & \$x & x \% \\
+        Batería de litio 18650 de 3000 mAh & 2 & \$15.000 & \$30.000 & 21,8 \% \\
         \hline
-        Portapilas & 2 & \$x & \$x & x \% \\
+        Portabaterías & 2 & \$2.500 & \$5.000 & 3,6 \% \\
         \hline
-        Interruptor & 2 & \$x & \$x & x \% \\
+        Interruptor & 2 & \$2.000 & \$4.000 & 2,9 \% \\
         \hline
-        PCB del módulo de captura & 1 & \$8.500 & \$8.500 & x \% \\
+        PCB del módulo de captura & 1 & \$8.500 & \$8.500 & 6,2 \% \\
         \hline
-        Componentes menores (resistencias, capacitores, borneras, LEDs y zócalos) & -- & \$x & \$x & x \% \\
+        Componentes menores (resistencias, capacitores, borneras, LEDs y zócalos) & -- & \$5.000 & \$5.000 & 3,6 \% \\
         \hline
-        Impresión 3D & -- & \$x & \$x & x \% \\
+        Impresión 3D & 2 & \$7.500 & \$15.000 & 10,9 \% \\
         \hline
-        \textbf{Total aproximado} & & & \textbf{\$x (USD x)} & \textbf{100 \%} \\
+        \textbf{Total aproximado} & & & \textbf{\$137.900 (USD 90)} & \textbf{100 \%} \\
         \hline
     \end{tabular}
 \end{table}
 
-El costo total del sistema ronda los \$x, unos USD x. De ese monto, \$x corresponden al módulo central y \$x al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
+El prototipo emplea una tarjeta microSD de 32 GB que ya estaba disponible. Sin embargo, como los archivos del sistema ocupan poco espacio, puede utilizarse una tarjeta de casi cualquier capacidad, por lo que el cálculo considera el precio de una de 16 GB, de uso habitual. Además, su valor varía mucho según la marca y otras características.
 
-El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas.
+El costo total del sistema ronda los \$137.900, unos USD 90. De ese monto, \$77.100 corresponden al módulo central y \$60.800 al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
+
+El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas. Del mismo modo, excluye la placa programadora que requiere el \emph{ESP32-CAM} para la carga del \emph{firmware}, ya que no forma parte del dispositivo y puede reutilizarse.
