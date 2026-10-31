@@ -1378,7 +1378,9 @@ Por la memoria limitada del módulo central, los modelos que agrupan varios elem
 
 \subsubsection{Controladores}
 
-Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema y existen cuatro: controlador de autenticación, de usuarios, de cuestionarios y del alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
+%Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema y existen cuatro: controlador de autenticación, de usuarios, de cuestionarios y del alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
+
+Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno agrupa las rutas de un recurso del sistema. Existen cuatro, que corresponden a la autenticación, los usuarios, los cuestionarios y el alumno. Todas las rutas comienzan con el prefijo /api/, lo que permite al servidor distinguirlas de los archivos de la aplicación web.
 
 Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. En resumen, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
 
@@ -1400,7 +1402,7 @@ Los métodos HTTP, presentados en el capítulo 2, se asignan según la operació
 
 %Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
 
-Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. En ese caso también incluyen un código que identifica la situación, de modo que la aplicación reacciona según ese código y no según el texto. Además, se acompañan de un código de estado HTTP. Ante un error, el sistema utiliza los siguientes:
+El contenido de todas las respuestas tiene el mismo formato. Incluye un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, cada respuesta lleva un código de estado HTTP, que es 200 cuando la operación se completa, o 201 cuando además crea un registro. Los códigos que el sistema utiliza para informar fallas son los siguientes:
 
 %Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si la operación tuvo éxito y, ante un error, un mensaje que lo describe. Además, el código de estado HTTP señala el tipo de problema.
 
@@ -1419,6 +1421,8 @@ Todas las respuestas comparten el mismo formato. Incluyen un campo que indica si
 \item 409: la acción entra en conflicto con la situación actual del sistema, como cuando un invitado intenta ingresar durante un examen o cuando la petición proviene de una pestaña que no es la activa.
 
 \end{itemize}
+
+Un mismo código puede corresponder a situaciones distintas. Por ejemplo, el 409 se emplea tanto cuando el panel está ocupado como cuando la sesión está abierta en otra pestaña. Para que la aplicación pueda distinguirlas, las respuestas de estos casos incluyen además un identificador fijo de la situación.
 
 Gracias a este formato común, el \emph{frontend} interpreta todas las respuestas de la misma manera.
 
