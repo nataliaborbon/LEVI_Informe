@@ -1541,7 +1541,7 @@ Cada vez que una sesión se cierra, el servidor registra el motivo, ya sea la sa
 
 %El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
 
-El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión, y se borra al cerrarse, lo que ocurre también cuando sale de su pantalla. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
+El invitado ingresa sin registrarse y ocupa el panel con la menor prioridad. Mientras hay un examen en progreso no puede ingresar ni enviar preguntas. Su pregunta se guarda solo en la RAM, junto con su sesión. Ambas se borran cuando la sesión se cierra, algo que también ocurre si el invitado sale de su pantalla. Así, el modo invitado no interfiere con las evaluaciones ni deja registros en la base de datos.
 
 \apartado{Pestaña activa}
 
@@ -1551,7 +1551,7 @@ Cada sesión se utiliza desde una sola pestaña a la vez. Para ello, cada pesta�
 
 %Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401. Si el \emph{token} es válido, pero el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también actualiza el momento de la última actividad.
 
-Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, responde con el código 401 y, si la sesión fue cerrada, indica el motivo. Si el \emph{token} es válido, pero proviene de una pestaña que no es la activa, responde con el código 409. Si el rol no tiene permiso para la acción, responde con el código 403. Cuando la verificación es correcta, también renueva el tiempo de vida de la sesión.
+Antes de procesar una petición protegida, los controladores recurren a un componente intermedio (\emph{middleware}). Este extrae el \emph{token} de la petición y lo compara con el de la sesión correspondiente. Si no coincide o la sesión expiró, rechaza la petición. Cuando la sesión fue cerrada, la respuesta informa además el motivo del cierre. Tampoco acepta la petición si el \emph{token} proviene de una pestaña que no es la activa o si el rol no tiene permiso para la acción. Cuando la verificación es correcta, también renueva el tiempo de vida de la sesión.
 
 \subsection{Frontend}
 
