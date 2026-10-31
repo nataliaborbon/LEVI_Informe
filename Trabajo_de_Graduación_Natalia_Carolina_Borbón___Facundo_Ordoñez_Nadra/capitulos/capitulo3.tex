@@ -2005,21 +2005,23 @@ Esta vista aparece solo cuando la NVS no contiene los datos de configuración, c
 \section{Alimentación}
 \label{sec:alimentacion}
 
-Esta sección detalla el sistema de energía autónomo del proyecto. Primero se repasan los requisitos y el presupuesto de consumo de cada módulo. Luego se analizan y comparan las alternativas propuestas. Se justifica la elección final y se expone la configuración adoptada. Por último, se describe el circuito del módulo central y se verifican los cálculos de autonomía.
+Esta sección detalla el sistema de energía autónomo del proyecto. Primero se repasan los requisitos y el presupuesto de consumo de cada módulo. Luego se analizan y comparan las alternativas propuestas. Se justifica la elección final y se expone la configuración adoptada. Posteriormente, se describe el circuito del módulo central y, por último, se verifican los cálculos de autonomía.
 
 \subsection{Requisitos previos}
 
-El dispositivo final debe ser inalámbrico y energéticamente autónomo, por lo que se descarta la conexión directa por cable USB. En su lugar, se diseñó un sistema propio con baterías de litio. Aunque presentan un costo inicial elevado, su capacidad de recarga evita la compra frecuente de repuestos. La tensión de la celda varía entre 3,0 V y 4,2 V según su nivel de carga.
+El dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la conexión directa mediante cable USB. Otra opción habitual consiste en acoplar un \emph{power bank} comercial. Sin embargo, esta alternativa se desestimó por criterios de diseño y ergonomía. El proyecto apuntaba a una carcasa que integre la placa y la fuente de energía en un mismo bloque. Dado que los bancos de carga comerciales varían en sus dimensiones físicas, resulta imposible estandarizar un único modelo de gabinete. 
 
-Esta energía requiere acondicionamiento previo. El microcontrolador \emph{ESP32} exige tensiones estables de 3,3 V o 5 V. Una pequeña variación provocaría fallos o reinicios. 
+En su lugar, se diseñó un sistema propio basado en celdas de litio recargables cilíndricas (formato 18650). Estas baterías conservan un tamaño universal sin importar su fabricante. Su tensión varía entre 2,7 V y 4,2 V según su nivel de carga.
 
-Cada módulo del sistema posee su propio circuito de alimentación independiente. Esta separación evita el uso de cables cruzados y otorga mayor libertad de movimiento. En un inicio, el diseño contemplaba circuitos idénticos para el módulo de captura y el módulo central (en el que se utilizaba la \emph{ESP32-CYD}). Sin embargo, la migración hacia la placa \emph{ONX3248G035} (sección 3.4) alteró este planteamiento, ya que esta incorpora su propio gestor de energía de fábrica. 
+Esta energía requiere acondicionamiento previo. El microcontrolador \emph{ESP32} exige tensiones estables de 3,3 V o 5 V. Una pequeña fluctuación provocaría fallos de ejecución o reinicios del sistema. 
 
-El usuario debe poder recargar el equipo sin extraer la batería. Además, la autonomía total debe cubrir al menos una jornada escolar completa (aproximadamente 6 horas continuas).
+Cada bloque del prototipo posee su propio circuito de alimentación independiente. Esta separación elimina el cruce de cables externos y otorga mayor libertad de movimiento. Originalmente, el diseño contemplaba etapas idénticas para el módulo capturador y el módulo central (equipado con la \emph{ESP32-CYD}). No obstante, la migración hacia la placa \emph{ONX3248G035} alteró este esquema, ya que el nuevo \emph{hardware} incorpora su propio gestor interno. 
+
+El usuario debe poder reponer la energía sin extraer la batería del equipo. Además, la autonomía operativa total debe cubrir al menos una jornada escolar completa (aproximadamente 6 horas continuas).
 
 \subsection{Presupuesto de consumo por módulo}
 
-La tabla \ref{tab:presupuesto_consumo} lista la corriente máxima exigida por cada bloque del sistema.
+Antes de analizar posibles soluciones, se deben determinar los requisitos energéticos totales de cada módulo en el peor caso posible. Para ello, se tomaron múltiples medidas de consumo con una fuente estable de 5 V. De todas estas medidas se adoptaron los máximos valores, que se listan en la tabla \ref{tab:presupuesto_consumo}.
 
 \begin{table}[H]
     \centering
@@ -2048,28 +2050,28 @@ Suspender la pantalla inactiva ahorra entre un 31 \% y un 36 \% del consumo tota
 
 Para cumplir los requisitos, se evaluaron tres métodos de alimentación. Todos utilizan celdas de litio 18650 de 3000 mAh (tensión nominal de 3,7 V). 
 
-La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados. Un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regularía el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
+La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados: un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
 
-Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones y su costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
+Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones, disponibilidad y costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
 
 \begin{table}[H]
     \centering
     \caption{Comparativa de alternativas de alimentación}
     \label{tab:comparativa_alimentacion}
-    \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1.5cm}|p{3.5cm}|p{2.5cm}|}
+    \begin{tabular}{|p{2cm}|p{2cm}|p{1.3cm}|p{3.2cm}|p{2.4cm}|p{2cm}|}
         \hline
-        \textbf{Alternativa} & \textbf{\emph{Dropout}} & \textbf{Carga y uso} & \textbf{Limitaciones} & \textbf{Costo estimado} \\
+        \textbf{Alternativa} & \textbf{\emph{Dropout}} & \textbf{Uso al cargar} & \textbf{Limitaciones} & \textbf{Disponibilidad} & \textbf{Costo total estimado} \\
         \hline
-        LDO + Cargador externo & Alta ($\sim$1,1 V) & No & Dropout: apaga el sistema cuando la celda baja a 3,8 V. & 22,30 USD \\
+        \raggedright LDO + \newline Cargador externo & \raggedright Alta \newline ($\sim$1,1 V) & No & \raggedright Dropout: apaga el sistema cuando la celda baja a 3,8 V. & Alta & 22,30 USD \\
         \hline
-        TP4056 + MT3608 & Nula (Topología \emph{Boost}) & No & Requiere cargar con el equipo apagado. Doble conversión de tensión. & 18,80 USD \\
+        \raggedright TP4056 + \newline MT3608 & \raggedright Nula \newline (Topología \emph{Boost}) & No & \raggedright Doble conversión de energía (baja eficiencia). & Muy alta & 18,80 USD \\
         \hline
-        IP5306 & Nula (Topología \emph{Boost}) & Sí & Inyecta ruido de conmutación. Requiere filtrado extra. & 20,00 USD \\
+        \raggedright IP5306 & \raggedright Nula \newline (Topología \emph{Boost}) & Sí & \raggedright Inyecta ruido de conmutación. \newline Requiere filtrado extra. & Baja & 20,00 USD \\
         \hline
     \end{tabular}
 \end{table}
 
-Se descarta la primera alternativa por el elevado \emph{dropout} del regulador lineal. El AMS1117 exige casi 1,1 V de margen. Esto impide aprovechar la curva completa de descarga de la batería (de 4,2 V hasta 3,0 V). La tercera opción se desestima debido al ruido eléctrico de baja frecuencia que afecta las comunicaciones inalámbricas.
+Se descarta la primera alternativa por el elevado \emph{dropout} del regulador lineal. El AMS1117 exige casi 1,1 V de margen. Esto impide aprovechar la curva completa de descarga de la batería (de 4,2 V hasta 2,7 V). La tercera opción se desestima debido al ruido eléctrico de baja frecuencia que afecta las comunicaciones inalámbricas.
 
 La solución adoptada es la segunda alternativa. El \emph{TP4056} gestiona la recarga de forma segura, mientras que el \emph{MT3608} estabiliza la tensión a 5 V constantes. Al entregar 5 V, se asume una pérdida de eficiencia por la doble regulación (el \emph{ESP32} reduce internamente a 3,3 V), pero asegura la inmunidad ante caídas de tensión de la celda y garantiza un rizado despreciable a la salida. Como el módulo de carga no discrimina entre la corriente de la batería y la del sistema, el dispositivo debe permanecer apagado durante la recarga para permitir el corte automático de seguridad.
 
@@ -2077,7 +2079,7 @@ La solución adoptada es la segunda alternativa. El \emph{TP4056} gestiona la re
 
 Esta sección detalla los parámetros de los módulos comerciales empleados para la placa capturadora. 
 
-El módulo \emph{TP4056} ejecuta un ciclo de corriente constante y tensión constante (CC/CV). La tabla \ref{tab:parametros_tp4056} resume sus especificaciones.
+El módulo \emph{TP4056} ejecuta un ciclo de carga de corriente constante y tensión constante (CC/CV). La tabla \ref{tab:parametros_tp4056} resume sus especificaciones.
 
 \begin{table}[H]
     \centering
@@ -2096,7 +2098,7 @@ El módulo \emph{TP4056} ejecuta un ciclo de corriente constante y tensión cons
     \end{tabular}
 \end{table}
 
-Por su parte, el \emph{MT3608} eleva la señal nominal de la celda. Mediante un potenciómetro en la placa, se fija su salida en 5 V. La tabla \ref{tab:parametros_mt3608} expone sus límites operativos.
+Por su parte, el \emph{MT3608} eleva la señal nominal de la celda a través de un circuito \emph{Boost}. Mediante un potenciómetro en la placa, se fija su salida en 5 V. La tabla \ref{tab:parametros_mt3608} expone sus límites operativos.
 
 \begin{table}[H]
     \centering
@@ -2125,7 +2127,7 @@ La figura \ref{fig:placascomerciales} ilustra los circuitos típicos implementad
 
 El \emph{hardware} del módulo central migró al modelo \emph{ONX3248G035}. Esta placa incluye su propio sistema de energía, diseñado para soportar celdas de litio directas sin elevar previamente la tensión a 5 V.
 
-El gestor de carga es el chip \emph{IP4054V}. Opera de forma similar al \emph{TP4056}, pero es más robusto y presenta mejores protecciones. Emplea una resistencia de programación de 3,3 k$\Omega$. Según su hoja de datos, esto establece un flujo constante de 0,3 A.
+El gestor de carga es el chip \emph{IP4054V}. Opera de forma similar al \emph{TP4056}, pero es más robusto y presenta mejores protecciones. Emplea una resistencia de programación de 3,3 k$\Omega$. Según su hoja de datos, esto establece un flujo de carga constante de 0,3 A.
 
 Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor reductor (\emph{Buck}) síncrono, basado en el integrado \emph{LC2201CCB5TR}. Este convertidor también presenta una tensión de \emph{dropout}, pero a diferencia de los reguladores LDO, esta caída es mínima debido a que posee transistores internos de muy baja resistencia. Permite exprimir la energía de la celda casi hasta los 3,3 V sin perder la regulación. Además, conmuta a 2,4 MHz, lo que maximiza la eficiencia térmica del sistema.
 
@@ -2145,38 +2147,41 @@ Esta sección detalla el aspecto físico final del dispositivo. Primero se prese
 
 \subsection{Circuitos}
 
-La sección anterior explicó en detalle los componentes utilizados en la etapa de alimentación. A continuación se ilustra la totalidad de las conexiones para el bloque capturador.
+La sección anterior explicó en detalle los componentes utilizados en la etapa de alimentación. A continuación, en la figura \ref{esquemacapturador}, se ilustra la totalidad de las conexiones para el bloque capturador.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturador.png}
-    \caption{Esquema de conexiones para la PCB del circuito capturador}
+    \caption{Esquema de conexiones del circuito capturador}
     \label{esquemacapturador}
 \end{figure}
 
-El diagrama cuenta con los módulos \emph{TP4056} y \emph{MT3608}, separados por un interruptor para apagar el sistema de forma manual. Además, incorpora un indicador luminoso de encendido, el zócalo para el \emph{ESP32-CAM}, el circuito de accionamiento del LED infrarrojo y tres capacitores. Estos últimos filtran el ruido eléctrico y suavizan los picos de corriente.
+El diagrama cuenta con los módulos \emph{TP4056} y \emph{MT3608}, separados por un interruptor para apagar el sistema de forma manual. Además, incorpora el LED infrarrojo y un LED de encendido, ambos con su respectiva resistencia. Se incluye el zócalo para el \emph{ESP32-CAM} y tres capacitores. Estos últimos filtran el ruido eléctrico y suavizan los picos de corriente.
 
-Al utilizar componentes comerciales preensamblados, el esquemático final se reduce al siguiente dibujo:
+Al utilizar componentes comerciales preensamblados, el esquemático final se reduce al expuesto en la figura \ref{esquemacapturadorsimple}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
-    \caption{Esquema simplificado de la PCB del módulo capturador}
+    \caption{Esquema simplificado del circuito del módulo capturador}
     \label{esquemacapturadorsimple}
 \end{figure}
 
 El \emph{TP4056} recibe energía por su puerto USB-C, por lo que los pines de entrada se omiten en el diagrama.
 
-Por su parte, el diseño del primer módulo central es idéntico al del capturador, pero sin el indicador de encendido, sin la etapa infrarroja y sin el acople para la cámara.
+Por su parte, el diseño del primer módulo central (Fig. \ref{esquemareceptor})es similar al del capturador, pero sin el indicador de encendido, sin la etapa infrarroja y sin el acople para la cámara.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemareceptor.png}
-    \caption{Esquema simplificado de la PCB del módulo central inicial (en desuso)}
+    \caption{Esquema simplificado del circuito del módulo central inicial (en desuso)}
     \label{esquemareceptor}
 \end{figure}
 
-Como se aclaró antes, este segundo circuito quedó en desuso porque la placa \emph{ONX3248G035} trae su propio circuito de recarga y regulación integrado. En consecuencia, el listado de materiales para construir únicamente la etapa de captura es el siguiente:
+\subsection{PCB}
+
+El diseño de la PCB del módulo de captura tuvo en cuenta su montaje dentro de la carcasa. Algunos componentes, como el LED de encendido, no se sueldan sobre la placa, sino que se fijan a la carcasa y se conectan mediante cables. Por este motivo, la PCB incorpora borneras en lugar de esos componentes, lo que permite elegir con mayor libertad su posición final en el equipo. Los materiales necesarios para armarla son los siguientes: 
+
 
 \begin{itemize}
     \item 1 módulo de carga comercial \emph{TP4056} (con protecciones \emph{DW01A} y \emph{FS8205A} incluidas).
@@ -2188,12 +2193,13 @@ Como se aclaró antes, este segundo circuito quedó en desuso porque la placa \e
     \item 1 resistencia de 220 $\Omega$ (1/4 W) para el LED azul.
     \item 2 capacitores cerámicos de 100 nF (filtrado de ruido de alta frecuencia).
     \item 1 capacitor electrolítico de 10 $\mu$F (estabilización de transitorios de corriente).
-    \item 1 bornera de 2 terminales y 1 bornera de 3 terminales.
+    \item 1 bornera de 2 terminales.
+    \item 1 bornera de 3 terminales.
     \item Tiras de pines (zócalos hembra) para el acople extraíble del \emph{ESP32-CAM}.
+    \item 1 conector JST SM hembra de 2 pines
+    \item 1 cable JST SM macho de 2 pines (Para LED IR)
     \item 1 placa de circuito impreso (PCB) a medida.
 \end{itemize}
-
-\subsection{PCB}
 
 A continuación se muestran los planos (\emph{layouts}) de las placas impresas trazados mediante el \emph{software} web \emph{EasyEDA}.
 
@@ -2211,19 +2217,23 @@ A continuación se muestran los planos (\emph{layouts}) de las placas impresas t
     \label{layoutservidor}
 \end{figure}
 
-En lugar de soldar el LED de estado directamente sobre la PCB capturadora, se opta por una bornera de tres terminales. De esta forma, su posición final en el equipo se elige con mayor libertad.
+Estos diseños se imprimieron en placas de cobre de capa simple, se perforaron y luego se soldaron los componentes.
+
 
 \subsection{Montaje}
 
-Con todos los elementos a disposición (placas \emph{ESP32}, etapa de alimentación, baterías y gorra base), se avanzó hacia el ensamblaje definitivo.
 
-Operar componentes electrónicos desnudos resulta incómodo y compromete la integridad física del equipo. Por lo tanto, se diseñó una carcasa impresa en 3D para cada bloque. Estas piezas protegen el \emph{hardware} y facilitan su manipulación.
+Una vez armados los circuitos, las placas de cada módulo quedan en condiciones de funcionar. Sin embargo, operarlas de forma expuesta resulta incómodo y compromete la integridad física del equipo. Por lo tanto, se diseñó una carcasa impresa en 3D para cada bloque.
 
 \keyword{Imágen de las carcasas}
 
-Como se observa, el estuche del bloque capturador posee una abertura cuadrada por donde asoma la cámara. Este hueco cuenta con un mecanismo deslizante para ajustar el ángulo de visión e integra el emisor infrarrojo en la misma pieza móvil. Además, la estructura incorpora un compartimento para la batería de litio y una pequeña ranura destinada al interruptor general.
+Como se observa en la fig. X, el estuche del módulo capturador posee una abertura rectangular por donde asoma la cámara. Este hueco cuenta con un mecanismo deslizante para ajustar el ángulo de visión e integra otra pieza móvil donde iran adheridas la cámara y el emisor infrarrojo. Además, la estructura incorpora tres ranuras. Una de ellas en donde se inserta el interruptor, otra por la que asoma el LED de encendido, y la última a través de la cual se puede acceder al pin de carga del dispositivo.
 
-Por su parte, la cubierta del módulo central presenta una ventana del tamaño exacto del panel táctil. Al principio, esta abertura medía 2,8 pulgadas para calzar con el \emph{ESP32-CYD}. Luego, el modelo 3D se rediseñó a medida para el \emph{ONX3248G035}.
+En un inicio, se conseideró incluir un compartimento para la batería de litio. Esta solución concentraba todo el peso en la visera de la gorra. Como consecuencia, la misma tendía a desplazarse hacia adelante, lo que volvía inviable el uso del dispositivo. Por este motivo, se optó por trasladar la batería a la parte trasera de la gorra para mejorar  la distribución del peso.
+
+Por su parte, la cubierta del módulo central inicial presentaba un espacio para insertar la batería de litio y una ventana del tamaño exacto del panel táctil. Contaba además con otros dos orificios: uno para el interruptor y otro para acceder al pin de carga. 
+
+Con el cambio de hardware a la placa \emph{ONX3248G035}, se rediseñó el gabinete, con una disposición similar a la anterior y sus medidas adaptadas a esta nueva placa. 
 
 \keyword{Imagen carcasa ONX}
 
