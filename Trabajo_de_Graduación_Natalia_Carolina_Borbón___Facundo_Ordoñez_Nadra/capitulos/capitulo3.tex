@@ -334,6 +334,7 @@ En esta sección se describe la evolución del detector. Primero se presentan lo
 
 
 \subsection{Procesamiento local como planteamiento inicial}
+\label{sec:procesamiento_local}
 
 En un principio se estableció que el procesamiento de las imágenes se realizaría en un microcontrolador, mediante una red neuronal artificial de tipo convolucional. Cuando la placa gestiona todas las tareas de detección, se habla de procesamiento local.
  
@@ -938,6 +939,7 @@ El \emph{ESP32} no cuenta con una interfaz de cámara dedicada. Por este motivo,
 
 
 \subsection{Módulo central}
+\label{sec:modulo_central}
 
 El módulo central se implementó con dos placas distintas a lo largo del proyecto. Ambas se presentan a continuación junto con una comparación entre ellas. Las conexiones con la tarjeta microSD y con la pantalla táctil se describen sobre la placa definitiva.
 
@@ -1067,6 +1069,7 @@ La Fig. \ref{fig:conexiones_onx} reúne las conexiones de la pantalla, del panel
 En esta sección se describe la infraestructura de comunicación del sistema. Primero se presenta la red Wi-Fi local que genera el módulo central y la forma en que los usuarios acceden a la aplicación. Luego se detalla la transmisión del video desde el módulo de captura. Por último, se explica cómo se comunican los dispositivos cliente con el módulo central.
 
 \subsection{Red Wi-Fi local}
+\label{sec:red_wifi}
 
 El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen hasta tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
 
@@ -1121,6 +1124,7 @@ La aplicación web solicita el video únicamente durante la calibración y el ex
 \end{figure}
 
 \subsection{Comunicación con el módulo central}
+\label{sec:comunicacion_central}
 
 Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación (Fig. \ref{fig:comunicacion_central}). La información viaja en formato JSON, descrito en el capítulo 2. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
 
@@ -1140,6 +1144,7 @@ El dispositivo del alumno realiza una consulta cada dos segundos mientras se enc
 \end{figure}
 
 \section{Aplicación web}
+\label{sec:aplicacion_web}
 
 La aplicación web reúne todo el software que permite a los usuarios interactuar con el sistema. Se organiza en tres capas, que son la base de datos, el \emph{backend} y el \emph{frontend}. Las dos primeras se ejecutan en el módulo central. El \emph{backend} forma parte del \emph{firmware}, escrito en C++, y la base de datos es un archivo \emph{SQLite} ubicado en la tarjeta microSD, que el propio \emph{firmware} lee y escribe. El \emph{frontend}, en cambio, funciona en el navegador de cada dispositivo cliente.
 
@@ -1163,6 +1168,7 @@ La aplicación web reúne todo el software que permite a los usuarios interactua
 A continuación se describe cada capa, en el orden en que se apoyan unas sobre otras. Primero se presenta la base de datos, luego el \emph{backend} y, por último, el \emph{frontend}.
 
 \subsection{Base de datos}
+\label{sec:base_datos}
 
 La base de datos almacena de forma permanente la información del sistema, que incluye los usuarios registrados, los cuestionarios (con sus preguntas y opciones) y los resultados del alumno. Así, estos registros se conservan aunque el módulo central se apague. En esta subsección se explica primero cómo se creó y configuró la base, y luego la estructura de sus tablas.
 
@@ -1363,6 +1369,7 @@ Estas relaciones definen el orden en que se crean los registros. Un cuestionario
 Las relaciones también determinan qué ocurre al eliminar un registro. Si se elimina un profesor, se borran en cascada sus cuestionarios, junto con sus preguntas y opciones. De esta forma no quedan registros huérfanos en la base. En cambio, si se elimina una opción, la pregunta no se borra, sino que la referencia a esa opción queda vacía.
 
 \subsection{Backend}
+\label{sec:backend}
 
 Las herramientas habituales para desarrollar un \emph{backend}, como \emph{Node.js} o \emph{Django}, requieren un sistema operativo y una cantidad de memoria muy superior a la del módulo central. Por este motivo, el \emph{backend} se escribió en C++, como parte del mismo \emph{firmware} que controla la red, la pantalla y la tarjeta microSD.
 
@@ -2271,6 +2278,7 @@ Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor re
 Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Considerando el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Dado que el microcontrolador \emph{ESP32} tolera descensos en su alimentación hasta los 3,0 V, este acoplamiento permite exprimir la energía remanente de la celda sin interrumpir el funcionamiento del dispositivo. Esto evita el apagado súbito que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
 
 \subsection{Verificaciones finales}
+\label{sec:verificaciones}
 
 Para validar el sistema, se calcula la autonomía operativa y los tiempos de reposición de energía.
 
@@ -2386,6 +2394,7 @@ Tras la impresión de las piezas, los circuitos se fijaron en su interior. A con
 \keyword{Imagen del montaje final?}
 
 \section{Costo total de desarrollo}
+\label{sec:costo_total}
 
 %(Tabla hecha por natty)
 
