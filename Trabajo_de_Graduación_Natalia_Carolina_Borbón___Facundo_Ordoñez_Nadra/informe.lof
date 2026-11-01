@@ -21,48 +21,46 @@
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Diferencias entre procesamiento local y remoto}}{23}{figure.caption.51}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Distintas partes del ojo y su nivel de oscuridad}}{24}{figure.caption.54}%
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Detección por umbral de oscuridad}}{25}{figure.caption.55}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces El \emph {glint} en el centro de la pupila}}{25}{figure.caption.56}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces El \emph {glint} no sigue a la pupila}}{26}{figure.caption.57}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Pantalla de creación de modelos de \emph {Edge Impulse}}}{26}{figure.caption.59}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Reconocimiento de vegetales con \emph {Edge Impulse}}}{27}{figure.caption.60}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Tiempo de inferencia estimado por \emph {Edge Impulse} para el \emph {ESP32} clásico}}{28}{figure.caption.61}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Entorno de \emph {Google Colab}}}{29}{figure.caption.63}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Una muestra de las imágenes utilizadas para el dataset}}{30}{figure.caption.64}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Planilla con etiquetado de imágenes}}{30}{figure.caption.65}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Resultados del modelo desarrollado en \emph {Google Colab}. Con un punto verde se indica el valor etiquetado, mientras que la cruz roja muestra la posición que la red predice}}{31}{figure.caption.73}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Error de precisión con TFLite (15.9 píxeles)}}{32}{figure.caption.74}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{33}{figure.caption.78}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{33}{figure.caption.79}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces El método de la transformada de Hough en funcionamiento}}{34}{figure.caption.81}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Fallo del algoritmo por oclusión}}{35}{figure.caption.82}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Falso positivo con el método de círculos de Hough}}{35}{figure.caption.83}%
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Plantillas para comparación}}{36}{figure.caption.87}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96. Normal y con LED infrarrojo}}{37}{figure.caption.89}%
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Video en vivo con el umbral de similitud}}{38}{figure.caption.91}%
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Diagrama de bloques del sistema definitivo}}{39}{figure.caption.93}%
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Mapa de memoria del módulo central}}{42}{figure.caption.100}%
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Placa \emph {ESP32-CAM} con su cámara.}}{43}{figure.caption.105}%
-\contentsline {figure}{\numberline {3.25}{\ignorespaces Cámaras OV2640 con distintos ángulos de visión y longitud de conector}}{44}{figure.caption.108}%
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Conexión entre el \emph {ESP32} y la cámara \emph {OV2640} en la placa \emph {ESP32-CAM}}}{45}{figure.caption.111}%
-\contentsline {figure}{\numberline {3.27}{\ignorespaces Placa \emph {ONX3248G035} (vista frontal y trasera)}}{46}{figure.caption.115}%
-\contentsline {figure}{\numberline {3.28}{\ignorespaces Conexiones de la placa \emph {ONX3248G035}}}{49}{figure.caption.121}%
-\contentsline {figure}{\numberline {3.29}{\ignorespaces Red Wi-Fi local del sistema}}{50}{figure.caption.124}%
-\contentsline {figure}{\numberline {3.30}{\ignorespaces Transmisión de video desde el módulo de captura}}{52}{figure.caption.127}%
-\contentsline {figure}{\numberline {3.31}{\ignorespaces Comunicación entre los dispositivos cliente y el módulo central}}{52}{figure.caption.129}%
-\contentsline {figure}{\numberline {3.32}{\ignorespaces Estructura de la base de datos en \emph {DB Browser for SQLite}}}{55}{figure.caption.134}%
-\contentsline {figure}{\numberline {3.33}{\ignorespaces Diagrama de transición de estados de un cuestionario}}{56}{figure.caption.136}%
-\contentsline {figure}{\numberline {3.34}{\ignorespaces Esquema relacional de la base de datos}}{57}{figure.caption.137}%
-\contentsline {figure}{\numberline {3.35}{\ignorespaces Estructura interna del \emph {Frontend}}}{64}{figure.caption.149}%
-\contentsline {figure}{\numberline {3.36}{\ignorespaces Sistema de ejecución de la aplicación web}}{65}{figure.caption.151}%
-\contentsline {figure}{\numberline {3.37}{\ignorespaces Pantallas y sub-pantallas de acceso}}{67}{figure.caption.153}%
-\contentsline {figure}{\numberline {3.38}{\ignorespaces Vistas de la pantalla del alumno}}{68}{figure.caption.154}%
-\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{71}{figure.caption.159}%
-\contentsline {figure}{\numberline {3.40}{\ignorespaces Vista de estado de la interfaz táctil}}{71}{figure.caption.160}%
-\contentsline {figure}{\numberline {3.41}{\ignorespaces Vista de examen de la interfaz táctil}}{72}{figure.caption.161}%
-\contentsline {figure}{\numberline {3.42}{\ignorespaces Vista de configuración inicial de la interfaz táctil}}{72}{figure.caption.162}%
-\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema de conexiones del circuito capturador}}{76}{figure.caption.176}%
-\contentsline {figure}{\numberline {3.44}{\ignorespaces Esquema simplificado del circuito del módulo capturador}}{77}{figure.caption.177}%
-\contentsline {figure}{\numberline {3.45}{\ignorespaces Esquema simplificado del circuito del módulo central inicial (en desuso)}}{77}{figure.caption.178}%
-\contentsline {figure}{\numberline {3.46}{\ignorespaces Layout de la PCB del módulo capturador}}{78}{figure.caption.180}%
-\contentsline {figure}{\numberline {3.47}{\ignorespaces Layout de la PCB del módulo central inicial (en desuso)}}{79}{figure.caption.181}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Posición del \emph {glint} respecto de la pupila}}{26}{figure.caption.56}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Pantalla de creación de modelos de \emph {Edge Impulse}}}{26}{figure.caption.58}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Reconocimiento de vegetales con \emph {Edge Impulse}}}{27}{figure.caption.59}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Tiempo de inferencia estimado por \emph {Edge Impulse} para el \emph {ESP32} clásico}}{28}{figure.caption.60}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Entorno de \emph {Google Colab}}}{29}{figure.caption.62}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Una muestra de las imágenes utilizadas para el dataset}}{30}{figure.caption.63}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Planilla con etiquetado de imágenes}}{30}{figure.caption.64}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Resultados del modelo desarrollado en \emph {Google Colab}. Con un punto verde se indica el valor etiquetado, mientras que la cruz roja muestra la posición que la red predice}}{31}{figure.caption.72}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Error de precisión con TFLite (15.9 píxeles)}}{32}{figure.caption.73}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Detección de rostro con \emph {MediaPipe}}}{33}{figure.caption.77}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Facciones del rostro en \emph {WebGazer}}}{33}{figure.caption.78}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Detección del iris con el método de círculos de Hough}}{34}{figure.caption.80}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Plantillas para comparación}}{36}{figure.caption.84}%
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Imagen de 128x128 píxeles con un recuadro de 96x96. Normal y con LED infrarrojo}}{37}{figure.caption.86}%
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Video en vivo con el umbral de similitud}}{38}{figure.caption.88}%
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Diagrama de bloques del sistema definitivo}}{38}{figure.caption.90}%
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Mapa de memoria del módulo central}}{41}{figure.caption.97}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Placa \emph {ESP32-CAM} con su cámara.}}{43}{figure.caption.102}%
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Cámaras OV2640 con distintos ángulos de visión y longitud de conector}}{44}{figure.caption.105}%
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Conexión entre el \emph {ESP32} y la cámara \emph {OV2640} en la placa \emph {ESP32-CAM}}}{45}{figure.caption.108}%
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Placa \emph {ONX3248G035} (vista frontal y trasera)}}{46}{figure.caption.112}%
+\contentsline {figure}{\numberline {3.25}{\ignorespaces Conexiones de la placa \emph {ONX3248G035}}}{48}{figure.caption.118}%
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Red Wi-Fi local del sistema}}{49}{figure.caption.121}%
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Transmisión de video desde el módulo de captura}}{51}{figure.caption.124}%
+\contentsline {figure}{\numberline {3.28}{\ignorespaces Comunicación entre los dispositivos cliente y el módulo central}}{52}{figure.caption.126}%
+\contentsline {figure}{\numberline {3.29}{\ignorespaces Estructura de la base de datos en \emph {DB Browser for SQLite}}}{54}{figure.caption.131}%
+\contentsline {figure}{\numberline {3.30}{\ignorespaces Diagrama de transición de estados de un cuestionario}}{55}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.31}{\ignorespaces Esquema relacional de la base de datos}}{56}{figure.caption.134}%
+\contentsline {figure}{\numberline {3.32}{\ignorespaces Estructura interna del \emph {Frontend}}}{63}{figure.caption.146}%
+\contentsline {figure}{\numberline {3.33}{\ignorespaces Sistema de ejecución de la aplicación web}}{64}{figure.caption.148}%
+\contentsline {figure}{\numberline {3.34}{\ignorespaces Pantallas y sub-pantallas de acceso}}{66}{figure.caption.150}%
+\contentsline {figure}{\numberline {3.35}{\ignorespaces Vistas de la pantalla del alumno}}{67}{figure.caption.151}%
+\contentsline {figure}{\numberline {3.36}{\ignorespaces Pantallas del panel}}{68}{figure.caption.152}%
+\contentsline {figure}{\numberline {3.37}{\ignorespaces Vista de bienvenida de la interfaz táctil}}{70}{figure.caption.157}%
+\contentsline {figure}{\numberline {3.38}{\ignorespaces Vista de estado de la interfaz táctil}}{71}{figure.caption.158}%
+\contentsline {figure}{\numberline {3.39}{\ignorespaces Vista de examen de la interfaz táctil}}{71}{figure.caption.159}%
+\contentsline {figure}{\numberline {3.40}{\ignorespaces Vista de configuración inicial de la interfaz táctil}}{72}{figure.caption.160}%
+\contentsline {figure}{\numberline {3.41}{\ignorespaces Módulos comerciales de alimentación del módulo de captura}}{75}{figure.caption.170}%
+\contentsline {figure}{\numberline {3.42}{\ignorespaces Esquema de conexiones del circuito capturador}}{77}{figure.caption.177}%
+\contentsline {figure}{\numberline {3.43}{\ignorespaces Esquema simplificado del circuito del módulo capturador}}{78}{figure.caption.178}%
+\contentsline {figure}{\numberline {3.44}{\ignorespaces Esquema simplificado del circuito del módulo central inicial (en desuso)}}{78}{figure.caption.179}%
+\contentsline {figure}{\numberline {3.45}{\ignorespaces Layouts de las PCB}}{79}{figure.caption.181}%
 \addvspace {10\p@ }
