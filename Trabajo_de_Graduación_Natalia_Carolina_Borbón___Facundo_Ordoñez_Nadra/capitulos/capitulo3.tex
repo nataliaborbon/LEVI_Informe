@@ -2146,30 +2146,46 @@ El usuario debe poder reponer la energía sin extraer la batería del equipo. Ad
 
 \subsection{Presupuesto de consumo por módulo}
 
-Antes de analizar posibles soluciones, se deben determinar los requisitos energéticos totales de cada módulo en el peor caso posible. Para ello, se tomaron múltiples medidas de consumo con una fuente estable de 5 V. De todas estas medidas se adoptaron los máximos valores, que se listan en la tabla \ref{tab:presupuesto_consumo}.
+Antes de analizar posibles soluciones, se deben determinar los requisitos eléctricos totales de cada módulo. Para ello, se tomaron múltiples medidas de consumo con una fuente estable de 5 V. Dichos valores, promedio y máximo, se listan en la tabla \ref{tab:presupuesto_consumo}.
 
 \begin{table}[H]
     \centering
-    \caption{Presupuesto de consumo de corriente en el peor caso}
+    \caption{Presupuesto de consumo de corriente con fuente de 5 voltios}
     \label{tab:presupuesto_consumo}
-    \begin{tabular}{|l|l|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
         \hline
-        \textbf{Condición de uso} & \textbf{Consumo (mA)} \\
+        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} & \begin{tabular}[c]{@{}c@{}}\textbf{Pico máximo} \\ \textbf{detectado} \\ \textbf{(mA)}\end{tabular} \\
         \hline
-        Módulo capturador (en transmisión Wi-Fi e IR encendido) & 291 \\
+        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 200 & 204 \\
         \hline
-        Módulo central CYD (Pantalla apagada) &  239 \\
+        Módulo central CYD (Pantalla apagada) & 167 & 171 \\
         \hline
-        Módulo central CYD (Pantalla encendida) & 375 \\
+        Módulo central CYD (Pantalla encendida) & 254 & 257 \\
         \hline
-        Módulo central ONX (Pantalla apagada) & 220 \\
+        Módulo central ONX (Pantalla apagada) & 130 & 134 \\
         \hline
-        Módulo central ONX (Pantalla encendida) & 285 \\
+        Módulo central ONX (Pantalla encendida) & 212 & 221 \\
         \hline
     \end{tabular}
 \end{table}
 
-Suspender la pantalla inactiva ahorra entre un 31 \% y un 36 \% del consumo total, dependiendo el modelo de placa que se analice. La transmisión de video impacta de forma mínima en la placa central. Estos valores empíricos sirven como base para dimensionar la capacidad de la batería en las verificaciones finales.
+Apagar la pantalla inactiva ahorra entre un 34 \% y un 38 \% del consumo total, según el modelo de placa analizado. Para el diseño inicial, se tomó como referencia la corriente consumida por el módulo capturador y el módulo central con el \emph{ESP32-CYD}.
+
+El producto entre la corriente media y la tensión de entrada (5 V) define la potencia consumida. El módulo capturador exige 1 W. El módulo central equipado con la placa CYD requiere 1,27 W con la pantalla activa y 835 mW en estado de suspensión. 
+
+Para estimar el requerimiento sobre la batería de litio, se dividió esta potencia por la tensión nominal de la celda (3,7 V). Este cálculo establece la siguiente corriente proyectada por módulo:
+
+\begin{itemize}
+    \item Módulo capturador: 270 mA.
+    \item Módulo central (CYD) con pantalla apagada: 226 mA.
+    \item Módulo central (CYD) con pantalla encendida: 343 mA.
+    \item Módulo central (ONX) con pantalla apagada: 176 mA.
+    \item Módulo central (ONX) con pantalla encendida: 286 mA.
+\end{itemize}
+
+Análisis adicionales revelaron que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes.  
+
+Estos valores empíricos servirán como base teórica para diseñar el circuito de alimentación y dimensionar la capacidad real de la batería en las verificaciones operativas.
 
 \subsection{Alternativas propuestas}
 
@@ -2277,16 +2293,49 @@ Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor re
 
 Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Considerando el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Dado que el microcontrolador \emph{ESP32} tolera descensos en su alimentación hasta los 3,0 V, este acoplamiento permite exprimir la energía remanente de la celda sin interrumpir el funcionamiento del dispositivo. Esto evita el apagado súbito que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
 
-\subsection{Verificaciones finales}
+\subsection{Verificaciones operativas finales}
 \label{sec:verificaciones}
 
-Para validar el sistema, se calcula la autonomía operativa y los tiempos de reposición de energía.
+Para validar el sistema, se calcula la autonomía operativa y los tiempos de reposición de energía. Inicialmente, se comprobó el consumo de corriente real de los módulos alimentados con la batería de litio montada sobre el circuito diseñado para comparar con las estimaciones previas.
 
-La capacidad total de la batería es de 3000 mAh. Debido a que el presupuesto de consumo se midió de forma empírica colocando el amperímetro en serie directamente en los bornes de la celda de litio, las pérdidas por eficiencia térmica de los convertidores de tensión ya se encuentran contempladas en las mediciones.
+\begin{table}[H]
+    \centering
+    \caption{Consumo de corriente empírico con celda de litio}
+    \label{tab:consumo_bateria}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} & \begin{tabular}[c]{@{}c@{}}\textbf{Pico máximo} \\ \textbf{detectado} \\ \textbf{(mA)}\end{tabular} \\
+        \hline
+        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 295 & 303 \\
+        \hline
+        Módulo central CYD (Pantalla apagada) & 238 & 243 \\
+        \hline
+        Módulo central CYD (Pantalla encendida) & 376 & 380 \\
+        \hline
+        Módulo central ONX (Pantalla apagada) & 150 & 155 \\
+        \hline
+        Módulo central ONX (Pantalla encendida) & 252 & 254 \\
+        \hline
+    \end{tabular}
+\end{table}
 
-Al dividir la capacidad de la celda por el consumo empírico en el peor de los casos, el módulo capturador (291 mA) arroja una autonomía teórica de 10,3 horas continuas. Por su parte, el módulo central \emph{ONX3248G035} (285 mA) alcanza las 10,5 horas. Ambos resultados satisfacen el requisito de la jornada escolar completa (6 horas).
+Las discrepancias respecto a los cálculos teóricos tienen una justificación topológica. En el módulo capturador y en la configuración \emph{CYD}, el consumo real superó las estimaciones debido a la doble conversión de tensión: el circuito \emph{Boost} requiere un esfuerzo mayor de la celda para elevar la señal de 3,7 V a 5 V, a lo que se suman las pérdidas térmicas de los reguladores lineales internos de la placa de desarrollo. 
 
-Finalmente, el tiempo de recarga se estima a partir de la corriente inyectada por cada gestor. El módulo capturador (configurado a 1 A) demanda aproximadamente 3 horas en completar un ciclo. El módulo central (\emph{IP4054V} a 0,3 A) requiere cerca de 10 horas.
+Por el contrario, los valores de la \emph{ONX3248G035} resultaron menores a los proyectados. Esto ocurre porque su convertidor reductor síncrono (\emph{Buck}) opera con mayor eficiencia al recibir los 3,7 V directos de la batería frente a los 5 V utilizados en las mediciones iniciales. Al existir una menor diferencia de potencial entre la entrada y la salida de 3,3 V, el componente optimiza su ciclo de trabajo y reduce drásticamente la energía disipada en forma de calor.
+
+Al dividir la capacidad de la celda (3000 mAh) por el consumo empírico, el módulo capturador (295 mA) arroja una autonomía de 10,2 horas continuas.
+
+Para el módulo central con la placa \emph{ONX3248G035}, se estima un tiempo de pantalla activa del 10 \% del uso total. El cálculo de la corriente promedio ($I_{prom}$) se define con la siguiente ecuación:
+
+\begin{equation}
+    I_{prom} = (I_{ON} \times 0,10) + (I_{OFF} \times 0,90)
+\end{equation}
+
+Al sustituir las variables por los valores tabulados, el módulo central promedia un consumo de 160,2 mA. Esto implica una autonomía teórica de 18,7 horas. Se comprueba así que la capacidad energética de ambos módulos supera con creces el mínimo necesario para cubrir una jornada escolar de 6 horas.
+
+Finalmente, el tiempo de recarga se estima a partir de la corriente inyectada por cada gestor. El módulo capturador (configurado a 1 A) demanda aproximadamente 3 horas para completar un ciclo. El módulo central (\emph{IP4054V} a 0,3 A) requiere cerca de 10 horas.
+
+La recarga se comprobó de manera empírica sobre el módulo capturador. Al conectar una celda completamente descargada (2,8 V), el sistema completó el ciclo y alcanzó su tensión máxima (4,1 V) exactas 3 horas y 2 minutos después.
 
 \section{Diseño físico}
 
