@@ -2154,17 +2154,17 @@ Antes de analizar posibles soluciones, se deben determinar los requisitos eléct
     \label{tab:presupuesto_consumo}
     \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
         \hline
-        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} & \begin{tabular}[c]{@{}c@{}}\textbf{Pico máximo} \\ \textbf{detectado} \\ \textbf{(mA)}\end{tabular} \\
+        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} \\
         \hline
-        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 200 & 204 \\
+        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 200 \\
         \hline
-        Módulo central CYD (Pantalla apagada) & 167 & 171 \\
+        Módulo central CYD (Pantalla apagada) & 167 \\
         \hline
-        Módulo central CYD (Pantalla encendida) & 254 & 257 \\
+        Módulo central CYD (Pantalla encendida) & 254 \\
         \hline
-        Módulo central ONX (Pantalla apagada) & 130 & 134 \\
+        Módulo central ONX (Pantalla apagada) & 130 \\
         \hline
-        Módulo central ONX (Pantalla encendida) & 212 & 221 \\
+        Módulo central ONX (Pantalla encendida) & 212 \\
         \hline
     \end{tabular}
 \end{table}
@@ -2175,15 +2175,28 @@ El producto entre la corriente media y la tensión de entrada (5 V) define la po
 
 Para estimar el requerimiento sobre la batería de litio, se dividió esta potencia por la tensión nominal de la celda (3,7 V). Este cálculo establece la siguiente corriente proyectada por módulo:
 
-\begin{itemize}
-    \item Módulo capturador: 270 mA.
-    \item Módulo central (CYD) con pantalla apagada: 226 mA.
-    \item Módulo central (CYD) con pantalla encendida: 343 mA.
-    \item Módulo central (ONX) con pantalla apagada: 176 mA.
-    \item Módulo central (ONX) con pantalla encendida: 286 mA.
-\end{itemize}
+\begin{table}[H]
+    \centering
+    \caption{Presupuesto de consumo estimado}
+    \label{tab:consumo_estimado}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} \\
+        \hline
+        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 270 \\
+        \hline
+        Módulo central CYD (Pantalla apagada) & 226 \\
+        \hline
+        Módulo central CYD (Pantalla encendida) & 343 \\
+        \hline
+        Módulo central ONX (Pantalla apagada) & 176 \\
+        \hline
+        Módulo central ONX (Pantalla encendida) & 286 \\
+        \hline
+    \end{tabular}
+\end{table}
 
-Análisis adicionales revelaron que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes.  
+Análisis adicionales revelaron, por un lado, que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes. Además, los valores máximos de corriente detectados no superaron el 5\% del promedio, por lo que no serán tenidos en cuenta para posteriores análisis.
 
 Estos valores empíricos servirán como base teórica para diseñar el circuito de alimentación y dimensionar la capacidad real de la batería en las verificaciones operativas.
 
@@ -2319,7 +2332,7 @@ Para validar el sistema, se calcula la autonomía operativa y los tiempos de rep
     \end{tabular}
 \end{table}
 
-Las discrepancias respecto a los cálculos teóricos tienen una justificación topológica. En el módulo capturador y en la configuración \emph{CYD}, el consumo real superó las estimaciones debido a la doble conversión de tensión: el circuito \emph{Boost} requiere un esfuerzo mayor de la celda para elevar la señal de 3,7 V a 5 V, a lo que se suman las pérdidas térmicas de los reguladores lineales internos de la placa de desarrollo. 
+Las discrepancias respecto a los cálculos teóricos (tabla \ref{tab:consumo_estimado}) tienen una justificación topológica. En el módulo capturador y en la configuración \emph{CYD}, el consumo real superó las estimaciones debido a las pérdidas térmicas del circuito intermediario entre la batería y la placa de desarrollo.
 
 Por el contrario, los valores de la \emph{ONX3248G035} resultaron menores a los proyectados. Esto ocurre porque su convertidor reductor síncrono (\emph{Buck}) opera con mayor eficiencia al recibir los 3,7 V directos de la batería frente a los 5 V utilizados en las mediciones iniciales. Al existir una menor diferencia de potencial entre la entrada y la salida de 3,3 V, el componente optimiza su ciclo de trabajo y reduce drásticamente la energía disipada en forma de calor.
 
