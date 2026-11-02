@@ -2146,25 +2146,26 @@ El usuario debe poder reponer la energía sin extraer la batería del equipo. Ad
 
 \subsection{Presupuesto de consumo por módulo}
 
-Antes de analizar posibles soluciones, se deben determinar los requisitos eléctricos totales de cada módulo. Para ello, se tomaron múltiples medidas de consumo con una fuente estable de 5 V. Dichos valores, promedio y máximo, se listan en la tabla \ref{tab:presupuesto_consumo}.
+Antes de analizar posibles soluciones, se deben determinar los requisitos eléctricos totales de cada módulo. Para ello, se tomaron múltiples medidas de consumo con una fuente estable de 5 V. Estos valores se listan en la tabla \ref{tab:presupuesto_consumo}.
 
 \begin{table}[H]
     \centering
+    \renewcommand{\arraystretch}{1.6} % Aumentado para dar más espacio en las filas
     \caption{Presupuesto de consumo de corriente con fuente de 5 voltios}
     \label{tab:presupuesto_consumo}
-    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.55\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
         \hline
-        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} \\
+        \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 200 \\
+        Capturador (en transmisión Wi-Fi e IR encendido) & 200 \\
         \hline
-        Módulo central CYD (Pantalla apagada) & 167 \\
+        Central con CYD (Pantalla apagada) & 167 \\
         \hline
-        Módulo central CYD (Pantalla encendida) & 254 \\
+        Central con CYD (Pantalla encendida) & 254 \\
         \hline
-        Módulo central ONX (Pantalla apagada) & 130 \\
+        Central con ONX (Pantalla apagada) & 130 \\
         \hline
-        Módulo central ONX (Pantalla encendida) & 212 \\
+        Central con ONX (Pantalla encendida) & 212 \\
         \hline
     \end{tabular}
 \end{table}
@@ -2177,25 +2178,25 @@ Para estimar el requerimiento sobre la batería de litio, se dividió esta poten
 
 \begin{table}[H]
     \centering
+    \renewcommand{\arraystretch}{1.6}
     \caption{Presupuesto de consumo estimado}
     \label{tab:consumo_estimado}
-    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.55\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
         \hline
-        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} \\
+        \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 270 \\
+        Capturador (en transmisión Wi-Fi e IR encendido) & 270 \\
         \hline
-        Módulo central CYD (Pantalla apagada) & 226 \\
+        Central con CYD (Pantalla apagada) & 226 \\
         \hline
-        Módulo central CYD (Pantalla encendida) & 343 \\
+        Central con CYD (Pantalla encendida) & 343 \\
         \hline
-        Módulo central ONX (Pantalla apagada) & 176 \\
+        Central con ONX (Pantalla apagada) & 176 \\
         \hline
-        Módulo central ONX (Pantalla encendida) & 286 \\
+        Central con ONX (Pantalla encendida) & 286 \\
         \hline
     \end{tabular}
 \end{table}
-
 Análisis adicionales revelaron, por un lado, que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes. Además, los valores máximos de corriente detectados no superaron el 5\% del promedio, por lo que no serán tenidos en cuenta para posteriores análisis.
 
 Estos valores empíricos servirán como base teórica para diseñar el circuito de alimentación y dimensionar la capacidad real de la batería en las verificaciones operativas.
@@ -2313,21 +2314,22 @@ Para validar el sistema, se calcula la autonomía operativa y los tiempos de rep
 
 \begin{table}[H]
     \centering
+    \renewcommand{\arraystretch}{1.6}
     \caption{Consumo de corriente empírico con celda de litio}
     \label{tab:consumo_bateria}
-    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.48\textwidth}|>{\centering\arraybackslash}m{0.20\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{0.55\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|}
         \hline
-        \multicolumn{1}{|c|}{\textbf{Sistema a medir}} & \begin{tabular}[c]{@{}c@{}}\textbf{Consumo} \\ \textbf{Promedio} \\ \textbf{(mA)}\end{tabular} & \begin{tabular}[c]{@{}c@{}}\textbf{Pico máximo} \\ \textbf{detectado} \\ \textbf{(mA)}\end{tabular} \\
+        \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Módulo capturador \newline (en transmisión Wi-Fi e IR encendido) & 295 & 303 \\
+        Capturador (en transmisión Wi-Fi e IR encendido) & 295 \\
         \hline
-        Módulo central CYD (Pantalla apagada) & 238 & 243 \\
+        Central con CYD (Pantalla apagada) & 238 \\
         \hline
-        Módulo central CYD (Pantalla encendida) & 376 & 380 \\
+        Central con CYD (Pantalla encendida) & 376 \\
         \hline
-        Módulo central ONX (Pantalla apagada) & 150 & 155 \\
+        Central con ONX (Pantalla apagada) & 150 \\
         \hline
-        Módulo central ONX (Pantalla encendida) & 252 & 254 \\
+        Central con ONX (Pantalla encendida) & 252 \\
         \hline
     \end{tabular}
 \end{table}

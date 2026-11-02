@@ -86,15 +86,15 @@
 \contentsline {section}{\numberline {3.8}Alimentación}{72}{section.161}%
 \contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{72}{subsection.162}%
 \contentsline {subsection}{\numberline {3.8.2}Presupuesto de consumo por módulo}{73}{subsection.163}%
-\contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{74}{subsection.165}%
-\contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{74}{subsection.167}%
-\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{75}{subsection.171}%
-\contentsline {subsection}{\numberline {3.8.6}Verificaciones operativas finales}{76}{subsection.172}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{77}{section.175}%
-\contentsline {subsection}{\numberline {3.9.1}Circuitos}{77}{subsection.176}%
-\contentsline {subsection}{\numberline {3.9.2}PCB}{78}{subsection.180}%
-\contentsline {subsection}{\numberline {3.9.3}Montaje}{79}{subsection.182}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{80}{section.183}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{82}{chapter.185}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{82}{section.186}%
-\contentsline {section}{\numberline {4.2}Trabajo futuro}{83}{section.187}%
+\contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{74}{subsection.166}%
+\contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{75}{subsection.168}%
+\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{75}{subsection.172}%
+\contentsline {subsection}{\numberline {3.8.6}Verificaciones operativas finales}{76}{subsection.173}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{77}{section.176}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{77}{subsection.177}%
+\contentsline {subsection}{\numberline {3.9.2}PCB}{78}{subsection.181}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{80}{subsection.183}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{80}{section.184}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{82}{chapter.186}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{82}{section.187}%
+\contentsline {section}{\numberline {4.2}Trabajo futuro}{83}{section.188}%

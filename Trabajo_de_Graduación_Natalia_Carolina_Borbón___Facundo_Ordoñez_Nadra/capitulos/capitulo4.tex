@@ -78,7 +78,7 @@ A lo largo del desarrollo se identificaron distintos aspectos del sistema que po
 
 \item Descarga de revisiones: actualmente, la revisión de un cuestionario finalizado solo puede consultarse desde la aplicación. Se podría permitir su descarga en un archivo, de modo que profesores y tutores conserven los resultados fuera del módulo central.
 
-\item Medidor de batería del módulo de captura: el módulo de captura no indica el nivel de carga de su batería, por lo que el usuario no sabe cuándo debe recargarla. Se podría incorporar un medidor que lea la tensión de la celda y la informe al módulo central, para mostrarla en su pantalla táctil.
+\item Indicador de batería: actualmente, ninguno de los dos módulos muestra el nivel de carga de su batería. La ONX3248G035 incorpora un divisor resistivo que permite medir la tensión de la batería, mientras que en el ESP32-CAM la implementación resulta más compleja, ya que no cuenta con este circuito. En ambos casos, la relación entre la tensión de una celda de litio y lsu carga no es lineal, por lo que convendría construir una tabla a partir de mediciones propias.
 
 \item Registro e inicio de sesión con huella dactilar: un lector de huellas dactilares en el módulo central permitiría que profesores y tutores se registren e inicien sesión con su huella. De esta forma, ya no serían necesarias las claves maestras, y los usuarios no tendrían que recordar un nombre de usuario y una contraseña.
 
