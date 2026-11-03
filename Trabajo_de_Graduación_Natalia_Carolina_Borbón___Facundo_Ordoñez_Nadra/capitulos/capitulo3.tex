@@ -4,7 +4,8 @@
 
 \label{Chapter3} % For referencing the chapter elsewhere, use \ref{Chapter3} 
 \label{implementacion}
-En este capítulo se presenta el diseño y la implementación de la solución propuesta. Se definen los requisitos del sistema y se expone la evaluación de las técnicas de seguimiento ocular hasta la selección de la adoptada, proceso que determinó la arquitectura global. A partir de esta estructura, se detallan los módulos de hardware utilizado, la infraestructura de red y los protocolos de comunicación Asimismo, se describe la implementación del software, que comprende la lógica del servidor, la aplicación web y la interfaz táctil. Luego se detallan el sistema de alimentación, el diseño físico y, para finalizar, los costos totales del desarrollo.
+%En este capítulo se presenta el diseño y la implementación de la solución propuesta. Se definen los requisitos del sistema y se expone la evaluación de las técnicas de seguimiento ocular hasta la selección de la adoptada, proceso que determinó la arquitectura global. A partir de esta estructura, se detallan los módulos de hardware utilizado, la infraestructura de red y los protocolos de comunicación Asimismo, se describe la implementación del software, que comprende la lógica del servidor, la aplicación web y la interfaz táctil. Luego se detallan el sistema de alimentación, el diseño físico y, para finalizar, los costos totales del desarrollo.
+Este capítulo describe el diseño y la implementación del dispositivo. Los requisitos del sistema guiaron la evaluación de distintos métodos de detección de la mirada, y el método adoptado determinó la arquitectura general. Sobre esa arquitectura se apoyan el \emph{hardware} de cada módulo, la red que los comunica y el \emph{software}, que comprende la aplicación web y la interfaz táctil del módulo central. El capítulo se completa con la alimentación, el diseño físico y el costo del prototipo.
 
 %----------------------------------------------------------------------------------------
 \iffalse
@@ -155,7 +156,7 @@ Como se advirtió previamente, el hardware del sistema se estructura en tres blo
 
 Bajo esta arquitectura, se establecen dos canales de comunicación principales. El primero de ellos vincula a ambos microcontroladores y el segundo enlaza al microcontrolador secundario con el dispositivo externo. 
 
-Respecto al primer enlace, cabe aclarar que no se transmiten los fotogramas del video, sino únicamente los resultados del procesamiento del detector ocular: las coordenadas espaciales (\emph{X} e \emph{Y}) de la pupila y un valor booleano que indica si el ojo se encuentra abierto o cerrado. Puesto que el sistema debe operar en tiempo real, esta transmisión exige alta velocidad y estricta seguridad para evitar la pérdida de paquetes. Para satisfacer estos requisitos, sumado a factores de practicidad física en el diseño, se determinó inicialmente la implementación del protocolo cableado \emph{SPI} (Serial Peripheral Interface). 
+Respecto al primer enlace, cabe aclarar que no se transmiten los fotogramas del video, sino únicamente los resultados del procesamiento del detector ocular: las coordenadas espaciales ($X$ e $Y$) de la pupila y un valor booleano que indica si el ojo se encuentra abierto o cerrado. Puesto que el sistema debe operar en tiempo real, esta transmisión exige alta velocidad y estricta seguridad para evitar la pérdida de paquetes. Para satisfacer estos requisitos, sumado a factores de practicidad física en el diseño, se determinó inicialmente la implementación del protocolo cableado \emph{SPI} (Serial Peripheral Interface). 
 
 El protocolo SPI es un estándar de comunicación de datos en serie normalmente utilizado para comunicar un dispositivo llamado \emph{maestro} con otro llamado \emph{esclavo} (puede haber uno o varios de cada categoría). Esta forma de comunicación es ideal debido a que es:
 
@@ -217,7 +218,7 @@ Por otra parte, para la etapa de experimentación y entrenamiento de los modelos
 \section{Requisitos y especificaciones del sistema}
 \label{sec:requisitos}
 
-En esta sección se detallan los requisitos planteados al inicio del proyecto. Derivan de los objetivos y del alcance presentados en el capítulo \ref{Chapter1}. Se clasifican en requisitos funcionales, que describen qué debe hacer el sistema; requisitos técnicos, que establecen las condiciones que debe cumplir el hardware y la comunicación; y restricciones de diseño, que delimitan cómo debe construirse.
+En esta sección se detallan los requisitos planteados al inicio del proyecto. Derivan de los objetivos y del alcance presentados en el capítulo \ref{Chapter1}. Se clasifican en requisitos funcionales, que describen qué debe hacer el sistema; requisitos técnicos, que establecen las condiciones que debe cumplir el \emph{hardware} y la comunicación; y restricciones de diseño, que delimitan cómo debe construirse.
 
 \subsection{Requisitos funcionales}
 
@@ -276,7 +277,7 @@ Acceso a la interfaz:
 
 \item Facilidad de uso: interfaz intuitiva y sencilla.
 
-\item Acceso universal: se debe poder utilizar desde cualquier dispositivo con navegador web, sin instalar software adicional.
+\item Acceso universal: se debe poder utilizar desde cualquier dispositivo con navegador web, sin instalar \emph{software} adicional.
 
 \item Comunicación local: los distintos bloques del sistema se comunicarán de forma inalámbrica, sin acceso a internet.
 
@@ -284,7 +285,7 @@ Acceso a la interfaz:
 
 \subsection{Requisitos técnicos}
 
-Los requisitos técnicos traducen las funciones anteriores en condiciones concretas para el hardware y la comunicación del sistema.
+Los requisitos técnicos traducen las funciones anteriores en condiciones concretas para el \emph{hardware} y la comunicación del sistema.
 
 \begin{itemize}
 
@@ -298,7 +299,7 @@ Los requisitos técnicos traducen las funciones anteriores en condiciones concre
 
 \item Conectividad inalámbrica: el microcontrolador que aloja la aplicación debe contar con conexión Wi-Fi. De este modo, se comunica con los dispositivos de los usuarios sin necesidad de acceso a internet.
 
-\item Independencia del sistema operativo: La interfaz debe ser una página web y no una aplicación instalable. Este tipo de programa depende del sistema operativo del dispositivo en el que se ejecuta. Una página web, en cambio, funciona en cualquier equipo con navegador, sea una laptop, un celular, una tablet o una computadora de escritorio.
+\item Independencia del sistema operativo: la interfaz debe ser una página web y no una aplicación instalable. Este tipo de programa depende del sistema operativo del dispositivo en el que se ejecuta. Una página web, en cambio, funciona en cualquier equipo con navegador, sea una \emph{laptop}, un celular, una \emph{tablet} o una computadora de escritorio.
 
 \end{itemize}
 
@@ -342,14 +343,14 @@ Antes de implementar una red neuronal se optó por intentar un método más senc
  
 Esta última placa se eligió porque su procesador incorpora instrucciones vectoriales diseñadas para acelerar el cómputo de redes neuronales. Dichas instrucciones permiten procesar varios datos en una sola operación. \emph{Espressif} las pone a disposición mediante la biblioteca \emph{ESP-NN}, cuyas funciones optimizadas están orientadas a modelos cuantizados a números enteros de 8 bits (\emph{int8}). La cuantización reduce el tamaño del modelo y el costo de cada operación. Por estos motivos, el \emph{ESP32-S3} resulta una opción adecuada para ejecutar redes neuronales con recursos limitados.
  
-Aun con esta aceleración, lograr que un microcontrolador ejecute una red neuronal de este calibre no es sencillo. La mayoría de estos modelos exige una capacidad de memoria y una velocidad que suelen exceder lo que ofrece el \emph{ESP32-S3}. Por este motivo, se exploraron formas de diseñar y entrenar redes lo más livianas y sencillas posibles. Este paradigma busca implementar inteligencia artificial con recursos de software y hardware limitados. Se lo conoce como \emph{Tiny Machine Learning} (o \emph{TinyML}) y es la filosofía que se aplicó en las etapas iniciales del desarrollo de este dispositivo.
+Aun con esta aceleración, lograr que un microcontrolador ejecute una red neuronal de este calibre no es sencillo. La mayoría de estos modelos exige una capacidad de memoria y una velocidad que suelen exceder lo que ofrece el \emph{ESP32-S3}. Por este motivo, se exploraron formas de diseñar y entrenar redes lo más livianas y sencillas posible. Este paradigma busca implementar inteligencia artificial con recursos de \emph{software} y \emph{hardware} limitados. Se lo conoce como \emph{Tiny Machine Learning} (o \emph{TinyML}) y es la filosofía que se aplicó en las etapas iniciales del desarrollo de este dispositivo.
  
 A continuación se desarrollan los tres métodos evaluados.
 
 
 \subsubsection{Umbral de oscuridad y brillantez}
 
-Este método de visión computacional clásica consiste en capturar una imagen en escala de grises de forma continua para analizar sus patrones de oscuridad (intensidad lumínica) en tiempo real.
+Este método de visión por computadora clásica consiste en capturar una imagen en escala de grises de forma continua para analizar sus patrones de oscuridad (intensidad lumínica) en tiempo real.
 
 Al tomar una imagen del ojo, el punto más oscuro suele ser la pupila (Figura \ref{fig:oscuridadpupila}). El resto del cuadro presenta porciones irregulares con tonos grises más claros. El algoritmo aprovecha este contraste extremo para localizar las coordenadas pupilares y, a partir de ellas, inferir la dirección de la mirada.
 
@@ -377,7 +378,7 @@ Una vez delimitada la región de interés (\emph{ROI}) que en teoría abarca la 
     \label{fig:umbraloscuridad}
 \end{figure}
 
-Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método en la práctica, se descubrió que la precisión era insuficiente. La presencia de cejas, pestañas o armazones de anteojos confundían fácilmente al detector. Si bien la pupila se mantenía como uno de los puntos de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable al seguimiento.
+Este algoritmo es liviano y se ejecuta con rapidez en el \emph{ESP32}. Sin embargo, al evaluar este método en la práctica, se descubrió que la precisión era insuficiente. La presencia de cejas, pestañas o armazones de anteojos confundía fácilmente al detector. Si bien la pupila se mantenía como uno de los puntos de menor intensidad lumínica, la gran similitud de tonos con estos elementos externos volvía inestable el seguimiento.
 
 Ante este obstáculo, se decidió cambiar de enfoque. En lugar de aislar objetos por su nivel de oscuridad, se optó por aprovechar un fenómeno físico conocido como \emph{efecto de brillo corneal}. Al apuntar una fuente de luz hacia el globo ocular (en este caso el LED IR), la superficie húmeda y curva de la córnea actúa como un espejo esférico. Esto hace que la luz rebote y forme un punto blanco concentrado e intenso en la imagen, denominado \emph{glint} (Figura \ref{fig:glint}).
 
@@ -405,12 +406,12 @@ Como la ubicación de este destello suele coincidir con la de la pupila, parecí
 Esta solución tampoco resultó satisfactoria. Durante las pruebas de seguimiento, se comprobó que el \emph{glint} no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
 
 
-Tras estos resultados, se descartó la visión computacional clásica y se dio paso a las redes neuronales.
+Tras estos resultados, se descartó la visión por computadora clásica y se dio paso a las redes neuronales.
 
 
 \subsubsection{Edge Impulse}
 
-Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}. Se trata de un entorno de desarrollo basado en la nube, orientada específicamente al aprendizaje automático con bajos recursos computacionales (Figura \ref{fig:edgeimpulse}). Fue fundada en 2019 con el objetivo de facilitar esta tarea. Su función principal es trasladar el procesamiento desde servidores en la nube directamente al hardware local. Además, es una herramienta versátil ya que ofrece compatibilidad con el framework de Arduino.
+Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}. Se trata de un entorno de desarrollo basado en la nube, orientado específicamente al aprendizaje automático con bajos recursos computacionales (Figura \ref{fig:edgeimpulse}). Fue fundada en 2019 con el objetivo de facilitar esta tarea. Su función principal es trasladar el procesamiento desde servidores en la nube directamente al \emph{hardware} local. Además, es una herramienta versátil ya que ofrece compatibilidad con el \emph{framework} de \emph{Arduino}.
 
 \begin{figure}[H]
     \centering
@@ -421,7 +422,7 @@ Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}. Se
 
 Su funcionamiento se basa en una estructura de trabajo lineal (conocida como \emph{pipeline} o \emph{Impulse}). Este flujo unifica todas las etapas del desarrollo de un modelo predictivo. Comienza con la adquisición y el etiquetado de datos estructurados. Continúa con bloques de procesamiento digital de señales, que extraen las características más relevantes de las imágenes. Sigue con el entrenamiento de la red neuronal propiamente dicha y finaliza con el empaquetado del modelo. Todo esto se realiza mediante una interfaz de usuario intuitiva.
 
-Gracias a sus técnicas de cuantización y a sus métodos de aceleración de hardware, resulta una opción prometedora que optimiza todo el proceso de aprendizaje. Funciona muy bien en tareas sencillas, como el reconocimiento de objetos o rostros (Figura \ref{fig:deteccionverduras2}).
+Gracias a sus técnicas de cuantización y a sus métodos de aceleración de \emph{hardware}, resulta una opción prometedora que optimiza todo el proceso de aprendizaje. Funciona muy bien en tareas sencillas, como el reconocimiento de objetos o rostros (Figura \ref{fig:deteccionverduras2}).
 
 \begin{figure}[H]
     \centering
@@ -434,7 +435,7 @@ La plataforma permite elegir entre distintas arquitecturas de red preentrenadas 
 
 A diferencia de las redes tradicionales que calculan coordenadas geométricas complejas, esta arquitectura utiliza \emph{MobileNetV2} como motor de extracción de características y luego aplica un enfoque más simple y eficiente: divide la imagen en una cuadrícula y evalúa cada celda de forma individual. En lugar de predecir el ancho y alto del objeto, el sistema actúa como un clasificador espacial que determina estadísticamente si cada celda corresponde al fondo de la imagen o si contiene el centro (centroide) de un objeto de interés. Esta simplificación matemática es lo que le permite ocupar menos de 100 KB de memoria y admitir entradas en escala de grises o RGB a cualquier resolución.
 
-Bajo este esquema, se eligieron las variantes \emph{MobileNetV2 0.1} y \emph{MobileNetV2 0.35} como redes base para comparar su rendimiento. Si bien la confección del conjunto de datos y el etiquetado inicial se trabajaron mediante cuadros delimitadores (\emph{bounding boxes}), la red extrae de ellos la posición central para su entrenamiento. Finalmente, los modelos resultantes fueron cuantizados al formato \emph{int8}. Esta conversión fue fundamental para reducir el consumo de memoria y aprovechar al máximo la aceleración de hardware del \emph{ESP32-S3}.
+Bajo este esquema, se eligieron las variantes \emph{MobileNetV2 0.1} y \emph{MobileNetV2 0.35} como redes base para comparar su rendimiento. Si bien la confección del conjunto de datos y el etiquetado inicial se trabajaron mediante cuadros delimitadores (\emph{bounding boxes}), la red extrae de ellos la posición central para su entrenamiento. Finalmente, los modelos resultantes fueron cuantizados al formato \emph{int8}. Esta conversión fue fundamental para reducir el consumo de memoria y aprovechar al máximo la aceleración de \emph{hardware} del \emph{ESP32-S3}.
 
 Antes de cargar cada modelo en la placa, \emph{Edge Impulse} calcula un valor aproximado de su tiempo de inferencia en el \emph{ESP32} clásico. Con \emph{MobileNetV2 0.35}, ese valor rondaba 1 segundo, mientras que con \emph{MobileNetV2 0.1} era cercano a 800 milisegundos (Fig. \ref{fig:edgetiempos}).
 
@@ -455,12 +456,13 @@ El modelo basado en \emph{MobileNetV2 0.1} no se llegó a probar en la placa. Si
 
 \subsubsection{TensorFlow Lite}
 
-Una herramienta muy utilizada en \emph{Machine Learning} es el framework de código abierto \emph{TensorFlow} (\emph{TF}). Está diseñado para entrenar y ejecutar modelos de redes neuronales propios o ya existentes. Sin embargo, no está optimizado para correr redes en sistemas con hardware limitado como los \emph{ESP32}. Por este motivo, \emph{Google} desarrolló una versión más liviana, llamada \emph{TensorFlow Lite} (\emph{TFLite}). Su variante específica para arquitecturas sin sistema operativo es \emph{TensorFlow Lite for Microcontrollers} (\emph{TFLM}).
+Una herramienta muy utilizada en \emph{Machine Learning} es el \emph{framework} de código abierto \emph{TensorFlow} (\emph{TF}). Está diseñado para entrenar y ejecutar modelos de redes neuronales propios o ya existentes. Sin embargo, no está optimizado para correr redes en sistemas con \emph{hardware} limitado como los \emph{ESP32}. Por este motivo, \emph{Google} desarrolló una versión más liviana, llamada \emph{TensorFlow Lite} (\emph{TFLite}). Su variante específica para arquitecturas sin sistema operativo es \emph{TensorFlow Lite for Microcontrollers} (\emph{TFLM}).
 
-Como siguiente paso, se optó por entrenar un modelo propio utilizando imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque otorga una libertad de personalización absoluta. Permite tener control total sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia exacta de compresión y exportación. Esta independencia resulta vital para adaptar el modelo a las limitaciones del microcontrolador y además se elimina la sobrecarga de código genérico que suele imponer una plataforma cerrada.
+%Como siguiente paso, se optó por entrenar un modelo propio utilizando imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque otorga una libertad de personalización absoluta. Permite tener control total sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia exacta de compresión y exportación. Esta independencia resulta vital para adaptar el modelo a las limitaciones del microcontrolador y además se elimina la sobrecarga de código genérico que suele imponer una plataforma cerrada.
+Como siguiente paso, se optó por entrenar un modelo propio con imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque ofrece mayor libertad de personalización. Permite tener control sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia de compresión y exportación. Esta independencia permite adaptar el modelo a las limitaciones del microcontrolador y eliminar la sobrecarga de código genérico que suele imponer una plataforma cerrada.
 
 
-Para facilitar la creación del modelo, \emph{Google} ofrece también \emph{Keras}, una API de alto nivel que agiliza y simplifica enormemente la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab2}). Se trata de una plataforma basada en la nube que permite ejecutar código Python en \emph{notebooks} interactivos.
+Para facilitar la creación del modelo, \emph{TensorFlow} incluye \emph{Keras}, una API de alto nivel que simplifica la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab2}). Se trata de una plataforma basada en la nube que permite ejecutar código \emph{Python} en \emph{notebooks} interactivos.
 
 
 
@@ -471,14 +473,14 @@ Para facilitar la creación del modelo, \emph{Google} ofrece también \emph{Kera
     \label{fig:entornogooglecolab2}
 \end{figure}
 
-Antes de empezar a codificar es necesario un \emph{dataset} (conjunto de datos de entrada). Para una red de este tipo, normalmente se utilizan cientos de imágenes asociadas a lo que se denomina \emph{etiquetas}. Una etiqueta representa el valor objetivo que el modelo debe predecir y aprender. En este proyecto, las etiquetas son números enteros fijos que representan las coordenadas espaciales (\emph{X} e \emph{Y}) del centro de la pupila.
+Antes de empezar a codificar es necesario un \emph{dataset} (conjunto de datos de entrada). Para una red de este tipo, normalmente se utilizan cientos de imágenes asociadas a lo que se denomina \emph{etiquetas}. Una etiqueta representa el valor objetivo que el modelo debe predecir y aprender. En este proyecto, las etiquetas son números enteros fijos que representan las coordenadas espaciales ($X$ e $Y$) del centro de la pupila.
 
 Las imágenes de entrenamiento se capturaron con el módulo \emph{ESP32-CAM}, en escala de grises (\emph{Grayscale}) y con una resolución de 96x96 píxeles. Esta configuración se seleccionó para minimizar el consumo de recursos computacionales sin comprometer los detalles necesarios de la imagen. Para garantizar cantidad y variabilidad, se tomó un conjunto total de 1315 capturas de cinco personas distintas (Figura \ref{fig:fotosojos2}). Se contemplaron distintas condiciones de iluminación y variaciones físicas, como la presencia y la ausencia de anteojos.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/fotosojos2.png}
-    \caption{Una muestra de las imágenes utilizadas para el dataset}
+    \caption{Una muestra de las imágenes utilizadas para el \emph{dataset}}
     \label{fig:fotosojos2}
 \end{figure}
 
@@ -495,19 +497,19 @@ A continuación se listan y explican brevemente las etapas de la creación de un
 
 \begin{enumerate}
 
-\item Preparación: Se importan en el código las herramientas necesarias para construir la CNN, entre ellas \emph{TensorFlow}, \emph{Pandas}, \emph{NumPy} y \emph{OpenCV}. Se monta \emph{Google Drive} para que el entorno acceda a las imágenes y etiquetas almacenadas allí.
+\item Preparación: se importan en el código las herramientas necesarias para construir la CNN, entre ellas \emph{TensorFlow}, \emph{Pandas}, \emph{NumPy} y \emph{OpenCV}. Se monta \emph{Google Drive} para que el entorno acceda a las imágenes y etiquetas almacenadas allí.
 
-\item Formateo del dataset: Se extraen de \emph{Google Drive} las 1315 imágenes y se leen y almacenan las etiquetas en arreglos.
+\item Formateo del \emph{dataset}: se extraen de \emph{Google Drive} las 1315 imágenes y se leen y almacenan las etiquetas en arreglos.
 
-\item Creación de la red: Se define el formato de las entradas, las capas internas y la función de activación. Al final se compila el modelo y se establece cómo trabajará con los errores.
+\item Creación de la red: se define el formato de las entradas, las capas internas y la función de activación. Al final se compila el modelo y se establece cómo trabajará con los errores.
 
-\item Separación de datos: Aquí se aplica una técnica para entrenar y evaluar la red al mismo tiempo. Se dividen las imágenes del dataset en dos grupos: el de entrenamiento (80\% de las imágenes) y el de evaluación (20\% restante). Esta separación es aleatoria y sirve para comprobar el resultado de la construcción del modelo.
+\item Separación de datos: aquí se aplica una técnica para entrenar y evaluar la red al mismo tiempo. Se dividen las imágenes del \emph{dataset} en dos grupos: el de entrenamiento (80\% de las imágenes) y el de evaluación (20\% restante). Esta separación es aleatoria y sirve para comprobar el resultado de la construcción del modelo.
 
-\item Entrenamiento: Se ejecuta el aprendizaje de la red. Se elige el número de \emph{épocas} (veces que el modelo analiza el grupo de imágenes) y se aplican \emph{callbacks} (funciones que detienen el entrenamiento cuando se alcanza la precisión deseada). Con esto último se evita que la red memorice fotos en lugar de aprender de ellas.
+\item Entrenamiento: se ejecuta el aprendizaje de la red. Se elige el número de \emph{épocas} (veces que el modelo analiza el grupo de imágenes) y se aplican \emph{callbacks} (funciones que detienen el entrenamiento cuando se alcanza la precisión deseada). Con esto último se evita que la red memorice fotos en lugar de aprender de ellas.
 
-\item Evaluación: Se pone a prueba la red con la porción de datos que nunca vio durante el entrenamiento. Se muestran los resultados y el análisis de distintos parámetros estadísticos, como el porcentaje de aciertos, los errores y la muestra con peor desviación.
+\item Evaluación: se pone a prueba la red con la porción de datos que nunca vio durante el entrenamiento. Se muestran los resultados y el análisis de distintos parámetros estadísticos, como el porcentaje de aciertos, los errores y la muestra con peor desviación.
 
-\item Exportación: Se guarda el modelo en un archivo con formato \emph{.tflite}. Este se utiliza luego en \emph{Visual Studio Code} (con la extensión \emph{PlatformIO}), el entorno en el que se programa el microcontrolador.
+\item Exportación: se guarda el modelo en un archivo con formato \texttt{.tflite}. Este se utiliza luego en \emph{Visual Studio Code} (con la extensión \emph{PlatformIO}), el entorno en el que se programa el microcontrolador.
 
 \end{enumerate}
 
@@ -520,30 +522,30 @@ Se iteró sobre la arquitectura de la red y se ajustaron sus hiperparámetros (l
     \label{fig:resultadoscolab}
 \end{figure}
 
-Este modelo resultó significativamente más rápido, eficiente y controlable que el generado con \emph{Edge Impulse}. Sin embargo, las pruebas empíricas en tiempo real mostraron que no cumplía los requisitos de precisión para el dispositivo final. Durante la operación, las coordenadas predichas eran muy inestables. Oscilaban de forma pequeña y constante (\emph{jittering}) y no lograban mantenerse en un valor firme. En la figura \ref{fig:maximoerror} se muestra un ejemplo de estos errores de precisión. A pesar de que son pocos píxeles, resulta significativo cuando se busca un objeto tan pequeño como la pupila.
+Este modelo resultó significativamente más rápido, eficiente y controlable que el generado con \emph{Edge Impulse}. Sin embargo, las pruebas empíricas en tiempo real mostraron que no cumplía los requisitos de precisión para el dispositivo final. Durante la operación, las coordenadas predichas eran muy inestables. Oscilaban de forma pequeña y constante (\emph{jittering}) y no lograban mantenerse en un valor firme. En la figura \ref{fig:maximoerror} se muestra un ejemplo de estos errores de precisión. Aunque se trata de pocos píxeles, el error resulta significativo cuando se busca un objeto tan pequeño como la pupila.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\textwidth]{figuras/maximoerror.png}
-    \caption{Error de precisión con TFLite (15.9 píxeles)}
+    \caption{Error de precisión con \emph{TFLite} (15,9 píxeles)}
     \label{fig:maximoerror}
 \end{figure}
 
-Para reducir esa inestabilidad, se intentó aumentar la complejidad y la profundidad de la red neuronal. Sin embargo, esto elevó la latencia de procesamiento a niveles inaceptables. Por el contrario, simplificar la arquitectura para recuperar velocidad degradaba la exactitud de las coordenadas. Se encontró así un límite de hardware insalvable.
+Para reducir esa inestabilidad, se intentó aumentar la complejidad y la profundidad de la red neuronal. Sin embargo, esto elevó la latencia de procesamiento a niveles inaceptables. Por el contrario, simplificar la arquitectura para recuperar velocidad degradaba la exactitud de las coordenadas. Se encontró así un límite de \emph{hardware} insalvable.
 
 
 \subsubsection{Conclusión del procesamiento local}
 
-Ninguno de los tres métodos cumplió las dos condiciones establecidas inicialmente. El umbral de oscuridad y brillantez no alcanzó la precisión requerida. \emph{Edge Impulse} resultó demasiado lento para el tiempo real. El modelo propio con \emph{TensorFlow Lite} no logró estabilidad en sus predicciones y, al aumentar su complejidad, perdió velocidad. Por lo tanto, el procesamiento de imágenes de forma puramente local, dentro de las limitaciones de memoria del microcontrolador, no resulta viable para las exigencias de este proyecto. Esta restricción motivó el descarte de las redes neuronales en hardware de bajos recursos. 
+Ninguno de los tres métodos cumplió las dos condiciones establecidas inicialmente. El umbral de oscuridad y brillantez no alcanzó la precisión requerida. \emph{Edge Impulse} resultó demasiado lento para el tiempo real. El modelo propio con \emph{TensorFlow Lite} no logró estabilidad en sus predicciones y, al aumentar su complejidad, perdió velocidad. Por lo tanto, el procesamiento de imágenes de forma puramente local, dentro de las limitaciones de memoria del microcontrolador, no resulta viable para las exigencias de este proyecto. Esta restricción motivó el descarte de las redes neuronales en \emph{hardware} de bajos recursos. 
 
-Ante esta situación, se decidió derivar la detección a un dispositivo externo. Este enfoque se describe en la siguiente subsección.
+%Ante esta situación, se decidió derivar la detección a un dispositivo externo. Este enfoque se describe en la siguiente subsección.
 
 
 \subsection{Procesamiento remoto por coordenadas}
 
 Tras descartar el procesamiento local, se decidió trasladar la detección a un dispositivo externo. Este equipo es el mismo desde el cual el usuario utiliza el sistema, como una PC, un celular o una \emph{tablet}. Cuando la detección se ejecuta en este dispositivo cliente, y no en el microcontrolador, se habla de procesamiento remoto.
 
-Este enfoque cambia la distribución de tareas. El microcontrolador ya no procesa las imágenes. Solo las captura y las transmite al dispositivo cliente por Wi-Fi. Este último recibe los fotogramas y ejecuta sobre ellos el método de detección. La transmisión de imágenes se detalla más adelante en este informe.
+Este enfoque cambia la distribución de tareas. El microcontrolador ya no procesa las imágenes. Solo las captura y las transmite al dispositivo cliente por Wi-Fi. Este último recibe los fotogramas y ejecuta sobre ellos el método de detección. La transmisión de imágenes se detalla en la sección \ref{sec:transmision_video}.
 
 La principal ventaja de este esquema es la capacidad de procesamiento disponible. Un dispositivo cliente cuenta con mucha más memoria y velocidad que un microcontrolador. Por lo tanto, ya no es necesario reducir los métodos de detección a modelos livianos como los de \emph{TinyML}. Esto permite evaluar herramientas más complejas, que resultaban inviables en el \emph{ESP32-S3}. Como contrapartida, el sistema pasa a depender de la transmisión continua de imágenes entre ambos dispositivos.
 
@@ -553,7 +555,7 @@ A continuación se desarrollan los dos métodos evaluados, que son las redes neu
 
 \subsubsection{MediaPipe y WebGazer}
 
-La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una red neuronal preentrenada para la detección de la mirada. Dos alternativas consideradas fueron \emph{MediaPipe} (un conjunto de bibliotecas provisto por \emph{Google}) y \emph{WebGazer} (un modelo desarrollado en el ámbito académico). Ambas son herramientas basadas en tecnologías web que solucionarían todos los problemas descritos con anterioridad. Sin embargo, fueron descartadas debido a dos inconvenientes.
+La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una red neuronal preentrenada para la detección de la mirada. Dos alternativas consideradas fueron \emph{MediaPipe} (un conjunto de bibliotecas provisto por \emph{Google}) y \emph{WebGazer} (un modelo desarrollado en el ámbito académico). Ambas son herramientas basadas en tecnologías web que evitaban las limitaciones de procesamiento del microcontrolador. Sin embargo, fueron descartadas debido a dos inconvenientes.
 
 \begin{figure}[H]
     \centering
@@ -571,7 +573,7 @@ La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una
 
 Por un lado, las dos requieren que la imagen abarque el rostro completo. \emph{MediaPipe} identifica puntos de referencia en toda la cara. \emph{WebGazer}, si bien está diseñado específicamente para estimar la mirada, ubica los ojos mediante el detector facial de \emph{MediaPipe}. En consecuencia, en ambos casos los ojos ocupan una cantidad reducida de píxeles. Para medir con precisión sus variaciones, se requiere una mayor resolución de imagen.
 
-Esta mayor resolución puede obtenerse de dos formas. La primera es aumentar la resolución de captura del \emph{ESP32-CAM}, lo que implica un mayor tráfico de imágenes entre el microcontrolador y el dispositivo cliente. La segunda es derivar la captura a la cámara integrada del dispositivo cliente. Sin embargo, esto comprometería la versatilidad, un requisito vital del dispositivo final. Cada equipo cliente posee una cámara con propiedades distintas, cuya resolución, ubicación, distancia focal e inclinación varían drásticamente. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial. Un dispositivo universal, que mantiene siempre su propia cámara en una posición fija respecto al ojo, evita por completo este problema.
+Esta mayor resolución puede obtenerse de dos formas. La primera es aumentar la resolución de captura del \emph{ESP32-CAM}, lo que implica un mayor tráfico de imágenes entre el microcontrolador y el dispositivo cliente. La segunda es derivar la captura a la cámara integrada del dispositivo cliente. Sin embargo, esto haría que la detección dependiera del equipo utilizado. Cada equipo cliente posee una cámara con propiedades distintas, cuya resolución, ubicación, distancia focal e inclinación varían de un modelo a otro. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial. Un dispositivo propio, que mantiene siempre su cámara en una posición fija respecto al ojo, evita este problema.
 
 Por otro lado, durante las pruebas, el cursor que indicaba en pantalla la posición estimada de la mirada vibraba de forma constante. Estas vibraciones se debían a los micromovimientos naturales del ojo. Como resultado, el seguimiento no resultaba estable.
 
@@ -579,9 +581,9 @@ Por estos motivos empíricos y de diseño, se decidió prescindir definitivament
 
 \subsubsection{OpenCV y Transformada de Hough}
 
-Tras descartar las redes neuronales, se evaluó \emph{OpenCV}, la biblioteca de visión computacional descrita en el capítulo 2. A diferencia de \emph{MediaPipe} y \emph{WebGazer}, sus funciones pueden aplicarse directamente sobre una imagen del ojo sin necesidad de detectar el rostro completo. Por este motivo, se perfiló como una alternativa sumamente viable para este trabajo.
+Tras descartar las redes neuronales, se evaluó \emph{OpenCV}, la biblioteca de visión por computadora descrita en el capítulo~\ref{Chapter2}. A diferencia de \emph{MediaPipe} y \emph{WebGazer}, sus funciones pueden aplicarse directamente sobre una imagen del ojo sin necesidad de detectar el rostro completo. Por este motivo, se perfiló como una alternativa viable para este trabajo.
 
-Las pruebas de este método se realizaron con un script de Python ejecutado en una computadora, que procesaba las imágenes capturadas por el \emph{ESP32-CAM}. Este script funcionaba como prototipo. En caso de obtener buenos resultados, el detector se iba a trasladar a \emph{OpenCV.js}, la versión de la biblioteca para navegadores web, que se ejecutaría en el dispositivo del usuario.
+Las pruebas de este método se realizaron con un \emph{script} de \emph{Python} ejecutado en una computadora, que procesaba las imágenes capturadas por el \emph{ESP32-CAM}. Este \emph{script} funcionaba como prototipo. En caso de obtener buenos resultados, el detector se iba a trasladar a \emph{OpenCV.js}, la versión de la biblioteca para navegadores web, que se ejecutaría en el dispositivo del usuario.
 
 Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complementarlo con la Transformada de Hough, un método clásico de extracción de características en el análisis de imágenes digitales. Su variante para círculos, conocida como \emph{HoughCircles} en \emph{OpenCV}, analiza los bordes detectados en un fotograma mediante un sistema matemático de votación. El algoritmo busca conjuntos de píxeles que compartan una curvatura y se encuentren a una distancia constante (el radio) de un posible punto central. Si suficientes píxeles votan por el mismo centro, el algoritmo confirma la existencia de un círculo en esa región. En este contexto, el círculo corresponde al iris del ojo, y las coordenadas de la pupila se obtienen al calcular la ubicación del centro de dicho círculo.
 
@@ -613,24 +615,25 @@ Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (prepr
     \label{fig:hough}
 \end{figure}
 
-Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica y sumamente indeseable.
+Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica para el alumno.
 
 Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
 
-Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real (Fig. \ref{fig:houghfalso}), por lo que esta solución queda definitivamente descartada.
+Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real (Fig. \ref{fig:houghfalso}), por lo que esta solución se descartó.
 
 
-\subsubsection{Conclusión de la detección por coordenadas}
+\subsubsection{Conclusión del procesamiento remoto por coordenadas}
 
 Ninguno de los dos métodos alcanzó un resultado satisfactorio. \emph{MediaPipe} y \emph{WebGazer} requerían una mayor resolución de imagen, que no podía obtenerse sin comprometer el diseño del dispositivo, y su estimación de la mirada resultaba inestable. Con \emph{OpenCV} y la Transformada de Hough no se logró detectar el iris con precisión, ya que la oclusión de los párpados y los falsos positivos presentaban un compromiso que no pudo resolverse.
 
-Las dos alternativas compartían un mismo enfoque, que consistía en detectar coordenadas espaciales específicas del ojo. Por este motivo, se tomó una decisión radical en el desarrollo de este trabajo. Se dejó atrás la detección de coordenadas y se pasó a identificar patrones de orientación de la mirada. Este cambio busca simplificar el detector y eliminar las causas de error encontradas en los métodos anteriores. El objetivo es lograr un algoritmo independiente de la luz ambiental, de la resolución de la cámara, del nivel de oscuridad de los elementos del rostro y de las variaciones en la forma del ojo. Esta estrategia se describe en la siguiente subsección.
+Las dos alternativas compartían un mismo enfoque, que consistía en detectar coordenadas espaciales específicas del ojo. Por este motivo, se cambió el enfoque del detector. Se dejó atrás la detección de coordenadas y se pasó a identificar patrones de orientación de la mirada. Este cambio busca simplificar el detector y eliminar las causas de error encontradas en los métodos anteriores. El objetivo es lograr un algoritmo independiente de la luz ambiental, de la resolución de la cámara, del nivel de oscuridad de los elementos del rostro y de las variaciones en la forma del ojo. Esta estrategia se describe en la siguiente subsección.
 
 \subsection{Template Matching como solución adoptada}
+\label{sec:template_matching}
 
-Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo 2. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo. Se implementa nuevamente el LED IR, para resaltar el contraste y eliminar sombras indeseadas.
+Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo~\ref{Chapter2}. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo.
 
-Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas, garantiza una iluminación uniforme y mejora notablemente el contraste de la imagen.
+Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas, garantiza una iluminación uniforme y mejora el contraste de la imagen.
 
 El algoritmo se ejecuta en el navegador del dispositivo cliente mediante \emph{OpenCV.js}. De esta forma, el detector no requiere instalar ninguna aplicación adicional en el equipo del usuario.
 
@@ -667,7 +670,8 @@ Cada plantilla se guarda con una resolución de 96x96 píxeles en escala de gris
 
 \subsubsection{Preprocesamiento de fotogramas}
 
-Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color. Esta configuración se debe a motivos técnicos y de rendimiento que se detallarán mas adelante. Se eligió transmitir la imagen como JPEG, ya que es el único formato que puede recibir un navegador. 
+%Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color. Esta configuración se debe a motivos técnicos y de rendimiento que se detallarán mas adelante. Se eligió transmitir la imagen como JPEG, ya que es el único formato que puede recibir un navegador. 
+Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo real con una resolución de 320x240 píxeles (\emph{QVGA}), en color, y comprime cada fotograma en formato JPEG. Los motivos de esta configuración se detallan en la sección \ref{sec:transmision_video}.
 
 %En primer lugar, se transmite a color porque el codificador JPEG de la cámara requiere este formato para funcionar. Una imagen comprimida de este tipo resulta significativamente más liviana que una transmisión de píxeles crudos en escala de grises, lo que evita saturar el ancho de banda y mantiene una tasa fluida de fotogramas. Además, incluso si se transmitiera en escala de grises, el navegador web del cliente fuerza internamente la decodificación de las imágenes a un formato RGBA de 4 canales, por lo que este formato es imprescindible para transmitir.
 
@@ -686,11 +690,11 @@ Antes de la comparación, cada fotograma se acondiciona. Primero se recorta inte
 
 \subsubsection{Comparación de plantillas}
 
-Cada fotograma acondicionado se compara con las seis plantillas mediante el \emph{coeficiente de correlación normalizado con media cero}, descrito en el capítulo 2.
+Cada fotograma acondicionado se compara con las seis plantillas mediante el \emph{coeficiente de correlación normalizado con media cero}, descrito en el capítulo~\ref{Chapter2}.
 
 Como se observa en el numerador de la fórmula, a cada píxel se le resta el valor promedio de su matriz. Por este motivo, el coeficiente recibe el nombre de media cero. Así, la fórmula no evalúa la intensidad lumínica absoluta de cada píxel, sino cuánto se diferencia del promedio de la imagen. Por ejemplo, si el rostro del alumno se ilumina de forma repentina por una fuente externa, todos los píxeles aumentan su valor, pero la diferencia relativa entre ellos se mantiene. De esta forma, el método resulta inmune a las variaciones uniformes de la iluminación ambiental.
 
-La plantilla mide 96x96 píxeles y el fotograma 128x128, aunque en ambos casos el ojo tiene el mismo tamaño. Esta diferencia permite que la plantilla recorra el fotograma mediante el barrido explicado en el capítulo 2, en lugar de compararse en una única posición.
+La plantilla mide 96x96 píxeles y el fotograma 128x128, aunque en ambos casos el ojo tiene el mismo tamaño. Esta diferencia permite que la plantilla recorra el fotograma mediante el barrido explicado en el capítulo~\ref{Chapter2}, en lugar de compararse en una única posición.
 
 El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si la comparación se realizara en un solo punto de 96x96, un desplazamiento mínimo del dispositivo, incluso de un milímetro, desalinearía las matrices y haría fallar el cálculo. Al recorrer todo el fotograma, el método obtiene un margen para compensar estas variaciones involuntarias. Así, el sistema tolera los pequeños movimientos de la cabeza del alumno.
 
@@ -729,7 +733,7 @@ La función del módulo de captura es obtener imágenes del ojo del alumno en ti
 
 \subsubsection{Módulo central}
 
-El módulo central coordina el funcionamiento de todo el sistema. En primer lugar, genera la red Wi-Fi local a la que se conectan los demás elementos. Así, el conjunto funciona sin acceso a internet. En segundo lugar, actúa como servidor. Entrega las páginas de aplicación web y la biblioteca \emph{OpenCV.js} a cada dispositivo que las solicita y responde a sus pedidos de información.
+El módulo central coordina el funcionamiento de todo el sistema. En primer lugar, genera la red Wi-Fi local a la que se conectan los demás elementos. Así, el conjunto funciona sin acceso a internet. En segundo lugar, actúa como servidor. Entrega las páginas de la aplicación web y la biblioteca \emph{OpenCV.js} a cada dispositivo que las solicita y responde a sus pedidos de información.
 
 Además, funciona como el núcleo de datos del sistema. Se encarga de autenticar a profesores y tutores, controlar las funciones disponibles para cada rol y administrar los cuestionarios. Durante las evaluaciones, recibe y registra las respuestas del alumno en una base de datos local. De esta forma, toda la información queda unificada en un único lugar, al cual los distintos usuarios acceden desde sus dispositivos.
 
@@ -737,7 +741,7 @@ Por último, el módulo central cuenta con una interfaz propia en su pantalla t�
 
 \subsubsection{Dispositivos cliente}
 
-Los dispositivos cliente son la vía de acceso de los usuarios al sistema. Cualquier equipo con navegador web puede cumplir esta función, sin instalar software adicional. Todos utilizan la misma aplicación web, pero la función de cada dispositivo depende de quien lo opere.
+Los dispositivos cliente son la vía de acceso de los usuarios al sistema. Cualquier equipo con navegador web puede cumplir esta función, sin instalar \emph{software} adicional. Todos utilizan la misma aplicación web, pero la función de cada dispositivo depende de quien lo opere.
 
 Desde estos dispositivos, los profesores y tutores gestionan los cuestionarios y realizan el seguimiento de los resultados del alumno, según los permisos de cada rol. Además, cada uno puede editar sus datos personales. Los profesores, a su vez, acceden a los datos de contacto de los tutores, mientras que los tutores consultan los de los profesores.
 
@@ -755,9 +759,10 @@ Los datos del sistema, en cambio, son procesados por el módulo central. Al cone
 
 Durante un examen, este intercambio ocurre de forma continua. El alumno confirma cada respuesta con un parpadeo y su dispositivo la envía en ese momento al módulo central. Este la registra en la base de datos y actualiza el progreso del examen.
 
-Las preguntas de los compañeros también pasan por el módulo central, pero no se guardan en la base de datos.  En lugar de eso, se conservan temporalmente en la memoria de trabajo y se entregan al dispositivo del alumno.
+Las preguntas de los compañeros también pasan por el módulo central, pero no se guardan en la base de datos. En lugar de eso, se conservan temporalmente en la memoria de trabajo y se entregan al dispositivo del alumno.
 
 \subsection{Mapa de memoria}
+\label{sec:mapa_memoria}
 
 %El módulo central, basado en un microcontrolador de la familia \emph{ESP32}, dispone de cuatro memorias con características distintas (Fig. \ref{fig:mapa_memoria}). La memoria flash retiene su contenido sin alimentación, pero su acceso es lento y su capacidad es reducida. La SRAM interna es rápida, aunque también tiene un tamaño limitado y se borra al apagar el equipo. La PSRAM es una memoria externa al chip, más lenta que la SRAM interna pero de mayor capacidad, y también se borra al apagar el equipo. La tarjeta microSD ofrece un espacio mucho mayor y tampoco pierde los datos. La ubicación de cada tipo de información responde a tres criterios. El primero es si debe conservarse al apagar el equipo. El segundo es con qué frecuencia cambia. El tercero es cuánto espacio ocupa.
 
@@ -822,13 +827,13 @@ La tarjeta microSD no pierde los datos ante la ausencia de alimentación y ofrec
 
 Tanto el módulo de captura como el módulo central se implementan con una placa de desarrollo basada en un microcontrolador. La elección de estas placas responde a las restricciones del proyecto, que exigían que fueran económicas y fáciles de conseguir. Además, ambas necesitaban conectividad Wi-Fi, ya que toda la comunicación del sistema ocurre de forma inalámbrica. El módulo de captura requería, a su vez, una interfaz física para conectar y manipular una cámara.
 
-En esta sección se justifica la elección de la familia \emph{ESP32} frente a otras alternativas del mercado. Luego se describen las placas utilizadas en cada módulo. Para el módulo de captura se detalla también la elección de la cámara. Para el módulo central se consideró, además, que debía contar con una ranura para tarjeta microSD y con una pantalla táctil integrada.
+En esta sección se justifica la elección de la familia \emph{ESP32} frente a otras alternativas del mercado. Luego se describen las placas utilizadas en cada módulo. Para el módulo de captura se detalla también la elección de la cámara. Para el módulo central se requería, además, una ranura para tarjeta microSD, y se optó por una placa con pantalla táctil integrada.
 
 \subsection{Elección de la familia ESP32}
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo 2. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo~\ref{Chapter2}. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
 
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
@@ -887,21 +892,21 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
 
 \subsubsection{Cámara}
 
-Para seleccionar la cámara se tuvieron en cuenta dos criterios principales. Por un lado, se requería una resolución que permitiera trabajar con imágenes de 320x240 píxeles. Por otro lado, debía tener un campo de visión dentro del rango de entre 60 y 120 grados establecido con anterioridad. Para ello se contaba con múltiples posibilidades, entre ellas, la cámara que se adquiría junto a la compra de la \emph{ESP32-CAM}, que contaba con una resolución de 2 megapíxeles y un ángulo de visión de 68°.
+Para seleccionar la cámara se tuvieron en cuenta dos criterios principales. Por un lado, se requería una resolución que permitiera trabajar con imágenes de 320x240 píxeles. Por otro lado, debía tener un campo de visión dentro del rango de entre 60 y 120 grados establecido con anterioridad. Para ello se contaba con múltiples posibilidades, entre ellas, la cámara que se adquiría junto a la compra del \emph{ESP32-CAM}, que contaba con una resolución de 2 megapíxeles y un ángulo de visión de 68°.
 
-Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Sin embargo, adquirir cualquiera de estos modelos implicaría un costo adicional que las pequeñas ventajas expuestas no logran compensar. Por lo tanto, se concluye que el uso del modelo incluido por defecto resulta suficiente, siendo únicamente necesario retirarle el filtro infrarrojo de fábrica para que logre registrar la luz del LED IR.
+Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Sin embargo, adquirir cualquiera de estos modelos implicaba un costo adicional que las pequeñas ventajas expuestas no lograban compensar. Por lo tanto, se concluyó que el uso del modelo incluido por defecto resultaba suficiente. Solo fue necesario retirarle el filtro infrarrojo de fábrica para que lograra registrar la luz del LED IR.
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.3\textwidth]{figuras/ov2640.png}
-    \caption{Cámaras OV2640 con distintos ángulos de visión y longitud de conector}
+    \caption{Cámaras \emph{OV2640} con distintos ángulos de visión y longitud de conector}
     \label{fig:ov2640}
 \end{figure}
 
 \subsubsection{Conexión de la cámara}
 
-La cámara \emph{OV2640} se conecta a la placa \emph{ESP32-CAM} mediante un conector \emph{flex} de 24 pines (Fig. \ref{fig:conexion_camara}). Por este conector, el microcontrolador y la cámara se comunican por dos vías, una interfaz paralela de 8 bits para los datos de cada imagen y el bus SCCB para la configuración. Como la cámara incorpora un codificador JPEG por hardware, puede entregar las imágenes ya comprimidas.
+La cámara \emph{OV2640} se conecta a la placa \emph{ESP32-CAM} mediante un conector \emph{flex} de 24 pines (Fig. \ref{fig:conexion_camara}). Por este conector, el microcontrolador y la cámara se comunican por dos vías, una interfaz paralela de 8 bits para los datos de cada imagen y el bus SCCB para la configuración. Como la cámara incorpora un codificador JPEG por \emph{hardware}, puede entregar las imágenes ya comprimidas.
 
 El \emph{ESP32} no cuenta con una interfaz de cámara dedicada. Por este motivo, la lectura de los datos la realiza su periférico I2S, que admite un modo de entrada paralela. Este periférico guarda cada fotograma en la PSRAM mediante acceso directo a memoria (DMA), es decir, sin intervención del procesador. La siguiente tabla describe las señales que intervienen.
 
@@ -1065,13 +1070,14 @@ La Fig. \ref{fig:conexiones_onx} reúne las conexiones de la pantalla, del panel
 \end{figure}
 
 \section{Red y comunicación}
+\label{sec:red}
 
 En esta sección se describe la infraestructura de comunicación del sistema. Primero se presenta la red Wi-Fi local que genera el módulo central y la forma en que los usuarios acceden a la aplicación. Luego se detalla la transmisión del video desde el módulo de captura. Por último, se explica cómo se comunican los dispositivos cliente con el módulo central.
 
 \subsection{Red Wi-Fi local}
 \label{sec:red_wifi}
 
-El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (SoftAP) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen hasta tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
+El módulo central genera una red Wi-Fi propia mediante el modo punto de acceso (\emph{SoftAP}) del \emph{ESP32}. La red se identifica con el nombre LEVI y está protegida con contraseña. Opera en la banda de 2,4 GHz, la única que admite el \emph{ESP32}, sobre el canal 1. Además, acepta hasta cuatro clientes conectados en simultáneo. Si bien el \emph{ESP32} permite más conexiones, cada dispositivo conectado ocupa parte de su memoria, que es acotada. Por este motivo, se fijó este límite. Durante el uso del sistema intervienen hasta tres de ellos, que son el módulo de captura, el dispositivo del alumno y el de un usuario externo. El cuarto lugar funciona como margen, en caso de que se conecte un equipo adicional a la red.
 
 Dentro de esta red, el módulo central ocupa la dirección 192.168.4.1, que funciona además como puerta de enlace (Fig. \ref{fig:red_wifi}). El módulo de captura, en cambio, utiliza una dirección IP estática, la 192.168.4.50. Así, el dispositivo del alumno siempre encuentra el video en la misma ubicación. Los dispositivos cliente, por su parte, reciben una dirección de forma dinámica al conectarse. El módulo central asigna estas direcciones en orden creciente, a partir de la 192.168.4.2. En consecuencia, para la cámara se eligió un valor alejado del inicio. Como la red tolera como máximo cuatro conexiones, resulta prácticamente imposible que la asignación dinámica alcance esa dirección y que dos equipos compartan la misma.
 
@@ -1086,15 +1092,15 @@ Ambas placas utilizan un archivo de configuración con los mismos parámetros de
 
 Una vez establecida la red, el módulo central supervisa su estado. Por un lado, registra la cantidad de dispositivos conectados a partir de la tabla de clientes que mantiene el punto de acceso. Cuando un celular o una computadora abandona la red, envía un aviso de desconexión y el punto de acceso lo quita de la tabla de inmediato. En cambio, si un equipo deja de responder sin avisar, permanece en la tabla hasta que transcurren cinco minutos sin actividad. Esta situación se da cuando un dispositivo sale del área de cobertura o se apaga de forma repentina.
 
-Por otro lado, el módulo de captura se encuentra en este último caso cada vez que se apaga, ya que no se desconecta de la red antes de hacerlo. Si solo se consultara la tabla, la cámara seguiría figurando como conectada durante varios minutos. Por este motivo, su estado se verifica de forma independiente. Mientras la pantalla está encendida, el módulo central envía un mensaje de eco (\emph{ping}) a la dirección de la cámara cada dos segundos. Si no obtiene respuesta en 500 milisegundos, la considera desconectada. Así, el sistema conoce su estado prácticamente en tiempo real. Para los demás dispositivos esta verificación no resulta necesaria, ya que normalmente se desconectan de forma explícita. La pantalla táctil utiliza ambos datos para informar el estado del sistema.
+Por otro lado, el módulo de captura se encuentra en este último caso cada vez que se apaga, ya que no se desconecta de la red antes de hacerlo. Si solo se consultara la tabla, la cámara figuraría como conectada durante varios minutos. Por este motivo, su estado se verifica de forma independiente. Mientras la pantalla está encendida, el módulo central envía un mensaje de eco (\emph{ping}) a la dirección de la cámara cada dos segundos. Si no obtiene respuesta en 500 milisegundos, la considera desconectada. Así, el sistema conoce su estado prácticamente en tiempo real. Para los demás dispositivos esta verificación no resulta necesaria, ya que normalmente se desconectan de forma explícita. La pantalla táctil utiliza ambos datos para informar el estado del sistema.
 
 \subsection{Acceso a la aplicación}
 
 Para utilizar el sistema, el usuario conecta su dispositivo a la red LEVI y luego ingresa a la aplicación web desde su navegador.
 
-El módulo central publica el nombre levi.local mediante mDNS, descrito en el capítulo 2. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene (Fig. \ref{fig:red_wifi}). Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a levi.local. De esta forma se mantiene una única dirección de acceso.
+El módulo central publica el nombre \texttt{levi.local} mediante mDNS, descrito en el capítulo~\ref{Chapter2}. Así, se accede a la aplicación al escribir ese nombre en la barra de direcciones o al escanear un código QR que lo contiene (Fig. \ref{fig:red_wifi}). Si un usuario ingresa con la dirección IP, el servidor lo redirige automáticamente a \texttt{levi.local}. De esta forma se mantiene una única dirección de acceso.
 
-En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única (\emph{Single Page Application}). Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con el archivo \emph{index.html}.
+En el primer acceso, el navegador obtiene los archivos de la aplicación desde el \emph{Filesystem} de la memoria flash del módulo central. La aplicación funciona como una página única (\emph{Single Page Application}). Por lo tanto, se transfiere una sola vez y, a partir de ese momento, cambia de pantalla sin pedir nuevas páginas al servidor. Si se solicita una ruta que no corresponde a ningún archivo, el servidor responde con el archivo \texttt{index.html}.
 
 El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que el módulo central entrega desde la tarjeta microSD. Debido a su tamaño, es el archivo más pesado que transmite el sistema. Por este motivo, el navegador lo guarda en su almacenamiento, de modo que en los accesos siguientes no vuelve a solicitarlo.
 
@@ -1107,12 +1113,13 @@ El dispositivo del alumno descarga además la biblioteca \emph{OpenCV.js}, que e
 %\end{figure}
 
 \subsection{Transmisión de video}
+\label{sec:transmision_video}
 
-El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo 2. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno (Fig. \ref{fig:transmision_video}).
+El módulo de captura transmite el video mediante la técnica MJPEG, detallada en el capítulo~\ref{Chapter2}. Se optó por esta técnica porque el navegador la reproduce de forma nativa, sin bibliotecas ni código adicional. Para implementarla, el módulo ejecuta un servidor HTTP propio, independiente del que funciona en el módulo central. Este servidor atiende las solicitudes en el puerto 80 de la dirección fija del módulo de captura, en la ruta /stream, y entrega un único flujo de video a la vez, que corresponde al dispositivo del alumno (Fig. \ref{fig:transmision_video}).
 
-La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Para esto se utiliza su codificador por hardware, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró la calidad en un nivel intermedio, lo que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
+La cámara opera con una señal de reloj de 16 MHz y toma cada fotograma con una resolución de 320x240 píxeles. Luego lo comprime en formato JPEG antes de enviarlo. Se eligió este formato porque es el único que coincide entre los que entrega la cámara y los que puede mostrar el navegador. Para esto se utiliza su codificador por \emph{hardware}, por lo que la compresión no consume recursos del microcontrolador. Además, se configuró la calidad en un nivel intermedio, lo que reduce el tamaño de cada imagen sin perder los detalles del ojo necesarios para la detección. La captura ocurre de forma continua y los fotogramas se guardan en la PSRAM, donde siempre se conserva el más reciente. Junto con cada fotograma, el módulo indica su tamaño, lo que permite al navegador reconocer dónde termina uno y comienza el siguiente.
 
-La resolución de 320x240 píxeles (QVGA) es uno de los tamaños predefinidos de la cámara. Una resolución mayor generaría fotogramas más pesados, que ocuparían más la red y reducirían la cantidad de imágenes por segundo. Una menor, en cambio, perdería la nitidez necesaria para reconocer la pupila. Por otro lado, las imágenes se transmiten en color porque el codificador JPEG de la cámara siempre genera este formato. Además, en una imagen JPEG la información de color ocupa poco espacio en comparación con la de brillo, por lo que la escala de grises reduciría apenas el uso de la red. Utilizar un tamaño de imagen no predefinido o un JPEG en escala de grises obligaría a procesar y volver a comprimir cada fotograma por software, lo que consumiría los recursos del microcontrolador y haría más lenta la transmisión. 
+La resolución de 320x240 píxeles (QVGA) es uno de los tamaños predefinidos de la cámara. Una resolución mayor generaría fotogramas más pesados, que ocuparían más la red y reducirían la cantidad de imágenes por segundo. Una menor, en cambio, perdería la nitidez necesaria para reconocer la pupila. Por otro lado, las imágenes se transmiten en color porque el codificador JPEG de la cámara siempre genera este formato. Además, en una imagen JPEG la información de color ocupa poco espacio en comparación con la de brillo, por lo que la escala de grises reduciría apenas el uso de la red. Utilizar un tamaño de imagen no predefinido o un JPEG en escala de grises obligaría a procesar y volver a comprimir cada fotograma por \emph{software}, lo que consumiría los recursos del microcontrolador y haría más lenta la transmisión. 
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Al recibir la solicitud, el servidor enciende el LED infrarrojo y descarta los tres primeros fotogramas, que pueden estar desactualizados o tener la exposición sin ajustar. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía el fotograma más reciente de manera continua, con un máximo de 20 por segundo. Como la aplicación procesa 15 por segundo, siempre dispone de uno nuevo. Fuera de esas etapas, la aplicación cierra la conexión, la cámara deja de transmitir y el LED se apaga. Así, no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo o fallan diez capturas seguidas, la transmisión también se detiene hasta recibir una nueva solicitud.
 
@@ -1126,7 +1133,7 @@ La aplicación web solicita el video únicamente durante la calibración y el ex
 \subsection{Comunicación con el módulo central}
 \label{sec:comunicacion_central}
 
-Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación (Fig. \ref{fig:comunicacion_central}). La información viaja en formato JSON, descrito en el capítulo 2. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
+Los dispositivos cliente se comunican con el módulo central mediante peticiones HTTP, a través de la red local. El servidor web del módulo central las atiende en el puerto 80, el estándar de este protocolo. Las peticiones de datos se dirigen a rutas que comienzan con /api/, mientras que el resto corresponde a los archivos de la aplicación (Fig. \ref{fig:comunicacion_central}). La información viaja en formato JSON, descrito en el capítulo~\ref{Chapter2}. El servidor procesa las peticiones de forma asíncrona, por lo que puede atender a varios dispositivos sin bloquearse.
 
 %La comunicación siempre se inicia desde los dispositivos cliente. Esto se debe a que HTTP opera bajo el modelo cliente-servidor presentado en el capítulo 2, en el que el cliente es quien inicia cada intercambio. El módulo central solo puede enviar información como respuesta a una solicitud, y no por iniciativa propia. Por este motivo, los dispositivos consultan al servidor de manera periódica para mantenerse actualizados.
 
@@ -1134,7 +1141,7 @@ En HTTP, cada intercambio comienza con una petición del cliente, y el servidor 
 
 %El dispositivo del alumno realiza una consulta cada dos segundos mientras espera o realiza un cuestionario. En ella informa que sigue activo y obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Los dispositivos de los profesores y los tutores, por su parte, envían cada cinco segundos un aviso similar, denominado \emph{heartbeat}, que indica que su sesión continúa activa. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
 
-El dispositivo del alumno realiza una consulta cada dos segundos mientras se encuentra en la pantalla de examen y esta permanece visible. En ella obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Además, todos los dispositivos con una sesión abierta envían un aviso periódico, denominado \emph{heartbeat}, que indica que la sesión continúa activa. El del alumno se envía cada cinco segundos, y el de profesores, tutores e invitados, cada diez. Este último informa también si el usuario utilizó la pantalla desde el aviso anterior. El uso de estos avisos en la gestión de las sesiones se describe en la sección del \emph{backend}.
+El dispositivo del alumno realiza una consulta cada dos segundos mientras se encuentra en la pantalla de examen y esta permanece visible. En ella obtiene la situación actual, como la pregunta del examen en curso o la pregunta enviada por un invitado. Además, todos los dispositivos con una sesión abierta envían un aviso periódico, denominado \emph{heartbeat}, que indica que la sesión continúa activa. El del alumno se envía cada cinco segundos, y el de profesores, tutores e invitados, cada diez. Este último informa también si el usuario utilizó la pantalla desde el aviso anterior. El uso de estos avisos en la gestión de las sesiones se describe en la sección \ref{sec:backend}.
 
 \begin{figure}[H]
     \centering
@@ -1146,7 +1153,7 @@ El dispositivo del alumno realiza una consulta cada dos segundos mientras se enc
 \section{Aplicación web}
 \label{sec:aplicacion_web}
 
-La aplicación web reúne todo el software que permite a los usuarios interactuar con el sistema. Se organiza en tres capas, que son la base de datos, el \emph{backend} y el \emph{frontend}. Las dos primeras se ejecutan en el módulo central. El \emph{backend} forma parte del \emph{firmware}, escrito en C++, y la base de datos es un archivo \emph{SQLite} ubicado en la tarjeta microSD, que el propio \emph{firmware} lee y escribe. El \emph{frontend}, en cambio, funciona en el navegador de cada dispositivo cliente.
+La aplicación web reúne todo el \emph{software} que permite a los usuarios interactuar con el sistema. Se organiza en tres capas, que son la base de datos, el \emph{backend} y el \emph{frontend}. Las dos primeras se ejecutan en el módulo central. El \emph{backend} forma parte del \emph{firmware}, escrito en C++, y la base de datos es un archivo \emph{SQLite} ubicado en la tarjeta microSD, que el propio \emph{firmware} lee y escribe. El \emph{frontend}, en cambio, funciona en el navegador de cada dispositivo cliente.
 
 \begin{table}[H]
     \centering
@@ -1158,9 +1165,9 @@ La aplicación web reúne todo el software que permite a los usuarios interactua
         \hline
         \emph{Base de datos} & En Módulo Central & Tarjeta SD & Archivo .db & SQL & Almacenamiento de datos persistente \\
         \hline
-        \emph{Backend} & En Módulo Central & Firmware del Módulo Central & Programa en C++ & C++ & Interconecta \emph{Frontend} con \emph{Base de datos} aplicando la lógica de negocio \\
+        \emph{Backend} & En Módulo Central & \emph{Firmware} del Módulo Central & Programa en C++ & C++ & Interconecta el \emph{frontend} con la base de datos y aplica la lógica de negocio \\
         \hline
-        \emph{Frontend} & En el dispositivo cliente & En el Módulo Central, pero se transmite al navegador & Programa empaquetado & HTML, CSS y JavaScript & Ejecuta la interfaz de usuario \\
+        \emph{Frontend} & En el dispositivo cliente & En el Módulo Central, pero se transmite al navegador & Programa empaquetado & HTML, CSS y \emph{JavaScript} & Ejecuta la interfaz de usuario \\
         \hline
     \end{tabular}
 \end{table}
@@ -1174,7 +1181,7 @@ La base de datos almacena de forma permanente la información del sistema, que i
 
 \subsubsection{Creación y configuración}
 
-La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo 2. Se lo eligió porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \emph{levi.db}, ubicado en la tarjeta microSD.
+La base de datos del sistema utiliza \emph{SQLite}, el motor embebido presentado en el capítulo~\ref{Chapter2}. Se lo eligió porque no requiere un servidor independiente y funciona con los recursos acotados del módulo central. Toda la información se guarda en un único archivo, \texttt{levi.db}, ubicado en la tarjeta microSD.
 
 La estructura de la base se diseñó en una computadora mediante la herramienta \emph{DB Browser for SQLite} (Fig. \ref{fig:dbbrowser}). Allí se definieron las tablas, sus campos, las relaciones, las restricciones y los índices. Luego, el archivo resultante se exportó y se copió a la tarjeta microSD. De esta forma, el \emph{firmware} no necesita crear esta estructura al iniciar, sino que abre directamente el archivo existente.
 
@@ -1182,13 +1189,15 @@ Los índices se definieron sobre las columnas que el sistema consulta con mayor 
 
 \begin{itemize}
 
-\item Opciones por pregunta (\emph{idx\_opciones\_idPregunta}): permite obtener las opciones de una pregunta, como por ejemplo al mostrarla al alumno.
+\item Opciones por pregunta (\texttt{idx\_opciones\_idPregunta}): permite obtener las opciones de una pregunta, como por ejemplo al mostrarla al alumno.
 
-\item Preguntas por cuestionario (\emph{idx\_preguntas\_idCuestionario}): permite obtener las preguntas de un cuestionario, como por ejemplo al buscar la siguiente sin responder durante el examen.
+\item Preguntas por cuestionario (\texttt{idx\_preguntas\_idCuestionario}): permite obtener las preguntas de un cuestionario, como por ejemplo al buscar la siguiente sin responder durante el examen.
 
-\item Opción correcta y opción elegida (\emph{idx\_preguntas\_idOpcionCorrecta} e \emph{idx\_preguntas\_id-}\emph{OpcionElegida}): permiten encontrar las preguntas que hacen referencia a una opción cuando esta se elimina.
+\item Opción correcta (\texttt{idx\_preguntas\_idOpcionCorrecta}): permite encontrar las preguntas cuya respuesta correcta es una opción determinada. Se utiliza cuando esa opción se elimina, para dejar vacía la referencia en la pregunta.
 
-\item Cuestionario en progreso (\emph{idx\_cuestionarios\_en\_progreso}): es un índice parcial que contiene solo el cuestionario en curso, que el sistema busca en cada consulta periódica del dispositivo del alumno.
+\item Opción elegida (\texttt{idx\_preguntas\_idOpcionElegida}): permite encontrar las preguntas en las que el alumno eligió una opción determinada. Al igual que el anterior, se utiliza cuando esa opción se elimina.
+
+\item Cuestionario en progreso (\texttt{idx\_cuestionarios\_en\_progreso}): es un índice parcial que contiene solo el cuestionario en curso, que el sistema busca en cada consulta periódica del dispositivo del alumno.
 
 \end{itemize}
 
@@ -1196,15 +1205,15 @@ Al abrir la base, el \emph{firmware} ajusta algunas opciones de funcionamiento d
 
 \begin{itemize}
 
-\item Claves foráneas (\emph{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
+\item Claves foráneas (\texttt{foreign\_keys}): se activa su verificación, que \emph{SQLite} deshabilita por defecto. Así se garantiza que las relaciones entre tablas se respeten.
 
-\item Registro de transacciones (\emph{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, y al finalizar cada una solo borra su encabezado, en lugar de eliminar el archivo y crearlo de nuevo. En el sistema de archivos de la microSD, crear y borrar archivos es lento, por lo que esta opción reduce el tiempo de cada escritura.
+\item Registro de transacciones (\texttt{journal\_mode}): \emph{SQLite} conserva el archivo de registro de cambios entre una transacción y otra, y al finalizar cada una solo borra su encabezado, en lugar de eliminar el archivo y crearlo de nuevo. En el sistema de archivos de la microSD, crear y borrar archivos es lento, por lo que esta opción reduce el tiempo de cada escritura.
 
-\item Sincronización (\emph{synchronous}): se emplea el nivel máximo, en el que \emph{SQLite} espera a que la tarjeta confirme cada escritura. Como el dispositivo puede desconectarse en cualquier momento, esto reduce el riesgo de que la base se dañe ante un corte de energía. Dado que cada operación se guarda en una única transacción, el costo en velocidad es bajo.
+\item Sincronización (\texttt{synchronous}): se emplea el nivel máximo, en el que \emph{SQLite} espera a que la tarjeta confirme cada escritura. Como el dispositivo puede desconectarse en cualquier momento, esto reduce el riesgo de que la base se dañe ante un corte de energía. Dado que cada operación se guarda en una única transacción, el costo en velocidad es bajo.
 
-\item Tamaño de la caché (\emph{cache\_size}): se fija en 512 KB, ubicados en la PSRAM. Así queda margen para el crecimiento de la base sin ocupar la RAM interna.
+\item Tamaño de la caché (\texttt{cache\_size}): se fija en 512 KB, ubicados en la PSRAM. Así queda margen para el crecimiento de la base sin ocupar la RAM interna.
 
-\item Almacenamiento temporal (\emph{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas, por ejemplo al ordenar un listado, se guardan en memoria y no en la tarjeta, lo que acelera esas operaciones.
+\item Almacenamiento temporal (\texttt{temp\_store}): los datos intermedios que \emph{SQLite} genera durante las consultas, por ejemplo al ordenar un listado, se guardan en memoria y no en la tarjeta, lo que acelera esas operaciones.
 
 \end{itemize}
 
@@ -1297,7 +1306,7 @@ El estado de un cuestionario solo puede tomar uno de los siguientes valores (Fig
 
 \item Pendiente: el cuestionario fue creado, pero todavía no se inició.
 
-\item En progreso: el alumno lo está resolviendo. Solo un cuestionario puede encontrarse en este estado a la vez.
+\item En progreso: el cuestionario fue iniciado y el alumno puede responderlo. Solo uno puede encontrarse en este estado a la vez.
 
 \item Pausado: la resolución se interrumpió de forma temporal y puede retomarse.
 
@@ -1373,7 +1382,7 @@ Las relaciones también determinan qué ocurre al eliminar un registro. Si se el
 
 Las herramientas habituales para desarrollar un \emph{backend}, como \emph{Node.js} o \emph{Django}, requieren un sistema operativo y una cantidad de memoria muy superior a la del módulo central. Por este motivo, el \emph{backend} se escribió en C++, como parte del mismo \emph{firmware} que controla la red, la pantalla y la tarjeta microSD.
 
-Su código se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo 2. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte que utiliza tanto los controladores como los servicios.
+Su código se organiza según el patrón Controlador-Servicio-Repositorio, presentado en el capítulo~\ref{Chapter2}. Cada petición que llega al módulo central atraviesa estas capas en orden. Primero la recibe un controlador, luego un servicio aplica las reglas del sistema y, por último, un repositorio accede a la base de datos. Las capas intercambian información mediante modelos, que son estructuras de datos comunes a todas ellas. La gestión de las sesiones, en cambio, funciona como un componente aparte que utilizan tanto los controladores como los servicios.
 
 \subsubsection{Modelos}
 
@@ -1389,7 +1398,8 @@ Los modelos son las estructuras con las que el \emph{backend} agrupa la informac
 
 \end{itemize}
 
-Por la memoria limitada del módulo central, los modelos que agrupan varios elementos tienen una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, y cada pregunta, hasta cuatro opciones. Los listados, por su parte, se entregan por páginas de diez elementos, por lo que la cantidad total de cuestionarios o usuarios no está limitada.
+%Por la memoria limitada del módulo central, los modelos que agrupan varios elementos tienen una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, y cada pregunta, hasta cuatro opciones. Los listados, por su parte, se entregan por páginas de diez elementos, por lo que la cantidad total de cuestionarios o usuarios no está limitada.
+Los modelos que agrupan varios elementos tienen una capacidad máxima fija. Este límite responde a un criterio de diseño, ya que en un microcontrolador conviene que la memoria que ocupa cada estructura sea conocida y acotada. De esta forma, un cuestionario admite hasta 20 preguntas, y cada pregunta, hasta cuatro opciones. Los listados, por su parte, se entregan por páginas de diez elementos, por lo que la cantidad total de cuestionarios o usuarios no está limitada.
 
 %Por la memoria limitada del módulo central, los modelos que agrupan varios elementos deberán tener una capacidad máxima fija. De esta forma, un cuestionario admite hasta 20 preguntas, cada pregunta hasta cuatro opciones y cada listado hasta 50 cuestionarios.
 
@@ -1401,7 +1411,7 @@ Los controladores constituyen el punto de entrada del \emph{backend}. Cada uno a
 
 Ante cada petición, el controlador verifica primero la sesión y el rol del usuario. Luego interpreta los datos recibidos en formato JSON, invoca al servicio correspondiente y, por último, construye la respuesta. En resumen, los controladores no aplican reglas del sistema, sino que solo traducen las peticiones HTTP en llamadas a los servicios.
 
-Los métodos HTTP, presentados en el capítulo 2, se asignan según la operación:
+Los métodos HTTP, presentados en el capítulo~\ref{Chapter2}, se asignan según la operación:
 
 \begin{itemize}
 
@@ -1447,11 +1457,11 @@ Al crear o editar un cuestionario, el cuerpo de la petición puede superar el ta
 
 \subsubsection{Servicios}
 
-Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo. Cuando una acción requiere varias escrituras en la base de datos, el servicio las agrupa en una única transacción, cuyo funcionamiento se explicó en el capítulo 2. Si alguna escritura falla, se deshacen todas, por lo que la base nunca queda con una operación a medias. Los repositorios, en cambio, siguen siendo los únicos que leen y escriben los datos.
+Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo. Cuando una acción requiere varias escrituras en la base de datos, el servicio las agrupa en una única transacción, cuyo funcionamiento se explicó en el capítulo~\ref{Chapter2}. Si alguna escritura falla, se deshacen todas, por lo que la base nunca queda con una operación a medias. Los repositorios, en cambio, son los únicos que leen y escriben los datos.
 
 \apartado{Autenticación}
 
-El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} con \emph{salt} descrito en el capítulo 2, con el algoritmo SHA-256. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas, que los usuarios suelen repetir en otros servicios. Para el cálculo se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo de la familia \emph{ESP32}, junto con el acelerador por hardware para SHA del \emph{ESP32-S3}. Así, no se requieren bibliotecas adicionales y el cálculo se realiza con rapidez.
+El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} con \emph{salt} descrito en el capítulo~\ref{Chapter2}, con el algoritmo SHA-256. De esta forma, aun si alguien accediera al archivo de la base de datos, no podría conocer las contraseñas, que los usuarios suelen repetir en otros servicios. Para el cálculo se utilizó la biblioteca \emph{mbedTLS}, que ya forma parte del entorno de desarrollo de la familia \emph{ESP32}, junto con el acelerador por \emph{hardware} para SHA del \emph{ESP32-S3}. Así, no se requieren bibliotecas adicionales y el cálculo se realiza con rapidez.
 
 %El servicio de autenticación verifica las credenciales de profesores y tutores mediante el procedimiento de \emph{hash} explicado en la sección de base de datos.
 
@@ -1461,15 +1471,15 @@ Si el usuario no existe o la contraseña no coincide, responde con el mismo mens
 
 %Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Además, genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
 
-Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Como el sistema funciona sin conexión a internet, no puede verificar las cuentas por correo electrónico. La clave maestra reemplaza esa verificación y evita que cualquier persona conectada a la red cree una cuenta de profesor o de tutor. Además, el servicio genera el \emph{salt} de cada usuario con el generador de números aleatorios por hardware del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
+Para registrar un usuario o restablecer una contraseña olvidada, el servicio exige la clave maestra correspondiente al rol, definida en la configuración inicial del sistema. Como el sistema funciona sin conexión a internet, no puede verificar las cuentas por correo electrónico. La clave maestra reemplaza esa verificación y evita que cualquier persona conectada a la red cree una cuenta de profesor o de tutor. Además, el servicio genera el \emph{salt} de cada usuario con el generador de números aleatorios por \emph{hardware} del microcontrolador, y lo renueva cada vez que se cambia la contraseña.
 
 %Por otra parte, cada vez que se cambia una contraseña, genera un nuevo \emph{salt}.
 
-Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial los cuestionarios del profesor y luego el usuario. Esto permite que, después de cada cuestionario borrado, el módulo central informe que sigue activo. Si todo se borrara con una sola sentencia, ese aviso recién sería posible al finalizar. En un usuario con muchos cuestionarios, la demora podría interpretarse como un bloqueo y provocar el reinicio del módulo central. 
+%Al eliminar un usuario, el servicio no recurre al borrado en cascada de la base de datos. En su lugar, borra de manera secuencial los cuestionarios del profesor y luego el usuario. Esto permite que, después de cada cuestionario borrado, el módulo central informe que sigue activo. Si todo se borrara con una sola sentencia, ese aviso recién sería posible al finalizar. En un usuario con muchos cuestionarios, la demora podría interpretarse como un bloqueo y provocar el reinicio del módulo central. 
 
 \apartado{Cuestionarios}
 
-El servicio de cuestionarios aplica las transiciones de estado descritas en la sección de base de datos. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado.
+El servicio de cuestionarios aplica las transiciones de estado descritas en la sección \ref{sec:base_datos}. Antes de cada cambio, comprueba que el cuestionario pertenezca al profesor que lo solicita y que su estado actual permita la acción. Además, como solo un cuestionario puede estar en progreso, al iniciar o reanudar uno pausa automáticamente al que estuviera en curso. La edición se admite solo en cuestionarios pendientes y la eliminación en cualquier estado, salvo en progreso o pausado.
 
 Al crear o editar un cuestionario, el servicio verifica que tenga título y al menos una pregunta, y que cada pregunta tenga entre dos y cuatro opciones, con una sola correcta.
 
@@ -1491,7 +1501,7 @@ Al recibir una respuesta, comprueba que la pregunta pertenezca al examen en curs
 
 La capa de repositorios es la única que accede a la base de datos. Existe uno por cada tabla, encargado de leer, insertar, modificar y eliminar sus registros. De esta forma, las instrucciones SQL quedan reunidas en un solo lugar y el resto del \emph{backend} trabaja con modelos sin conocer cómo se almacenan los datos.
 
-Todos los repositorios comparten una única conexión con la base de datos. El módulo central la abre al encender, configura las opciones de \emph{SQLite} descritas en la sección de base de datos y la mantiene abierta mientras funciona. Así se evita abrir y cerrar el archivo en cada petición, lo que demandaría tiempo y memoria adicionales.
+Todos los repositorios comparten una única conexión con la base de datos. El módulo central la abre al encender, configura las opciones de \emph{SQLite} presentadas en la sección \ref{sec:base_datos} y la mantiene abierta mientras funciona. Así se evita abrir y cerrar el archivo en cada petición, lo que demandaría tiempo y memoria adicionales.
 
 Las consultas se ejecutan como sentencias preparadas. Primero se define la instrucción con marcadores en lugar de los valores y luego se asocian a ellos los datos recibidos. Como estos nunca forman parte del texto de la instrucción, se impide la inyección de SQL, es decir, que un dato ingresado por el usuario se interprete como una orden para la base.
 
@@ -1507,7 +1517,7 @@ La gestión de sesiones controla quién está conectado al sistema y con qué ro
 
 %Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y el momento de su última actividad. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
-Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo 2, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y los datos que controlan su vencimiento. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
+Al iniciar sesión, el módulo central genera el \emph{token}, presentado en el capítulo~\ref{Chapter2}, como una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por \emph{hardware} del \emph{ESP32-S3}. El servidor guarda ese \emph{token} en la RAM, junto con el rol del usuario y los datos que controlan su vencimiento. Por lo tanto, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
 %Al iniciar sesión, el módulo central genera un \emph{token}, que es una cadena de 32 caracteres hexadecimales obtenida con el generador de números aleatorios por hardware del \emph{ESP32}. El \emph{token} se envía al navegador y éste lo incluye en el encabezado de cada petición posterior. El servidor, por su parte, guarda en la RAM ese \emph{token} junto con el rol del usuario y el momento de su última actividad. Para validar una petición basta con comparar el valor recibido con el almacenado. Como estos datos residen en la RAM, las sesiones se pierden al reiniciar el módulo central y los usuarios deben volver a ingresar.
 
@@ -1527,7 +1537,7 @@ En el panel, los roles tienen distinta prioridad. El tutor tiene la mayor, segui
 
 %El módulo central revisa de forma continua la última actividad de cada sesión, que se actualiza con cada petición válida y con los avisos periódicos descritos en la sección de red. Cuando una sesión supera su tiempo límite sin actividad, la cierra y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida cuando un usuario cierra el navegador sin salir del sistema.
 
-El módulo central revisa de forma continua dos tiempos en cada sesión del panel. El de vida se renueva con cualquier petición válida, incluidos los avisos periódicos descritos en la sección de red, y vence cuando el usuario cierra el navegador o pierde la conexión. El de inactividad, en cambio, se renueva solo cuando el usuario utiliza la pantalla, y vence cuando la sesión queda abierta sin uso. La sesión del alumno controla únicamente la vida, ya que durante el examen el alumno no utiliza el mouse ni el teclado. Cuando alguno de estos tiempos supera su límite, el sistema cierra la sesión y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida.
+El módulo central revisa de forma continua dos tiempos en cada sesión del panel. El de vida se renueva con cualquier petición válida, incluidos los avisos periódicos descritos en la sección \ref{sec:comunicacion_central}, y vence cuando el usuario cierra el navegador o pierde la conexión. El de inactividad, en cambio, se renueva solo cuando el usuario utiliza la pantalla, y vence cuando la sesión queda abierta sin uso. La sesión del alumno controla únicamente la vida, ya que durante el examen el alumno no utiliza el \emph{mouse} ni el teclado. Cuando alguno de estos tiempos supera su límite, el sistema cierra la sesión y libera su lugar. Así, ningún lugar queda ocupado de forma indefinida.
 
 \begin{table}[H]
     \centering
@@ -1572,17 +1582,18 @@ Antes de procesar una petición protegida, los controladores recurren a un compo
 
 \subsection{Frontend}
 
-El \emph{frontend} es la parte visual del código. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo 2.
+El \emph{frontend} es la parte visual del código. Su función es actuar como intermediario entre el usuario y el \emph{backend}, que gestiona los datos y los permisos. Se ejecuta en el navegador de cada dispositivo cliente y se organiza según la arquitectura basada en componentes presentada en el capítulo~\ref{Chapter2}.
 
 \subsubsection{Entorno y herramientas}
 
-Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} cuyas características fueron descritas en el capítulo 2.
+Para su desarrollo se optó por \emph{Preact}, una biblioteca de \emph{JavaScript} cuyas características fueron descritas en el capítulo~\ref{Chapter2}.
 
-El código fuente se escribió en computador, utilizando el software \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
+%El código fuente se escribió en computador, utilizando el software \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
+El código fuente se escribió en una computadora, con el \emph{software} \emph{Visual Studio Code}. Sin embargo, en ese formato no puede ser interpretado directamente por los navegadores ni almacenarse de forma eficiente en un microcontrolador. Por este motivo, antes de cargarlo en el módulo central, se utilizó la herramienta de construcción \emph{Vite}, que compiló, minimizó y empaquetó todo el código en archivos estáticos. El resultado fue un documento HTML, una hoja de estilos CSS y un archivo \emph{JavaScript}.
 
 Estos archivos se cargan por USB en el \emph{Filesystem} de la memoria flash del módulo central. Esta partición es independiente de la que contiene el \emph{firmware}, por lo que la interfaz puede actualizarse sin volver a cargar el programa del microcontrolador y viceversa.
 
-Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 61,6\% menos, mientras que la hoja de estilos no varió.
+Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección de la biblioteca. Para ello, la misma aplicación se compiló con \emph{React} y se comparó el tamaño del archivo \emph{JavaScript} resultante con el obtenido mediante \emph{Preact} (Tabla \ref{tab:preactreact}). Con \emph{Preact}, el archivo ocupó un 61,7 \% menos, mientras que la hoja de estilos no varió.
 
 \begin{table}[H]
     \centering
@@ -1615,19 +1626,19 @@ Los componentes se organizan de forma jerárquica: en la raíz se encuentra el c
 
 %El componente principal (\emph{App.jsx}), actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Utilizando la ruta común, aplica a todas las pantallas del panel un mismo control de inactividad. Si el usuario no interactúa durante un tiempo o si el servidor informa que la sesión expiró, lo devuelve a la pantalla de inicio de sesión.
 
-El componente principal (\emph{App.jsx}), actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Mientras el usuario se encuentra en cualquiera de las pantallas del panel o del invitado, envía el aviso periódico, junto con la indicación de si el usuario utilizó la pantalla. Si el servidor informa que la sesión se cerró, muestra el motivo y lo devuelve a la pantalla de inicio de sesión.
+El componente principal (\texttt{App.jsx}) actúa además como gestor de rutas. Según la dirección del navegador decide qué pantalla mostrar y, si no corresponde a ninguna, redirige al inicio. Mientras el usuario se encuentra en cualquiera de las pantallas del panel o del invitado, envía el aviso periódico, junto con la indicación de si el usuario utilizó la pantalla. Si el servidor informa que la sesión se cerró, muestra el motivo y lo devuelve a la pantalla de inicio de sesión.
 
 El profesor y el tutor comparten las mismas pantallas del panel. Cada una consulta el rol del usuario (que el navegador guarda al iniciar sesión), y muestra u oculta sus elementos según corresponda. Por ejemplo, el campo que el profesor ve como materia, el tutor lo ve como vínculo. Así se evitó duplicar pantallas casi idénticas, lo que reduce el código y mantiene ambas versiones coherentes. Este dato solo determina qué se muestra. Los permisos los verifica el \emph{backend} en cada petición, por lo que ocultar un botón no constituye una medida de seguridad.
 
 %Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\emph{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El módulo, por su parte, arma los encabezados, adjunta el \emph{token} de sesión e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
 
-Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\emph{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El archivo \emph{api.js}, por su parte, arma los encabezados, adjunta el \emph{token} de sesión y el identificador de la pestaña e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
+Las comunicaciones con el \emph{backend} se aislaron en un módulo independiente (\texttt{api.js}), que centraliza todas las peticiones dirigidas al módulo central. De esta forma, las pantallas solicitan datos, como el estado de un examen o la lista de profesores, mediante funciones simples. El archivo \texttt{api.js}, por su parte, arma cada petición, le adjunta el \emph{token} de sesión y el identificador de la pestaña, e interpreta las respuestas en formato JSON. Si el servidor responde con un error, lo convierte en un mensaje que la pantalla muestra al usuario.
 
-Por último, se cuenta con un módulo independiente de paginación, utilizado para aumentar la eficiencia del sistema al momento de transmitir y desplegar información en listas. Esto se logra limitando la cantidad de elementos individuales que se pueden mostrar al mismo tiempo en pantalla. Estos límites y la segmentación de las páginas son definidos y controlados por el \emph{backend}.
+Por último, se cuenta con un módulo independiente de paginación, utilizado para aumentar la eficiencia del sistema al momento de transmitir y desplegar información en listas. Para ello, se limita la cantidad de elementos individuales que se pueden mostrar al mismo tiempo en pantalla. Estos límites y la segmentación de las páginas son definidos y controlados por el \emph{backend}.
 
 \subsubsection{Recepción de datos y ejecución del detector}
 
-En la sección 3.5 se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos (Fig. \ref{fig:recepciondedatos}).
+En la sección \ref{sec:red} se describió cómo el módulo central y el módulo de captura envían la información. A continuación se explica qué hace el navegador con ella. Primero se detalla cómo recibe la aplicación y la biblioteca \emph{OpenCV.js}, y luego cómo recibe el video y ejecuta el detector a partir de esos elementos (Fig. \ref{fig:recepciondedatos}).
 
 \begin{figure}[H]
     \centering
@@ -1637,23 +1648,23 @@ En la sección 3.5 se describió cómo el módulo central y el módulo de captur
 \end{figure}
 
 
-\emph{Carga de la aplicación}
+\apartado{Carga de la aplicación}
 
-Cuando un usuario ingresa a \emph{levi.local}, el módulo central envía al navegador los tres archivos del \emph{frontend}. El documento HTML llega prácticamente vacío y solo indica qué otros dos archivos descargar (El \emph{CSS} y el \emph{JavaScript}). Una vez recibidos, el navegador ejecuta el código \emph{JavaScript}, que arma la interfaz y muestra la pantalla solicitada. A partir de ese momento, todo el funcionamiento de la interfaz ocurre en el dispositivo del usuario.
+Cuando un usuario ingresa a \texttt{levi.local}, el módulo central envía al navegador los tres archivos del \emph{frontend}. El documento HTML llega prácticamente vacío y solo indica qué otros dos archivos descargar (el \emph{CSS} y el \emph{JavaScript}). Una vez recibidos, el navegador ejecuta el código \emph{JavaScript}, que arma la interfaz y muestra la pantalla solicitada. A partir de ese momento, todo el funcionamiento de la interfaz ocurre en el dispositivo del usuario.
 
-\emph{Obtención de OpenCV.js}
+\apartado{Obtención de OpenCV.js}
 
 La biblioteca \emph{OpenCV.js} no se envía junto con la aplicación, sino solo cuando se abre la pantalla del alumno, que es la única que la necesita. Como es el archivo más pesado del sistema, el navegador guarda una copia después de la primera descarga, de modo que en los accesos siguientes no vuelve a pedirla al módulo central. Cuando debe descargarla, verifica que el archivo haya llegado completo y, si la descarga falla, la vuelve a intentar de forma automática.
 
 La biblioteca incluye una parte de su código que el navegador debe compilar antes de ejecutarla, lo que demora algunos segundos. Durante ese tiempo, la pantalla del alumno muestra un aviso y mantiene deshabilitados los botones.
 
-\emph{Recepción del video}
+\apartado{Recepción del video}
 
 Durante la calibración y el examen, el navegador del alumno se conecta directamente al módulo de captura y recibe el video. Cada fotograma JPEG que llega reemplaza al anterior, y el propio navegador se encarga de decodificarlo sin código adicional. El video completo no se muestra al alumno. En su lugar, la pantalla presenta el recorte del ojo que se analiza (128x128). Sobre esa imagen se dibuja un recuadro que marca la región que se guardará en la plantilla al momento de calibrar (96x96). Esto ayuda al alumno a mantener centrado su ojo durante el proceso.
 
 La conexión se abre al ingresar a la calibración o al examen y se cierra al salir de ellos. Cada vez que se abre se fuerza una conexión nueva, para que el navegador no muestre una imagen antigua guardada de un acceso anterior. Si ocurre un error o el video deja de actualizarse durante más de 4 segundos, la conexión se reabre automáticamente. 
 
-\emph{Ejecución del seguimiento}
+\apartado{Ejecución del seguimiento}
 
 
 Una vez compilada, la biblioteca pone sus funciones a disposición de la aplicación, cuyo código \emph{JavaScript} las invoca de forma nativa. Las operaciones de alta carga computacional, como la conversión a escala de grises o la comparación de plantillas, ocurren dentro del entorno optimizado de la biblioteca. El código \emph{JavaScript}, por su parte, se limita a coordinar el flujo de ejecución y a reflejar los resultados en la interfaz visual.
@@ -1666,15 +1677,15 @@ Respecto a las plantillas obtenidas en la calibración, el almacenamiento del na
 
 Las pantallas se agrupan en tres categorías, según quién las utiliza: las de acceso, la del alumno y las del panel.
 
-\emph{Pantallas de acceso}
+\apartado{Pantallas de acceso}
 
 Son las pantallas a las que cualquier usuario puede ingresar sin importar su rol.
 
 \begin{itemize}
 
-\item Inicio (o \emph{Home}) (figura \ref{fig:accesoinicio}): es la primera pantalla que se muestra al acceder a \emph{levi.local}. Presenta un mensaje de bienvenida y dos botones: uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
+\item Inicio (o \emph{Home}) (figura \ref{fig:accesoinicio}): es la primera pantalla que se muestra al acceder a \texttt{levi.local}. Presenta un mensaje de bienvenida y dos botones: uno para ingresar como alumno y otro para hacerlo como usuario externo. El primero dirige a la pantalla del alumno y el segundo, a la de inicio de sesión.
 
-\item Inicio de sesión (o \emph{Logueo}) (figura \ref{fig:accesologin}): los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse, completando un formulario con sus datos (figura \ref{fig:accesoregistro}), o recuperar una contraseña olvidada (figura \ref{fig:accesorecuperar}). En ambos casos se solicita la clave maestra del rol.
+\item Inicio de sesión (o \emph{Logueo}) (figura \ref{fig:accesologin}): los profesores y los tutores ingresan su usuario y su contraseña. Desde allí también pueden registrarse mediante un formulario con sus datos (figura \ref{fig:accesoregistro}), o recuperar una contraseña olvidada (figura \ref{fig:accesorecuperar}). En ambos casos se solicita la clave maestra del rol.
 
 \item Invitado (figura \ref{fig:accesoinvitado}): se accede desde la pantalla de inicio de sesión. Presenta un campo para la pregunta y entre dos y cuatro campos para las opciones, que pueden agregarse o quitarse. Al enviarla, la pregunta aparece en la pantalla del alumno.
 
@@ -1720,7 +1731,7 @@ Son las pantallas a las que cualquier usuario puede ingresar sin importar su rol
     \label{fig:pantallasacceso}
 \end{figure}
 
-\emph{Pantalla del alumno}
+\apartado{Pantalla del alumno}
 
 El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alternan según la etapa en la que se encuentra.
 
@@ -1728,7 +1739,8 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 
 \item Menú (figura \ref{fig:alumnomenu}): presenta un indicador del estado de carga del detector y dos botones, uno para la calibración y otro para el examen.
 
-\item Calibración (figura \ref{fig:alumnocalibracion}): muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Presenta un botón de inicio y uno de retorno. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. El proceso puede abortarse voluntariamente con un botón. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en la memoria de sesión del navegador, se mantiene disponible mientras la pestaña permanezca abierta.
+%\item Calibración (figura \ref{fig:alumnocalibracion}): muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Presenta un botón de inicio y uno de retorno. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. El proceso puede abortarse voluntariamente con un botón. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración realizada en la misma sesión, el botón de inicio ofrece recalibrar. Esta calibración antigua, almacenada en la memoria de sesión del navegador, se mantiene disponible mientras la pestaña permanezca abierta.
+\item Calibración (figura \ref{fig:alumnocalibracion}): muestra seis recuadros, uno por cada plantilla, y la imagen del ojo que se analiza. Presenta un botón de inicio y uno de retorno. Durante la secuencia, un mensaje indica hacia dónde debe mirar el alumno y una cuenta regresiva anuncia cada captura. El proceso puede abortarse voluntariamente con un botón. Al finalizar, las plantillas aparecen en sus recuadros y el alumno puede guardarlas o repetir el proceso. Si ya existe una calibración guardada, el botón de inicio ofrece recalibrar. Esa calibración permanece en el navegador aunque se cierre la pestaña, como se explicó en la sección \ref{sec:template_matching}.
 
 \item Examen (figura \ref{fig:alumnoexamen}): muestra en una esquina la imagen del ojo, junto con un control deslizante que ajusta el umbral de similitud. Mientras no haya un cuestionario en curso ni una pregunta de invitado, la pantalla queda en espera. Cuando llega una pregunta presenta el enunciado y cuatro cuadrantes, uno por opción, con una zona neutra en el centro. Si se trata de una pregunta de examen, se incluye en el encabezado el número de pregunta. Cada cuadrante posee un color distintivo. La pantalla se divide siempre en cuatro, aunque la pregunta tenga menos opciones. En este último caso, los cuadrantes sobrantes quedan vacíos y se ignoran, de modo que las posiciones coinciden con las de la calibración.
 
@@ -1772,7 +1784,7 @@ El alumno ingresa sin autenticarse. Su pantalla reúne cuatro vistas que se alte
 \end{figure}
 
 
-\emph{Pantallas del panel}
+\apartado{Pantallas del panel}
 
 Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las acciones que no pueden deshacerse, como eliminar un registro o finalizar un cuestionario, solicitan una confirmación antes de ejecutarse.
 
@@ -1782,13 +1794,13 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
 
 \item Perfil: permite modificar los datos personales del usuario y, en una sección aparte, cambiar la contraseña, para lo cual se solicitan la actual y la nueva. No se requiere clave maestra, ya que la sesión activa confirma la identidad del usuario. También permite eliminar la propia cuenta y advierte al usuario si intenta salir con cambios sin guardar.
 
-\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, se otorga a los tutores la capacidad  para eliminar profesores (figura \ref{fig:panelcontactos}). Esta es una de las dos pantallas que utiliza el componente de paginación, limitando la cantidad de usuarios máxima que se muestran por página (definido por el backend).
+\item Contactos: muestra los datos de contacto de los usuarios del otro rol. Además, se otorga a los tutores la capacidad para eliminar profesores (figura \ref{fig:panelcontactos}). Esta es una de las dos pantallas que utilizan el componente de paginación, que limita la cantidad máxima de usuarios que se muestran por página, según lo definido por el \emph{backend}.
 
-\item Cuestionarios: Se subdivide en tres vistas.
+\item Cuestionarios: se subdivide en tres vistas.
 
 \begin{itemize}
 
-\item \emph{Listado}: para el profesor, presenta el listado de sus cuestionarios (figura \ref{fig:panelcuestionarios}) con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan o deshabilitan según su estado actual. El botón de estado solo cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, el sistema captura la fecha y hora del dispositivo del profesor para almacenarlas en la base de datos. Esto se debe a que el sistema carece de conexión a internet, lo que le impide obtener la hora de forma autónoma. El tutor, en cambio, ve los cuestionarios de todos los profesores con la materia de cada uno, y solo puede acceder a su revisión. Ambas listas aplican el componente paginador, mostrando un límite máximo de cuestionarios por página.
+\item \emph{Listado}: para el profesor, presenta el listado de sus cuestionarios (figura \ref{fig:panelcuestionarios}) con su título, su cantidad de preguntas, el puntaje obtenido, la condición de aprobación y la fecha de inicio. Cada cuestionario cuenta con botones para editarlo, eliminarlo, cambiar su estado y finalizarlo, que se habilitan o deshabilitan según su estado actual. El botón de estado solo cambia su función en cada caso, de modo que inicia, pausa o reanuda el cuestionario y, una vez finalizado, permite revisarlo. Al iniciar un cuestionario, el sistema captura la fecha y hora del dispositivo del profesor para almacenarlas en la base de datos. Esto se debe a que el sistema carece de conexión a internet, lo que le impide obtener la hora de forma autónoma. El tutor, en cambio, ve los cuestionarios de todos los profesores con la materia de cada uno, y solo puede acceder a su revisión. Ambas listas aplican el componente de paginación, que muestra una cantidad máxima de cuestionarios por página.
 
 \item \emph{Editor} (figura \ref{fig:paneleditor}): exclusivo para el profesor. Se accede desde el listado, tanto para crear un cuestionario como para modificar uno pendiente. Cada pregunta se carga en un bloque propio. Para agilizar la carga, un mismo esquema de puntajes puede aplicarse a todas las preguntas, y estas pueden reordenarse o eliminarse. Se incluye además un botón para cargar un cuestionario mediante un archivo JSON externo, en caso de que se quiera editar por fuera del sistema. 
 
@@ -1840,7 +1852,7 @@ Son las pantallas que utilizan los profesores y los tutores. En todas ellas, las
     \label{fig:panel}
 \end{figure}
 
-\emph{Editor externo}
+\apartado{Editor externo}
 
 Se desarrolló como una alternativa para crear y editar cuestionarios por fuera del sistema principal. Consiste en una página web independiente cuyo único propósito es generar un archivo estructurado en formato JSON. Este archivo puede ser importado posteriormente por el profesor desde su panel. Su interfaz y funcionalidad son exactamente las mismas que las del editor original, pero, en lugar de guardar el cuestionario en el sistema, lo descarga directamente en el dispositivo del usuario. También permite cargar un archivo JSON previamente generado para retomar su edición.
 
@@ -1967,7 +1979,7 @@ Se desarrolló como una alternativa para crear y editar cuestionarios por fuera 
 
 \section{Interfaz de usuario táctil}
 
-Con el fin de facilitar el uso del dispositivo, se incorporó una interfaz gráfica en la pantalla táctil del módulo central. Desde ella se realiza la configuración inicial del equipo y se supervisa el estado del sistema. La interfaz se desarrolló con la biblioteca \emph{LVGL}, presentada en el capítulo 2. A continuación se describen las bibliotecas y los controladores que utiliza, su funcionamiento dentro del módulo central y las vistas que la componen.
+Con el fin de facilitar el uso del dispositivo, se incorporó una interfaz gráfica en la pantalla táctil del módulo central. Desde ella se realiza la configuración inicial del equipo y se supervisa el estado del sistema. La interfaz se desarrolló con la biblioteca \emph{LVGL}, presentada en el capítulo~\ref{Chapter2}. A continuación se describen las bibliotecas y los controladores que utiliza, su funcionamiento dentro del módulo central y las vistas que la componen.
 
 \subsection{Bibliotecas y controladores}
 
@@ -1995,9 +2007,10 @@ Con el fin de aumentar la eficiencia energética del dispositivo, se implementó
 
 La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un contenedor deslizante, en el que el usuario pasa de una a otra con un gesto horizontal. La cuarta, en cambio, solo aparece durante la configuración inicial del equipo.
 
-\keyword{Bienvenida}
+\apartado{Bienvenida}
 
-Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
+%Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
+Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección \texttt{levi.local}. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, no tenía sentido generarlo en cada encendido. Por eso, se lo guardó en la memoria flash como una imagen ya generada en blanco y negro. Generarlo al iniciar el equipo, además, habría ocupado RAM de forma innecesaria.
 
 \begin{figure}[H]
     \centering
@@ -2007,9 +2020,9 @@ Es la primera vista que se muestra al encender el equipo ya configurado. Present
     \label{vistabienvenida}
 \end{figure}
 
-\keyword{Estado del sistema}
+\apartado{Estado del sistema}
 
-Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección de red y comunicación.
+Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección \ref{sec:red_wifi}.
 
 \begin{figure}[H]
     \centering
@@ -2019,7 +2032,7 @@ Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el no
     \label{vistaestado}
 \end{figure}
 
-\keyword{Examen}
+\apartado{Examen}
 
 La tercera vista permite seguir el examen desde el propio módulo central. Mientras no haya un cuestionario en curso muestra un mensaje de espera. Durante el examen presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
 
@@ -2048,7 +2061,7 @@ La tercera vista permite seguir el examen desde el propio módulo central. Mient
     \label{vistaexamen}
 \end{figure}
 
-\keyword{Configuración inicial}
+\apartado{Configuración inicial}
 
 Esta vista aparece solo cuando la NVS no contiene los datos de configuración, como ocurre en el primer encendido del equipo. En ella se ingresan el nombre del alumno y las claves maestras de profesores y tutores. Para escribirlos, la interfaz despliega un teclado virtual. Las claves se muestran ocultas, aunque un botón permite verlas, y no es posible continuar con campos vacíos. Al guardar, los datos se almacenan en la NVS y el equipo se reinicia para cargar las vistas habituales.
 
@@ -2134,13 +2147,14 @@ Esta sección detalla el sistema de energía autónomo del proyecto. Primero se 
 
 \subsection{Requisitos previos}
 
-El dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la conexión directa mediante cable USB. Otra opción habitual consiste en acoplar un \emph{power bank} comercial. Sin embargo, esta alternativa se desestimó por criterios de diseño y ergonomía. El proyecto apuntaba a una carcasa que integre la placa y la fuente de energía en un mismo bloque. Dado que los bancos de carga comerciales varían en sus dimensiones físicas, resulta imposible estandarizar un único modelo de gabinete. 
+%El dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la conexión directa mediante cable USB. Otra opción habitual consiste en acoplar un \emph{power bank} comercial. Sin embargo, esta alternativa se desestimó por criterios de diseño y ergonomía. El proyecto apuntaba a una carcasa que integre la placa y la fuente de energía en un mismo bloque. Dado que los bancos de carga comerciales varían en sus dimensiones físicas, resulta imposible estandarizar un único modelo de gabinete. 
+El dispositivo final debe ser inalámbrico y energéticamente autónomo. Por este motivo, se descarta la conexión directa mediante cable USB. Otra opción habitual consiste en acoplar un \emph{power bank} comercial. Sin embargo, esta alternativa se desestimó por criterios de diseño y ergonomía. En un principio, el proyecto apuntaba a una carcasa que integrara la placa y la fuente de energía en un mismo bloque. Dado que los bancos de carga comerciales varían en sus dimensiones físicas, resultaba imposible estandarizar un único modelo de gabinete.
 
 En su lugar, se diseñó un sistema propio basado en celdas de litio recargables cilíndricas (formato 18650). Estas baterías conservan un tamaño universal sin importar su fabricante. Su tensión varía entre 2,7 V y 4,2 V según su nivel de carga.
 
-Esta energía requiere acondicionamiento previo. El microcontrolador \emph{ESP32} exige tensiones estables de 3,3 V o 5 V. Una pequeña fluctuación provocaría fallos de ejecución o reinicios del sistema. 
+Esta energía requiere acondicionamiento previo. Las placas de desarrollo del \emph{ESP32} admiten una alimentación estable de 3,3 V o de 5 V. En el segundo caso, un regulador de la propia placa la reduce a los 3,3 V con los que trabaja el microcontrolador. Una pequeña fluctuación provocaría fallos de ejecución o reinicios del sistema. 
 
-Cada bloque del prototipo posee su propio circuito de alimentación independiente. Esta separación elimina el cruce de cables externos y otorga mayor libertad de movimiento. Originalmente, el diseño contemplaba etapas idénticas para el módulo capturador y el módulo central (equipado con la \emph{ESP32-CYD}). No obstante, la migración hacia la placa \emph{ONX3248G035} alteró este esquema, ya que el nuevo \emph{hardware} incorpora su propio gestor interno. 
+Cada bloque del prototipo posee su propio circuito de alimentación independiente. Esta separación elimina el cruce de cables externos y otorga mayor libertad de movimiento. Originalmente, el diseño contemplaba etapas idénticas para el módulo de captura y el módulo central (equipado con la \emph{ESP32-CYD}). No obstante, la migración hacia la placa \emph{ONX3248G035} alteró este esquema, ya que el nuevo \emph{hardware} incorpora su propio gestor interno. 
 
 El usuario debe poder reponer la energía sin extraer la batería del equipo. Además, la autonomía operativa total debe cubrir al menos una jornada escolar completa (aproximadamente 6 horas continuas).
 
@@ -2157,22 +2171,22 @@ Antes de analizar posibles soluciones, se deben determinar los requisitos eléct
         \hline
         \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Capturador (en transmisión Wi-Fi e IR encendido) & 200 \\
+        Captura (en transmisión Wi-Fi e IR encendido) & 200 \\
         \hline
-        Central con CYD (Pantalla apagada) & 167 \\
+        Central con \emph{CYD} (Pantalla apagada) & 167 \\
         \hline
-        Central con CYD (Pantalla encendida) & 254 \\
+        Central con \emph{CYD} (Pantalla encendida) & 254 \\
         \hline
-        Central con ONX (Pantalla apagada) & 130 \\
+        Central con \emph{ONX} (Pantalla apagada) & 130 \\
         \hline
-        Central con ONX (Pantalla encendida) & 212 \\
+        Central con \emph{ONX} (Pantalla encendida) & 212 \\
         \hline
     \end{tabular}
 \end{table}
 
-Apagar la pantalla inactiva ahorra entre un 34 \% y un 38 \% del consumo total, según el modelo de placa analizado. Para el diseño inicial, se tomó como referencia la corriente consumida por el módulo capturador y el módulo central con el \emph{ESP32-CYD}.
+Apagar la pantalla inactiva ahorra entre un 34 \% y un 38 \% del consumo total, según el modelo de placa analizado. Para el diseño inicial, se tomó como referencia la corriente consumida por el módulo de captura y el módulo central con el \emph{ESP32-CYD}.
 
-El producto entre la corriente media y la tensión de entrada (5 V) define la potencia consumida. El módulo capturador exige 1 W. El módulo central equipado con la placa CYD requiere 1,27 W con la pantalla activa y 835 mW en estado de suspensión. 
+El producto entre la corriente media y la tensión de entrada (5 V) define la potencia consumida. El módulo de captura exige 1 W. El módulo central equipado con la placa \emph{CYD} requiere 1,27 W con la pantalla activa y 835 mW en estado de suspensión. 
 
 Para estimar el requerimiento sobre la batería de litio, se dividió esta potencia por la tensión nominal de la celda (3,7 V). Este cálculo establece la siguiente corriente proyectada por módulo:
 
@@ -2185,29 +2199,31 @@ Para estimar el requerimiento sobre la batería de litio, se dividió esta poten
         \hline
         \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Capturador (en transmisión Wi-Fi e IR encendido) & 270 \\
+        Captura (en transmisión Wi-Fi e IR encendido) & 270 \\
         \hline
-        Central con CYD (Pantalla apagada) & 226 \\
+        Central con \emph{CYD} (Pantalla apagada) & 226 \\
         \hline
-        Central con CYD (Pantalla encendida) & 343 \\
+        Central con \emph{CYD} (Pantalla encendida) & 343 \\
         \hline
-        Central con ONX (Pantalla apagada) & 176 \\
+        Central con \emph{ONX} (Pantalla apagada) & 176 \\
         \hline
-        Central con ONX (Pantalla encendida) & 286 \\
+        Central con \emph{ONX} (Pantalla encendida) & 286 \\
         \hline
     \end{tabular}
 \end{table}
-Análisis adicionales revelaron, por un lado, que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes. Además, los valores máximos de corriente detectados no superaron el 5\% del promedio, por lo que no serán tenidos en cuenta para posteriores análisis.
+Análisis adicionales revelaron, por un lado, que la transmisión de video impacta de forma mínima en la placa central (entre un 1 \% y un 3 \% de variación). No obstante, este proceso introduce una mayor inestabilidad a causa de oscilaciones eléctricas frecuentes. Además, los valores máximos de corriente detectados no superaron el 5 \% del promedio, por lo que no se tuvieron en cuenta para posteriores análisis.
 
-Estos valores empíricos servirán como base teórica para diseñar el circuito de alimentación y dimensionar la capacidad real de la batería en las verificaciones operativas.
+Estos valores empíricos sirvieron como base teórica para diseñar el circuito de alimentación y dimensionar la capacidad real de la batería en las verificaciones operativas.
 
 \subsection{Alternativas propuestas}
 
 Para cumplir los requisitos, se evaluaron tres métodos de alimentación. Todos utilizan celdas de litio 18650 de 3000 mAh (tensión nominal de 3,7 V). 
 
-La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados: un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
+%La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados: un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
+La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117}, para ajustar el nivel de tensión a 3,3 V estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados, un cargador (\emph{TP4056}) y un elevador de tensión (\emph{MT3608}). El primero recarga la batería de litio y la protege durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentan directamente el microcontrolador. Por último, el tercer método combina la recarga, la protección y la regulación en un solo integrado (\emph{IP5306}).
 
-Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones, disponibilidad y costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
+%Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones, disponibilidad y costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
+Para seleccionar el circuito definitivo se tuvieron en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{dropout}), la capacidad para cargar el dispositivo a la vez que se lo utiliza, las limitaciones, la disponibilidad y el costo. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
 
 \begin{table}[H]
     \centering
@@ -2217,28 +2233,30 @@ Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la c
         \hline
         \textbf{Alternativa} & \textbf{\emph{Dropout}} & \textbf{Uso al cargar} & \textbf{Limitaciones} & \textbf{Disponibilidad} & \textbf{Costo total estimado} \\
         \hline
-        \raggedright LDO + \newline Cargador externo & \raggedright Alta \newline ($\sim$1,1 V) & No & \raggedright Dropout: apaga el sistema cuando la celda baja a 3,8 V. & Alta & 22,30 USD \\
+        \raggedright LDO + \newline Cargador externo & \raggedright Alta \newline ($\sim$1,1 V) & No & \raggedright \emph{Dropout}: apaga el sistema cuando la celda baja a 4,1 V. & Alta & 22,30 USD \\
         \hline
-        \raggedright TP4056 + \newline MT3608 & \raggedright Nula \newline (Topología \emph{Boost}) & No & \raggedright Doble conversión de energía (baja eficiencia). & Muy alta & 18,80 USD \\
+        \raggedright \emph{TP4056} + \newline \emph{MT3608} & \raggedright Nula \newline (Topología \emph{Boost}) & No & \raggedright Doble conversión de energía (baja eficiencia). & Muy alta & 18,80 USD \\
         \hline
-        \raggedright IP5306 & \raggedright Nula \newline (Topología \emph{Boost}) & Sí & \raggedright Inyecta ruido de conmutación. \newline Requiere filtrado extra. & Baja & 20,00 USD \\
+        \raggedright \emph{IP5306} & \raggedright Nula \newline (Topología \emph{Boost}) & Sí & \raggedright Inyecta ruido de conmutación. \newline Requiere filtrado extra. & Baja & 20,00 USD \\
         \hline
     \end{tabular}
 \end{table}
 
-Se descarta la primera alternativa por el elevado \emph{dropout} del regulador lineal. El AMS1117 exige casi 1,1 V de margen. Esto impide aprovechar la curva completa de descarga de la batería (de 4,2 V hasta 2,7 V). La tercera opción se desestima debido al ruido eléctrico de baja frecuencia que afecta las comunicaciones inalámbricas.
+%Se descarta la primera alternativa por el elevado \emph{dropout} del regulador lineal. El AMS1117 exige casi 1,1 V de margen. Esto impide aprovechar la curva completa de descarga de la batería (de 4,2 V hasta 2,7 V). La tercera opción se desestima debido al ruido eléctrico de baja frecuencia que afecta las comunicaciones inalámbricas.
+Se descartó la primera alternativa por el elevado \emph{dropout} del regulador lineal. El \emph{AMS1117} exige casi 1,1 V de margen. Como el \emph{ESP32} requiere una alimentación mínima recomendada de 3,0 V, el sistema se apaga cuando la celda desciende a unos 4,1 V. Esto impide aprovechar la curva completa de descarga de la batería (de 4,2 V hasta 2,7 V). La tercera opción se desestimó porque su convertidor conmuta a una frecuencia baja, lo que produce un mayor rizado en la salida. Este ruido afecta las comunicaciones inalámbricas.
 
-La solución adoptada es la segunda alternativa. El \emph{TP4056} gestiona la recarga de forma segura, mientras que el \emph{MT3608} estabiliza la tensión a 5 V constantes. Al entregar 5 V, se asume una pérdida de eficiencia por la doble regulación (el \emph{ESP32} reduce internamente a 3,3 V), pero asegura la inmunidad ante caídas de tensión de la celda y garantiza un rizado despreciable a la salida. Como el módulo de carga no discrimina entre la corriente de la batería y la del sistema, el dispositivo debe permanecer apagado durante la recarga para permitir el corte automático de seguridad.
+%La solución adoptada es la segunda alternativa. El \emph{TP4056} gestiona la recarga de forma segura, mientras que el \emph{MT3608} estabiliza la tensión a 5 V constantes. Al entregar 5 V, se asume una pérdida de eficiencia por la doble regulación (el \emph{ESP32} reduce internamente a 3,3 V), pero asegura la inmunidad ante caídas de tensión de la celda y garantiza un rizado despreciable a la salida. Como el módulo de carga no discrimina entre la corriente de la batería y la del sistema, el dispositivo debe permanecer apagado durante la recarga para permitir el corte automático de seguridad.
+La solución adoptada fue la segunda alternativa. El \emph{TP4056} gestiona la recarga de forma segura, mientras que el \emph{MT3608} estabiliza la tensión a 5 V constantes. Entregar 5 V implica una pérdida de eficiencia por la doble regulación (el \emph{ESP32} reduce internamente a 3,3 V), pero asegura la inmunidad ante caídas de tensión de la celda y garantiza un rizado despreciable a la salida. Como el módulo de carga no discrimina entre la corriente de la batería y la del sistema, el dispositivo debe permanecer apagado durante la recarga para permitir el corte automático de seguridad.
 
 \subsection{Detalle de la solución adoptada}
 
-Esta sección detalla los parámetros de los módulos comerciales empleados para la placa capturadora. 
+Esta subsección detalla los parámetros de los módulos comerciales empleados en el módulo de captura. 
 
 El módulo \emph{TP4056} (figura \ref{fig:modulotp4056}) ejecuta un ciclo de carga de corriente constante y tensión constante (CC/CV). La tabla \ref{tab:parametros_tp4056} resume sus especificaciones.
 
 \begin{table}[H]
     \centering
-    \caption{Parámetros de operación del módulo TP4056}
+    \caption{Parámetros de operación del módulo \emph{TP4056}}
     \label{tab:parametros_tp4056}
     \begin{tabular}{|l|l|}
         \hline
@@ -2257,7 +2275,7 @@ Por su parte, el \emph{MT3608} (figura \ref{fig:modulomt3608}) eleva la señal n
 
 \begin{table}[H]
     \centering
-    \caption{Parámetros de operación del módulo MT3608}
+    \caption{Parámetros de operación del módulo \emph{MT3608}}
     \label{tab:parametros_mt3608}
     \begin{tabular}{|l|l|}
         \hline
@@ -2305,7 +2323,8 @@ El gestor de carga es el chip \emph{IP4054V}. Opera de forma similar al \emph{TP
 
 Para estabilizar la señal eléctrica a 3,3 V, la placa emplea un convertidor reductor (\emph{Buck}) síncrono, basado en el integrado \emph{LC2201CCB5TR}. Este componente conmuta a 2 MHz, lo que maximiza la eficiencia térmica del sistema. 
 
-Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Considerando el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Dado que el microcontrolador \emph{ESP32} tolera descensos en su alimentación hasta los 3,0 V, este acoplamiento permite exprimir la energía remanente de la celda sin interrumpir el funcionamiento del dispositivo. Esto evita el apagado súbito que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
+%Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Considerando el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Dado que el microcontrolador \emph{ESP32} tolera descensos en su alimentación hasta los 3,0 V, este acoplamiento permite exprimir la energía remanente de la celda sin interrumpir el funcionamiento del dispositivo. Esto evita el apagado súbito que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
+Al igual que un regulador lineal, este convertidor posee un límite físico para mantener la regulación. Su transistor interno presenta una resistencia típica $R_{DS(ON)}$ de 250 m$\Omega$. Con el consumo de la placa, esto genera una caída de tensión de aproximadamente 0,1 V, por lo que exige un mínimo de 3,4 V en la entrada para sostener los 3,3 V de salida. Sin embargo, la ventaja fundamental del \emph{Buck} radica en su comportamiento al cruzar este umbral. Al quedarse sin margen de reducción, el chip suspende la conmutación y entra en un modo de operación al 100 \% de ciclo de trabajo (\emph{paso directo}). En este estado, el componente actúa como un puente directo entre la batería y la carga. Como el \emph{ESP32-S3} requiere una alimentación mínima recomendada de 3,0 V, la celda puede descender hasta unos 3,1 V sin interrumpir el funcionamiento del dispositivo. Así se aprovecha casi toda la energía remanente de la batería. Esto evita el apagado anticipado que sí provocaría el alto umbral de caída de un LDO bajo las mismas condiciones.
 
 \subsection{Verificaciones operativas finales}
 \label{sec:verificaciones}
@@ -2321,24 +2340,24 @@ Para validar el sistema, se calcula la autonomía operativa y los tiempos de rep
         \hline
         \multicolumn{1}{|c|}{\textbf{Módulo}} & \textbf{Consumo Promedio (mA)} \\
         \hline
-        Capturador (en transmisión Wi-Fi e IR encendido) & 295 \\
+        Captura (en transmisión Wi-Fi e IR encendido) & 295 \\
         \hline
-        Central con CYD (Pantalla apagada) & 238 \\
+        Central con \emph{CYD} (Pantalla apagada) & 238 \\
         \hline
-        Central con CYD (Pantalla encendida) & 376 \\
+        Central con \emph{CYD} (Pantalla encendida) & 376 \\
         \hline
-        Central con ONX (Pantalla apagada) & 150 \\
+        Central con \emph{ONX} (Pantalla apagada) & 150 \\
         \hline
-        Central con ONX (Pantalla encendida) & 252 \\
+        Central con \emph{ONX} (Pantalla encendida) & 252 \\
         \hline
     \end{tabular}
 \end{table}
 
-Las discrepancias respecto a los cálculos teóricos (tabla \ref{tab:consumo_estimado}) tienen una justificación topológica. En el módulo capturador y en la configuración \emph{CYD}, el consumo real superó las estimaciones debido a las pérdidas térmicas del circuito intermediario entre la batería y la placa de desarrollo.
+Las discrepancias respecto a los cálculos teóricos (tabla \ref{tab:consumo_estimado}) tienen una justificación topológica. En el módulo de captura y en la configuración \emph{CYD}, el consumo real superó las estimaciones debido a las pérdidas térmicas del circuito intermediario entre la batería y la placa de desarrollo.
 
-Por el contrario, los valores de la \emph{ONX3248G035} resultaron menores a los proyectados. Esto ocurre porque su convertidor reductor síncrono (\emph{Buck}) opera con mayor eficiencia al recibir los 3,7 V directos de la batería frente a los 5 V utilizados en las mediciones iniciales. Al existir una menor diferencia de potencial entre la entrada y la salida de 3,3 V, el componente optimiza su ciclo de trabajo y reduce drásticamente la energía disipada en forma de calor.
+Por el contrario, los valores de la \emph{ONX3248G035} resultaron menores a los proyectados. Esto ocurre porque su convertidor reductor síncrono (\emph{Buck}) opera con mayor eficiencia al recibir los 3,7 V directos de la batería frente a los 5 V utilizados en las mediciones iniciales. Al existir una menor diferencia de potencial entre la entrada y la salida de 3,3 V, el componente optimiza su ciclo de trabajo y reduce la energía disipada en forma de calor.
 
-Al dividir la capacidad de la celda (3000 mAh) por el consumo empírico, el módulo capturador (295 mA) arroja una autonomía de 10,2 horas continuas.
+Al dividir la capacidad de la celda (3000 mAh) por el consumo empírico, el módulo de captura (295 mA) arroja una autonomía de 10,2 horas continuas.
 
 Para el módulo central con la placa \emph{ONX3248G035}, se estima un tiempo de pantalla activa del 10 \% del uso total. El cálculo de la corriente promedio ($I_{prom}$) se define con la siguiente ecuación:
 
@@ -2348,39 +2367,39 @@ Para el módulo central con la placa \emph{ONX3248G035}, se estima un tiempo de 
 
 Al sustituir las variables por los valores tabulados, el módulo central promedia un consumo de 160,2 mA. Esto implica una autonomía teórica de 18,7 horas. Se comprueba así que la capacidad energética de ambos módulos supera con creces el mínimo necesario para cubrir una jornada escolar de 6 horas.
 
-Finalmente, el tiempo de recarga se estima a partir de la corriente inyectada por cada gestor. El módulo capturador (configurado a 1 A) demanda aproximadamente 3 horas para completar un ciclo. El módulo central (\emph{IP4054V} a 0,3 A) requiere cerca de 10 horas.
+Finalmente, el tiempo de recarga se estima a partir de la corriente inyectada por cada gestor. El módulo de captura (configurado a 1 A) demanda aproximadamente 3 horas para completar un ciclo. El módulo central (\emph{IP4054V} a 0,3 A) requiere cerca de 10 horas.
 
-La recarga se comprobó de manera empírica sobre el módulo capturador. Al conectar una celda completamente descargada (2,8 V), el sistema completó el ciclo y alcanzó su tensión máxima (4,1 V) exactas 3 horas y 2 minutos después.
+La recarga se comprobó de manera empírica sobre el módulo de captura. Al conectar una celda completamente descargada (2,8 V), el sistema completó el ciclo y alcanzó su tensión máxima (4,1 V) exactas 3 horas y 2 minutos después.
 
 \section{Diseño físico}
 
-Esta sección detalla el aspecto físico final del dispositivo. Primero se presenta el circuito de alimentación del módulo capturador y la primera versión pensada para el módulo central, que utilizaba la placa \emph{ESP32-CYD}. Luego se muestran los planos de las placas impresas y, finalmente, el ensamblaje definitivo del sistema.
+Esta sección detalla el aspecto físico final del dispositivo. Primero se presenta el circuito de alimentación del módulo de captura y la primera versión pensada para el módulo central, que utilizaba la placa \emph{ESP32-CYD}. Luego se muestran los planos de las placas impresas y, finalmente, el ensamblaje definitivo del sistema.
 
 \subsection{Circuitos}
 
-La sección anterior explicó en detalle los componentes utilizados en la etapa de alimentación. A continuación, en la figura \ref{esquemacapturador}, se ilustra la totalidad de las conexiones para el bloque capturador.
+La sección anterior explicó en detalle los componentes utilizados en la etapa de alimentación. A continuación, en la figura \ref{esquemacapturador}, se ilustra la totalidad de las conexiones para el módulo de captura.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturador.png}
-    \caption{Esquema de conexiones del circuito capturador}
+    \caption{Esquema de conexiones del circuito del módulo de captura}
     \label{esquemacapturador}
 \end{figure}
 
 El diagrama cuenta con los módulos \emph{TP4056} y \emph{MT3608}, separados por un interruptor para apagar el sistema de forma manual. Además, incorpora el LED infrarrojo y un LED de encendido, ambos con su respectiva resistencia. Se incluye el zócalo para el \emph{ESP32-CAM} y tres capacitores. Estos últimos filtran el ruido eléctrico y suavizan los picos de corriente.
 
-Al utilizar componentes comerciales preensamblados, el esquemático final se reduce al expuesto en la figura \ref{esquemacapturadorsimple}
+Al utilizar componentes comerciales preensamblados, el esquemático final se reduce al expuesto en la figura \ref{esquemacapturadorsimple}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/esquemacapturadorsimple.png}
-    \caption{Esquema simplificado del circuito del módulo capturador}
+    \caption{Esquema simplificado del circuito del módulo de captura}
     \label{esquemacapturadorsimple}
 \end{figure}
 
 El \emph{TP4056} recibe energía por su puerto USB-C, por lo que los pines de entrada se omiten en el diagrama.
 
-Por su parte, el diseño del primer módulo central (Fig. \ref{esquemareceptor})es similar al del capturador, pero sin el indicador de encendido, sin la etapa infrarroja y sin el acople para la cámara.
+Por su parte, el diseño del primer módulo central (Fig. \ref{esquemareceptor}) es similar al del módulo de captura, pero sin el indicador de encendido, sin la etapa infrarroja y sin el acople para la cámara.
 
 \begin{figure}[H]
     \centering
@@ -2407,8 +2426,8 @@ El diseño de la PCB del módulo de captura tuvo en cuenta su montaje dentro de 
     \item 1 bornera de 2 terminales.
     \item 1 bornera de 3 terminales.
     \item Tiras de pines (zócalos hembra) para el acople extraíble del \emph{ESP32-CAM}.
-    \item 1 conector JST SM hembra de 2 pines
-    \item 1 cable JST SM macho de 2 pines (Para LED IR)
+    \item 1 conector JST SM hembra de 2 pines.
+    \item 1 cable JST SM macho de 2 pines (para el LED IR).
     \item 1 placa de circuito impreso (PCB) a medida.
 \end{itemize}
 
@@ -2419,7 +2438,7 @@ A continuación se muestran los planos (\emph{layouts}) de las placas impresas t
     \begin{subfigure}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/layoutcapturador.png}
-        \caption{Módulo capturador}
+        \caption{Módulo de captura}
         \label{layoutcapturador}
     \end{subfigure}
     \hspace{1cm}
@@ -2429,7 +2448,7 @@ A continuación se muestran los planos (\emph{layouts}) de las placas impresas t
         \caption{Módulo central inicial (en desuso)}
         \label{layoutservidor}
     \end{subfigure}
-    \caption{Layouts de las PCB}
+    \caption{\emph{Layouts} de las PCB}
     \label{fig:layouts}
 \end{figure}
 
@@ -2441,13 +2460,13 @@ Estos diseños se imprimieron en placas de cobre de capa simple, se perforaron y
 
 Una vez armados los circuitos, las placas de cada módulo quedan en condiciones de funcionar. Sin embargo, operarlas de forma expuesta resulta incómodo y compromete la integridad física del equipo. Por lo tanto, se diseñó una carcasa impresa en 3D para cada bloque.
 
-Como se observa en la figura \ref{fig:carcasa_captura}, el estuche del módulo capturador posee una abertura rectangular por donde asoma la cámara. Este hueco cuenta con un mecanismo deslizante para ajustar el ángulo de visión e integra otra pieza móvil donde iran adheridas la cámara y el emisor infrarrojo. Además, la estructura incorpora tres ranuras. Una de ellas en donde se inserta el interruptor, otra por la que asoma el LED de encendido, y la última a través de la cual se puede acceder al pin de carga del dispositivo.
+Como se observa en la figura \ref{fig:carcasa_captura}, el estuche del módulo de captura posee una abertura rectangular por donde asoma la cámara. Este hueco cuenta con un mecanismo deslizante para ajustar el ángulo de visión e integra otra pieza móvil donde irán adheridas la cámara y el emisor infrarrojo. Además, la estructura incorpora tres ranuras: una en la que se inserta el interruptor, otra por la que asoma el LED de encendido y la última, a través de la cual se puede acceder al pin de carga del dispositivo.
 
-En un inicio, se consideró incluir un compartimento para la batería de litio. Esta solución concentraba todo el peso en la visera de la gorra. Como consecuencia, la misma tendía a desplazarse hacia adelante, lo que volvía inviable el uso del dispositivo. Por este motivo, se optó por trasladar la batería a la parte trasera de la gorra para mejorar  la distribución del peso.
+En un inicio, se consideró incluir un compartimento para la batería de litio. Esta solución concentraba todo el peso en la visera de la gorra. Como consecuencia, la misma tendía a desplazarse hacia adelante, lo que volvía inviable el uso del dispositivo. Por este motivo, se optó por trasladar la batería a la parte trasera de la gorra para mejorar la distribución del peso.
 
 Por su parte, la cubierta del módulo central inicial presentaba un espacio para insertar la batería de litio y una ventana del tamaño exacto del panel táctil. Contaba además con otros dos orificios: uno para el interruptor y otro para acceder al pin de carga. 
 
-Con el cambio de hardware a la placa \emph{ONX3248G035}, se rediseñó el gabinete (figura \ref{fig:carcasa_onx}), con una disposición similar a la anterior y sus medidas adaptadas a esta nueva placa. Cabe mencionar que la batería se conecta al módulo a través de un conector hembra JST WT de 2 pines, por lo que fue necesario adquirir un conector macho del mismo tipo.
+Con el cambio de \emph{hardware} a la placa \emph{ONX3248G035}, se rediseñó el gabinete (figura \ref{fig:carcasa_onx}), con una disposición similar a la anterior y sus medidas adaptadas a esta nueva placa. Cabe mencionar que la batería se conecta al módulo a través de un conector hembra JST WT de 2 pines, por lo que fue necesario adquirir un conector macho del mismo tipo.
 
 \begin{figure}[H]
     \centering
@@ -2468,7 +2487,8 @@ Con el cambio de hardware a la placa \emph{ONX3248G035}, se rediseñó el gabine
     \label{fig:carcasas}
 \end{figure}
 
-Tras la impresión de las piezas, los circuitos se fijaron en su interior. A continuación, se empleó adhesivo y tiras de velcro (abrojos) para adherir el bloque capturador a la visera de la gorra. El servidor central, en cambio, se mantiene como un elemento portátil e independiente, ideal para la comodidad del examinador, tutor o compañero.
+%Tras la impresión de las piezas, los circuitos se fijaron en su interior. A continuación, se empleó adhesivo y tiras de velcro (abrojos) para adherir el bloque capturador a la visera de la gorra. El servidor central, en cambio, se mantiene como un elemento portátil e independiente, ideal para la comodidad del examinador, tutor o compañero.
+Tras la impresión de las piezas, los circuitos se fijaron en su interior. A continuación, se empleó adhesivo y tiras de velcro (abrojos) para adherir el módulo de captura a la visera de la gorra. El módulo central, en cambio, se mantiene como un elemento portátil e independiente, que el profesor, el tutor o el compañero pueden ubicar donde les resulte cómodo.
 
 \section{Costo total de desarrollo}
 \label{sec:costo_total}
