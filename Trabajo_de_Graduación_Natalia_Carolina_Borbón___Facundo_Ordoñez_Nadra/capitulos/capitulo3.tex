@@ -324,7 +324,7 @@ Las restricciones de diseño limitan la forma en que se construye el dispositivo
 
 El detector ocular es el componente central del sistema. Su función es determinar la dirección de la mirada del alumno a partir de la imagen de su ojo. Los métodos evaluados deben cumplir con dos condiciones fundamentales, que son la rapidez de respuesta y la precisión de la detección.
 
-En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente. Por último, se detalla la solución adoptada.
+En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente (Fig. \ref{fig:localremoto2}). Por último, se detalla la solución adoptada.
 
 \begin{figure}[H]
     \centering
@@ -339,7 +339,7 @@ En esta sección se describe la evolución del detector. Primero se presentan lo
 
 En un principio se estableció que el procesamiento de las imágenes se realizaría en un microcontrolador, mediante una red neuronal artificial de tipo convolucional. Cuando la placa gestiona todas las tareas de detección, se habla de procesamiento local.
  
-Antes de implementar una red neuronal se optó por intentar un método más sencillo. Se consideró que este tipo de modelo podía ser una complicación innecesaria para este problema. Este primer método se desarrolló en el \emph{ESP32-CAM}, una variante de las placas de desarrollo \emph{ESP32} que incluye un módulo para cámaras. En principio, este microcontrolador capturaría y procesaría las imágenes. Sin embargo, al no alcanzar la precisión requerida, se recurrió a las redes neuronales. Para poder ejecutarlas, se lo sustituyó por el \emph{ESP32-S3}.
+Antes de implementar una red neuronal se optó por intentar un método más sencillo. Se consideró que este tipo de modelo podía ser una complicación innecesaria para este problema. Este primer método se desarrolló en el \emph{ESP32-CAM}~\cite{esp32cam}, una variante de las placas de desarrollo \emph{ESP32} que incluye un módulo para cámaras. En principio, este microcontrolador capturaría y procesaría las imágenes. Sin embargo, al no alcanzar la precisión requerida, se recurrió a las redes neuronales. Para poder ejecutarlas, se lo sustituyó por el \emph{ESP32-S3}~\cite{esp32s3}.
  
 Esta última placa se eligió porque su procesador incorpora instrucciones vectoriales diseñadas para acelerar el cómputo de redes neuronales. Dichas instrucciones permiten procesar varios datos en una sola operación. \emph{Espressif} las pone a disposición mediante la biblioteca \emph{ESP-NN}, cuyas funciones optimizadas están orientadas a modelos cuantizados a números enteros de 8 bits (\emph{int8}). La cuantización reduce el tamaño del modelo y el costo de cada operación. Por estos motivos, el \emph{ESP32-S3} resulta una opción adecuada para ejecutar redes neuronales con recursos limitados.
  
@@ -384,6 +384,8 @@ Ante este obstáculo, se decidió cambiar de enfoque. En lugar de aislar objetos
 
 Como la ubicación de este destello suele coincidir con la de la pupila, parecía una alternativa viable para reemplazar el algoritmo anterior por un detector de brillantez.
 
+Esta solución tampoco resultó satisfactoria. Durante las pruebas de seguimiento, se comprobó que el \emph{glint} no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[t]{0.25\textwidth}
@@ -403,15 +405,13 @@ Como la ubicación de este destello suele coincidir con la de la pupila, parecí
     \label{fig:glintpupila}
 \end{figure}
 
-Esta solución tampoco resultó satisfactoria. Durante las pruebas de seguimiento, se comprobó que el \emph{glint} no se desplazaba de la misma forma que la pupila. Su posición relativa dependía estrictamente de la geometría del ojo frente a la fuente de luz (Fig. \ref{fig:glintdesplazado}).
-
 
 Tras estos resultados, se descartó la visión por computadora clásica y se dio paso a las redes neuronales.
 
 
 \subsubsection{Edge Impulse}
 
-Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}. Se trata de un entorno de desarrollo basado en la nube, orientado específicamente al aprendizaje automático con bajos recursos computacionales (Figura \ref{fig:edgeimpulse}). Fue fundada en 2019 con el objetivo de facilitar esta tarea. Su función principal es trasladar el procesamiento desde servidores en la nube directamente al \emph{hardware} local. Además, es una herramienta versátil ya que ofrece compatibilidad con el \emph{framework} de \emph{Arduino}.
+Un primer acercamiento al \emph{TinyML} es la plataforma \emph{Edge Impulse}~\cite{edgeimpulse}. Se trata de un entorno de desarrollo basado en la nube, orientado específicamente al aprendizaje automático con bajos recursos computacionales (Figura \ref{fig:edgeimpulse}). Fue fundada en 2019 con el objetivo de facilitar esta tarea. Su función principal es trasladar el procesamiento desde servidores en la nube directamente al \emph{hardware} local. Además, es una herramienta versátil ya que ofrece compatibilidad con el \emph{framework} de \emph{Arduino}~\cite{arduino_esp32}.
 
 \begin{figure}[H]
     \centering
@@ -456,13 +456,13 @@ El modelo basado en \emph{MobileNetV2 0.1} no se llegó a probar en la placa. Si
 
 \subsubsection{TensorFlow Lite}
 
-Una herramienta muy utilizada en \emph{Machine Learning} es el \emph{framework} de código abierto \emph{TensorFlow} (\emph{TF}). Está diseñado para entrenar y ejecutar modelos de redes neuronales propios o ya existentes. Sin embargo, no está optimizado para correr redes en sistemas con \emph{hardware} limitado como los \emph{ESP32}. Por este motivo, \emph{Google} desarrolló una versión más liviana, llamada \emph{TensorFlow Lite} (\emph{TFLite}). Su variante específica para arquitecturas sin sistema operativo es \emph{TensorFlow Lite for Microcontrollers} (\emph{TFLM}).
+Una herramienta muy utilizada en \emph{Machine Learning} es el \emph{framework} de código abierto \emph{TensorFlow}~\cite{tensorflow} (\emph{TF}). Está diseñado para entrenar y ejecutar modelos de redes neuronales propios o ya existentes. Sin embargo, no está optimizado para correr redes en sistemas con \emph{hardware} limitado como los \emph{ESP32}. Por este motivo, \emph{Google} desarrolló una versión más liviana, llamada \emph{TensorFlow Lite} (\emph{TFLite}). Su variante específica para arquitecturas sin sistema operativo es \emph{TensorFlow Lite for Microcontrollers} (\emph{TFLM}).
 
 %Como siguiente paso, se optó por entrenar un modelo propio utilizando imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque otorga una libertad de personalización absoluta. Permite tener control total sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia exacta de compresión y exportación. Esta independencia resulta vital para adaptar el modelo a las limitaciones del microcontrolador y además se elimina la sobrecarga de código genérico que suele imponer una plataforma cerrada.
 Como siguiente paso, se optó por entrenar un modelo propio con imágenes capturadas directamente por el \emph{ESP32-CAM}. A diferencia de \emph{Edge Impulse}, que automatiza el proceso pero restringe las decisiones de diseño, este nuevo enfoque ofrece mayor libertad de personalización. Permite tener control sobre cada etapa del flujo de trabajo, como elegir individualmente las capas matemáticas, ajustar los parámetros de entrenamiento o definir la estrategia de compresión y exportación. Esta independencia permite adaptar el modelo a las limitaciones del microcontrolador y eliminar la sobrecarga de código genérico que suele imponer una plataforma cerrada.
 
 
-Para facilitar la creación del modelo, \emph{TensorFlow} incluye \emph{Keras}, una API de alto nivel que simplifica la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab} (Figura \ref{fig:entornogooglecolab2}). Se trata de una plataforma basada en la nube que permite ejecutar código \emph{Python} en \emph{notebooks} interactivos.
+Para facilitar la creación del modelo, \emph{TensorFlow} incluye \emph{Keras}~\cite{keras}, una API de alto nivel que simplifica la programación de la arquitectura neuronal. El entorno de desarrollo seleccionado fue \emph{Google Colab}~\cite{colab} (Figura \ref{fig:entornogooglecolab2}). Se trata de una plataforma basada en la nube que permite ejecutar código \emph{Python} en \emph{notebooks} interactivos.
 
 
 
@@ -509,7 +509,7 @@ A continuación se listan y explican brevemente las etapas de la creación de un
 
 \item Evaluación: se pone a prueba la red con la porción de datos que nunca vio durante el entrenamiento. Se muestran los resultados y el análisis de distintos parámetros estadísticos, como el porcentaje de aciertos, los errores y la muestra con peor desviación.
 
-\item Exportación: se guarda el modelo en un archivo con formato \texttt{.tflite}. Este se utiliza luego en \emph{Visual Studio Code} (con la extensión \emph{PlatformIO}), el entorno en el que se programa el microcontrolador.
+\item Exportación: se guarda el modelo en un archivo con formato \texttt{.tflite}. Este se utiliza luego en \emph{Visual Studio Code} (con la extensión \emph{PlatformIO}~\cite{platformio}), el entorno en el que se programa el microcontrolador.
 
 \end{enumerate}
 
@@ -551,11 +551,13 @@ La principal ventaja de este esquema es la capacidad de procesamiento disponible
 
 Al mover la detección al dispositivo cliente, la aceleración de redes neuronales que ofrece el \emph{ESP32-S3} dejó de ser necesaria. Por lo tanto, se volvió a utilizar el \emph{ESP32-CAM} para la captura de imágenes.
 
-A continuación se desarrollan los dos métodos evaluados, que son las redes neuronales preentrenadas \emph{MediaPipe} y \emph{WebGazer}, y \emph{OpenCV} con la Transformada de Hough.
+A continuación se desarrollan los dos métodos evaluados, que son las redes neuronales preentrenadas \emph{MediaPipe}~\cite{mediapipe} y \emph{WebGazer}~\cite{webgazer}, y \emph{OpenCV} con la Transformada de Hough~\cite{opencv_features,opencv_houghcircles}.
 
 \subsubsection{MediaPipe y WebGazer}
 
 La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una red neuronal preentrenada para la detección de la mirada. Dos alternativas consideradas fueron \emph{MediaPipe} (un conjunto de bibliotecas provisto por \emph{Google}) y \emph{WebGazer} (un modelo desarrollado en el ámbito académico). Ambas son herramientas basadas en tecnologías web que evitaban las limitaciones de procesamiento del microcontrolador. Sin embargo, fueron descartadas debido a dos inconvenientes.
+
+Por un lado, las dos requieren que la imagen abarque el rostro completo. \emph{MediaPipe} identifica puntos de referencia en toda la cara (Fig. \ref{fig:deteccion_rostro_mediapipe}). \emph{WebGazer}, si bien está diseñado específicamente para estimar la mirada, ubica los ojos mediante el detector facial de \emph{MediaPipe} (Fig. \ref{fig:deteccion_rostro_webgazer}). En consecuencia, en ambos casos los ojos ocupan una cantidad reducida de píxeles. Para medir con precisión sus variaciones, se requiere una mayor resolución de imagen.
 
 \begin{figure}[H]
     \centering
@@ -570,8 +572,6 @@ La mayor capacidad de procesamiento del dispositivo cliente permite utilizar una
     \caption{Facciones del rostro en \emph{WebGazer}}
     \label{fig:deteccion_rostro_webgazer}
 \end{figure}
-
-Por un lado, las dos requieren que la imagen abarque el rostro completo. \emph{MediaPipe} identifica puntos de referencia en toda la cara. \emph{WebGazer}, si bien está diseñado específicamente para estimar la mirada, ubica los ojos mediante el detector facial de \emph{MediaPipe}. En consecuencia, en ambos casos los ojos ocupan una cantidad reducida de píxeles. Para medir con precisión sus variaciones, se requiere una mayor resolución de imagen.
 
 Esta mayor resolución puede obtenerse de dos formas. La primera es aumentar la resolución de captura del \emph{ESP32-CAM}, lo que implica un mayor tráfico de imágenes entre el microcontrolador y el dispositivo cliente. La segunda es derivar la captura a la cámara integrada del dispositivo cliente. Sin embargo, esto haría que la detección dependiera del equipo utilizado. Cada equipo cliente posee una cámara con propiedades distintas, cuya resolución, ubicación, distancia focal e inclinación varían de un modelo a otro. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial. Un dispositivo propio, que mantiene siempre su cámara en una posición fija respecto al ojo, evita este problema.
 
@@ -588,6 +588,12 @@ Las pruebas de este método se realizaron con un \emph{script} de \emph{Python} 
 Para aprovechar al máximo las capacidades de \emph{OpenCV}, se decidió complementarlo con la Transformada de Hough, un método clásico de extracción de características en el análisis de imágenes digitales. Su variante para círculos, conocida como \emph{HoughCircles} en \emph{OpenCV}, analiza los bordes detectados en un fotograma mediante un sistema matemático de votación. El algoritmo busca conjuntos de píxeles que compartan una curvatura y se encuentren a una distancia constante (el radio) de un posible punto central. Si suficientes píxeles votan por el mismo centro, el algoritmo confirma la existencia de un círculo en esa región. En este contexto, el círculo corresponde al iris del ojo, y las coordenadas de la pupila se obtienen al calcular la ubicación del centro de dicho círculo.
 
 Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (preprocesamiento) para limpiar la imagen de ruido digital y prepararla para el análisis. A continuación se aplica la función de círculos de Hough. Cuando se detecta el contorno del iris, los resultados se grafican sobre la imagen a modo de depuración visual. Un trazo verde delimita la circunferencia detectada y un punto rojo en su centro representa las coordenadas de la pupila (Fig. \ref{fig:houghfuncionando}).
+
+Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica para el alumno.
+
+Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
+
+Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real (Fig. \ref{fig:houghfalso}), por lo que esta solución se descartó.
 
 \begin{figure}[H]
     \centering
@@ -614,12 +620,6 @@ Una vez recibido el fotograma, \emph{OpenCV} realiza un filtrado espacial (prepr
     \caption{Detección del iris con el método de círculos de Hough}
     \label{fig:hough}
 \end{figure}
-
-Aquí surge un problema importante. La función de círculos de Hough está diseñada para detectar circunferencias perfectas, y el iris humano no siempre se presenta como tal frente a la cámara. Con frecuencia, los párpados ocluyen una parte superior o inferior y alteran su geometría circular (Fig. \ref{fig:houghcerrado}). Esto implicaría que el usuario debería forzar permanentemente sus músculos oculares para mantener los ojos abiertos de forma antinatural y así garantizar el correcto funcionamiento del sistema. Esta situación resulta poco práctica para el alumno.
-
-Una posible solución consiste en disminuir la exigencia de \emph{OpenCV} para que tolere ciertas deformaciones, como arcos incompletos o formas elípticas, y no detecte únicamente círculos perfectos. Sin embargo, esto genera un problema secundario grave. El algoritmo se vuelve demasiado permisivo y registra falsos positivos al detectar curvas en párpados, cejas, arrugas y otras facciones del rostro.
-
-Ambos problemas presentan un compromiso técnico recíproco, ya que si se intenta reducir uno, el otro empeora. Se realizaron sucesivas pruebas con herramientas complementarias, como umbrales de radio y detectores de brillantez y oscuridad apoyados por el LED infrarrojo. Aun así, la precisión alcanzada no resultó adecuada para un seguidor ocular en tiempo real (Fig. \ref{fig:houghfalso}), por lo que esta solución se descartó.
 
 
 \subsubsection{Conclusión del procesamiento remoto por coordenadas}
@@ -679,7 +679,7 @@ Con el sistema en funcionamiento, el \emph{ESP32-CAM} captura el ojo en tiempo r
 
 Luego de tomar la imagen, se envía al dispositivo cliente a través de la red local. Allí se realiza todo el procesamiento de las imágenes.
 
-Antes de la comparación, cada fotograma se acondiciona. Primero se recorta internamente a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
+Antes de la comparación, cada fotograma se acondiciona. Primero se recorta internamente a un tamaño de 128x128 píxeles (región de interés), y luego se cambia su formato a escala de grises. Ambos pasos reducen la carga del procesamiento posterior. El recorte es más grande que las plantillas (Fig. \ref{fig:streamconysinir}) por un motivo que se explica en la siguiente etapa. Con el mismo fin, la tasa de análisis se limita a 15 fotogramas por segundo (FPS). Experimentalmente, esta frecuencia resultó suficiente para lograr una interacción fluida en tiempo real sin sobrecargar el dispositivo cliente.
 
 \begin{figure}[H]
     \centering
@@ -700,7 +700,7 @@ El barrido compensa los errores de posicionamiento entre el ojo y la cámara. Si
 
 De la matriz de resultados de cada plantilla se toma el coeficiente más alto, que corresponde a la posición de mayor coincidencia. Este proceso se repite con las seis plantillas. La plantilla con el mayor de los seis valores indica la acción que realiza el alumno.
 
-En las pruebas también se detectaron falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para reducir este efecto se incorporó un umbral de similitud, por debajo del cual toda coincidencia se descarta. A partir de los ensayos, el umbral se fijó por defecto en un 80\%, y el usuario puede ajustarlo desde la interfaz web (Fig. \ref{fig:slider}). Con esta medida, el problema quedó resuelto.
+En las pruebas también se detectaron falsos positivos. En ocasiones, el algoritmo resultaba demasiado permisivo y confundía las orientaciones del ojo. Para reducir este efecto se incorporó un umbral de similitud, por debajo del cual toda coincidencia se descarta. A partir de los ensayos, el umbral se fijó por defecto en un 80\%, y el usuario puede ajustarlo desde la interfaz web (Fig. \ref{fig:sliderconir}). Con esta medida, el problema quedó resuelto.
 
 \begin{figure}[H]
     \centering
@@ -858,7 +858,7 @@ En la presente subsección, la placa y la cámara del módulo de captura se anal
 
 \subsubsection{Placa}
 
-El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos. Sin embargo, no dispone de un puerto USB, por lo que la carga del \emph{firmware} requiere una placa programadora externa.
+El módulo de captura se implementa con la placa \emph{ESP32-CAM} (Fig. \ref{fig:esp32cam}). Esta combina un microcontrolador \emph{ESP32} con una interfaz para cámara y se vende junto con el módulo \emph{OV2640}~\cite{ov2640}. También incorpora una memoria PSRAM de 4 MB, que permite almacenar los fotogramas antes de transmitirlos. Sin embargo, no dispone de un puerto USB, por lo que la carga del \emph{firmware} requiere una placa programadora externa.
 
 \begin{figure}[H]
     \centering
@@ -960,7 +960,7 @@ La \emph{ESP32-CYD} se utilizó durante la mayor parte del desarrollo, y con ell
 
 \subsubsection{Placa adoptada}
 
-La placa que se utilizó en el sistema definitivo es la \emph{ONX3248G035} (Fig. \ref{fig:onx3248g035}), perteneciente a la línea \emph{Open Nextion} de la empresa \emph{ITEAD}. Se basa en el microcontrolador \emph{ESP32-S3}, con una memoria flash de 16 MB y una memoria PSRAM de 8 MB. Integra una pantalla táctil capacitiva de 3,5 pulgadas y una ranura para tarjeta microSD. También incorpora un circuito de carga para batería de litio, que se describe en la sección \ref{sec:alimentacion}. Su costo es de 25 USD a octubre de 2026.
+La placa que se utilizó en el sistema definitivo es la \emph{ONX3248G035}~\cite{nextion_onx} (Fig. \ref{fig:onx3248g035}), perteneciente a la línea \emph{Open Nextion} de la empresa \emph{ITEAD}. Se basa en el microcontrolador \emph{ESP32-S3}, con una memoria flash de 16 MB y una memoria PSRAM de 8 MB. Integra una pantalla táctil capacitiva de 3,5 pulgadas y una ranura para tarjeta microSD. También incorpora un circuito de carga para batería de litio, que se describe en la sección \ref{sec:alimentacion}. Su costo es de 25 USD a octubre de 2026.
 
 \begin{figure}[H]
     \centering
@@ -2010,7 +2010,7 @@ La interfaz se organiza en cuatro vistas. Tres de ellas forman parte de un conte
 \apartado{Bienvenida}
 
 %Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección levi.local. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, se lo guardó como una imagen ya generada en blanco y negro y ubicada en la memoria flash. Generarlo con una biblioteca al iniciar el equipo habría ocupado RAM, tanto para el cálculo como para la imagen resultante.
-Es la primera vista que se muestra al encender el equipo ya configurado. Presenta un mensaje de bienvenida y un código QR que contiene la dirección \texttt{levi.local}. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, no tenía sentido generarlo en cada encendido. Por eso, se lo guardó en la memoria flash como una imagen ya generada en blanco y negro. Generarlo al iniciar el equipo, además, habría ocupado RAM de forma innecesaria.
+Es la primera vista que se muestra al encender el equipo ya configurado (figura \ref{vistabienvenida}). Presenta un mensaje de bienvenida y un código QR que contiene la dirección \texttt{levi.local}. Al escanearlo con un teléfono, el navegador abre directamente la aplicación, sin necesidad de escribir la dirección. Como el contenido del código no cambia, no tenía sentido generarlo en cada encendido. Por eso, se lo guardó en la memoria flash como una imagen ya generada en blanco y negro. Generarlo al iniciar el equipo, además, habría ocupado RAM de forma innecesaria.
 
 \begin{figure}[H]
     \centering
@@ -2022,7 +2022,7 @@ Es la primera vista que se muestra al encender el equipo ya configurado. Present
 
 \apartado{Estado del sistema}
 
-Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección \ref{sec:red_wifi}.
+Al deslizar la pantalla se accede a un panel de supervisión (figura \ref{vistaestado}). Este muestra el nombre del alumno, el del usuario conectado al panel, el estado de la cámara y la cantidad de dispositivos conectados a la red. Los dos últimos datos se obtienen según lo descrito en la sección \ref{sec:red_wifi}.
 
 \begin{figure}[H]
     \centering
@@ -2034,7 +2034,7 @@ Al deslizar la pantalla se accede a un panel de supervisión. Este muestra el no
 
 \apartado{Examen}
 
-La tercera vista permite seguir el examen desde el propio módulo central. Mientras no haya un cuestionario en curso muestra un mensaje de espera. Durante el examen presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
+La tercera vista permite seguir el examen desde el propio módulo central (figura \ref{vistaexamen}). Mientras no haya un cuestionario en curso muestra un mensaje de espera. Durante el examen presenta el título del cuestionario y el progreso del alumno, expresado como la pregunta actual sobre el total. Al finalizar muestra el resultado, que incluye el puntaje necesario para aprobar, el obtenido sobre el máximo posible, el tiempo empleado y si el alumno aprobó. Después de unos segundos, la vista vuelve sola a la espera.
 
 %\keyword{(Imágenes de la vista de examen en espera, en curso y finalizado)}
 
@@ -2063,7 +2063,7 @@ La tercera vista permite seguir el examen desde el propio módulo central. Mient
 
 \apartado{Configuración inicial}
 
-Esta vista aparece solo cuando la NVS no contiene los datos de configuración, como ocurre en el primer encendido del equipo. En ella se ingresan el nombre del alumno y las claves maestras de profesores y tutores. Para escribirlos, la interfaz despliega un teclado virtual. Las claves se muestran ocultas, aunque un botón permite verlas, y no es posible continuar con campos vacíos. Al guardar, los datos se almacenan en la NVS y el equipo se reinicia para cargar las vistas habituales.
+Esta vista aparece solo cuando la NVS no contiene los datos de configuración, como ocurre en el primer encendido del equipo (figura \ref{vistaconfiguracion}). En ella se ingresan el nombre del alumno y las claves maestras de profesores y tutores. Para escribirlos, la interfaz despliega un teclado virtual. Las claves se muestran ocultas, aunque un botón permite verlas, y no es posible continuar con campos vacíos. Al guardar, los datos se almacenan en la NVS y el equipo se reinicia para cargar las vistas habituales.
 
 %\keyword{(Imagen de la vista de configuración inicial)}
 
@@ -2220,7 +2220,7 @@ Estos valores empíricos sirvieron como base teórica para diseñar el circuito 
 Para cumplir los requisitos, se evaluaron tres métodos de alimentación. Todos utilizan celdas de litio 18650 de 3000 mAh (tensión nominal de 3,7 V). 
 
 %La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117} para ajustar el nivel de tensión a 3,3 voltios estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados: un regulador de carga (\emph{TP4056}) y un elevador te tensión (\emph{MT3608}). El primero de ellos sirve para recargar baterías de litio y protegerla durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentarán directamente el microcontrolador. Por último, el tercer método combina la recarga, protección y regulación en un solo integrado (\emph{IP5306}).
-La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117}, para ajustar el nivel de tensión a 3,3 V estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados, un cargador (\emph{TP4056}) y un elevador de tensión (\emph{MT3608}). El primero recarga la batería de litio y la protege durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentan directamente el microcontrolador. Por último, el tercer método combina la recarga, la protección y la regulación en un solo integrado (\emph{IP5306}).
+La primera alternativa consiste en utilizar un regulador lineal de tensión de baja caída (LDO), como el \emph{AMS1117}, para ajustar el nivel de tensión a 3,3 V estables. Para recargar la batería se utiliza un cargador externo comercial. La segunda alternativa utiliza dos módulos separados, un cargador (\emph{TP4056}~\cite{tp4056}) y un elevador de tensión (\emph{MT3608}~\cite{mt3608}). El primero recarga la batería de litio y la protege durante su uso. El segundo regula el nivel de tensión para obtener 5 V estables que alimentan directamente el microcontrolador. Por último, el tercer método combina la recarga, la protección y la regulación en un solo integrado (\emph{IP5306}).
 
 %Para seleccionar el circuito definitivo se tendrán en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{Dropout}), su capacidad para cargar el dispositivo a la vez que se lo utiliza, sus limitaciones, disponibilidad y costo económico. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
 Para seleccionar el circuito definitivo se tuvieron en cuenta aspectos como la caída de tensión entre la entrada y la salida (\emph{dropout}), la capacidad para cargar el dispositivo a la vez que se lo utiliza, las limitaciones, la disponibilidad y el costo. La tabla \ref{tab:comparativa_alimentacion} resume estos parámetros.
@@ -2431,7 +2431,7 @@ El diseño de la PCB del módulo de captura tuvo en cuenta su montaje dentro de 
     \item 1 placa de circuito impreso (PCB) a medida.
 \end{itemize}
 
-A continuación se muestran los planos (\emph{layouts}) de las placas impresas trazados mediante el \emph{software} web \emph{EasyEDA}.
+A continuación se muestran los planos (\emph{layouts}) de las placas impresas trazados mediante el \emph{software} web \emph{EasyEDA} (figura \ref{fig:layouts}).
 
 \begin{figure}[H]
     \centering

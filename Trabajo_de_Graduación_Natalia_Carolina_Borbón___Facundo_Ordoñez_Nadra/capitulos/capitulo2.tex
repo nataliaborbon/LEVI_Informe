@@ -12,7 +12,7 @@ En este capítulo se exploran en términos muy generales los distintos conceptos
 
 \section{Seguimiento Ocular y Visión por Computadora}
 
-El seguimiento ocular puede realizarse de distintas formas, entre ellas mediante la visión por computadora. Esta disciplina se complementa con el procesamiento de imágenes, y una de las bibliotecas más utilizadas para trabajar con ambos es \emph{OpenCV}. Entre las técnicas que ofrece esta biblioteca se encuentra la coincidencia de patrones. Las redes neuronales artificiales, por su parte, constituyen otro enfoque posible dentro de la misma disciplina. Primero se presentan los conceptos generales. Luego se describen \emph{OpenCV} junto con la coincidencia de patrones y, por último, las redes neuronales artificiales.
+El seguimiento ocular puede realizarse de distintas formas, entre ellas mediante la visión por computadora. Esta disciplina se complementa con el procesamiento de imágenes, y una de las bibliotecas más utilizadas para trabajar con ambos es \emph{OpenCV}~\cite{opencv_docs}. Entre las técnicas que ofrece esta biblioteca se encuentra la coincidencia de patrones~\cite{wiki_template_matching,opencv_template_matching}. Las redes neuronales artificiales~\cite{xeridia_rna}, por su parte, constituyen otro enfoque posible dentro de la misma disciplina. Primero se presentan los conceptos generales. Luego se describen \emph{OpenCV} junto con la coincidencia de patrones y, por último, las redes neuronales artificiales.
 
 \subsection{Conceptos generales}
 
@@ -132,7 +132,7 @@ Esta matriz permite obtener no solo la ubicación de la coincidencia con la plan
 
 \subsection{Redes neuronales artificiales}
 
-Las redes neuronales artificiales son un tipo de modelo de aprendizaje automático, conocido en inglés como \emph{Machine Learning}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
+Las redes neuronales artificiales son un tipo de modelo de aprendizaje automático, conocido en inglés como \emph{Machine Learning}~\cite{xeridia_ml}. Esta rama de las ciencias de la computación permite a los sistemas aprender y resolver problemas sin ser programados de forma tradicional. El proceso consiste en suministrar datos a una computadora para que construya un modelo predictivo basado en esa experiencia (Fig. \ref{fig:machinelearning}).
 
 \begin{figure}[H]
 \centering
@@ -225,7 +225,7 @@ En función de los requerimientos de este proyecto, se planteó como hipótesis 
 
 \section{Sistemas Embebidos y Control Gráfico}
 
-Los sistemas embebidos suelen construirse en torno a un microcontrolador, como los de la familia \emph{ESP32}. Para mostrar interfaces gráficas con sus recursos limitados existen bibliotecas como \emph{LVGL}. Primero se presentan los microcontroladores y luego las interfaces gráficas embebidas. 
+Los sistemas embebidos suelen construirse en torno a un microcontrolador, como los de la familia \emph{ESP32}~\cite{esp32_datasheet}. Para mostrar interfaces gráficas con sus recursos limitados existen bibliotecas como \emph{LVGL}~\cite{lvgl}. Primero se presentan los microcontroladores y luego las interfaces gráficas embebidas. 
 
 \subsection{Microcontroladores y familia ESP32}
 
@@ -278,7 +278,7 @@ Las redes locales Wi-Fi son uno de los medios por los que pueden comunicarse los
 
 \subsection{Redes locales Wi-Fi}
 
-El estándar IEEE 802.11, conocido comúnmente como Wi-Fi, define los protocolos para la implementación de redes de área local inalámbricas (WLAN). La topología de estas redes se estructura a través de dos modos de operación:
+El estándar IEEE 802.11~\cite{ieee80211}, conocido comúnmente como Wi-Fi, define los protocolos para la implementación de redes de área local inalámbricas (WLAN). La topología de estas redes se estructura a través de dos modos de operación:
 
 \begin{itemize}
     \item Modo Estación (\emph{Station} - STA): en esta configuración, el nodo inalámbrico actúa como cliente. Su función consiste en explorar el espectro de radiofrecuencia y detectar una red existente a través de su identificador (SSID). Luego se autentica mediante los protocolos de seguridad correspondientes (como WPA2/WPA3) y se asocia a un punto de acceso central para integrarse al tráfico de dicha red.
@@ -296,7 +296,7 @@ En el marco de este trabajo, uno de los módulos del sistema se configura en mod
 
 \subsection{Protocolos de comunicación y transmisión de video}
 
-La comunicación en una red de datos se rige por protocolos que definen cómo se estructura, transmite y recibe la información. Estos protocolos se organizan en cuatro capas, según el modelo TCP/IP (Fig. \ref{fig:tcpip}). La capa de acceso a la red transmite los datos a través del medio físico, como por ejemplo las redes Wi-Fi presentadas anteriormente. Sobre ella, la capa de Internet identifica a cada dispositivo y dirige los datos hacia su destino. La capa de transporte organiza el intercambio de datos entre los programas de cada equipo. Por último, la capa de aplicación reúne los protocolos que utilizan directamente esos programas. Cada capa se apoya en los servicios de la inferior.
+La comunicación en una red de datos se rige por protocolos que definen cómo se estructura, transmite y recibe la información. Estos protocolos se organizan en cuatro capas, según el modelo TCP/IP~\cite{saade_tcpip} (Fig. \ref{fig:tcpip}). La capa de acceso a la red transmite los datos a través del medio físico, como por ejemplo las redes Wi-Fi presentadas anteriormente. Sobre ella, la capa de Internet identifica a cada dispositivo y dirige los datos hacia su destino. La capa de transporte organiza el intercambio de datos entre los programas de cada equipo. Por último, la capa de aplicación reúne los protocolos que utilizan directamente esos programas. Cada capa se apoya en los servicios de la inferior.
 
 \begin{itemize}
     \item Protocolo IP (\textit{Internet Protocol}): estructura los datos en paquetes que contienen las direcciones de origen y destino para su entrega en la red. Estas direcciones identifican a cada dispositivo de manera unívoca. En redes locales, la dirección de cada dispositivo se establece mediante dos modalidades:
@@ -313,11 +313,11 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
 
     \item Protocolo DHCP (\textit{Dynamic Host Configuration Protocol}): asigna de forma automática una dirección IP disponible a cada equipo que se asocia a la red, lo que agiliza la incorporación de nuevos dispositivos sin requerir configuraciones individuales. Se apoya en UDP.
 
-    \item Protocolo mDNS (\textit{Multicast Domain Name System}): permite que los dispositivos de una red local se identifiquen mediante nombres de dominio legibles por humanos, en lugar de direcciones IP numéricas. A diferencia del sistema DNS tradicional, no requiere un servidor de nombres. El equipo envía la consulta a toda la red local, y responde aquel que tiene asignado ese nombre. Se apoya en UDP.
+    \item Protocolo mDNS (\textit{Multicast Domain Name System})~\cite{rfc6762}: permite que los dispositivos de una red local se identifiquen mediante nombres de dominio legibles por humanos, en lugar de direcciones IP numéricas. A diferencia del sistema DNS tradicional, no requiere un servidor de nombres. El equipo envía la consulta a toda la red local, y responde aquel que tiene asignado ese nombre. Se apoya en UDP.
 
-    \item Protocolo HTTP (\textit{Hypertext Transfer Protocol}): opera bajo el modelo cliente-servidor mediante un esquema de peticiones y respuestas. Se apoya en TCP, lo que asegura que la información no sufra pérdidas ni alteraciones. A través de este mecanismo se transfieren páginas web, estilos y datos estructurados. Estos últimos suelen enviarse en formato JSON (\emph{JavaScript Object Notation}). Este formato organiza la información como texto, en pares que asocian un nombre con un valor. Además, admite listas y permite agrupar elementos dentro de otros. Al tratarse de texto plano, programas escritos en lenguajes distintos pueden generarlo e interpretarlo sin dificultad.
+    \item Protocolo HTTP (\textit{Hypertext Transfer Protocol})~\cite{rfc9110}: opera bajo el modelo cliente-servidor mediante un esquema de peticiones y respuestas. Se apoya en TCP, lo que asegura que la información no sufra pérdidas ni alteraciones. A través de este mecanismo se transfieren páginas web, estilos y datos estructurados. Estos últimos suelen enviarse en formato JSON (\emph{JavaScript Object Notation})~\cite{rfc8259}. Este formato organiza la información como texto, en pares que asocian un nombre con un valor. Además, admite listas y permite agrupar elementos dentro de otros. Al tratarse de texto plano, programas escritos en lenguajes distintos pueden generarlo e interpretarlo sin dificultad.
 
-    \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia ininterrumpida de fotogramas JPEG independientes delimitados por un separador. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
+    \item Transmisión continua de video (\textit{Streaming} MJPEG): en lugar de realizar una petición HTTP por cada imagen, la técnica MJPEG (\textit{Motion} JPEG) mantiene una única conexión abierta para enviar una secuencia ininterrumpida de fotogramas JPEG independientes delimitados por un separador~\cite{rfc2046,whatwg_mixed_replace}. El cliente actualiza la imagen en pantalla a medida que recibe cada cuadro. De este modo, se logra una visualización de video fluida en tiempo real.
 \end{itemize}
 
 \begin{figure}[H]
@@ -347,7 +347,7 @@ La comunicación en una red de datos se rige por protocolos que definen cómo se
 
 \section{Arquitectura de una aplicación web}
 
-En el desarrollo de \emph{software}, las aplicaciones web suelen combinar el modelo cliente/servidor con el patrón MVC. Con este enfoque, la aplicación se divide en tres partes, que son el \emph{frontend}, el \emph{backend} y la base de datos. En esta sección se explican primero el modelo cliente/servidor y el patrón MVC, y luego cada una de estas tres partes.
+En el desarrollo de \emph{software}, las aplicaciones web suelen combinar el modelo cliente/servidor con el patrón MVC~\cite{wiki_mvc}. Con este enfoque, la aplicación se divide en tres partes, que son el \emph{frontend}, el \emph{backend} y la base de datos. En esta sección se explican primero el modelo cliente/servidor y el patrón MVC, y luego cada una de estas tres partes.
 
 \subsection{Modelo Cliente/Servidor}
 
@@ -398,9 +398,9 @@ El \emph{frontend} opera como la Vista del patrón MVC. Presenta la interfaz gr�
 Al solicitar la aplicación, el navegador descarga un conjunto de archivos que procesa localmente para generar la interfaz. Esta tarea se apoya en tres tecnologías complementarias (Fig. \ref{fig:arquitecturaweb2}):
 
 \begin{itemize}
-    \item HTML (\textit{HyperText Markup Language}, lenguaje de marcado de hipertexto): define la estructura y el contenido del documento. Mediante etiquetas, especifica qué función cumple cada elemento en la interfaz (títulos, bloques de texto, botones o casillas para ingresar datos) y los organiza en un orden lógico que el navegador interpreta para armar la pantalla.
-    \item CSS (\textit{Cascading Style Sheets}, hojas de estilo en cascada): controla el aspecto visual y la ubicación de los elementos definidos por HTML. Aplica reglas para establecer colores, tipografías, tamaños y espacios. También organiza cómo se distribuyen los bloques en la pantalla. De este modo, la interfaz se adapta al tamaño del dispositivo.
-    \item \emph{JavaScript}: es el lenguaje de programación que se ejecuta directamente en el navegador. Mientras que el HTML define qué elementos existen y el CSS define cómo se ven, \emph{JavaScript} hace que la página responda a las acciones del usuario. Detecta eventos como clics o el envío de un formulario y altera el contenido en pantalla en tiempo real según esa interacción. Además, se comunica con el servidor para intercambiar información mientras la aplicación está en uso.
+    \item HTML (\textit{HyperText Markup Language}, lenguaje de marcado de hipertexto)~\cite{mdn_html}: define la estructura y el contenido del documento. Mediante etiquetas, especifica qué función cumple cada elemento en la interfaz (títulos, bloques de texto, botones o casillas para ingresar datos) y los organiza en un orden lógico que el navegador interpreta para armar la pantalla.
+    \item CSS (\textit{Cascading Style Sheets}, hojas de estilo en cascada)~\cite{mdn_css}: controla el aspecto visual y la ubicación de los elementos definidos por HTML. Aplica reglas para establecer colores, tipografías, tamaños y espacios. También organiza cómo se distribuyen los bloques en la pantalla. De este modo, la interfaz se adapta al tamaño del dispositivo.
+    \item \emph{JavaScript}~\cite{mdn_js}: es el lenguaje de programación que se ejecuta directamente en el navegador. Mientras que el HTML define qué elementos existen y el CSS define cómo se ven, \emph{JavaScript} hace que la página responda a las acciones del usuario. Detecta eventos como clics o el envío de un formulario y altera el contenido en pantalla en tiempo real según esa interacción. Además, se comunica con el servidor para intercambiar información mientras la aplicación está en uso.
 \end{itemize}
 
 \begin{figure}[H]
@@ -414,7 +414,7 @@ A medida que una aplicación suma pantallas y funciones, mantener el código fue
 
 Bajo este modelo, el código fuente se divide en múltiples archivos modulares que se importan y articulan en un archivo principal. La única relación de dependencia entre componentes se da cuando uno contiene a otro. En esa situación, únicamente el componente padre puede alterar el estado del hijo. Esta estructura ofrece una fácil reusabilidad de elementos. Además, garantiza la modularidad y el aislamiento de fallos. Es decir, si un componente específico presenta un error, no compromete el funcionamiento del programa en su totalidad.
 
-Existen diversas herramientas disponibles para implementar este esquema, entre las cuales destaca \emph{React}, una biblioteca de \emph{JavaScript} creada y mantenida por \emph{Meta}. Está enfocada en la construcción de interfaces de usuario mediante componentes reutilizables. Por otra parte, \emph{Preact} se presenta como una alternativa más ligera y eficiente para entornos con recursos limitados. Creada por una comunidad independiente, esta herramienta ofrece las mismas capacidades de desarrollo que \emph{React}, pero omite características accesorias, lo que reduce el peso del empaquetado final. En consecuencia, disminuye el tamaño de los archivos estáticos que el microcontrolador debe alojar en su memoria y transferir posteriormente al navegador al momento de utilizar la interfaz.
+Existen diversas herramientas disponibles para implementar este esquema, entre las cuales destaca \emph{React}, una biblioteca de \emph{JavaScript} creada y mantenida por \emph{Meta}. Está enfocada en la construcción de interfaces de usuario mediante componentes reutilizables. Por otra parte, \emph{Preact}~\cite{preact} se presenta como una alternativa más ligera y eficiente para entornos con recursos limitados. Creada por una comunidad independiente, esta herramienta ofrece las mismas capacidades de desarrollo que \emph{React}, pero omite características accesorias, lo que reduce el peso del empaquetado final. En consecuencia, disminuye el tamaño de los archivos estáticos que el microcontrolador debe alojar en su memoria y transferir posteriormente al navegador al momento de utilizar la interfaz.
 
 
 %Para implementar este esquema se suele utilizar \emph{React}, una biblioteca orientada a componentes, o en su defecto \emph{Preact},  que ofrece las mismas capacidades de desarrollo pero con una sobrecarga mucho menor. Al prescindir de funciones accesorias innecesarias, el empaquetado final resulta significativamente más liviano, lo que reduce el tamaño de los archivos que el microcontrolador debe almacenar y transferir hacia el navegador al momento de servir la interfaz.
@@ -450,7 +450,7 @@ Las peticiones que atienden los Controladores llegan a través de una interfaz d
 
 Por su parte, cada respuesta incluye un código de estado numérico que informa el resultado. Los códigos de la serie 200 indican que la operación se completó con éxito. Los de la serie 400 señalan un error en la petición enviada por el cliente. Por último, los de la serie 500 indican una falla del servidor.
 
-Para permitir el acceso, el \emph{backend} verifica la contraseña de cada usuario. Por seguridad, las contraseñas no se almacenan en texto plano, sino que se les aplica una función de \emph{hash}. Esta función convierte un dato de cualquier longitud en una cadena de tamaño fijo. El proceso es irreversible, por lo que a partir del resultado no es posible conocer el dato original. Además, una misma entrada produce siempre el mismo resultado, y un cambio mínimo genera uno completamente distinto. Uno de los algoritmos más utilizados es SHA-256 (\emph{Secure Hash Algorithm}), que produce resultados de 256 bits.
+Para permitir el acceso, el \emph{backend} verifica la contraseña de cada usuario. Por seguridad, las contraseñas no se almacenan en texto plano, sino que se les aplica una función de \emph{hash}. Esta función convierte un dato de cualquier longitud en una cadena de tamaño fijo. El proceso es irreversible, por lo que a partir del resultado no es posible conocer el dato original. Además, una misma entrada produce siempre el mismo resultado, y un cambio mínimo genera uno completamente distinto. Uno de los algoritmos más utilizados es SHA-256 (\emph{Secure Hash Algorithm})~\cite{fips180-4}, que produce resultados de 256 bits.
 
 Antes de aplicar la función, cada contraseña se combina con un \emph{salt}, una cadena aleatoria distinta para cada usuario. El \emph{salt} se almacena junto con el resultado, ya que se necesita para verificar la contraseña más adelante. Cuando el usuario inicia sesión, el \emph{backend} combina la contraseña ingresada con ese mismo \emph{salt}, vuelve a aplicar la función y compara el resultado con el valor almacenado (Fig. \ref{fig:saltedhash}).
 
@@ -507,7 +507,7 @@ En el desarrollo de \emph{software} existen dos formas principales de gestionar 
 
 Un motor de base de datos embebido es una biblioteca de \emph{software} que se integra directamente dentro del mismo código de la aplicación. En este esquema, el motor no se ejecuta como un proceso separado, sino que forma parte del propio ejecutable del sistema.
 
-\emph{SQLite} es un motor de base de datos relacional embebido de código abierto ampliamente utilizado que implementa el estándar SQL. Sus características teóricas esenciales son:
+\emph{SQLite}~\cite{sqlite} es un motor de base de datos relacional embebido de código abierto ampliamente utilizado que implementa el estándar SQL. Sus características teóricas esenciales son:
 
 \begin{itemize}
     \item Arquitectura sin servidor (\emph{Serverless}): los procesos leen y escriben directamente en el soporte de almacenamiento, lo que elimina la necesidad de instalar, configurar y mantener un servidor de base de datos aparte.
