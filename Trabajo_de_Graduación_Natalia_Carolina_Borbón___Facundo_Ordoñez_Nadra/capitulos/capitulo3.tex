@@ -324,11 +324,25 @@ Las restricciones de diseño limitan la forma en que se construye el dispositivo
 
 El detector ocular es el componente central del sistema. Su función es determinar la dirección de la mirada del alumno a partir de la imagen de su ojo. Los métodos evaluados deben cumplir con dos condiciones fundamentales, que son la rapidez de respuesta y la precisión de la detección.
 
-En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador. Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente (Fig. \ref{fig:localremoto2}). Por último, se detalla la solución adoptada.
+En esta sección se describe la evolución del detector. Primero se presentan los métodos evaluados de procesamiento local, que se ejecutan en el propio microcontrolador (Fig. \ref{fig:procesamientolocal}). Luego se exponen los de procesamiento remoto, que corren en el dispositivo cliente (Fig. \ref{fig:procesamientoremoto}). Por último, se detalla la solución adoptada.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{figuras/localremoto2.png}
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/procesamientolocal.png}
+        \caption{Procesamiento local}
+        \label{fig:procesamientolocal}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/procesamientoremoto.png}
+        \caption{Procesamiento remoto}
+        \label{fig:procesamientoremoto}
+    \end{subfigure}
     \caption{Diferencias entre procesamiento local y remoto}
     \label{fig:localremoto2}
 \end{figure}
@@ -437,11 +451,25 @@ A diferencia de las redes tradicionales que calculan coordenadas geométricas co
 
 Bajo este esquema, se eligieron las variantes \emph{MobileNetV2 0.1} y \emph{MobileNetV2 0.35} como redes base para comparar su rendimiento. Si bien la confección del conjunto de datos y el etiquetado inicial se trabajaron mediante cuadros delimitadores (\emph{bounding boxes}), la red extrae de ellos la posición central para su entrenamiento. Finalmente, los modelos resultantes fueron cuantizados al formato \emph{int8}. Esta conversión fue fundamental para reducir el consumo de memoria y aprovechar al máximo la aceleración de \emph{hardware} del \emph{ESP32-S3}.
 
-Antes de cargar cada modelo en la placa, \emph{Edge Impulse} calcula un valor aproximado de su tiempo de inferencia en el \emph{ESP32} clásico. Con \emph{MobileNetV2 0.35}, ese valor rondaba 1 segundo, mientras que con \emph{MobileNetV2 0.1} era cercano a 800 milisegundos (Fig. \ref{fig:edgetiempos}).
+Antes de cargar cada modelo en la placa, \emph{Edge Impulse} calcula un valor aproximado de su tiempo de inferencia en el \emph{ESP32} clásico. Con \emph{MobileNetV2 0.35}, ese valor rondaba 1 segundo (Fig. \ref{fig:edgetiempos035}), mientras que con \emph{MobileNetV2 0.1} era cercano a 800 milisegundos (Fig. \ref{fig:edgetiempos01}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/edgetiempos.png}
+    \begin{subfigure}{0.7\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/edgetiempos035.png}
+        \caption{\emph{MobileNetV2 0.35}}
+        \label{fig:edgetiempos035}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    \begin{subfigure}{0.7\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/edgetiempos01.png}
+        \caption{\emph{MobileNetV2 0.1}}
+        \label{fig:edgetiempos01}
+    \end{subfigure}
     \caption{Tiempo de inferencia estimado por \emph{Edge Impulse} para el \emph{ESP32} clásico}
     \label{fig:edgetiempos}
 \end{figure}
@@ -603,14 +631,14 @@ Ambos problemas presentan un compromiso técnico recíproco, ya que si se intent
         \caption{Detección correcta}
         \label{fig:houghfuncionando}
     \end{subfigure}
-    \hfill
+    \hspace{0.6cm}
     \begin{subfigure}[t]{0.25\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/houghcerrado.png}
         \caption{Fallo por oclusión}
         \label{fig:houghcerrado}
     \end{subfigure}
-    \hfill
+    \hspace{0.6cm}
     \begin{subfigure}[t]{0.25\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/houghfalso.png}
@@ -633,7 +661,7 @@ Las dos alternativas compartían un mismo enfoque, que consistía en detectar co
 
 Para identificar la orientación de la mirada se utilizó \emph{Template Matching}, técnica descrita en el capítulo~\ref{Chapter2}. En este caso, las plantillas son imágenes del ojo del alumno, una por cada una de las seis acciones posibles. Como cada dispositivo está destinado a un único estudiante, las plantillas corresponden siempre a su propio ojo.
 
-Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas, garantiza una iluminación uniforme y mejora el contraste de la imagen.
+Con este método, las sombras que se forman sobre el ojo tienden a ocultar la pupila dentro de una región oscura uniforme. Esto le dificulta al sistema distinguir hacia dónde se mueve. Por este motivo, se vuelve a incorporar el LED IR. Su luz infrarroja borra las sombras indeseadas, garantiza una iluminación uniforme y mejora el contraste de la imagen (Fig. \ref{fig:streamsinir} y \ref{fig:streamconir}).
 
 El algoritmo se ejecuta en el navegador del dispositivo cliente mediante \emph{OpenCV.js}. De esta forma, el detector no requiere instalar ninguna aplicación adicional en el equipo del usuario.
 
@@ -661,7 +689,7 @@ El método requiere, como paso inicial, un proceso de calibración que proporcio
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{figuras/plantillasconir.png}
+    \includegraphics[width=0.85\textwidth]{figuras/plantillasconir.png}
     \caption{Plantillas para comparación}
     \label{fig:plantillasconir}
 \end{figure}
@@ -683,8 +711,20 @@ Antes de la comparación, cada fotograma se acondiciona. Primero se recorta inte
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figuras/streamconysinir.png}
-    \caption{Imagen de 128x128 píxeles con un recuadro de 96x96. Normal y con LED infrarrojo}
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/streamsinir.png}
+        \caption{Sin LED infrarrojo}
+        \label{fig:streamsinir}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}[t]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/streamconir.png}
+        \caption{Con LED infrarrojo}
+        \label{fig:streamconir}
+    \end{subfigure}
+    \caption{Imagen de 128x128 píxeles con un recuadro de 96x96}
     \label{fig:streamconysinir}
 \end{figure}
 
@@ -894,7 +934,7 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
 
 Para seleccionar la cámara se tuvieron en cuenta dos criterios principales. Por un lado, se requería una resolución que permitiera trabajar con imágenes de 320x240 píxeles. Por otro lado, debía tener un campo de visión dentro del rango de entre 60 y 120 grados establecido con anterioridad. Para ello se contaba con múltiples posibilidades, entre ellas, la cámara que se adquiría junto a la compra del \emph{ESP32-CAM}, que contaba con una resolución de 2 megapíxeles y un ángulo de visión de 68°.
 
-Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Sin embargo, adquirir cualquiera de estos modelos implicaba un costo adicional que las pequeñas ventajas expuestas no lograban compensar. Por lo tanto, se concluyó que el uso del modelo incluido por defecto resultaba suficiente. Solo fue necesario retirarle el filtro infrarrojo de fábrica para que lograra registrar la luz del LED IR.
+Se consideraron como alternativas una cámara \emph{OV3660} de 3 megapíxeles, que ofrecía resultados similares, y una variante de la \emph{OV2640} con un conector \emph{flex} de mayor longitud, para permitir mayor flexibilidad a la hora del montaje. Ambos modelos se comercializan con distintos ángulos de visión y longitudes de conector. En la Fig. \ref{fig:ov2640} se presentan algunas versiones de la \emph{OV2640}. Sin embargo, adquirir cualquiera de estos modelos implicaba un costo adicional que las pequeñas ventajas expuestas no lograban compensar. Por lo tanto, se concluyó que el uso del modelo incluido por defecto resultaba suficiente. Solo fue necesario retirarle el filtro infrarrojo de fábrica para que lograra registrar la luz del LED IR.
 
 
 \begin{figure}[H]
@@ -1123,6 +1163,8 @@ La resolución de 320x240 píxeles (QVGA) es uno de los tamaños predefinidos de
 
 La aplicación web solicita el video únicamente durante la calibración y el examen. Al recibir la solicitud, el servidor enciende el LED infrarrojo y descarta los tres primeros fotogramas, que pueden estar desactualizados o tener la exposición sin ajustar. Mientras el dispositivo del alumno mantiene la conexión, el servidor envía el fotograma más reciente de manera continua, con un máximo de 20 por segundo. Como la aplicación procesa 15 por segundo, siempre dispone de uno nuevo. Fuera de esas etapas, la aplicación cierra la conexión, la cámara deja de transmitir y el LED se apaga. Así, no se ocupa la red de forma innecesaria. Si la conexión se interrumpe por otro motivo o fallan diez capturas seguidas, la transmisión también se detiene hasta recibir una nueva solicitud.
 
+Por otra parte, si al encenderse el módulo de captura no logra inicializar la cámara, se reinicia de forma automática a los tres segundos y vuelve a intentarlo. De esta forma, no queda en funcionamiento un servidor que no puede entregar video.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figuras/transmision_video.png}
@@ -1316,7 +1358,7 @@ El estado de un cuestionario solo puede tomar uno de los siguientes valores (Fig
 
 %Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda.
 
-Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda, o de forma automática si el alumno que se había desconectado vuelve a ingresar desde el mismo dispositivo.
+Al crearse, todo cuestionario queda en estado \emph{pendiente}. Cuando el profesor lo inicia, pasa a estar \emph{en progreso} y se registra la fecha de inicio. Desde ese estado puede pasar a \emph{pausado} en tres casos. El primero es cuando el profesor lo pausa voluntariamente. El segundo, cuando el alumno pierde la conexión con el sistema o sale de su pantalla. El tercero, cuando se inicia o reanuda otro cuestionario, ya que solo uno puede estar en progreso a la vez. Un cuestionario pausado vuelve a estar en progreso cuando el profesor lo reanuda, o de forma automática si el alumno que se había desconectado vuelve a ingresar desde el mismo dispositivo.
 
 Por último, el cuestionario pasa a \emph{finalizado} cuando el alumno responde la última pregunta o cuando el profesor lo da por terminado, ya sea que esté en progreso o pausado. En ese momento se calculan y guardan el puntaje obtenido y el tiempo de resolución. Un cuestionario finalizado no vuelve a cambiar de estado.
 
@@ -1437,7 +1479,7 @@ El contenido de todas las respuestas tiene el mismo formato. Incluye un campo qu
 
 \item 400: los datos enviados son inválidos o están incompletos.
 
-\item 401: la sesión no existe o expiró.
+\item 401: la sesión no existe o expiró, o se rechazó el inicio de sesión.
 
 \item 403: el rol del usuario no tiene permiso para la acción.
 
@@ -1449,15 +1491,15 @@ El contenido de todas las respuestas tiene el mismo formato. Incluye un campo qu
 
 \end{itemize}
 
-Un mismo código puede corresponder a situaciones distintas. Por ejemplo, el 409 se emplea tanto cuando el panel está ocupado como cuando la sesión está abierta en otra pestaña. Para que la aplicación pueda distinguirlas, las respuestas de estos casos incluyen además un identificador fijo de la situación.
+Un mismo código puede corresponder a situaciones distintas. Por ejemplo, el 409 se emplea tanto cuando un invitado intenta ingresar con el panel ocupado como cuando la sesión está abierta en otra pestaña. Del mismo modo, el 401 se emplea tanto cuando la sesión expiró como cuando falla el inicio de sesión de un profesor o un tutor, ya sea porque las credenciales son incorrectas o porque el panel está ocupado. Para que la aplicación pueda distinguirlas, las respuestas de estos casos incluyen además un identificador fijo de la situación.
 
 Gracias a este formato común, el \emph{frontend} interpreta todas las respuestas de la misma manera.
 
-Al crear o editar un cuestionario, el cuerpo de la petición puede superar el tamaño que el servidor entrega de una sola vez. En ese caso llega dividido en fragmentos y el controlador los reúne antes de interpretar el JSON.
+Cuando el cuerpo de una petición supera el tamaño que el servidor entrega de una sola vez, como puede ocurrir al crear o editar un cuestionario, llega dividido en fragmentos. En ese caso, el controlador los reúne antes de interpretar el JSON.
 
 \subsubsection{Servicios}
 
-Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo. Cuando una acción requiere varias escrituras en la base de datos, el servicio las agrupa en una única transacción, cuyo funcionamiento se explicó en el capítulo~\ref{Chapter2}. Si alguna escritura falla, se deshacen todas, por lo que la base nunca queda con una operación a medias. Los repositorios, en cambio, son los únicos que leen y escriben los datos.
+Los servicios concentran las reglas del sistema. Existen cuatro: servicios de autenticación, de usuarios, de cuestionarios y de respuestas del alumno. Cada uno valida los datos que recibe, decide si la acción solicitada está permitida y coordina a los repositorios necesarios para llevarla a cabo. Toda escritura en la base de datos se realiza dentro de una transacción, cuyo funcionamiento se explicó en el capítulo~\ref{Chapter2}. Cuando la acción consiste en una única sentencia, como eliminar un usuario junto con sus cuestionarios en cascada, \emph{SQLite} ya la ejecuta como una transacción. Cuando requiere varias escrituras, como crear o editar un cuestionario, cambiar su estado o registrar la última respuesta del alumno junto con el resultado del examen, el servicio las agrupa explícitamente en una sola. Si alguna escritura falla, se deshacen todas, por lo que la base nunca queda con una operación a medias. Los repositorios, en cambio, son los únicos que leen y escriben los datos.
 
 \apartado{Autenticación}
 
@@ -1487,7 +1529,7 @@ Al crear o editar un cuestionario, el servicio verifica que tenga título y al m
 
 %Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido, pero si ese intervalo supera un valor máximo solo se contabiliza dicho máximo. Así, una demora breve de la red no altera la medición, y un corte de conexión no se suma como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
 
-Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido. Como el dispositivo solo consulta mientras la pantalla de examen está visible, ni un corte de conexión ni el tiempo que el alumno pasa fuera de esa pantalla se suman como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera.
+Este servicio también lleva el cronómetro del examen. El tiempo se mide con el reloj interno del microcontrolador, a partir de las consultas periódicas que realiza el dispositivo del alumno. Entre una consulta y la siguiente se suma el tiempo real transcurrido. Si entre dos consultas pasan más de 6 segundos, ese intervalo no se suma. Así, una demora breve de la red se mide con precisión, pero ni un corte de conexión ni el tiempo que el alumno pasa fuera de la pantalla de examen, durante el cual el dispositivo no consulta, se cuentan como tiempo de examen. Al pausar, el tiempo acumulado se guarda en la base de datos, y al reanudar se recupera. Mientras el examen está en progreso, además, el tiempo se guarda una vez por minuto. Así, si el módulo central se reinicia en medio de un examen, se pierde como mucho el último minuto: en la siguiente consulta del alumno, el cronómetro se retoma desde el valor guardado.
 
 Por último, al finalizar un cuestionario el servicio calcula el puntaje: suma los puntos de cada respuesta correcta, resta los de cada incorrecta y no considera las preguntas sin responder. El resultado se guarda junto con el tiempo de resolución.
 
@@ -1560,7 +1602,7 @@ El módulo central revisa de forma continua dos tiempos en cada sesión del pane
 
 %Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. De esta forma, el cronómetro se detiene hasta que el profesor lo reanuda.
 
-Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. Si luego vuelve a ingresar el mismo dispositivo, el examen se reanuda sin intervención del profesor, salvo que este haya cambiado su estado mientras tanto.
+Si la sesión que expira es la del alumno y hay un examen en progreso, el sistema lo pausa automáticamente. Lo mismo ocurre cuando el alumno sale de su pantalla o cierra la pestaña, ya que en ese caso la aplicación cierra su sesión. Si luego vuelve a ingresar el mismo dispositivo, el examen se reanuda sin intervención del profesor, salvo que este haya cambiado su estado mientras tanto.
 
 Cada vez que una sesión se cierra, el servidor registra el motivo, ya sea la salida voluntaria, la inactividad, la pérdida de conexión o el ingreso de otro usuario. Si después llega una petición con ese \emph{token}, la respuesta lo indica y la aplicación muestra el aviso correspondiente.
 
@@ -1997,11 +2039,11 @@ La interfaz forma parte del mismo \emph{firmware} que el resto del módulo centr
 
 La información del examen requiere un tratamiento particular. Consultarla en la base de datos en cada ciclo implicaría acceder a la tarjeta microSD de forma continua. Por este motivo, cada vez que el alumno consulta el estado del examen, el servicio de respuestas guarda en la RAM un resumen con los datos que muestra la pantalla, y la interfaz solo lee esa copia.
 
-Para no ocupar al microcontrolador de forma innecesaria, cada dato se vuelve a dibujar solo cuando cambia. Por ejemplo, el nombre del usuario conectado o el estado de la cámara se actualizan únicamente cuando difieren del valor que ya se muestra.
+Para no ocupar al microcontrolador de forma innecesaria, el nombre del usuario conectado y el estado de la cámara se vuelven a dibujar solo cuando difieren del valor que ya se muestra. Del mismo modo, el resultado de un examen se dibuja una única vez, al finalizar.
 
 Al encender el equipo, la pantalla se inicia antes que la tarjeta microSD, la base de datos, la red y el servidor web. De esta forma, el usuario observa la interfaz desde los primeros instantes, mientras el resto del sistema termina de arrancar.
 
-Con el fin de aumentar la eficiencia energética del dispositivo, se implementó un sistema de suspensión. Tras un período establecido de inactividad, la pantalla desactiva por completo sus funcionalidades. Durante este estado de reposo, únicamente el controlador táctil permanece encendido, lo que permite al usuario reactivar el sistema en cualquier momento. Para evitar acciones involuntarias, este primer toque sirve exclusivamente para encender la pantalla, sin activar ningún elemento de la interfaz.
+Con el fin de aumentar la eficiencia energética del dispositivo, se implementó un sistema de suspensión. Tras 60 segundos sin toques, se apaga la retroiluminación, la interfaz deja de actualizarse y se detiene la verificación de la cámara. Durante este estado de reposo solo se sigue leyendo el panel táctil, lo que permite al usuario reactivar la pantalla en cualquier momento. El resto del sistema continúa funcionando con normalidad. Para evitar acciones involuntarias, este primer toque sirve exclusivamente para encender la pantalla, sin activar ningún elemento de la interfaz.
 
 \subsection{Vistas}
 
@@ -2298,14 +2340,14 @@ Por su parte, el \emph{MT3608} (figura \ref{fig:modulomt3608}) eleva la señal n
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.42\textwidth}
+    \begin{subfigure}{0.34\textwidth}
         \centering
         \includegraphics[width=\textwidth, viewport=15 110 338 329, clip]{figuras/tpymt.png}
         \caption{Módulo de carga \emph{TP4056}}
         \label{fig:modulotp4056}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.5\textwidth}
+    \hspace{0.8cm}
+    \begin{subfigure}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth, viewport=409 110 803 329, clip]{figuras/tpymt.png}
         \caption{Módulo elevador \emph{MT3608}}
