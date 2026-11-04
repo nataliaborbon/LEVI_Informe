@@ -2578,3 +2578,9 @@ El costo total del sistema ronda los \$137.900, unos USD 90. De ese monto, \$77.
 El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas. Del mismo modo, excluye la placa programadora que requiere el \emph{ESP32-CAM} para la carga del \emph{firmware}, ya que no forma parte del dispositivo y puede reutilizarse.
 
 El módulo de captura resulta costoso para la función que cumple, ya que solo obtiene y transmite video. No obstante, es difícil encontrar una cámara sin filtro infrarrojo. Además, debe poder ubicarse con facilidad en una posición fija frente al ojo.
+
+El sistema se concibió como un dispositivo completo, con carcasa propia, que una persona común pueda encargar a alguien con nociones básicas de electrónica.
+
+En una producción a mayor escala, la fabricación y el montaje podrían encargarse a una empresa. En ese caso, los diseños actuales podrían modificarse para que la PCB del módulo de captura incluya los circuitos de carga y de elevación de tensión, en lugar de los módulos \emph{TP4056} y \emph{MT3608} soldados por separado.
+
+Por otra parte, quien arme el dispositivo por su cuenta podría optar por una variante más económica, con menor integración. En el módulo de captura, esta consiste en reemplazar la etapa de alimentación por un \emph{power bank} y conectar el LED infrarrojo con su resistencia mediante cables soldados, sin PCB. Como desventaja, la carcasa actual está diseñada para la PCB y los componentes de su lista de materiales. Algunos de ellos tienen su lugar en ella y podrían no incluirse al armarlo de esta forma.
