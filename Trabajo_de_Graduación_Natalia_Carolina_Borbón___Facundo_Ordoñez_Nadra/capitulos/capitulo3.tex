@@ -601,8 +601,7 @@ Por un lado, las dos requieren que la imagen abarque el rostro completo. \emph{M
     \label{fig:deteccion_rostro_webgazer}
 \end{figure}
 
-Esta mayor resolución puede obtenerse de dos formas. La primera es aumentar la resolución de captura del \emph{ESP32-CAM}, lo que implica un mayor tráfico de imágenes entre el microcontrolador y el dispositivo cliente. La segunda es derivar la captura a la cámara integrada del dispositivo cliente. Sin embargo, esto haría que la detección dependiera del equipo utilizado. Cada equipo cliente posee una cámara con propiedades distintas, cuya resolución, ubicación, distancia focal e inclinación varían de un modelo a otro. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial. Un dispositivo propio, que mantiene siempre su cámara en una posición fija respecto al ojo, evita este problema.
-
+Esta mayor resolución puede obtenerse de dos formas. La primera es aumentar la resolución de captura del \emph{ESP32-CAM}, lo que implica un mayor tráfico de imágenes entre el microcontrolador y el dispositivo cliente. La segunda es derivar la captura a la cámara integrada del dispositivo cliente. Sin embargo, esto haría que la detección dependiera del equipo utilizado. Cada equipo cliente posee una cámara con propiedades distintas, cuya resolución, ubicación, distancia focal e inclinación varían de un modelo a otro. Todas estas son variables incontrolables que afectarían la precisión del seguimiento espacial. Además, las cámaras integradas incluyen un filtro que atenúa considerablemente la luz infrarroja, y retirarlo no es viable en un equipo de uso cotidiano. Por lo tanto, registrarían la iluminación del LED IR con poca intensidad. Así, la imagen quedaría más expuesta a las sombras y a la luz ambiente. Un dispositivo propio, que mantiene siempre su cámara en una posición fija respecto al ojo y permite retirar ese filtro, evita estos problemas.
 Por otro lado, durante las pruebas, el cursor que indicaba en pantalla la posición estimada de la mirada vibraba de forma constante. Estas vibraciones se debían a los micromovimientos naturales del ojo. Como resultado, el seguimiento no resultaba estable.
 
 Por estos motivos empíricos y de diseño, se decidió prescindir definitivamente de las redes neuronales como método de detección espacial.
@@ -1654,7 +1653,7 @@ Una vez finalizado el desarrollo del \emph{frontend}, se verificó la elección 
 
 \subsubsection{Estructura interna}
 
-El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones (Fig. \ref{fig:estructurafront2}). Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular (en el caso del alumno, únicamente en posición horizontal).
+El \emph{frontend} se estructuró en pantallas, donde cada una cumple un conjunto acotado de funciones (Fig. \ref{fig:estructurafront2}). Cada pantalla es un componente con su propio archivo de código y su hoja de estilos. Las pantallas destinadas a profesores y tutores, en cambio, se agruparon en un conjunto llamado \emph{panel}. Comparten una misma hoja de estilos, de modo que mantienen una apariencia uniforme y una misma ruta base en el navegador. Además, las hojas de estilos ajustan la disposición de los elementos al tamaño de la pantalla, de modo que la interfaz puede utilizarse tanto en una computadora como en un celular.
 
 \begin{figure}[H]
     \centering
@@ -2477,25 +2476,22 @@ A continuación se muestran los planos (\emph{layouts}) de las placas impresas t
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figuras/layoutcapturador.png}
-        \caption{Módulo de captura}
-        \label{layoutcapturador}
-    \end{subfigure}
+    \subcaptionbox{Módulo de captura\label{layoutcapturador}}{%
+        \includegraphics[height=11cm]{figuras/layoutcapturador.jpg}%
+    }
     \hspace{1cm}
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figuras/layoutservidor.png}
-        \caption{Módulo central inicial (en desuso)}
-        \label{layoutservidor}
-    \end{subfigure}
+    \subcaptionbox{Módulo central inicial (en desuso)\label{layoutservidor}}{%
+        \includegraphics[height=11cm]{figuras/layoutservidor.jpg}%
+    }
     \caption{\emph{Layouts} de las PCB}
     \label{fig:layouts}
 \end{figure}
 
-Estos diseños se imprimieron en placas de cobre de capa simple, se perforaron y luego se soldaron los componentes.
+Al trazar las pistas de cobre se consideró la posición de la antena Wi-Fi de cada módulo. En el módulo de captura, el \emph{ESP32-CAM} se acopla sobre la placa mediante zócalos. Su antena está en la parte inferior del módulo, por lo que queda sobre el centro de la PCB. Un plano de masa en esa zona atenuaría la señal y reduciría el alcance de la conexión. Por este motivo, se optó por no aplicar relleno de masa en esta placa.
 
+En el módulo central inicial, en cambio, la antena queda en un extremo de la placa. Esta disposición permitió incorporar un plano de masa, que mejora la estabilidad eléctrica del circuito. Se dejó una franja libre de cobre junto a la antena para evitar la atenuación de la señal.
+
+Los \emph{layouts} mostrados corresponden al diseño final de las placas. Las placas fabricadas se basaron en una versión previa, que luego recibió pequeñas modificaciones. Estas placas se imprimieron en cobre de capa simple, se perforaron y se soldaron los componentes.
 
 \subsection{Montaje}
 
@@ -2580,3 +2576,5 @@ El prototipo emplea una tarjeta microSD de 32 GB que ya estaba disponible. Sin e
 El costo total del sistema ronda los \$137.900, unos USD 90. De ese monto, \$77.100 corresponden al módulo central y \$60.800 al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
 
 El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas. Del mismo modo, excluye la placa programadora que requiere el \emph{ESP32-CAM} para la carga del \emph{firmware}, ya que no forma parte del dispositivo y puede reutilizarse.
+
+El módulo de captura resulta costoso para la función que cumple, ya que solo obtiene y transmite video. No obstante, es difícil encontrar una cámara sin filtro infrarrojo. Además, debe poder ubicarse con facilidad en una posición fija frente al ojo.
