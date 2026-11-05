@@ -2373,6 +2373,48 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">bibliografia.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1" intorder="1">tobii</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">eyecomtec</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">eyegaze</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">eyeharp</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">opencv_docs</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">wiki_template_matching</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">opencv_template_matching</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">xeridia_rna</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">xeridia_ml</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">esp32_datasheet</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">lvgl</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">ieee80211</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">saade_tcpip</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">rfc6762</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">rfc9110</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">rfc8259</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">rfc2046</bcf:citekey>
+    <bcf:citekey order="16" intorder="2">whatwg_mixed_replace</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">wiki_mvc</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">mdn_html</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">mdn_css</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">mdn_js</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">preact</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">fips180-4</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">sqlite</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">esp32cam</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">esp32s3</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">edgeimpulse</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">arduino_esp32</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">tensorflow</bcf:citekey>
+    <bcf:citekey order="29" intorder="1">keras</bcf:citekey>
+    <bcf:citekey order="30" intorder="1">colab</bcf:citekey>
+    <bcf:citekey order="31" intorder="1">platformio</bcf:citekey>
+    <bcf:citekey order="32" intorder="1">mediapipe</bcf:citekey>
+    <bcf:citekey order="33" intorder="1">webgazer</bcf:citekey>
+    <bcf:citekey order="34" intorder="1">opencv_features</bcf:citekey>
+    <bcf:citekey order="34" intorder="2">opencv_houghcircles</bcf:citekey>
+    <bcf:citekey order="35" intorder="1">ov2640</bcf:citekey>
+    <bcf:citekey order="36" intorder="1">nextion_onx</bcf:citekey>
+    <bcf:citekey order="37" intorder="1">tp4056</bcf:citekey>
+    <bcf:citekey order="38" intorder="1">mt3608</bcf:citekey>
+    <bcf:citekey order="39" intorder="1" nocite="1">*</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

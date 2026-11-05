@@ -36,9 +36,9 @@
 \contentsline {subsection}{\numberline {3.2.2}Procesamiento remoto por coordenadas}{32}{subsection.75}%
 \contentsline {subsubsection}{MediaPipe y WebGazer}{33}{section*.76}%
 \contentsline {subsubsection}{OpenCV y Transformada de Hough}{34}{section*.79}%
-\contentsline {subsubsection}{Conclusión de la detección por coordenadas}{35}{section*.81}%
+\contentsline {subsubsection}{Conclusión del procesamiento remoto por coordenadas}{35}{section*.81}%
 \contentsline {subsection}{\numberline {3.2.3}Template Matching como solución adoptada}{35}{subsection.82}%
-\contentsline {subsubsection}{Calibración}{36}{section*.83}%
+\contentsline {subsubsection}{Calibración}{35}{section*.83}%
 \contentsline {subsubsection}{Preprocesamiento de fotogramas}{36}{section*.85}%
 \contentsline {subsubsection}{Comparación de plantillas}{37}{section*.87}%
 \contentsline {section}{\numberline {3.3}Arquitectura del sistema}{38}{section.89}%
@@ -65,36 +65,37 @@
 \contentsline {subsection}{\numberline {3.5.3}Transmisión de video}{50}{subsection.123}%
 \contentsline {subsection}{\numberline {3.5.4}Comunicación con el módulo central}{51}{subsection.125}%
 \contentsline {section}{\numberline {3.6}Aplicación web}{52}{section.127}%
-\contentsline {subsection}{\numberline {3.6.1}Base de datos}{52}{subsection.129}%
+\contentsline {subsection}{\numberline {3.6.1}Base de datos}{53}{subsection.129}%
 \contentsline {subsubsection}{Creación y configuración}{53}{section*.130}%
 \contentsline {subsubsection}{Estructura de las tablas}{54}{section*.132}%
 \contentsline {subsection}{\numberline {3.6.2}Backend}{57}{subsection.135}%
 \contentsline {subsubsection}{Modelos}{57}{section*.136}%
-\contentsline {subsubsection}{Controladores}{57}{section*.137}%
-\contentsline {subsubsection}{Servicios}{58}{section*.138}%
+\contentsline {subsubsection}{Controladores}{58}{section*.137}%
+\contentsline {subsubsection}{Servicios}{59}{section*.138}%
 \contentsline {subsubsection}{Repositorios}{60}{section*.139}%
-\contentsline {subsubsection}{Gestión de sesiones}{60}{section*.140}%
+\contentsline {subsubsection}{Gestión de sesiones}{61}{section*.140}%
 \contentsline {subsection}{\numberline {3.6.3}Frontend}{62}{subsection.142}%
 \contentsline {subsubsection}{Entorno y herramientas}{62}{section*.143}%
-\contentsline {subsubsection}{Estructura interna}{62}{section*.145}%
+\contentsline {subsubsection}{Estructura interna}{63}{section*.145}%
 \contentsline {subsubsection}{Recepción de datos y ejecución del detector}{64}{section*.147}%
-\contentsline {subsubsection}{Pantallas}{65}{section*.149}%
-\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{68}{section.153}%
+\contentsline {subsubsection}{Pantallas}{66}{section*.149}%
+\contentsline {section}{\numberline {3.7}Interfaz de usuario táctil}{69}{section.153}%
 \contentsline {subsection}{\numberline {3.7.1}Bibliotecas y controladores}{69}{subsection.154}%
-\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{69}{subsection.155}%
+\contentsline {subsection}{\numberline {3.7.2}Funcionamiento}{70}{subsection.155}%
 \contentsline {subsection}{\numberline {3.7.3}Vistas}{70}{subsection.156}%
-\contentsline {section}{\numberline {3.8}Alimentación}{72}{section.161}%
-\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{72}{subsection.162}%
+\contentsline {section}{\numberline {3.8}Alimentación}{73}{section.161}%
+\contentsline {subsection}{\numberline {3.8.1}Requisitos previos}{73}{subsection.162}%
 \contentsline {subsection}{\numberline {3.8.2}Presupuesto de consumo por módulo}{73}{subsection.163}%
 \contentsline {subsection}{\numberline {3.8.3}Alternativas propuestas}{74}{subsection.166}%
 \contentsline {subsection}{\numberline {3.8.4}Detalle de la solución adoptada}{75}{subsection.168}%
-\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{75}{subsection.172}%
-\contentsline {subsection}{\numberline {3.8.6}Verificaciones operativas finales}{76}{subsection.173}%
-\contentsline {section}{\numberline {3.9}Diseño físico}{77}{section.176}%
-\contentsline {subsection}{\numberline {3.9.1}Circuitos}{77}{subsection.177}%
-\contentsline {subsection}{\numberline {3.9.2}PCB}{78}{subsection.181}%
-\contentsline {subsection}{\numberline {3.9.3}Montaje}{80}{subsection.183}%
-\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{80}{section.184}%
-\contentsline {chapter}{\numberline {4}Conclusiones}{82}{chapter.186}%
-\contentsline {section}{\numberline {4.1}Resultados obtenidos}{82}{section.187}%
-\contentsline {section}{\numberline {4.2}Trabajo futuro}{83}{section.188}%
+\contentsline {subsection}{\numberline {3.8.5}Circuito de alimentación del \emph {ONX3248G035}}{76}{subsection.172}%
+\contentsline {subsection}{\numberline {3.8.6}Verificaciones operativas finales}{77}{subsection.173}%
+\contentsline {section}{\numberline {3.9}Diseño físico}{78}{section.176}%
+\contentsline {subsection}{\numberline {3.9.1}Circuitos}{78}{subsection.177}%
+\contentsline {subsection}{\numberline {3.9.2}PCB}{79}{subsection.181}%
+\contentsline {subsection}{\numberline {3.9.3}Montaje}{81}{subsection.183}%
+\contentsline {section}{\numberline {3.10}Costo total de desarrollo}{82}{section.185}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{84}{chapter.187}%
+\contentsline {section}{\numberline {4.1}Resultados obtenidos}{84}{section.188}%
+\contentsline {section}{\numberline {4.2}Trabajo futuro}{85}{section.189}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{87}{appendix*.190}%

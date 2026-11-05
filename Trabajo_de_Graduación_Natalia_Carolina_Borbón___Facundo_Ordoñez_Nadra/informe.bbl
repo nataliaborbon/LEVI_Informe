@@ -16,5 +16,1343 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{tobii}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=52695cfdddc55d6f4cb5638e7d4f9dbd}{%
+           family={{Tobii}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{fullhash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{fullhashraw}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{bibnamehash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{authorbibnamehash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{authornamehash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{authorfullhash}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \strng{authorfullhashraw}{52695cfdddc55d6f4cb5638e7d4f9dbd}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de Tobii}
+      \verb{urlraw}
+      \verb https://www.tobii.com/es/company
+      \endverb
+      \verb{url}
+      \verb https://www.tobii.com/es/company
+      \endverb
+    \endentry
+    \entry{eyecomtec}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c7eb588d47b54e0cd05ea6c62ad38198}{%
+           family={{EyeComTec}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{fullhash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{fullhashraw}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{bibnamehash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{authorbibnamehash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{authornamehash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{authorfullhash}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \strng{authorfullhashraw}{c7eb588d47b54e0cd05ea6c62ad38198}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de EyeComTec}
+      \verb{urlraw}
+      \verb https://eyecomtec.com
+      \endverb
+      \verb{url}
+      \verb https://eyecomtec.com
+      \endverb
+    \endentry
+    \entry{eyegaze}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=82debc7e8b31777d73dd4d24e8d484c6}{%
+           family={{EyeGaze}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{fullhash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{fullhashraw}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{bibnamehash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{authorbibnamehash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{authornamehash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{authorfullhash}{82debc7e8b31777d73dd4d24e8d484c6}
+      \strng{authorfullhashraw}{82debc7e8b31777d73dd4d24e8d484c6}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de EyeGaze}
+      \verb{urlraw}
+      \verb https://eyegaze.com/about-us/
+      \endverb
+      \verb{url}
+      \verb https://eyegaze.com/about-us/
+      \endverb
+    \endentry
+    \entry{eyeharp}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=362136cf947dfbcd2fdfc9afaa6dd25f}{%
+           family={{EyeHarp}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{fullhash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{fullhashraw}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{bibnamehash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{authorbibnamehash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{authornamehash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{authorfullhash}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \strng{authorfullhashraw}{362136cf947dfbcd2fdfc9afaa6dd25f}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de EyeHarp}
+      \verb{urlraw}
+      \verb https://eyeharp.org/es/#
+      \endverb
+      \verb{url}
+      \verb https://eyeharp.org/es/#
+      \endverb
+    \endentry
+    \entry{opencv_docs}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=5bd3dfdc302c8d0660444d98cf3baa60}{%
+           family={{OpenCV Team}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{bibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorbibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authornamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{OpenCV Documentation}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/5.0/
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/5.0/
+      \endverb
+    \endentry
+    \entry{wiki_template_matching}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={{Wikipedia}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhashraw}{9c677286866aad38f8e9b660f5411814}
+      \strng{bibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorbibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authornamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhashraw}{9c677286866aad38f8e9b660f5411814}
+      \field{extraname}{1}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{30}
+      \field{month}{7}
+      \field{note}{Última edición}
+      \field{title}{Template matching}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Template_matching
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Template_matching
+      \endverb
+    \endentry
+    \entry{opencv_template_matching}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=5bd3dfdc302c8d0660444d98cf3baa60}{%
+           family={{OpenCV Team}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{bibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorbibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authornamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{31}
+      \field{month}{12}
+      \field{title}{Template matching con OpenCV}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/4.13.0/d4/dc6/tutorial_py_template_matching.html
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/4.13.0/d4/dc6/tutorial_py_template_matching.html
+      \endverb
+    \endentry
+    \entry{xeridia_rna}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=029ee49fc2f9a31e46f21f2ba097a313}{%
+           family={García-Olalla\bibnamedelima Olivera},
+           familyi={G\bibinithyphendelim O\bibinitperiod\bibinitdelim O\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Xeridia}%
+      }
+      \strng{namehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{fullhash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{fullhashraw}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{bibnamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorbibnamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authornamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorfullhash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorfullhashraw}{029ee49fc2f9a31e46f21f2ba097a313}
+      \field{extraname}{1}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{16}
+      \field{month}{9}
+      \field{title}{Redes Neuronales Artificiales: Qué son y cómo se entrenan}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.xeridia.com/blog/redes-neuronales-artificiales-que-son-y-como-se-entrenan-parte-i
+      \endverb
+      \verb{url}
+      \verb https://www.xeridia.com/blog/redes-neuronales-artificiales-que-son-y-como-se-entrenan-parte-i
+      \endverb
+    \endentry
+    \entry{xeridia_ml}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=029ee49fc2f9a31e46f21f2ba097a313}{%
+           family={García-Olalla\bibnamedelima Olivera},
+           familyi={G\bibinithyphendelim O\bibinitperiod\bibinitdelim O\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Xeridia}%
+      }
+      \strng{namehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{fullhash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{fullhashraw}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{bibnamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorbibnamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authornamehash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorfullhash}{029ee49fc2f9a31e46f21f2ba097a313}
+      \strng{authorfullhashraw}{029ee49fc2f9a31e46f21f2ba097a313}
+      \field{extraname}{2}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{19}
+      \field{month}{3}
+      \field{title}{¿Qué es Machine Learning?}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.xeridia.com/blog/que-es-machine-learning
+      \endverb
+      \verb{url}
+      \verb https://www.xeridia.com/blog/que-es-machine-learning
+      \endverb
+    \endentry
+    \entry{esp32_datasheet}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=66589871a3c3f27bcbf3891133af42b1}{%
+           family={{Espressif Systems}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{bibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorbibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authornamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \field{extraname}{1}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{ESP32 Series Datasheet}
+      \verb{urlraw}
+      \verb https://documentation.espressif.com/esp32_datasheet_en.html
+      \endverb
+      \verb{url}
+      \verb https://documentation.espressif.com/esp32_datasheet_en.html
+      \endverb
+    \endentry
+    \entry{lvgl}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8460ccdc72fc75a6028817c3756d9b05}{%
+           family={{LVGL Developers}},
+           familyi={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{fullhash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{fullhashraw}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{bibnamehash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{authorbibnamehash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{authornamehash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{authorfullhash}{8460ccdc72fc75a6028817c3756d9b05}
+      \strng{authorfullhashraw}{8460ccdc72fc75a6028817c3756d9b05}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{1}
+      \field{month}{9}
+      \field{note}{Última edición}
+      \field{title}{LVGL Documentation}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://lvgl.io/docs/open/integration/frameworks/platformio
+      \endverb
+      \verb{url}
+      \verb https://lvgl.io/docs/open/integration/frameworks/platformio
+      \endverb
+    \endentry
+    \entry{ieee80211}{standard}{}{}
+      \name{author}{1}{}{%
+        {{hash=472abfae8142fdb6f39d081303e8af85}{%
+           family={{IEEE}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{fullhash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{fullhashraw}{472abfae8142fdb6f39d081303e8af85}
+      \strng{bibnamehash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{authorbibnamehash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{authornamehash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{authorfullhash}{472abfae8142fdb6f39d081303e8af85}
+      \strng{authorfullhashraw}{472abfae8142fdb6f39d081303e8af85}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{IEEE Std 802.11-2020}
+      \field{title}{IEEE Standard for Information Technology--Telecommunications and Information Exchange between Systems--Local and Metropolitan Area Networks--Specific Requirements--Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1109/IEEESTD.2021.9363693
+      \endverb
+    \endentry
+    \entry{saade_tcpip}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=8f39d99fb52aa2d0b2950e6b226b2bb0}{%
+           family={Saade},
+           familyi={S\bibinitperiod},
+           given={Sergio},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Miguel de Tucumán}%
+      }
+      \list{publisher}{1}{%
+        {EDUNT}%
+      }
+      \strng{namehash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{fullhash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{fullhashraw}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{bibnamehash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{authorbibnamehash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{authornamehash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{authorfullhash}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \strng{authorfullhashraw}{8f39d99fb52aa2d0b2950e6b226b2bb0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Protocolos de comunicación TCP/IP}
+      \field{year}{2016}
+      \field{dateera}{ce}
+    \endentry
+    \entry{rfc6762}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=3ce6c29cc780e2a86b6022182a7bd362}{%
+           family={Cheshire},
+           familyi={C\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=15b9829e7da499a2d2e01d7afdd51cf3}{%
+           family={Krochmal},
+           familyi={K\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {IETF}%
+      }
+      \strng{namehash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{fullhash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{fullhashraw}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{bibnamehash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{authorbibnamehash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{authornamehash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{authorfullhash}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \strng{authorfullhashraw}{3dd7f803e5c7b42b4112fa9fe9cc3033}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{2}
+      \field{number}{6762}
+      \field{title}{Multicast DNS}
+      \field{type}{RFC}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rfc-editor.org/rfc/rfc6762
+      \endverb
+      \verb{url}
+      \verb https://www.rfc-editor.org/rfc/rfc6762
+      \endverb
+    \endentry
+    \entry{rfc9110}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=a6155135a306bddfc30cc4f52d1924e6}{%
+           family={Fielding},
+           familyi={F\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=55ac868e62f6d4ea8f9f143c4c584739}{%
+           family={Nottingham},
+           familyi={N\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=225e8f62a72b900586837313fbf16715}{%
+           family={Reschke},
+           familyi={R\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {IETF}%
+      }
+      \strng{namehash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{fullhash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{fullhashraw}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{bibnamehash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{authorbibnamehash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{authornamehash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{authorfullhash}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \strng{authorfullhashraw}{c041f6bbb0d8a8e111b5a59cfd0aee9f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{number}{9110}
+      \field{title}{HTTP Semantics}
+      \field{type}{RFC}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rfc-editor.org/rfc/rfc9110
+      \endverb
+      \verb{url}
+      \verb https://www.rfc-editor.org/rfc/rfc9110
+      \endverb
+    \endentry
+    \entry{rfc8259}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=532fb491ff1af75ada11b8ee4c440170}{%
+           family={Bray},
+           familyi={B\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {IETF}%
+      }
+      \strng{namehash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{fullhash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{fullhashraw}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{bibnamehash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{authorbibnamehash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{authornamehash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{authorfullhash}{532fb491ff1af75ada11b8ee4c440170}
+      \strng{authorfullhashraw}{532fb491ff1af75ada11b8ee4c440170}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{number}{8259}
+      \field{title}{The JavaScript Object Notation (JSON) Data Interchange Format}
+      \field{type}{RFC}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rfc-editor.org/rfc/rfc8259
+      \endverb
+      \verb{url}
+      \verb https://www.rfc-editor.org/rfc/rfc8259
+      \endverb
+    \endentry
+    \entry{rfc2046}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=c577f2f6b942928459a1a66bf012f813}{%
+           family={Freed},
+           familyi={F\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=e614af73ef2303af7d285e39fb0b6378}{%
+           family={Borenstein},
+           familyi={B\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {IETF}%
+      }
+      \strng{namehash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{fullhash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{fullhashraw}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{bibnamehash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{authorbibnamehash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{authornamehash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{authorfullhash}{24f978a4c8b84f8fd939ff2a624421e1}
+      \strng{authorfullhashraw}{24f978a4c8b84f8fd939ff2a624421e1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{number}{2046}
+      \field{title}{Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types}
+      \field{type}{RFC}
+      \field{year}{1996}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rfc-editor.org/rfc/rfc2046
+      \endverb
+      \verb{url}
+      \verb https://www.rfc-editor.org/rfc/rfc2046
+      \endverb
+    \endentry
+    \entry{whatwg_mixed_replace}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=4eff95d9319057962e5e815abde2ab62}{%
+           family={{WHATWG}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{fullhash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{fullhashraw}{4eff95d9319057962e5e815abde2ab62}
+      \strng{bibnamehash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{authorbibnamehash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{authornamehash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{authorfullhash}{4eff95d9319057962e5e815abde2ab62}
+      \strng{authorfullhashraw}{4eff95d9319057962e5e815abde2ab62}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{HTML Living Standard, sección 17.2: multipart/x-mixed-replace}
+      \verb{urlraw}
+      \verb https://html.spec.whatwg.org/multipage/iana.html#multipart/x-mixed-replace
+      \endverb
+      \verb{url}
+      \verb https://html.spec.whatwg.org/multipage/iana.html#multipart/x-mixed-replace
+      \endverb
+    \endentry
+    \entry{wiki_mvc}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={{Wikipedia}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhashraw}{9c677286866aad38f8e9b660f5411814}
+      \strng{bibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorbibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authornamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhashraw}{9c677286866aad38f8e9b660f5411814}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{16}
+      \field{month}{7}
+      \field{note}{Última edición}
+      \field{title}{Modelo--vista--controlador}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador
+      \endverb
+      \verb{url}
+      \verb https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador
+      \endverb
+    \endentry
+    \entry{mdn_html}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=eace3534eb86e51f9a1db37427425ce9}{%
+           family={{MDN Web Docs}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{bibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorbibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{HTML: Lenguaje de etiquetas de hipertexto}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/es/docs/Web/HTML
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/es/docs/Web/HTML
+      \endverb
+    \endentry
+    \entry{mdn_css}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=eace3534eb86e51f9a1db37427425ce9}{%
+           family={{MDN Web Docs}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{bibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorbibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{CSS}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/es/docs/Web/CSS
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/es/docs/Web/CSS
+      \endverb
+    \endentry
+    \entry{mdn_js}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=eace3534eb86e51f9a1db37427425ce9}{%
+           family={{MDN Web Docs}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{fullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{bibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorbibnamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authornamehash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhash}{eace3534eb86e51f9a1db37427425ce9}
+      \strng{authorfullhashraw}{eace3534eb86e51f9a1db37427425ce9}
+      \field{extraname}{3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{JavaScript}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/es/docs/Web/JavaScript
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/es/docs/Web/JavaScript
+      \endverb
+    \endentry
+    \entry{preact}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8158be72cbc21345bcb37a49f405ccf0}{%
+           family={{Preact Contributors}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{fullhash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{fullhashraw}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{bibnamehash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{authorbibnamehash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{authornamehash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{authorfullhash}{8158be72cbc21345bcb37a49f405ccf0}
+      \strng{authorfullhashraw}{8158be72cbc21345bcb37a49f405ccf0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Preact Documentation}
+      \verb{urlraw}
+      \verb https://preactjs.com/guide/v10/getting-started
+      \endverb
+      \verb{url}
+      \verb https://preactjs.com/guide/v10/getting-started
+      \endverb
+    \endentry
+    \entry{fips180-4}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=ef9cb61878e61d434507444346b29d1a}{%
+           family={{National Institute of Standards and Technology}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {NIST}%
+      }
+      \list{location}{1}{%
+        {Gaithersburg, MD}%
+      }
+      \strng{namehash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{fullhash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{fullhashraw}{ef9cb61878e61d434507444346b29d1a}
+      \strng{bibnamehash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{authorbibnamehash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{authornamehash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{authorfullhash}{ef9cb61878e61d434507444346b29d1a}
+      \strng{authorfullhashraw}{ef9cb61878e61d434507444346b29d1a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{number}{180-4}
+      \field{title}{Secure Hash Standard (SHS)}
+      \field{type}{FIPS PUB}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.6028/NIST.FIPS.180-4
+      \endverb
+    \endentry
+    \entry{sqlite}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=dff733f23ac0303d52e5e06590877a49}{%
+           family={{SQLite Consortium}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{fullhash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{fullhashraw}{dff733f23ac0303d52e5e06590877a49}
+      \strng{bibnamehash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{authorbibnamehash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{authornamehash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{authorfullhash}{dff733f23ac0303d52e5e06590877a49}
+      \strng{authorfullhashraw}{dff733f23ac0303d52e5e06590877a49}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{SQLite Documentation}
+      \verb{urlraw}
+      \verb https://www.sqlite.org/docs.html
+      \endverb
+      \verb{url}
+      \verb https://www.sqlite.org/docs.html
+      \endverb
+    \endentry
+    \entry{esp32cam}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=6cd18cd3c430190534e873165484322e}{%
+           family={{AI-Thinker}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6cd18cd3c430190534e873165484322e}
+      \strng{fullhash}{6cd18cd3c430190534e873165484322e}
+      \strng{fullhashraw}{6cd18cd3c430190534e873165484322e}
+      \strng{bibnamehash}{6cd18cd3c430190534e873165484322e}
+      \strng{authorbibnamehash}{6cd18cd3c430190534e873165484322e}
+      \strng{authornamehash}{6cd18cd3c430190534e873165484322e}
+      \strng{authorfullhash}{6cd18cd3c430190534e873165484322e}
+      \strng{authorfullhashraw}{6cd18cd3c430190534e873165484322e}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{ESP32-CAM Hardware Reference}
+      \verb{urlraw}
+      \verb https://docs.zephyrproject.org/latest/boards/aithinker/esp32_cam/doc/index.html
+      \endverb
+      \verb{url}
+      \verb https://docs.zephyrproject.org/latest/boards/aithinker/esp32_cam/doc/index.html
+      \endverb
+    \endentry
+    \entry{esp32s3}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=66589871a3c3f27bcbf3891133af42b1}{%
+           family={{Espressif Systems}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{bibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorbibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authornamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial del ESP32-S3}
+      \verb{urlraw}
+      \verb https://www.espressif.com/en/products/socs/esp32-s3
+      \endverb
+      \verb{url}
+      \verb https://www.espressif.com/en/products/socs/esp32-s3
+      \endverb
+    \endentry
+    \entry{edgeimpulse}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d29db41b60ea60f80ff180bc5009cd1d}{%
+           family={{Edge Impulse}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{fullhash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{fullhashraw}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{bibnamehash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{authorbibnamehash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{authornamehash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{authorfullhash}{d29db41b60ea60f80ff180bc5009cd1d}
+      \strng{authorfullhashraw}{d29db41b60ea60f80ff180bc5009cd1d}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de Edge Impulse}
+      \verb{urlraw}
+      \verb https://docs.edgeimpulse.com/
+      \endverb
+      \verb{url}
+      \verb https://docs.edgeimpulse.com/
+      \endverb
+    \endentry
+    \entry{arduino_esp32}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=66589871a3c3f27bcbf3891133af42b1}{%
+           family={{Espressif Systems}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{fullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{bibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorbibnamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authornamehash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhash}{66589871a3c3f27bcbf3891133af42b1}
+      \strng{authorfullhashraw}{66589871a3c3f27bcbf3891133af42b1}
+      \field{extraname}{3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Arduino-ESP32 Documentation}
+      \verb{urlraw}
+      \verb https://docs.espressif.com/projects/arduino-esp32/en/latest/
+      \endverb
+      \verb{url}
+      \verb https://docs.espressif.com/projects/arduino-esp32/en/latest/
+      \endverb
+    \endentry
+    \entry{tensorflow}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={{Google}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de TensorFlow}
+      \verb{urlraw}
+      \verb https://www.tensorflow.org/api_docs/python/tf/all_symbols?version=stable
+      \endverb
+      \verb{url}
+      \verb https://www.tensorflow.org/api_docs/python/tf/all_symbols?version=stable
+      \endverb
+    \endentry
+    \entry{keras}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=7fee7bb66f4294c3e32783efa7d9bafc}{%
+           family={{Keras}},
+           familyi={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{fullhash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{fullhashraw}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{bibnamehash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{authorbibnamehash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{authornamehash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{authorfullhash}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \strng{authorfullhashraw}{7fee7bb66f4294c3e32783efa7d9bafc}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de Keras}
+      \verb{urlraw}
+      \verb https://keras.io/getting_started/about/
+      \endverb
+      \verb{url}
+      \verb https://keras.io/getting_started/about/
+      \endverb
+    \endentry
+    \entry{colab}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={{Google}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{extraname}{2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de Google Colab}
+      \verb{urlraw}
+      \verb https://colab.research.google.com/notebooks/welcome.ipynb
+      \endverb
+      \verb{url}
+      \verb https://colab.research.google.com/notebooks/welcome.ipynb
+      \endverb
+    \endentry
+    \entry{platformio}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=23138c559a24c119db84660a0a2177b3}{%
+           family={{PlatformIO}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{23138c559a24c119db84660a0a2177b3}
+      \strng{fullhash}{23138c559a24c119db84660a0a2177b3}
+      \strng{fullhashraw}{23138c559a24c119db84660a0a2177b3}
+      \strng{bibnamehash}{23138c559a24c119db84660a0a2177b3}
+      \strng{authorbibnamehash}{23138c559a24c119db84660a0a2177b3}
+      \strng{authornamehash}{23138c559a24c119db84660a0a2177b3}
+      \strng{authorfullhash}{23138c559a24c119db84660a0a2177b3}
+      \strng{authorfullhashraw}{23138c559a24c119db84660a0a2177b3}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{PlatformIO Documentation}
+      \verb{urlraw}
+      \verb https://docs.platformio.org/en/latest/
+      \endverb
+      \verb{url}
+      \verb https://docs.platformio.org/en/latest/
+      \endverb
+    \endentry
+    \entry{mediapipe}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={{Google}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{extraname}{3}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de MediaPipe}
+      \verb{urlraw}
+      \verb https://developers.google.com/edge/mediapipe/solutions/guide
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/edge/mediapipe/solutions/guide
+      \endverb
+    \endentry
+    \entry{webgazer}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b92ea25a7c8eff10be796cea2a59f555}{%
+           family={{WebGazer}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{fullhash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{fullhashraw}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{bibnamehash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{authorbibnamehash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{authornamehash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{authorfullhash}{b92ea25a7c8eff10be796cea2a59f555}
+      \strng{authorfullhashraw}{b92ea25a7c8eff10be796cea2a59f555}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Página oficial de WebGazer}
+      \verb{urlraw}
+      \verb https://www.webgazer.io/docs
+      \endverb
+      \verb{url}
+      \verb https://www.webgazer.io/docs
+      \endverb
+    \endentry
+    \entry{opencv_features}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=5bd3dfdc302c8d0660444d98cf3baa60}{%
+           family={{OpenCV Team}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{bibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorbibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authornamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \field{extraname}{3}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{31}
+      \field{month}{12}
+      \field{title}{Detección de características con OpenCV}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/4.13.0/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/4.13.0/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
+      \endverb
+    \endentry
+    \entry{opencv_houghcircles}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=5bd3dfdc302c8d0660444d98cf3baa60}{%
+           family={{OpenCV Team}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{fullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{bibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorbibnamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authornamehash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhash}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \strng{authorfullhashraw}{5bd3dfdc302c8d0660444d98cf3baa60}
+      \field{extraname}{4}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{31}
+      \field{month}{12}
+      \field{title}{Círculos de Hough con OpenCV}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/4.13.0/da/d53/tutorial_py_houghcircles.html
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/4.13.0/da/d53/tutorial_py_houghcircles.html
+      \endverb
+    \endentry
+    \entry{ov2640}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=95c247e295fc9db51489e61efe9c8a4f}{%
+           family={{OmniVision}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{fullhash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{fullhashraw}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{bibnamehash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{authorbibnamehash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{authornamehash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{authorfullhash}{95c247e295fc9db51489e61efe9c8a4f}
+      \strng{authorfullhashraw}{95c247e295fc9db51489e61efe9c8a4f}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{OV2640 Datasheet}
+      \verb{urlraw}
+      \verb https://www.uctronics.com/download/cam_module/OV2640DS.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.uctronics.com/download/cam_module/OV2640DS.pdf
+      \endverb
+    \endentry
+    \entry{nextion_onx}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=64673ad3412fd3688e8c87de4c3c634c}{%
+           family={{Nextion}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{fullhash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{fullhashraw}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{bibnamehash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{authorbibnamehash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{authornamehash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{authorfullhash}{64673ad3412fd3688e8c87de4c3c634c}
+      \strng{authorfullhashraw}{64673ad3412fd3688e8c87de4c3c634c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{ONX3248G035}
+      \verb{urlraw}
+      \verb https://nextion.tech/wiki/onx3248g035/
+      \endverb
+      \verb{url}
+      \verb https://nextion.tech/wiki/onx3248g035/
+      \endverb
+    \endentry
+    \entry{tp4056}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=65a728f8e9eea8cc3a0be0bee98acd2f}{%
+           family={{UMW}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{fullhash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{fullhashraw}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{bibnamehash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{authorbibnamehash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{authornamehash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{authorfullhash}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \strng{authorfullhashraw}{65a728f8e9eea8cc3a0be0bee98acd2f}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Datasheet TP4056}
+      \verb{urlraw}
+      \verb https://www.umw-ic.com/static/pdf/095975b8ef7d5f40719d87d331ee6bc4.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.umw-ic.com/static/pdf/095975b8ef7d5f40719d87d331ee6bc4.pdf
+      \endverb
+    \endentry
+    \entry{mt3608}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d79849a03f24eac42ab494242d8550ff}{%
+           family={{Alldatasheet}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{fullhash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{fullhashraw}{d79849a03f24eac42ab494242d8550ff}
+      \strng{bibnamehash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{authorbibnamehash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{authornamehash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{authorfullhash}{d79849a03f24eac42ab494242d8550ff}
+      \strng{authorfullhashraw}{d79849a03f24eac42ab494242d8550ff}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Datasheet MT3608}
+      \verb{urlraw}
+      \verb https://www.alldatasheet.com/datasheet-pdf/view/1131968/ETC1/MT3608.html
+      \endverb
+      \verb{url}
+      \verb https://www.alldatasheet.com/datasheet-pdf/view/1131968/ETC1/MT3608.html
+      \endverb
+    \endentry
+    \entry{reyes2022vision}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=c3eaecd18105792dca21ca7633bded18}{%
+           family={Reyes\bibnamedelima Indacochea},
+           familyi={R\bibinitperiod\bibinitdelim I\bibinitperiod},
+           given={René\bibnamedelima Iván},
+           giveni={R\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Facultad de Ingeniería en Ciencias Aplicadas, Universidad Técnica del Norte}%
+      }
+      \list{location}{1}{%
+        {Ibarra, Ecuador}%
+      }
+      \strng{namehash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{fullhash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{fullhashraw}{c3eaecd18105792dca21ca7633bded18}
+      \strng{bibnamehash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{authorbibnamehash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{authornamehash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{authorfullhash}{c3eaecd18105792dca21ca7633bded18}
+      \strng{authorfullhashraw}{c3eaecd18105792dca21ca7633bded18}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{title}{Algoritmo de visión artificial para apoyar la terapia de lenguaje en niños con parálisis cerebral}
+      \field{type}{Trabajo de grado, Ingeniería en Mecatrónica}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \true{nocite}
+      \verb{urlraw}
+      \verb https://repositorio.utn.edu.ec/bitstream/123456789/13159/2/04%20MEC%20450%20TRABAJO%20DE%20GRADO.pdf
+      \endverb
+      \verb{url}
+      \verb https://repositorio.utn.edu.ec/bitstream/123456789/13159/2/04%20MEC%20450%20TRABAJO%20DE%20GRADO.pdf
+      \endverb
+    \endentry
+    \entry{fuhl2016else}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=d7930bcb10889c8d88e97d5b3b7d620f}{%
+           family={Fuhl},
+           familyi={F\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=4176e95761a5c05f233f87826cc96a05}{%
+           family={Santini},
+           familyi={S\bibinitperiod},
+           given={T.\bibnamedelimi C.},
+           giveni={T\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=5a8df31f88f0d036f32b5e714907057a}{%
+           family={Kübler},
+           familyi={K\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=120e950a9b31ffa9b595fc9a5f5ab80a}{%
+           family={Kasneci},
+           familyi={K\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Charleston, SC}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{2eed2f040284a207b61b3d758cb5ab40}
+      \strng{fullhash}{549f9d12bfee470d4ec2786539e1d7fa}
+      \strng{fullhashraw}{549f9d12bfee470d4ec2786539e1d7fa}
+      \strng{bibnamehash}{2eed2f040284a207b61b3d758cb5ab40}
+      \strng{authorbibnamehash}{2eed2f040284a207b61b3d758cb5ab40}
+      \strng{authornamehash}{2eed2f040284a207b61b3d758cb5ab40}
+      \strng{authorfullhash}{549f9d12bfee470d4ec2786539e1d7fa}
+      \strng{authorfullhashraw}{549f9d12bfee470d4ec2786539e1d7fa}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Ninth Biennial ACM Symposium on Eye Tracking Research \& Applications (ETRA '16)}
+      \field{title}{ElSe: Ellipse Selection for Robust Pupil Detection in Real-World Environments}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \true{nocite}
+      \field{pages}{123\bibrangedash 130}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/2857491.2857505
+      \endverb
+    \endentry
+    \entry{queipo2021deep}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=58e9a71db04e299fa545d7a7132cd374}{%
+           family={Queipo\bibnamedelimb de\bibnamedelimb Llano\bibnamedelima Mazzuchelli},
+           familyi={Q\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Santiago\bibnamedelima Juan},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {E.T.S.I. y Sistemas de Telecomunicación, Universidad Politécnica de Madrid}%
+      }
+      \list{location}{1}{%
+        {Madrid}%
+      }
+      \strng{namehash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{fullhash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{fullhashraw}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{bibnamehash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{authorbibnamehash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{authornamehash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{authorfullhash}{58e9a71db04e299fa545d7a7132cd374}
+      \strng{authorfullhashraw}{58e9a71db04e299fa545d7a7132cd374}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{Implementación de aplicaciones de Deep Learning en microcontroladores ARM Cortex M}
+      \field{type}{Trabajo Fin de Grado}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \true{nocite}
+      \verb{urlraw}
+      \verb https://oa.upm.es/71117/
+      \endverb
+      \verb{url}
+      \verb https://oa.upm.es/71117/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

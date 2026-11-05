@@ -872,7 +872,7 @@ En esta sección se justifica la elección de la familia \emph{ESP32} frente a o
 
 Para implementar los dos módulos se compararon distintas placas de desarrollo. Los criterios de evaluación fueron el costo, la conectividad Wi-Fi integrada y la facilidad de adquisición. También se consideró que cada módulo necesita periféricos específicos. El módulo de captura requiere una cámara, y el módulo central, un medio para almacenar la base de datos.
 
-Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo~\ref{Chapter2}. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 7 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
+Se optó por la familia \emph{ESP32}, de la empresa \emph{Espressif Systems}, cuyas características se describieron en el capítulo~\ref{Chapter2}. Sus placas integran la conectividad Wi-Fi en el mismo chip y tienen un costo de entre 6 y 25 USD a octubre de 2026. Además, se consiguen con facilidad, tanto en el mercado local como a través de tiendas internacionales. La familia también ofrece variantes que reúnen en un solo dispositivo los periféricos que necesita cada módulo, como una cámara, una pantalla o una ranura para tarjeta microSD. Esto permitió implementar ambos con microcontroladores de la misma familia y, por lo tanto, con las mismas herramientas de desarrollo. Los dos se programaron sobre el \emph{framework} de \emph{Arduino}, en \emph{Visual Studio Code} con la extensión \emph{PlatformIO}. Se eligió esta extensión porque facilita la estructuración del código y, al compilar, procesa únicamente los archivos modificados, lo que reduce el tiempo de cada prueba.
 
 
 A continuación se detallan las alternativas consideradas y los motivos de su descarte. Los precios corresponden a las tiendas oficiales de cada fabricante a octubre de 2026.
@@ -881,11 +881,11 @@ A continuación se detallan las alternativas consideradas y los motivos de su de
 
 \item \emph{Arduino Uno}: es una de las placas más difundidas, pero no cuenta con conectividad Wi-Fi. Además, sus 2 KB de memoria RAM resultan insuficientes para alojar una aplicación web.
 
-\item \emph{Arduino UNO R4 WiFi}, \emph{Arduino Nano 33 IoT} y \emph{Arduino Nano ESP32}: incorporan Wi-Fi y cuentan con el respaldo de la marca \emph{Arduino}. Sin embargo, su costo, de entre 18 y 28 USD, es mayor que el de las placas de \emph{Espressif}. Además, ninguna integra una interfaz para cámara ni una ranura para tarjeta microSD.
+\item \emph{Arduino UNO R4 WiFi}, \emph{Arduino Nano 33 IoT} y \emph{Arduino Nano ESP32}: incorporan Wi-Fi y cuentan con el respaldo de la marca \emph{Arduino}. Sin embargo, su costo, de entre 28 y 50 USD, es mayor que el de las placas de \emph{Espressif}. Además, ninguna integra una interfaz para cámara ni una ranura para tarjeta microSD.
 
 \item \emph{Raspberry Pi Pico 2 W}: incorpora Wi-Fi y tiene un costo de 7 USD. Sin embargo, tampoco dispone de interfaz para cámara ni de lector de tarjetas microSD. Por lo tanto, ambos módulos requerirían componentes externos adicionales.
 
-\item \emph{Raspberry Pi Zero 2 W}: incluye Wi-Fi y un conector para cámara, con un costo de 15 USD. Sin embargo, no es un microcontrolador, sino una computadora que requiere un sistema operativo, y el proyecto se plantea sobre microcontroladores de bajos recursos. Además, la cámara se adquiere por separado a un precio de entre 25 y 35 USD.
+\item \emph{Raspberry Pi Zero 2 W}: incluye Wi-Fi y un conector para cámara, con un costo de 30 USD. Sin embargo, no es un microcontrolador, sino una computadora que requiere un sistema operativo, y el proyecto se plantea sobre microcontroladores de bajos recursos. Además, la cámara se adquiere por separado a un precio de entre 25 y 35 USD.
 
 \end{itemize}
 
@@ -918,13 +918,13 @@ Frente a placas de otras marcas, la principal ventaja del \emph{ESP32-CAM} es el
         \hline
         \textbf{Opción} & \textbf{Placa} & \textbf{Cámara} & \textbf{Costo total} \\
         \hline
-        \emph{ESP32-CAM} & 7 a 10 USD & Incluida (\emph{OV2640}) & 7 a 10 USD \\
+        \emph{ESP32-CAM} & 5 a 18 USD & Incluida (\emph{OV2640}) & 5 a 18 USD \\
         \hline
         \emph{Raspberry Pi Pico 2 W} & 7 USD & \emph{Arducam Mini 2MP}, 26 USD & 33 USD \\
         \hline
-        \emph{Arduino UNO R4 WiFi} & 27,50 USD & \emph{Arducam Mini 2MP}, 26 USD & 53,50 USD \\
+        \emph{Arduino UNO R4 WiFi} & 30 USD & \emph{Arducam Mini 2MP}, 26 USD & 56 USD \\
         \hline
-        \emph{Raspberry Pi Zero 2 W} & 15 USD & \emph{Camera Module 3}, 25 a 35 USD & 40 a 50 USD \\
+        \emph{Raspberry Pi Zero 2 W} & 30 USD & \emph{Camera Module 3}, 25 a 35 USD & 55 a 65 USD \\
         \hline
     \end{tabular}
 \end{table}
@@ -989,7 +989,7 @@ El módulo central se implementó con dos placas distintas a lo largo del proyec
 
 \subsubsection{Placa inicial}
 
-El módulo central se implementó inicialmente con la placa \emph{ESP32-2432S028R}, conocida como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Esta placa se basa en el módulo \emph{ESP32-WROOM-32}, con el \emph{ESP32} clásico, e integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD. Su costo es de entre 13 y 18 USD a octubre de 2026. En un principio, se consideró que los recursos de este chip serían suficientes para las tareas del módulo central, ya que el procesamiento de las imágenes ocurre en el dispositivo del alumno.
+El módulo central se implementó inicialmente con la placa \emph{ESP32-2432S028R}, conocida como \emph{ESP32-CYD} (\emph{Cheap Yellow Display}). Esta placa se basa en el módulo \emph{ESP32-WROOM-32}, con el \emph{ESP32} clásico, e integra una pantalla táctil de 2,8 pulgadas y una ranura para tarjeta microSD. Su costo es de entre 13 y 26 USD a octubre de 2026. En un principio, se consideró que los recursos de este chip serían suficientes para las tareas del módulo central, ya que el procesamiento de las imágenes ocurre en el dispositivo del alumno.
 
 El principal criterio de elección fue la ranura para tarjeta microSD. El módulo central almacena una base de datos que crece con el uso y aloja la biblioteca \emph{OpenCV.js}, cuyo tamaño excede la capacidad de la memoria flash. La microSD ofrece el espacio necesario para ambos archivos sin agregar componentes externos. Otro aspecto favorable es la versatilidad de almacenamiento de la placa, descrita en el mapa de memoria.
 
@@ -999,7 +999,7 @@ La \emph{ESP32-CYD} se utilizó durante la mayor parte del desarrollo, y con ell
 
 \subsubsection{Placa adoptada}
 
-La placa que se utilizó en el sistema definitivo es la \emph{ONX3248G035}~\cite{nextion_onx} (Fig. \ref{fig:onx3248g035}), perteneciente a la línea \emph{Open Nextion} de la empresa \emph{ITEAD}. Se basa en el microcontrolador \emph{ESP32-S3}, con una memoria flash de 16 MB y una memoria PSRAM de 8 MB. Integra una pantalla táctil capacitiva de 3,5 pulgadas y una ranura para tarjeta microSD. También incorpora un circuito de carga para batería de litio, que se describe en la sección \ref{sec:alimentacion}. Su costo es de 25 USD a octubre de 2026.
+La placa que se utilizó en el sistema definitivo es la \emph{ONX3248G035}~\cite{nextion_onx} (Fig. \ref{fig:onx3248g035}), perteneciente a la línea \emph{Open Nextion} de la empresa \emph{ITEAD}. Se basa en el microcontrolador \emph{ESP32-S3}, con una memoria flash de 16 MB y una memoria PSRAM de 8 MB. Integra una pantalla táctil capacitiva de 3,5 pulgadas y una ranura para tarjeta microSD. También incorpora un circuito de carga para batería de litio, que se describe en la sección \ref{sec:alimentacion}. Su costo es de 35 USD a octubre de 2026.
 
 \begin{figure}[H]
     \centering
@@ -1032,7 +1032,7 @@ Una diferencia clave con la \emph{ESP32-CYD} es la memoria PSRAM, que resultó f
         \hline
         Circuito de carga & No posee & Integrado \\
         \hline
-        Costo (oct. 2026) & 13 a 18 USD & 25 USD \\
+        Costo (oct. 2026) & 13 a 26 USD & 35 USD \\
         \hline
     \end{tabular}
 \end{table}
@@ -2544,36 +2544,36 @@ La siguiente tabla detalla los componentes de ambos módulos junto con su costo 
         \hline
         \textbf{Componente} & \textbf{Cantidad} & \textbf{Precio unitario} & \textbf{Subtotal} & \textbf{\% del total} \\
         \hline
-        Placa \emph{ONX3248G035} & 1 & USD 25 & USD 25 & 27,6 \% \\
+        Placa \emph{ONX3248G035} & 1 & USD 35 & USD 35 & 32,4 \% \\
         \hline
-        \emph{ESP32-CAM} & 1 & USD 10 & USD 10 & 11,1 \% \\
+        \emph{ESP32-CAM} & 1 & USD 18 & USD 18 & 16,7 \% \\
         \hline
-        Tarjeta microSD de 16 GB & 1 & \$12.000 & \$12.000 & 8,7 \% \\
+        Tarjeta microSD de 16 GB & 1 & \$12.000 & \$12.000 & 7,2 \% \\
         \hline
-        Módulo de carga \emph{TP4056} & 1 & \$2.000 & \$2.000 & 1,4 \% \\
+        Módulo de carga \emph{TP4056} & 1 & \$2.000 & \$2.000 & 1,2 \% \\
         \hline
-        Módulo elevador \emph{MT3608} & 1 & \$3.000 & \$3.000 & 2,2 \% \\
+        Módulo elevador \emph{MT3608} & 1 & \$3.000 & \$3.000 & 1,8 \% \\
         \hline
-        Batería de litio 18650 de 3000 mAh & 2 & \$15.000 & \$30.000 & 21,8 \% \\
+        Batería de litio 18650 de 3000 mAh & 2 & \$15.000 & \$30.000 & 18,0 \% \\
         \hline
-        Portabaterías & 2 & \$2.500 & \$5.000 & 3,6 \% \\
+        Portabaterías & 2 & \$2.500 & \$5.000 & 3,0 \% \\
         \hline
-        Interruptor & 2 & \$2.000 & \$4.000 & 2,9 \% \\
+        Interruptor & 2 & \$2.000 & \$4.000 & 2,4 \% \\
         \hline
-        PCB del módulo de captura & 1 & \$8.500 & \$8.500 & 6,2 \% \\
+        PCB del módulo de captura & 1 & \$8.500 & \$8.500 & 5,1 \% \\
         \hline
-        Componentes menores (resistencias, capacitores, borneras, LEDs y zócalos) & -- & \$5.000 & \$5.000 & 3,6 \% \\
+        Componentes menores (resistencias, capacitores, borneras, LEDs y zócalos) & -- & \$5.000 & \$5.000 & 3,0 \% \\
         \hline
-        Impresión 3D & 2 & \$7.500 & \$15.000 & 10,9 \% \\
+        Impresión 3D & 2 & \$7.500 & \$15.000 & 9,0 \% \\
         \hline
-        \textbf{Total aproximado} & & & \textbf{\$137.900 (USD 90)} & \textbf{100 \%} \\
+        \textbf{Total aproximado} & & & \textbf{\$166.120 (USD 108)} & \textbf{100 \%} \\
         \hline
     \end{tabular}
 \end{table}
 
 El prototipo emplea una tarjeta microSD de 32 GB que ya estaba disponible. Sin embargo, como los archivos del sistema ocupan poco espacio, puede utilizarse una tarjeta de casi cualquier capacidad, por lo que el cálculo considera el precio de una de 16 GB, de uso habitual. Además, su valor varía mucho según la marca y otras características.
 
-El costo total del sistema ronda los \$137.900, unos USD 90. De ese monto, \$77.100 corresponden al módulo central y \$60.800 al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
+El costo total del sistema ronda los \$166.120, unos USD 108. De ese monto, \$92.900 corresponden al módulo central y \$73.220 al módulo de captura. Estos valores surgen de compras minoristas. En una producción a mayor escala, adquirir los componentes al por mayor reduciría el costo total.
 
 El cálculo no incluye costos de \emph{software}, ya que las herramientas y bibliotecas empleadas en el desarrollo son gratuitas. Tampoco contempla el armado del dispositivo, como la soldadura de los componentes y el montaje de los módulos en sus carcasas. Del mismo modo, excluye la placa programadora que requiere el \emph{ESP32-CAM} para la carga del \emph{firmware}, ya que no forma parte del dispositivo y puede reutilizarse.
 
